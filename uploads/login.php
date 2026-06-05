@@ -15,16 +15,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (mysqli_num_rows($result) == 1) {
         $user = mysqli_fetch_assoc($result);
         
-        // Verifikasi password (pakai password_verify karena sudah di-hash)
+        // Verifikasi password
         if (password_verify($password, $user['password'])) {
-            // Login berhasil - simpan session
+            // Login berhasil
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];
             
             echo "<script>
                     alert('✅ Login berhasil! Selamat datang, " . $user['username'] . "'); 
-                    window.location.href='index.php';
+                    window.location.href='dashboard.php';
                   </script>";
             exit();
         } else {
@@ -122,11 +122,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             font-size: 0.85rem;
             color: #6c757d;
         }
-        .footer-text a {
-            color: #2d6a4f;
-            text-decoration: none;
-            font-weight: 600;
-        }
     </style>
 </head>
 <body>
@@ -169,7 +164,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <div class="footer-text">
         <p class="mb-1">🔐 Halaman khusus admin</p>
-        <a href="../mapatek-arsip-public/index.html">← Kembali ke Website Publik</a>
+        <a href="index.html">← Kembali ke Website Publik</a>
     </div>
 </div>
 

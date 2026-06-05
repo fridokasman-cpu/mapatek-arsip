@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
 $user = "root";
-$pass = ""; // Default XAMPP kosong
+$pass = "";
 $db = "kearsipan_mapatek";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
