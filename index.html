@@ -34,6 +34,7 @@
             display: flex;
             gap: 2rem;
             list-style: none;
+            align-items: center;
         }
         .nav-links a {
             color: white;
@@ -43,6 +44,16 @@
         }
         .nav-links a:hover {
             color: var(--accent);
+        }
+        .btn-login-nav {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        .btn-login-nav:hover {
+            background: var(--accent);
+            color: var(--primary) !important;
         }
         .hamburger {
             display: none;
@@ -215,24 +226,6 @@
         }
         footer a { color: var(--accent); text-decoration: none; }
         
-        /* TOMBOL LOGIN ADMIN (Kecil di footer) */
-        .admin-login-link {
-            display: inline-block;
-            margin-top: 1rem;
-            padding: 0.5rem 1.5rem;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 20px;
-            color: white;
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: 0.3s;
-        }
-        .admin-login-link:hover {
-            background: rgba(255,255,255,0.2);
-            color: var(--accent);
-        }
-        
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -264,6 +257,7 @@
             <li><a href="#pendaftaran">Pendaftaran</a></li>
             <li><a href="#arsip">Arsip</a></li>
             <li><a href="#kontak">Kontak</a></li>
+            <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav" title="Khusus Admin"><i class="fas fa-lock"></i> Login Admin</a></li>
         </ul>
         <div class="hamburger" onclick="toggleMenu()">
             <i class="fas fa-bars"></i>
@@ -426,11 +420,9 @@
         <p style="margin-top: 0.5rem;">
             <small>Sistem Kearsipan Internal | Dibuat dengan ❤️ untuk keluarga besar Mapatek</small>
         </p>
-        
-        <!-- TOMBOL LOGIN ADMIN (Kecil, di footer) -->
-        <a href="login.php" class="admin-login-link" title="Khusus Admin">
-            <i class="fas fa-lock"></i> Login Admin
-        </a>
+        <p style="margin-top: 1rem;">
+            <small>🔐 <a href="http://localhost/mapatek-arsip/login.php" title="Khusus Admin - Hanya bisa diakses dari laptop admin">Login Admin</a> (Khusus Pengurus)</small>
+        </p>
     </footer>
 
     <script>
