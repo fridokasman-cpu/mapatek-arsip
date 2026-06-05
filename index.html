@@ -171,14 +171,21 @@
         }
 
       .hero { 
-    /* Gradient hanya di atas, bawah transparan */
-    background: linear-gradient(to bottom, rgba(27, 67, 50, 0.7) 0%, rgba(27, 67, 50, 0.2) 40%, transparent 100%), 
+    background: linear-gradient(135deg, rgba(27, 67, 50, 0.35) 0%, rgba(45, 106, 79, 0.3) 100%), 
                 url('images/background.jpg');
     background-size: cover;
-    background-position: center 30%;  /* Fokus ke area orang */
+    background-position: center 40%;  /* Adjust angka ini untuk geser fokus */
     background-repeat: no-repeat;
-    background-attachment: scroll;
-    /* ... properti lainnya */
+    background-attachment: fixed;
+    color: var(--white); 
+    padding: 10rem 5% 6rem; 
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
         .hero-content {
             max-width: 800px;
