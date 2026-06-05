@@ -171,13 +171,37 @@
         }
 
         /* Hero Section */
-       .hero { 
-    background: linear-gradient(135deg, rgba(27, 67, 50, 0.5) 0%, rgba(45, 106, 79, 0.45) 100%), 
+      /* VARIASI 1: Parallax Effect (Paling Populer) */
+.hero-parallax {
+    background: linear-gradient(rgba(27, 67, 50, 0.8), rgba(45, 106, 79, 0.8)),
                 url('images/background.jpg');
     background-size: cover;
-    background-position: center bottom;  /* Fokus ke bagian bawah (area orang) */
+    background-position: center;
+    background-attachment: fixed;  /* Efek parallax */
     background-repeat: no-repeat;
-    /* ... properti lainnya */
+    min-height: 100vh;
+}
+
+/* VARIASI 2: Zoom Effect on Hover */
+.hero-zoom {
+    background: linear-gradient(rgba(27, 67, 50, 0.9), rgba(45, 106, 79, 0.85)),
+                url('images/background.jpg');
+    background-size: 110%;  /* Lebih besar 10% */
+    background-position: center;
+    transition: background-size 0.5s ease;
+}
+
+.hero-zoom:hover {
+    background-size: 120%;  /* Zoom saat hover */
+}
+
+/* VARIASI 3: Focus pada Subjek Foto */
+.hero-focus-top {
+    background: linear-gradient(rgba(27, 67, 50, 0.9), rgba(45, 106, 79, 0.85)),
+                url('images/background.jpg');
+    background-size: cover;
+    background-position: center top;  /* Fokus ke atas (untuk foto gunung/orang) */
+    background-repeat: no-repeat;
 }
         .hero-content {
             max-width: 800px;
