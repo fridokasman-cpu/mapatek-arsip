@@ -4,31 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Kearsipan | Mapatek Abhipraya</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #1b4332; --accent: #d8f3dc; --text: #2d3436; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        body { background: #f8f9fa; color: var(--text); }
+        :root { 
+            --primary: #1b4332; 
+            --secondary: #2d6a4f;
+            --accent: #40916c;
+            --light: #d8f3dc; 
+            --dark: #081c15;
+            --text: #2d3436;
+            --white: #ffffff;
+            --gradient: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+            --shadow: 0 10px 30px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: 'Poppins', sans-serif; 
+            scroll-behavior: smooth; 
+        }
+        
+        body { 
+            background: #f8f9fa; 
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar Modern */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
         
         /* NAVBAR */
         .navbar {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(27, 67, 50, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
+            background: rgba(27, 67, 50, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
         .navbar .logo {
-            color: white;
+            color: var(--white);
             font-weight: 800;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
         }
         .nav-links {
             display: flex;
@@ -37,212 +81,657 @@
             align-items: center;
         }
         .nav-links a {
-            color: white;
+            color: var(--white);
             text-decoration: none;
             font-weight: 600;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--light);
+            transition: width 0.3s ease;
+        }
+        .nav-links a:hover::after {
+            width: 100%;
         }
         .nav-links a:hover {
-            color: var(--accent);
+            color: var(--light);
+            transform: translateY(-2px);
         }
         .btn-login-nav {
             background: rgba(255,255,255,0.2);
-            padding: 0.5rem 1.2rem;
-            border-radius: 20px;
+            padding: 0.6rem 1.5rem;
+            border-radius: 25px;
             font-size: 0.85rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
         }
         .btn-login-nav:hover {
-            background: var(--accent);
+            background: var(--light);
             color: var(--primary) !important;
+            border-color: var(--light);
+            transform: translateY(-2px);
         }
         .hamburger {
             display: none;
-            color: white;
-            font-size: 1.5rem;
+            color: var(--white);
+            font-size: 1.8rem;
             cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .hamburger:hover {
+            transform: rotate(90deg);
         }
         
-        /* HERO */
+        /* HERO SECTION */
         .hero { 
-            background: linear-gradient(rgba(27, 67, 50, 0.85), rgba(27, 67, 50, 0.9)), 
-                        url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200') center/cover; 
-            color: white; 
-            padding: 8rem 1rem 5rem; 
-            text-align: center; 
+            background: linear-gradient(135deg, rgba(27, 67, 50, 0.9) 0%, rgba(45, 106, 79, 0.85) 100%), 
+                        url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1920') center/cover; 
+            color: var(--white); 
+            padding: 10rem 5% 6rem; 
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
-        .hero h1 { font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 800; }
-        .hero p { opacity: 0.9; max-width: 600px; margin: 0 auto 2rem; font-size: 1.1rem; }
-        
-        .search-box { max-width: 500px; margin: 0 auto; position: relative; }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-30px, -30px) rotate(180deg); }
+        }
+        .hero h1 { 
+            font-size: 3rem; 
+            margin-bottom: 1rem; 
+            font-weight: 800;
+            animation: fadeInUp 1s ease;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .hero p { 
+            opacity: 0.95; 
+            max-width: 700px; 
+            margin: 0 auto 2.5rem; 
+            font-size: 1.2rem;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+        .search-box { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            position: relative;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
         .search-box input { 
             width: 100%; 
-            padding: 1rem 1.5rem; 
+            padding: 1.2rem 2rem; 
             border-radius: 50px; 
             border: none; 
             font-size: 1rem; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-            outline: none; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+            outline: none;
+            transition: all 0.3s ease;
+        }
+        .search-box input:focus {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .container { max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; }
+        .container { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            padding: 0 2rem; 
+        }
         
         .section-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--primary);
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             font-weight: 800;
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient);
+            margin: 1rem auto 0;
+            border-radius: 2px;
         }
         
         /* TENTANG KAMI */
-        .tentang-section { background: white; padding: 4rem 1.5rem; }
-        .tentang-content { max-width: 800px; margin: 0 auto; line-height: 1.8; }
-        .tentang-content p { margin-bottom: 1.5rem; text-align: justify; }
+        .tentang-section { 
+            background: var(--white); 
+            padding: 6rem 2rem;
+            position: relative;
+        }
+        .tentang-content { 
+            max-width: 900px; 
+            margin: 0 auto; 
+            line-height: 1.8;
+        }
+        .tentang-content p { 
+            margin-bottom: 1.5rem; 
+            text-align: justify;
+            font-size: 1.05rem;
+        }
         .sejarah-box {
-            background: var(--accent);
-            padding: 2rem;
-            border-radius: 15px;
-            border-left: 5px solid var(--primary);
-            margin: 2rem 0;
+            background: linear-gradient(135deg, var(--light) 0%, #b7e4c7 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border-left: 6px solid var(--primary);
+            margin: 2.5rem 0;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        .sejarah-box:hover {
+            transform: translateX(10px);
+        }
+        
+        /* PENGURUS SECTION - NEW */
+        .pengurus-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 6rem 2rem;
+        }
+        .pengurus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+        .pengurus-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        .pengurus-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+        .pengurus-photo {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-bottom: 4px solid var(--accent);
+            transition: transform 0.3s ease;
+        }
+        .pengurus-card:hover .pengurus-photo {
+            transform: scale(1.05);
+        }
+        .pengurus-info {
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .pengurus-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .pengurus-position {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            padding: 0.3rem 1rem;
+            background: var(--light);
+            border-radius: 20px;
+            display: inline-block;
+        }
+        .pengurus-details {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e9ecef;
+        }
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+        .detail-item i {
+            color: var(--secondary);
+            width: 20px;
+        }
+        .badge-role {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--gradient);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
         
         /* PENDAFTARAN */
-        .pendaftaran-section { background: #f0f4f8; padding: 4rem 1.5rem; }
+        .pendaftaran-section { 
+            background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%); 
+            padding: 6rem 2rem;
+        }
         .status-box {
-            max-width: 700px;
+            max-width: 750px;
             margin: 0 auto;
-            padding: 3rem 2rem;
-            border-radius: 20px;
+            padding: 4rem 3rem;
+            border-radius: 30px;
             text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-hover);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+            50% { box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
         }
         .status-buka {
             background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
-            border: 3px solid #28a745;
+            border: 4px solid #28a745;
         }
         .status-tutup {
             background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
-            border: 3px solid #dc3545;
+            border: 4px solid #dc3545;
         }
-        .status-icon { font-size: 5rem; margin-bottom: 1rem; }
+        .status-icon { 
+            font-size: 6rem; 
+            margin-bottom: 1.5rem;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
         .status-buka .status-icon { color: #28a745; }
         .status-tutup .status-icon { color: #dc3545; }
         .btn-daftar {
             display: inline-block;
-            padding: 1rem 3rem;
-            background: #28a745;
+            padding: 1.2rem 3.5rem;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
             color: white;
             text-decoration: none;
             border-radius: 50px;
-            font-weight: bold;
+            font-weight: 700;
             font-size: 1.2rem;
-            margin-top: 1.5rem;
-            transition: 0.3s;
-            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
+            border: none;
+            cursor: pointer;
         }
         .btn-daftar:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.6);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(40, 167, 69, 0.6);
             color: white;
         }
         .info-periode {
-            background: white;
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            margin-top: 1.5rem;
-            display: inline-block;
-            font-weight: 600;
-            color: #1b4332;
-        }
-        
-        /* KONTAK */
-        .kontak-section { background: white; padding: 4rem 1.5rem; }
-        .kontak-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        .kontak-card {
-            background: #f8f9fa;
-            padding: 2rem;
+            background: var(--white);
+            padding: 1.2rem 2.5rem;
             border-radius: 15px;
-            text-align: center;
-            transition: 0.3s;
-            border: 2px solid transparent;
+            margin-top: 2rem;
+            display: inline-block;
+            font-weight: 700;
+            color: var(--primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 1.1rem;
         }
-        .kontak-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-        }
-        .kontak-card i { font-size: 3rem; color: var(--primary); margin-bottom: 1rem; }
-        .kontak-card h3 { color: var(--primary); margin-bottom: 0.5rem; }
-        .kontak-card a { color: var(--text); text-decoration: none; font-weight: 600; }
-        .kontak-card a:hover { color: var(--primary); }
         
         /* ARSIP */
+        .arsip-section {
+            background: var(--white);
+            padding: 6rem 2rem;
+        }
         .category-tabs { 
-            display: flex; gap: 0.8rem; justify-content: center; 
-            margin-bottom: 2rem; flex-wrap: wrap; 
+            display: flex; 
+            gap: 1rem; 
+            justify-content: center; 
+            margin-bottom: 3rem; 
+            flex-wrap: wrap; 
         }
         .tab-btn { 
-            padding: 0.6rem 1.5rem; border: 2px solid var(--primary); 
-            background: transparent; color: var(--primary); 
-            border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; 
+            padding: 0.8rem 2rem; 
+            border: 2px solid var(--primary); 
+            background: transparent; 
+            color: var(--primary); 
+            border-radius: 30px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
         }
-        .tab-btn.active, .tab-btn:hover { background: var(--primary); color: white; }
+        .tab-btn.active, .tab-btn:hover { 
+            background: var(--gradient); 
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(27, 67, 50, 0.3);
+        }
 
         .folder-banner { 
-            background: var(--accent); padding: 2rem; border-radius: 15px; 
-            margin-bottom: 2rem; text-align: center; border: 2px dashed var(--primary); 
+            background: linear-gradient(135deg, var(--light) 0%, #b7e4c7 100%);
+            padding: 3rem; 
+            border-radius: 25px; 
+            margin-bottom: 3rem; 
+            text-align: center;
+            border: 3px dashed var(--primary);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
         }
-        .folder-banner h3 { color: var(--primary); margin-bottom: 0.5rem; }
+        .folder-banner:hover {
+            transform: translateY(-5px);
+        }
 
-        .arsip-list { display: grid; gap: 1rem; }
+        .arsip-list { 
+            display: grid; 
+            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        }
         .arsip-item { 
-            background: white; padding: 1.5rem; border-radius: 12px; 
-            display: flex; justify-content: space-between; align-items: center; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); transition: 0.3s; 
+            background: var(--white); 
+            padding: 2rem; 
+            border-radius: 20px; 
+            display: flex; 
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+            border-left: 6px solid var(--accent);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
         }
-        .arsip-item:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
-        .arsip-info h3 { font-size: 1.1rem; margin-bottom: 0.4rem; color: #111; }
+        .arsip-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .arsip-item:hover::before {
+            transform: scaleX(1);
+        }
+        .arsip-item:hover { 
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+        }
+        .arsip-info h3 { 
+            font-size: 1.2rem; 
+            margin-bottom: 0.5rem; 
+            color: var(--dark);
+            font-weight: 700;
+        }
         .arsip-info span { 
-            font-size: 0.8rem; background: var(--accent); padding: 3px 10px; 
-            border-radius: 6px; color: var(--primary); font-weight: 700; text-transform: uppercase; 
+            font-size: 0.85rem; 
+            background: var(--light); 
+            padding: 0.4rem 1rem; 
+            border-radius: 20px; 
+            color: var(--primary); 
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 0.5rem;
         }
-        .arsip-info small { color: #636e72; margin-left: 10px; }
+        .arsip-info small { 
+            color: #6c757d; 
+            margin-left: 10px;
+            font-weight: 500;
+        }
         .btn-download { 
-            background: var(--primary); color: white; padding: 0.7rem 1.2rem; 
-            text-decoration: none; border-radius: 8px; font-size: 0.9rem; transition: 0.3s; 
-            display: flex; align-items: center; gap: 8px; 
+            background: var(--gradient);
+            color: white; 
+            padding: 0.9rem 1.5rem; 
+            text-decoration: none; 
+            border-radius: 12px; 
+            font-size: 0.95rem; 
+            transition: all 0.3s ease; 
+            display: inline-flex;
+            align-items: center; 
+            gap: 0.5rem;
+            margin-top: 1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(27, 67, 50, 0.3);
         }
-        .btn-download:hover { background: #2d6a4f; }
+        .btn-download:hover { 
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(27, 67, 50, 0.4);
+        }
 
-        footer { 
-            text-align: center; padding: 3rem 1rem; color: white; 
-            font-size: 0.9rem; background: var(--primary); margin-top: 4rem; 
+        /* KONTAK */
+        .kontak-section { 
+            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
+            color: var(--white);
+            padding: 6rem 2rem;
+            position: relative;
+            overflow: hidden;
         }
-        footer a { color: var(--accent); text-decoration: none; }
+        .kontak-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+        }
+        .kontak-section .section-title {
+            color: var(--white);
+        }
+        .kontak-section .section-title::after {
+            background: var(--light);
+        }
+        .kontak-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+        .kontak-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: 25px;
+            text-align: center;
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .kontak-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+            border-color: var(--light);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .kontak-card i { 
+            font-size: 3.5rem; 
+            color: var(--light); 
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .kontak-card:hover i {
+            transform: rotateY(360deg);
+        }
+        .kontak-card h3 { 
+            color: var(--white);
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+        .kontak-card p {
+            color: rgba(255,255,255,0.8);
+            margin-bottom: 1rem;
+        }
+        .kontak-card a { 
+            color: var(--light); 
+            text-decoration: none; 
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .kontak-card a:hover { 
+            color: var(--white);
+            transform: scale(1.1);
+        }
         
-        @media (max-width: 768px) {
+        /* FOOTER */
+        footer { 
+            text-align: center; 
+            padding: 3rem 2rem; 
+            color: var(--white); 
+            font-size: 0.95rem; 
+            background: var(--dark);
+            position: relative;
+        }
+        footer a { 
+            color: var(--light); 
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        footer a:hover {
+            color: var(--white);
+            text-decoration: underline;
+        }
+        .footer-social {
+            margin-top: 1.5rem;
+        }
+        .footer-social a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .footer-social a:hover {
+            background: var(--accent);
+            transform: translateY(-5px);
+        }
+        
+        /* LOADING SPINNER */
+        .loading-spinner {
+            border: 5px solid rgba(255,255,255,0.1);
+            border-top: 5px solid var(--light);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 968px) {
             .nav-links {
                 display: none;
                 position: absolute;
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: var(--primary);
+                background: var(--gradient);
                 flex-direction: column;
-                padding: 1rem;
-                gap: 1rem;
+                padding: 2rem;
+                gap: 1.5rem;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.2);
             }
-            .nav-links.active { display: flex; }
-            .hamburger { display: block; }
-            .hero h1 { font-size: 2rem; }
-            .arsip-item { flex-direction: column; align-items: flex-start; gap: 1rem; }
-            .btn-download { width: 100%; justify-content: center; }
+            .nav-links.active { 
+                display: flex;
+                animation: slideDown 0.3s ease;
+            }
+            @keyframes slideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            .hamburger { 
+                display: block; 
+            }
+            .hero h1 { 
+                font-size: 2.2rem; 
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .arsip-list {
+                grid-template-columns: 1fr;
+            }
+            .pengurus-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .section-title {
+                font-size: 1.5rem;
+            }
+            .pengurus-photo {
+                height: 280px;
+            }
+        }
+
+        /* SCROLL REVEAL ANIMATION */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -250,10 +739,11 @@
 
     <!-- NAVBAR -->
     <nav class="navbar">
-        <div class="logo">🏕️ Mapatek Abhipraya</div>
+        <div class="logo">🏔️ Mapatek Abhipraya</div>
         <ul class="nav-links" id="navLinks">
             <li><a href="#home">Beranda</a></li>
             <li><a href="#tentang">Tentang</a></li>
+            <li><a href="#pengurus">Pengurus</a></li>
             <li><a href="#pendaftaran">Pendaftaran</a></li>
             <li><a href="#arsip">Arsip</a></li>
             <li><a href="#kontak">Kontak</a></li>
@@ -274,7 +764,7 @@
     </section>
 
     <!-- TENTANG KAMI -->
-    <section id="tentang" class="tentang-section">
+    <section id="tentang" class="tentang-section reveal">
         <div class="container">
             <h2 class="section-title">🌲 Tentang Kami</h2>
             <div class="tentang-content">
@@ -312,75 +802,234 @@
         </div>
     </section>
 
+    <!-- PENGURUS SECTION - NEW -->
+    <section id="pengurus" class="pengurus-section reveal">
+        <div class="container">
+            <h2 class="section-title">👥 Struktur Pengurus</h2>
+            <p style="text-align: center; color: #6c757d; font-size: 1.1rem; max-width: 700px; margin: -2rem auto 3rem;">
+                Kenali lebih dekat para pengurus Mapatek Abhipraya yang siap melayani dan mengajak Anda menjelajahi keindahan alam
+            </p>
+            
+            <div class="pengurus-grid">
+                <!-- Ketua -->
+                <div class="pengurus-card">
+                    <span class="badge-role">Ketua</span>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop" alt="Ketua" class="pengurus-photo">
+                    <div class="pengurus-info">
+                        <h3 class="pengurus-name">Ahmad Rizky Pratama</h3>
+                        <span class="pengurus-position">Ketua Umum</span>
+                        <div class="pengurus-details">
+                            <div class="detail-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>NIM: 2021001001</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-phone"></i>
+                                <span>0812-3456-7890</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-compass"></i>
+                                <span>Divisi: Leadership</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sekretaris -->
+                <div class="pengurus-card">
+                    <span class="badge-role" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Sekretaris</span>
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop" alt="Sekretaris" class="pengurus-photo">
+                    <div class="pengurus-info">
+                        <h3 class="pengurus-name">Siti Nurhaliza</h3>
+                        <span class="pengurus-position">Sekretaris Jenderal</span>
+                        <div class="pengurus-details">
+                            <div class="detail-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>NIM: 2021001002</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-phone"></i>
+                                <span>0822-1442-8371</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-compass"></i>
+                                <span>Divisi: Administrasi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bendahara -->
+                <div class="pengurus-card">
+                    <span class="badge-role" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">Bendahara</span>
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop" alt="Bendahara" class="pengurus-photo">
+                    <div class="pengurus-info">
+                        <h3 class="pengurus-name">Budi Santoso</h3>
+                        <span class="pengurus-position">Bendahara</span>
+                        <div class="pengurus-details">
+                            <div class="detail-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>NIM: 2021001003</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-phone"></i>
+                                <span>0813-9876-5432</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-compass"></i>
+                                <span>Divisi: Keuangan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Koordinator Lapangan 1 -->
+                <div class="pengurus-card">
+                    <span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span>
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop" alt="Koordinator Lapangan" class="pengurus-photo">
+                    <div class="pengurus-info">
+                        <h3 class="pengurus-name">Rangga Wijaya</h3>
+                        <span class="pengurus-position">Koordinator Lapangan</span>
+                        <div class="pengurus-details">
+                            <div class="detail-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>NIM: 2021001004</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-phone"></i>
+                                <span>0857-1234-5678</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-compass"></i>
+                                <span>Divisi: Operasional</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Koordinator Logistik -->
+                <div class="pengurus-card">
+                    <span class="badge-role" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Logistik</span>
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop" alt="Koordinator Logistik" class="pengurus-photo">
+                    <div class="pengurus-info">
+                        <h3 class="pengurus-name">Dewi Lestari</h3>
+                        <span class="pengurus-position">Koordinator Logistik</span>
+                        <div class="pengurus-details">
+                            <div class="detail-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>NIM: 2021001005</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-phone"></i>
+                                <span>0821-8765-4321</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-compass"></i>
+                                <span>Divisi: Perlengkapan</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Koordinator Dokumentasi -->
+                <div class="pengurus-card">
+                    <span class="badge-role" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">Dokumentasi</span>
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop" alt="Dokumentasi" class="pengurus-photo">
+                    <div class="pengurus-info">
+                        <h3 class="pengurus-name">Maya Anggraini</h3>
+                        <span class="pengurus-position">Koordinator Dokumentasi</span>
+                        <div class="pengurus-details">
+                            <div class="detail-item">
+                                <i class="fas fa-id-card"></i>
+                                <span>NIM: 2021001006</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-phone"></i>
+                                <span>0896-5432-1098</span>
+                            </div>
+                            <div class="detail-item">
+                                <i class="fas fa-compass"></i>
+                                <span>Divisi: Media & Info</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- PENDAFTARAN -->
-    <section id="pendaftaran" class="pendaftaran-section">
+    <section id="pendaftaran" class="pendaftaran-section reveal">
         <div class="container">
             <h2 class="section-title">🎯 Pendaftaran Anggota</h2>
             
             <div id="statusContainer" class="text-center">
-                <div class="spinner-border text-success" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <p class="mt-2">Memuat status pendaftaran...</p>
+                <div class="loading-spinner"></div>
+                <p style="color: #6c757d; font-size: 1.1rem;">Memuat status pendaftaran...</p>
             </div>
         </div>
     </section>
 
     <!-- ARSIP -->
-    <section id="arsip" class="container">
-        <h2 class="section-title">📁 Arsip Dokumen</h2>
-        
-        <div class="folder-banner">
-            <i class="fas fa-folder-open fa-2x" style="color: var(--primary); margin-bottom: 0.5rem;"></i>
-            <h3>Akses Semua Arsip Mapatek</h3>
-            <p>Klik di bawah untuk membuka folder lengkap arsip kami di Google Drive</p>
-            <a href="https://drive.google.com/drive/folders/1kq-TJI0r7p8zXTg4lJw9pTSLRmnnfTwd?usp=sharing" target="_blank" class="btn-download" style="display: inline-flex; margin-top: 1rem;">
-                <i class="fab fa-google-drive"></i> Buka Folder Arsip Lengkap
-            </a>
-        </div>
-
-        <div class="category-tabs">
-            <button class="tab-btn active" onclick="filterKategori('all', this)">Semua</button>
-            <button class="tab-btn" onclick="filterKategori('Laporan Kegiatan', this)">Laporan Kegiatan</button>
-            <button class="tab-btn" onclick="filterKategori('Laporan Keuangan', this)">Keuangan</button>
-            <button class="tab-btn" onclick="filterKategori('AD_ART', this)">AD/ART & SK</button>
-        </div>
-
-        <div class="arsip-list" id="arsipList">
-            <div class="arsip-item" data-kategori="Laporan Kegiatan">
-                <div class="arsip-info">
-                    <h3>Laporan Ekspedisi Gunung Gede 2023</h3>
-                    <span>Laporan Kegiatan</span> <small>• 25 Mei 2023</small>
-                </div>
-                <a href="https://drive.google.com/your-link-here" target="_blank" class="btn-download">
-                    <i class="fas fa-file-pdf"></i> Lihat File
+    <section id="arsip" class="arsip-section reveal">
+        <div class="container">
+            <h2 class="section-title">📁 Arsip Dokumen</h2>
+            
+            <div class="folder-banner">
+                <i class="fas fa-folder-open fa-3x" style="color: var(--primary); margin-bottom: 1rem;"></i>
+                <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Akses Semua Arsip Mapatek</h3>
+                <p style="color: #6c757d; margin-bottom: 1.5rem;">Klik di bawah untuk membuka folder lengkap arsip kami di Google Drive</p>
+                <a href="https://drive.google.com/drive/folders/1kq-TJI0r7p8zXTg4lJw9pTSLRmnnfTwd?usp=sharing" target="_blank" class="btn-download" style="display: inline-flex;">
+                    <i class="fab fa-google-drive"></i> Buka Folder Arsip Lengkap
                 </a>
             </div>
 
-            <div class="arsip-item" data-kategori="AD_ART">
-                <div class="arsip-info">
-                    <h3>Anggaran Dasar & Anggaran Rumah Tangga (Revisi 2024)</h3>
-                    <span>AD/ART</span> <small>• 10 Jan 2024</small>
-                </div>
-                <a href="https://drive.google.com/your-link-here" target="_blank" class="btn-download">
-                    <i class="fas fa-file-pdf"></i> Lihat File
-                </a>
+            <div class="category-tabs">
+                <button class="tab-btn active" onclick="filterKategori('all', this)">Semua</button>
+                <button class="tab-btn" onclick="filterKategori('Laporan Kegiatan', this)">Laporan Kegiatan</button>
+                <button class="tab-btn" onclick="filterKategori('Laporan Keuangan', this)">Keuangan</button>
+                <button class="tab-btn" onclick="filterKategori('AD_ART', this)">AD/ART & SK</button>
             </div>
 
-            <div class="arsip-item" data-kategori="Laporan Keuangan">
-                <div class="arsip-info">
-                    <h3>Laporan Pertanggungjawaban Keuangan Diksar XII</h3>
-                    <span>Laporan Keuangan</span> <small>• 15 Feb 2024</small>
+            <div class="arsip-list" id="arsipList">
+                <div class="arsip-item" data-kategori="Laporan Kegiatan">
+                    <div class="arsip-info">
+                        <span>Laporan Kegiatan</span>
+                        <h3>Laporan Ekspedisi Gunung Gede 2023</h3>
+                        <small><i class="far fa-calendar"></i> 25 Mei 2023</small>
+                    </div>
+                    <a href="https://drive.google.com/your-link-here" target="_blank" class="btn-download">
+                        <i class="fas fa-file-pdf"></i> Lihat File
+                    </a>
                 </div>
-                <a href="https://drive.google.com/your-link-here" target="_blank" class="btn-download">
-                    <i class="fas fa-file-excel"></i> Lihat File
-                </a>
+
+                <div class="arsip-item" data-kategori="AD_ART">
+                    <div class="arsip-info">
+                        <span>AD/ART</span>
+                        <h3>Anggaran Dasar & Anggaran Rumah Tangga (Revisi 2024)</h3>
+                        <small><i class="far fa-calendar"></i> 10 Jan 2024</small>
+                    </div>
+                    <a href="https://drive.google.com/your-link-here" target="_blank" class="btn-download">
+                        <i class="fas fa-file-pdf"></i> Lihat File
+                    </a>
+                </div>
+
+                <div class="arsip-item" data-kategori="Laporan Keuangan">
+                    <div class="arsip-info">
+                        <span>Laporan Keuangan</span>
+                        <h3>Laporan Pertanggungjawaban Keuangan Diksar XII</h3>
+                        <small><i class="far fa-calendar"></i> 15 Feb 2024</small>
+                    </div>
+                    <a href="https://drive.google.com/your-link-here" target="_blank" class="btn-download">
+                        <i class="fas fa-file-excel"></i> Lihat File
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- KONTAK -->
-    <section id="kontak" class="kontak-section">
+    <section id="kontak" class="kontak-section reveal">
         <div class="container">
             <h2 class="section-title">📞 Hubungi Kami</h2>
             <div class="kontak-grid">
@@ -389,7 +1038,7 @@
                     <h3>WhatsApp Admin</h3>
                     <p>Chat langsung dengan admin kami</p>
                     <a href="https://wa.me/6282214428371" target="_blank">
-                        <strong>0822-1442-8371</strong>
+                        <i class="fas fa-phone"></i> 0822-1442-8371
                     </a>
                 </div>
 
@@ -398,7 +1047,7 @@
                     <h3>Instagram</h3>
                     <p>Follow untuk info terbaru</p>
                     <a href="https://instagram.com/mapatek_abhipraya" target="_blank">
-                        <strong>@mapatek_abhipraya</strong>
+                        <i class="fab fa-instagram"></i> @mapatek_abhipraya
                     </a>
                 </div>
 
@@ -407,7 +1056,7 @@
                     <h3>Lokasi</h3>
                     <p>Kunjungi basecamp kami</p>
                     <a href="https://maps.app.goo.gl/aWpAXADTecgmY1EG9" target="_blank">
-                        <strong>Lihat di Maps</strong>
+                        <i class="fas fa-location-arrow"></i> Lihat di Maps
                     </a>
                 </div>
             </div>
@@ -416,26 +1065,53 @@
 
     <!-- FOOTER -->
     <footer>
-        <p class="fw-bold">&copy; 2023 - 2026 Mapatek Abhipraya. All Rights Reserved.</p>
-        <p style="margin-top: 0.5rem;">
+        <p class="fw-bold" style="font-size: 1.1rem; margin-bottom: 0.5rem;">🏔️ Mapatek Abhipraya</p>
+        <p>&copy; 2023 - 2026 All Rights Reserved.</p>
+        <p style="margin-top: 1rem;">
             <small>Sistem Kearsipan Internal | Dibuat dengan ❤️ untuk keluarga besar Mapatek</small>
         </p>
-        <p style="margin-top: 1rem;">
-            <small>🔐 <a href="http://localhost/mapatek-arsip/login.php" title="Khusus Admin - Hanya bisa diakses dari laptop admin">Login Admin</a> (Khusus Pengurus)</small>
-        </p>
+        <div class="footer-social">
+            <a href="https://instagram.com/mapatek_abhipraya" target="_blank" title="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://wa.me/6282214428371" target="_blank" title="WhatsApp">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="http://localhost/mapatek-arsip/login.php" target="_blank" title="Login Admin">
+                <i class="fas fa-lock"></i>
+            </a>
+        </div>
     </footer>
 
     <script>
+        // Toggle Mobile Menu
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('active');
         }
 
+        // Close menu when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 document.getElementById('navLinks').classList.remove('active');
             });
         });
 
+        // Scroll Reveal Animation
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(element => {
+                var windowHeight = window.innerHeight;
+                var elementTop = element.getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add("active");
+                }
+            });
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger once on load
+
+        // Filter Arsip
         function filterArsip() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let items = document.getElementsByClassName('arsip-item');
@@ -445,6 +1121,7 @@
             }
         }
 
+        // Filter Kategori
         function filterKategori(kategori, btnElement) {
             let items = document.getElementsByClassName('arsip-item');
             let buttons = document.getElementsByClassName('tab-btn');
@@ -461,6 +1138,7 @@
             }
         }
 
+        // Fetch Status Pendaftaran
         fetch('status.json?t=' + new Date().getTime())
             .then(response => response.json())
             .then(data => {
@@ -470,11 +1148,11 @@
                     container.innerHTML = `
                         <div class="status-box status-buka">
                             <div class="status-icon"><i class="fas fa-door-open"></i></div>
-                            <h2 style="color: #155724;">PENDAFTARAN DIBUKA! 🎉</h2>
+                            <h2 style="color: #155724; font-size: 2.5rem; margin-bottom: 1rem;">PENDAFTARAN DIBUKA! 🎉</h2>
                             <div class="info-periode">
                                 <i class="fas fa-calendar-alt"></i> ${data.periode}
                             </div>
-                            <p style="margin-top: 1.5rem; color: #155724;">
+                            <p style="margin-top: 2rem; color: #155724; font-size: 1.2rem;">
                                 Ayo bergabung bersama keluarga besar Mapatek Abhipraya!<br>
                                 Isi formulir pendaftaran dengan klik tombol di bawah ini.
                             </p>
@@ -487,16 +1165,16 @@
                     container.innerHTML = `
                         <div class="status-box status-tutup">
                             <div class="status-icon"><i class="fas fa-door-closed"></i></div>
-                            <h2 style="color: #721c24;">PENDAFTARAN DITUTUP</h2>
-                            <p style="margin-top: 1rem; color: #721c24; font-size: 1.1rem;">
+                            <h2 style="color: #721c24; font-size: 2.5rem; margin-bottom: 1rem;">PENDAFTARAN DITUTUP</h2>
+                            <p style="margin-top: 1rem; color: #721c24; font-size: 1.2rem;">
                                 ${data.info_lanjutan}
                             </p>
                             <div class="info-periode" style="background: #f8d7da; color: #721c24;">
                                 <i class="fas fa-info-circle"></i> ${data.periode}
                             </div>
-                            <p style="margin-top: 1.5rem; font-size: 0.95rem;">
+                            <p style="margin-top: 2rem; font-size: 1rem;">
                                 Follow Instagram kami untuk info terbaru:<br>
-                                <a href="https://instagram.com/mapatek_abhipraya" target="_blank" style="color: #e1306c; font-weight: bold;">
+                                <a href="https://instagram.com/mapatek_abhipraya" target="_blank" style="color: #e1306c; font-weight: 700; font-size: 1.1rem;">
                                     <i class="fab fa-instagram"></i> @mapatek_abhipraya
                                 </a>
                             </p>
@@ -505,14 +1183,15 @@
                 }
             })
             .catch(error => {
+                console.error('Error:', error);
                 document.getElementById('statusContainer').innerHTML = `
                     <div class="status-box status-tutup">
                         <div class="status-icon"><i class="fas fa-info-circle"></i></div>
-                        <h2 style="color: #721c24;">INFORMASI PENDAFTARAN</h2>
-                        <p style="margin-top: 1rem; color: #721c24; font-size: 1.1rem;">
+                        <h2 style="color: #721c24; font-size: 2.5rem; margin-bottom: 1rem;">INFORMASI PENDAFTARAN</h2>
+                        <p style="margin-top: 1rem; color: #721c24; font-size: 1.2rem;">
                             Untuk informasi mengenai pendaftaran anggota baru, silakan hubungi admin kami melalui WhatsApp atau Instagram.
                         </p>
-                        <div style="margin-top: 2rem;">
+                        <div style="margin-top: 2.5rem;">
                             <a href="https://wa.me/6282214428371" target="_blank" class="btn-daftar" style="background: #25D366; margin-right: 1rem;">
                                 <i class="fab fa-whatsapp"></i> Chat Admin
                             </a>
@@ -523,6 +1202,18 @@
                     </div>
                 `;
             });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.padding = '0.8rem 5%';
+                navbar.style.boxShadow = '0 5px 30px rgba(0,0,0,0.2)';
+            } else {
+                navbar.style.padding = '1rem 5%';
+                navbar.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+            }
+        });
     </script>
 </body>
 </html>
