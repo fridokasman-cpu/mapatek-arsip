@@ -1,3 +1,4 @@
+<?php include 'auth.php'; ?>
 <?php
 include 'koneksi.php';
 $id = $_GET['id'];

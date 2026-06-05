@@ -75,7 +75,6 @@
         
         .container { max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; }
         
-        /* SECTION TITLES */
         .section-title {
             text-align: center;
             font-size: 2rem;
@@ -85,19 +84,9 @@
         }
         
         /* TENTANG KAMI */
-        .tentang-section {
-            background: white;
-            padding: 4rem 1.5rem;
-        }
-        .tentang-content {
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.8;
-        }
-        .tentang-content p {
-            margin-bottom: 1.5rem;
-            text-align: justify;
-        }
+        .tentang-section { background: white; padding: 4rem 1.5rem; }
+        .tentang-content { max-width: 800px; margin: 0 auto; line-height: 1.8; }
+        .tentang-content p { margin-bottom: 1.5rem; text-align: justify; }
         .sejarah-box {
             background: var(--accent);
             padding: 2rem;
@@ -107,10 +96,7 @@
         }
         
         /* PENDAFTARAN */
-        .pendaftaran-section {
-            background: #f0f4f8;
-            padding: 4rem 1.5rem;
-        }
+        .pendaftaran-section { background: #f0f4f8; padding: 4rem 1.5rem; }
         .status-box {
             max-width: 700px;
             margin: 0 auto;
@@ -127,10 +113,7 @@
             background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
             border: 3px solid #dc3545;
         }
-        .status-icon {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-        }
+        .status-icon { font-size: 5rem; margin-bottom: 1rem; }
         .status-buka .status-icon { color: #28a745; }
         .status-tutup .status-icon { color: #dc3545; }
         .btn-daftar {
@@ -162,10 +145,7 @@
         }
         
         /* KONTAK */
-        .kontak-section {
-            background: white;
-            padding: 4rem 1.5rem;
-        }
+        .kontak-section { background: white; padding: 4rem 1.5rem; }
         .kontak-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -186,112 +166,71 @@
             border-color: var(--primary);
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
-        .kontak-card i {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-        .kontak-card h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-        .kontak-card a {
-            color: var(--text);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .kontak-card a:hover {
-            color: var(--primary);
-        }
+        .kontak-card i { font-size: 3rem; color: var(--primary); margin-bottom: 1rem; }
+        .kontak-card h3 { color: var(--primary); margin-bottom: 0.5rem; }
+        .kontak-card a { color: var(--text); text-decoration: none; font-weight: 600; }
+        .kontak-card a:hover { color: var(--primary); }
         
         /* ARSIP */
         .category-tabs { 
-            display: flex; 
-            gap: 0.8rem; 
-            justify-content: center; 
-            margin-bottom: 2rem; 
-            flex-wrap: wrap; 
+            display: flex; gap: 0.8rem; justify-content: center; 
+            margin-bottom: 2rem; flex-wrap: wrap; 
         }
         .tab-btn { 
-            padding: 0.6rem 1.5rem; 
-            border: 2px solid var(--primary); 
-            background: transparent; 
-            color: var(--primary); 
-            border-radius: 50px; 
-            cursor: pointer; 
-            font-weight: 600; 
-            transition: 0.3s; 
+            padding: 0.6rem 1.5rem; border: 2px solid var(--primary); 
+            background: transparent; color: var(--primary); 
+            border-radius: 50px; cursor: pointer; font-weight: 600; transition: 0.3s; 
         }
-        .tab-btn.active, .tab-btn:hover { 
-            background: var(--primary); 
-            color: white; 
-        }
+        .tab-btn.active, .tab-btn:hover { background: var(--primary); color: white; }
 
         .folder-banner { 
-            background: var(--accent); 
-            padding: 2rem; 
-            border-radius: 15px; 
-            margin-bottom: 2rem; 
-            text-align: center; 
-            border: 2px dashed var(--primary); 
+            background: var(--accent); padding: 2rem; border-radius: 15px; 
+            margin-bottom: 2rem; text-align: center; border: 2px dashed var(--primary); 
         }
-        .folder-banner h3 {
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
+        .folder-banner h3 { color: var(--primary); margin-bottom: 0.5rem; }
 
         .arsip-list { display: grid; gap: 1rem; }
         .arsip-item { 
-            background: white; 
-            padding: 1.5rem; 
-            border-radius: 12px; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            border-left: 5px solid var(--primary); 
-            transition: 0.3s; 
+            background: white; padding: 1.5rem; border-radius: 12px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-left: 5px solid var(--primary); transition: 0.3s; 
         }
-        .arsip-item:hover { 
-            transform: translateY(-2px); 
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1); 
-        }
+        .arsip-item:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
         .arsip-info h3 { font-size: 1.1rem; margin-bottom: 0.4rem; color: #111; }
         .arsip-info span { 
-            font-size: 0.8rem; 
-            background: var(--accent); 
-            padding: 3px 10px; 
-            border-radius: 6px; 
-            color: var(--primary); 
-            font-weight: 700; 
-            text-transform: uppercase; 
+            font-size: 0.8rem; background: var(--accent); padding: 3px 10px; 
+            border-radius: 6px; color: var(--primary); font-weight: 700; text-transform: uppercase; 
         }
         .arsip-info small { color: #636e72; margin-left: 10px; }
         .btn-download { 
-            background: var(--primary); 
-            color: white; 
-            padding: 0.7rem 1.2rem; 
-            text-decoration: none; 
-            border-radius: 8px; 
-            font-size: 0.9rem; 
-            transition: 0.3s; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
+            background: var(--primary); color: white; padding: 0.7rem 1.2rem; 
+            text-decoration: none; border-radius: 8px; font-size: 0.9rem; transition: 0.3s; 
+            display: flex; align-items: center; gap: 8px; 
         }
         .btn-download:hover { background: #2d6a4f; }
 
         footer { 
-            text-align: center; 
-            padding: 3rem 1rem; 
-            color: white; 
-            font-size: 0.9rem; 
-            background: var(--primary); 
-            margin-top: 4rem; 
+            text-align: center; padding: 3rem 1rem; color: white; 
+            font-size: 0.9rem; background: var(--primary); margin-top: 4rem; 
         }
-        footer a {
-            color: var(--accent);
+        footer a { color: var(--accent); text-decoration: none; }
+        
+        /* TOMBOL LOGIN ADMIN (Kecil di footer) */
+        .admin-login-link {
+            display: inline-block;
+            margin-top: 1rem;
+            padding: 0.5rem 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            color: white;
             text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .admin-login-link:hover {
+            background: rgba(255,255,255,0.2);
+            color: var(--accent);
         }
         
         @media (max-width: 768px) {
@@ -306,12 +245,8 @@
                 padding: 1rem;
                 gap: 1rem;
             }
-            .nav-links.active {
-                display: flex;
-            }
-            .hamburger {
-                display: block;
-            }
+            .nav-links.active { display: flex; }
+            .hamburger { display: block; }
             .hero h1 { font-size: 2rem; }
             .arsip-item { flex-direction: column; align-items: flex-start; gap: 1rem; }
             .btn-download { width: 100%; justify-content: center; }
@@ -401,7 +336,6 @@
     <section id="arsip" class="container">
         <h2 class="section-title">📁 Arsip Dokumen</h2>
         
-        <!-- BANNER FOLDER DRIVE -->
         <div class="folder-banner">
             <i class="fas fa-folder-open fa-2x" style="color: var(--primary); margin-bottom: 0.5rem;"></i>
             <h3>Akses Semua Arsip Mapatek</h3>
@@ -419,8 +353,6 @@
         </div>
 
         <div class="arsip-list" id="arsipList">
-            
-            <!-- CONTOH DATA 1 -->
             <div class="arsip-item" data-kategori="Laporan Kegiatan">
                 <div class="arsip-info">
                     <h3>Laporan Ekspedisi Gunung Gede 2023</h3>
@@ -431,7 +363,6 @@
                 </a>
             </div>
 
-            <!-- CONTOH DATA 2 -->
             <div class="arsip-item" data-kategori="AD_ART">
                 <div class="arsip-info">
                     <h3>Anggaran Dasar & Anggaran Rumah Tangga (Revisi 2024)</h3>
@@ -442,7 +373,6 @@
                 </a>
             </div>
 
-            <!-- CONTOH DATA 3 -->
             <div class="arsip-item" data-kategori="Laporan Keuangan">
                 <div class="arsip-info">
                     <h3>Laporan Pertanggungjawaban Keuangan Diksar XII</h3>
@@ -452,7 +382,6 @@
                     <i class="fas fa-file-excel"></i> Lihat File
                 </a>
             </div>
-
         </div>
     </section>
 
@@ -461,8 +390,6 @@
         <div class="container">
             <h2 class="section-title">📞 Hubungi Kami</h2>
             <div class="kontak-grid">
-                
-                <!-- WHATSAPP -->
                 <div class="kontak-card">
                     <i class="fab fa-whatsapp"></i>
                     <h3>WhatsApp Admin</h3>
@@ -472,7 +399,6 @@
                     </a>
                 </div>
 
-                <!-- INSTAGRAM -->
                 <div class="kontak-card">
                     <i class="fab fa-instagram"></i>
                     <h3>Instagram</h3>
@@ -482,7 +408,6 @@
                     </a>
                 </div>
 
-                <!-- LOKASI -->
                 <div class="kontak-card">
                     <i class="fas fa-map-marker-alt"></i>
                     <h3>Lokasi</h3>
@@ -491,7 +416,6 @@
                         <strong>Lihat di Maps</strong>
                     </a>
                 </div>
-
             </div>
         </div>
     </section>
@@ -502,22 +426,24 @@
         <p style="margin-top: 0.5rem;">
             <small>Sistem Kearsipan Internal | Dibuat dengan ❤️ untuk keluarga besar Mapatek</small>
         </p>
+        
+        <!-- TOMBOL LOGIN ADMIN (Kecil, di footer) -->
+        <a href="login.php" class="admin-login-link" title="Khusus Admin">
+            <i class="fas fa-lock"></i> Login Admin
+        </a>
     </footer>
 
     <script>
-        // Toggle Mobile Menu
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('active');
         }
 
-        // Close menu when clicking a link
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 document.getElementById('navLinks').classList.remove('active');
             });
         });
 
-        // Fitur Pencarian Arsip
         function filterArsip() {
             let input = document.getElementById('searchInput').value.toLowerCase();
             let items = document.getElementsByClassName('arsip-item');
@@ -527,7 +453,6 @@
             }
         }
 
-        // Fitur Filter Kategori
         function filterKategori(kategori, btnElement) {
             let items = document.getElementsByClassName('arsip-item');
             let buttons = document.getElementsByClassName('tab-btn');
@@ -544,7 +469,6 @@
             }
         }
 
-        // Load Status Pendaftaran dari status.json
         fetch('status.json?t=' + new Date().getTime())
             .then(response => response.json())
             .then(data => {
