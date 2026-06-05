@@ -436,7 +436,7 @@
         <div class="pengurus-grid">
             <div class="pengurus-card"><span class="badge-role">Ketua</span><img src="images/pengurus/ketua.jpg" alt="Machmud Chabibul Lathif" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/1.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Machmud Chabibul Lathif</h3><span class="pengurus-position">Ketua Umum</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018064</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-952-824-898</span></div></div></div>
             <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Sekretaris</span><img src="images/pengurus/sekretaris.jpg" alt="Putri Robet" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/1.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Putri Robet</h3><span class="pengurus-position">Sekretaris Jenderal</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018007</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0815-2272-3325</span></div></div></div>
-            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Sekretaris</span><img src="images/pengurus/sekretariswakil.jpg" alt="Tsyei Dayana Knyartutu" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/2.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Tsyei Dayana Knyartutu</h3><span class="pengurus-position">Sekretaris Wakil</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018006</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-343-835-369</span></div></div></div>
+            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Sekretaris</span><img src="images/pengurus/sekretariswakil.jpg" alt="Tisye Dayana Knyartutu" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/2.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Tsyei Dayana Knyartutu</h3><span class="pengurus-position">Sekretaris Wakil</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018006</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-343-835-369</span></div></div></div>
             <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">Bendahara</span><img src="images/pengurus/bendahara.jpg" alt="Rosa Bandatia" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/3.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Rosa Bandatia</h3><span class="pengurus-position">Bendahara 1</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018028</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>082-249-858-268</span></div></div></div>
             <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span><img src="images/pengurus/rockclimbing.jpg" alt="Tresia Utami Sulensi" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/4.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Tresia Utami Sulensi</h3><span class="pengurus-position">Koordinator Rock Climbing</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024013058</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0858-2245-0087</span></div></div></div>
             <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span><img src="images/pengurus/gununghutan.jpg" alt="Muhammad Musfian Sutrawardi" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/2.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Muhammad Musfian Sutrawardi</h3><span class="pengurus-position">Koordinator Gunung Hutan</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2023013044</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-398-717-626</span></div></div></div>
@@ -536,16 +536,27 @@
         { day: "05", month: "JUL", title: "Bakti Sosial & Konservasi", location: "Desa Wisata Pentingsari", desc: "Bersih-bersih sungai dan edukasi lingkungan", status: "upcoming" }
     ];
 
-    // Data Galeri
-    const galeriImages = [
-        "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1486718448742-163732cd1544?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1533130061792-64b345e4a833?w=400&h=400&fit=crop",
-        "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=400&fit=crop"
-    ];
+    // Data Galeri dengan caption (lebih profesional)
+const galeriImages = [
+    { src: "images/galeri/ekspedisi_rinjani.jpg", caption: "Ekspedisi Gunung Rinjani 2023" },
+    { src: "images/galeri/diksar.jpg", caption: "Pendidikan Dasar (Diksar) Angkatan III" },
+    { src: "images/galeri/rock_climbing.jpg", caption: "Latihan Rock Climbing di Tebing Gamping" },
+    { src: "images/galeri/baksos.jpg", caption: "Bakti Sosial Bersih Pantai Baros" },
+    { src: "images/galeri/navigasi.jpg", caption: "Latihan Navigasi Darat" },
+    { src: "images/galeri/konservasi.jpg", caption: "Penanaman Pohon di Hutan Pendidikan" }
+];
 
+// Fungsi loadGaleri yang dimodifikasi untuk support caption
+function loadGaleri() {
+    const container = document.getElementById('galeriGrid');
+    if (!container) return;
+    container.innerHTML = galeriImages.map((img, i) => `
+        <div class="galeri-item" onclick="openModal('${img.src}')">
+            <img src="${img.src}" alt="${img.caption}" onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
+            <div class="galeri-overlay"><p><i class="fas fa-camera"></i> ${img.caption}</p></div>
+        </div>
+    `).join('');
+}
     // Load Agenda
     function loadAgenda() {
         const container = document.getElementById('agendaGrid');
