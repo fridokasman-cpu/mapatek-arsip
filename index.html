@@ -128,6 +128,29 @@
         .angkatan-name { font-weight: 700; color: var(--primary); }
         .angkatan-desc { color: var(--gray-600); font-size: 0.9rem; }
 
+        /* Stats Counter - FITUR BARU */
+        .stats-section {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 3rem 0;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            text-align: center;
+        }
+        .stat-card {
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-number { font-size: 2.2rem; font-weight: 800; }
+        .stat-label { font-size: 0.85rem; opacity: 0.9; margin-top: 0.5rem; }
+
         /* Pengurus Grid */
         .pengurus-section { background: var(--gray-100); padding: 5rem 0; }
         .section-subtitle { text-align: center; color: var(--gray-600); max-width: 650px; margin: -1.5rem auto 3rem; font-size: 1rem; }
@@ -167,6 +190,100 @@
         .arsip-info small { font-size: 0.7rem; color: var(--gray-600); }
         .btn-download { background: var(--gray-100); color: var(--secondary); padding: 0.6rem 1rem; text-decoration: none; border-radius: 40px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; transition: all 0.2s ease; border: 1px solid var(--gray-200); }
         .btn-download:hover { background: var(--secondary); color: var(--white); border-color: var(--secondary); }
+
+        /* Agenda Section - FITUR BARU */
+        .agenda-section { background: var(--gray-100); padding: 5rem 0; }
+        .agenda-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+        .agenda-card { background: var(--white); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); transition: all 0.3s; display: flex; }
+        .agenda-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .agenda-date { background: var(--gradient); color: white; padding: 1rem; text-align: center; min-width: 80px; display: flex; flex-direction: column; justify-content: center; }
+        .agenda-date .day { font-size: 1.6rem; font-weight: 800; line-height: 1; }
+        .agenda-date .month { font-size: 0.75rem; opacity: 0.9; }
+        .agenda-content { padding: 1rem 1.25rem; flex: 1; }
+        .agenda-title { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem; }
+        .agenda-location { font-size: 0.7rem; color: var(--gray-600); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.25rem; }
+        .agenda-desc { font-size: 0.8rem; color: var(--gray-700); }
+        .agenda-status { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 40px; font-size: 0.65rem; font-weight: 600; margin-top: 0.5rem; }
+        .status-upcoming { background: #dbeafe; color: #1e40af; }
+        .status-ongoing { background: #dcfce7; color: #166534; }
+
+        /* Galeri Section - FITUR BARU */
+        .galeri-section { background: var(--white); padding: 5rem 0; }
+        .galeri-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+        .galeri-item { position: relative; border-radius: var(--radius-md); overflow: hidden; cursor: pointer; aspect-ratio: 1; }
+        .galeri-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+        .galeri-item:hover img { transform: scale(1.1); }
+        .galeri-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.7)); padding: 0.75rem; color: white; transform: translateY(100%); transition: transform 0.3s; }
+        .galeri-item:hover .galeri-overlay { transform: translateY(0); }
+        .galeri-overlay p { font-size: 0.7rem; font-weight: 600; }
+
+        /* Modal Galeri - FITUR BARU */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; }
+        .modal.active { display: flex; }
+        .modal-content { max-width: 90%; max-height: 90%; }
+        .modal-content img { width: 100%; height: auto; border-radius: var(--radius-md); }
+        .modal-close { position: absolute; top: 20px; right: 35px; color: white; font-size: 2rem; cursor: pointer; }
+        .modal-close:hover { color: var(--accent); }
+
+        /* Dark Mode Toggle - FITUR BARU */
+        .dark-mode-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            margin-right: 0.5rem;
+        }
+        .dark-mode-toggle:hover { background: var(--accent); transform: rotate(15deg); }
+        body.dark-mode { background: #121826; color: #e2e8f0; }
+        body.dark-mode .tentang-section, body.dark-mode .arsip-section, body.dark-mode .galeri-section { background: #1a1f2e; }
+        body.dark-mode .pengurus-card, body.dark-mode .agenda-card, body.dark-mode .arsip-item { background: #1e2436; border-color: #2d3348; }
+        body.dark-mode .section-title { color: #e2e8f0; }
+
+        /* Back to Top - FITUR BARU */
+        .back-to-top {
+            position: fixed;
+            bottom: 100px;
+            right: 24px;
+            width: 45px;
+            height: 45px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 999;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s;
+            border: none;
+            color: white;
+        }
+        .back-to-top:hover { transform: translateY(-5px); }
+        .back-to-top.show { display: flex; }
+
+        /* Toast Notification - FITUR BARU */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--primary);
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            z-index: 2000;
+            transition: transform 0.3s;
+            box-shadow: var(--shadow-lg);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
 
         /* Kontak */
         .kontak-section { background: var(--primary); color: var(--white); padding: 5rem 0; }
@@ -229,6 +346,9 @@
             .pengurus-grid { gap: 1.25rem; }
             .arsip-list { grid-template-columns: 1fr; }
             .chatbot-container { width: 320px; height: 480px; right: -20px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .agenda-card { flex-direction: column; }
+            .agenda-date { flex-direction: row; gap: 0.5rem; justify-content: center; align-items: center; }
         }
         @media (max-width: 480px) {
             .pengurus-photo { height: 260px; }
@@ -248,13 +368,16 @@
         <li><a href="#home">Beranda</a></li>
         <li><a href="#tentang">Tentang</a></li>
         <li><a href="#pengurus">Pengurus</a></li>
+        <li><a href="#agenda">Agenda</a></li>
+        <li><a href="#galeri">Galeri</a></li>
         <li><a href="#pendaftaran">Pendaftaran</a></li>
         <li><a href="#arsip">Arsip</a></li>
         <li><a href="#kontak">Kontak</a></li>
         <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav"><i class="fas fa-lock"></i> Admin</a></li>
     </ul>
-    <div class="hamburger" onclick="toggleMenu()">
-        <i class="fas fa-bars"></i>
+    <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></button>
+        <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     </div>
 </nav>
 
@@ -264,6 +387,18 @@
         <p>Mapatek Abhipraya | Berdiri sejak 19 Maret 2023<br>Pusat transparansi laporan, dokumen organisasi, dan dokumentasi kegiatan.</p>
         <div class="search-box">
             <input type="text" id="searchInput" onkeyup="filterArsip()" placeholder="Cari judul laporan, tahun, atau kategori...">
+        </div>
+    </div>
+</section>
+
+<!-- STATS COUNTER - FITUR BARU -->
+<section class="stats-section reveal">
+    <div class="container">
+        <div class="stats-grid">
+            <div class="stat-card"><div class="stat-number" id="memberCount">0</div><div class="stat-label">Total Anggota</div></div>
+            <div class="stat-card"><div class="stat-number" id="expeditionCount">0</div><div class="stat-label">Ekspedisi</div></div>
+            <div class="stat-card"><div class="stat-number" id="trainingCount">0</div><div class="stat-label">Pelatihan</div></div>
+            <div class="stat-card"><div class="stat-number" id="documentCount">0</div><div class="stat-label">Dokumen</div></div>
         </div>
     </div>
 </section>
@@ -279,26 +414,10 @@
                 <p>Berawal dari kegelisahan akan minimnya wadah bagi mahasiswa pecinta alam di kampus, serta keinginan untuk menanamkan nilai-nilai kecintaan terhadap alam dan jiwa kepemimpinan, maka berdirilah Mapatek Abhipraya. Berikut adalah perjalanan angkatan yang telah membentuk sejarah organisasi:</p>
                 
                 <div class="angkatan-list">
-                    <div class="angkatan-item">
-                        <span class="angkatan-year">2023 (Angkatan Pendiri)</span>
-                        <span class="angkatan-name">🌟 PANCATOMPAK</span>
-                        <span class="angkatan-desc">"Lima Puncak Harapan" - Angkatan pendiri yang beranggotakan 5 orang pemberani. Mereka adalah arsitek mimpi yang meletakkan batu pertama berdirinya Mapatek Abhipraya.</span>
-                    </div>
-                    <div class="angkatan-item">
-                        <span class="angkatan-year">2024 (Angkatan I)</span>
-                        <span class="angkatan-name">👣 TAPAKKAKI</span>
-                        <span class="angkatan-desc">"Mengukir Jejak Perjuangan" - Angkatan yang mulai memperluas sayap organisasi dengan berbagai kegiatan ekspedisi dan konservasi.</span>
-                    </div>
-                    <div class="angkatan-item">
-                        <span class="angkatan-year">2025 (Angkatan II)</span>
-                        <span class="angkatan-name">⛰️ TEDAKDAIVAT</span>
-                        <span class="angkatan-desc">"Menapaki Puncak Tertinggi" - Angkatan yang berfokus pada pengembangan skill teknis pendakian dan survival.</span>
-                    </div>
-                    <div class="angkatan-item">
-                        <span class="angkatan-year">2026 (Angkatan III)</span>
-                        <span class="angkatan-name">🌿 LITANIARAM</span>
-                        <span class="angkatan-desc">"Pelita bagi Alam" - Angkatan terbaru yang mengusung semangat konservasi dan edukasi lingkungan.</span>
-                    </div>
+                    <div class="angkatan-item"><span class="angkatan-year">2023 (Angkatan Pendiri)</span><span class="angkatan-name">🌟 PANCATOMPAK</span><span class="angkatan-desc">"Lima Puncak Harapan" - Angkatan pendiri yang beranggotakan 5 orang pemberani.</span></div>
+                    <div class="angkatan-item"><span class="angkatan-year">2024 (Angkatan I)</span><span class="angkatan-name">👣 TAPAKKAKI</span><span class="angkatan-desc">"Mengukir Jejak Perjuangan" - Angkatan yang mulai memperluas sayap organisasi.</span></div>
+                    <div class="angkatan-item"><span class="angkatan-year">2025 (Angkatan II)</span><span class="angkatan-name">⛰️ TEDAKDAIVAT</span><span class="angkatan-desc">"Menapaki Puncak Tertinggi" - Fokus pada pengembangan skill teknis pendakian.</span></div>
+                    <div class="angkatan-item"><span class="angkatan-year">2026 (Angkatan III)</span><span class="angkatan-name">🌿 LITANIARAM</span><span class="angkatan-desc">"Pelita bagi Alam" - Mengusung semangat konservasi dan edukasi lingkungan.</span></div>
                 </div>
                 <p style="margin-top: 1rem; font-style: italic;">"Setiap angkatan memiliki cerita dan pengabdiannya masing-masing. Mereka adalah mata rantai yang tak terputus dalam perjalanan panjang Mapatek Abhipraya."</p>
             </div>
@@ -315,156 +434,57 @@
         <h2 class="section-title">Struktur Pengurus</h2>
         <p class="section-subtitle">Kenali lebih dekat para pengurus Mapatek Abhipraya yang siap melayani dan mengajak Anda menjelajahi keindahan alam</p>
         <div class="pengurus-grid">
-            <div class="pengurus-card">
-                <span class="badge-role">Ketua</span>
-                <img src="images/pengurus/ketua.jpg" alt="Machmud Chabibul Lathif" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/1.jpg'">
-                <div class="pengurus-info">
-                    <h3 class="pengurus-name">Machmud Chabibul Lathif</h3>
-                    <span class="pengurus-position">Ketua Umum</span>
-                    <div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018064</span></div>
-                    <div class="detail-item"><i class="fas fa-phone"></i><span>085-952-824-898</span></div>
-                </div>
-            </div>
-            <div class="pengurus-card">
-                <span class="badge-role" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Sekretaris</span>
-                <img src="images/pengurus/sekretaris.jpg" alt="Putri Robet" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/1.jpg'">
-                <div class="pengurus-info">
-                    <h3 class="pengurus-name">Putri Robet</h3>
-                    <span class="pengurus-position">Sekretaris Jenderal</span>
-                    <div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018007</span></div>
-                    <div class="detail-item"><i class="fas fa-phone"></i><span>0815-2272-3325</span></div>
-                </div>
-            </div>
-            <div class="pengurus-card">
-                <span class="badge-role" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Sekretaris</span>
-                <img src="images/pengurus/sekretariswakil.jpg" alt="Tsyei Dayana Knyartutu" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/2.jpg'">
-                <div class="pengurus-info">
-                    <h3 class="pengurus-name">Tsyei Dayana Knyartutu</h3>
-                    <span class="pengurus-position">Sekretaris Wakil</span>
-                    <div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018006</span></div>
-                    <div class="detail-item"><i class="fas fa-phone"></i><span>085-343-835-369</span></div>
-                </div>
-            </div>
-            <div class="pengurus-card">
-                <span class="badge-role" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">Bendahara</span>
-                <img src="images/pengurus/bendahara.jpg" alt="Rosa Bandatia" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/3.jpg'">
-                <div class="pengurus-info">
-                    <h3 class="pengurus-name">Rosa Bandatia</h3>
-                    <span class="pengurus-position">Bendahara 1</span>
-                    <div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018028</span></div>
-                    <div class="detail-item"><i class="fas fa-phone"></i><span>082-249-858-268</span></div>
-                </div>
-            </div>
-            <div class="pengurus-card">
-                <span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span>
-                <img src="images/pengurus/rockclimbing.jpg" alt="Tresia Utami Sulensi" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/4.jpg'">
-                <div class="pengurus-info">
-                    <h3 class="pengurus-name">Tresia Utami Sulensi</h3>
-                    <span class="pengurus-position">Koordinator Rock Climbing</span>
-                    <div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024013058</span></div>
-                    <div class="detail-item"><i class="fas fa-phone"></i><span>0858-2245-0087</span></div>
-                </div>
-            </div>
-            <div class="pengurus-card">
-                <span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span>
-                <img src="images/pengurus/gununghutan.jpg" alt="Muhammad Musfian Sutrawardi" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/2.jpg'">
-                <div class="pengurus-info">
-                    <h3 class="pengurus-name">Muhammad Musfian Sutrawardi</h3>
-                    <span class="pengurus-position">Koordinator Gunung Hutan</span>
-                    <div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2023013044</span></div>
-                    <div class="detail-item"><i class="fas fa-phone"></i><span>085-398-717-626</span></div>
-                </div>
-            </div>
-            <div class="pengurus-card">
-                <span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span>
-                <img src="images/pengurus/timgununghutan.jpg" alt="Muhamad Amrullah" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/3.jpg'">
-                <div class="pengurus-info">
-                    <h3 class="pengurus-name">Muhamad Amrullah</h3>
-                    <span class="pengurus-position">Tim Gunung Hutan</span>
-                    <div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024012021</span></div>
-                    <div class="detail-item"><i class="fas fa-phone"></i><span>085-659-543-192</span></div>
-                </div>
-            </div>
-            <div class="pengurus-card">
-                <span class="badge-role" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Logistik</span>
-                <img src="images/pengurus/logistik.jpg" alt="Gahar Albani Rasyid" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/4.jpg'">
-                <div class="pengurus-info">
-                    <h3 class="pengurus-name">Gahar Albani Rasyid</h3>
-                    <span class="pengurus-position">Koordinator Logistik</span>
-                    <div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024019012</span></div>
-                    <div class="detail-item"><i class="fas fa-phone"></i><span>082-338-021-599</span></div>
-                </div>
-            </div>
-            <div class="pengurus-card">
-                <span class="badge-role" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">Dokumentasi</span>
-                <img src="images/pengurus/dokumentasi.jpg" alt="Fridolinus Jeri Kasman" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/5.jpg'">
-                <div class="pengurus-info">
-                    <h3 class="pengurus-name">Fridolinus Jeri Kasman</h3>
-                    <span class="pengurus-position">Koordinator Dokumentasi</span>
-                    <div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2023018008</span></div>
-                    <div class="detail-item"><i class="fas fa-phone"></i><span>0822-1442-8371</span></div>
-                </div>
-            </div>
-            <div class="pengurus-card">
-                <span class="badge-role" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">Dokumentasi</span>
-                <img src="images/pengurus/dokumentasiwakil.jpg" alt="Laura Mahatta Rismavi Hendra" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/5.jpg'">
-                <div class="pengurus-info">
-                    <h3 class="pengurus-name">Laura Mahatta Rismavi Hendra</h3>
-                    <span class="pengurus-position">Tim PDD</span>
-                    <div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024012037</span></div>
-                    <div class="detail-item"><i class="fas fa-phone"></i><span>089-539-279-3379</span></div>
-                </div>
-            </div>
+            <div class="pengurus-card"><span class="badge-role">Ketua</span><img src="images/pengurus/ketua.jpg" alt="Machmud Chabibul Lathif" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/1.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Machmud Chabibul Lathif</h3><span class="pengurus-position">Ketua Umum</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018064</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-952-824-898</span></div></div></div>
+            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Sekretaris</span><img src="images/pengurus/sekretaris.jpg" alt="Putri Robet" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/1.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Putri Robet</h3><span class="pengurus-position">Sekretaris Jenderal</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018007</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0815-2272-3325</span></div></div></div>
+            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Sekretaris</span><img src="images/pengurus/sekretariswakil.jpg" alt="Tsyei Dayana Knyartutu" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/2.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Tsyei Dayana Knyartutu</h3><span class="pengurus-position">Sekretaris Wakil</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018006</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-343-835-369</span></div></div></div>
+            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">Bendahara</span><img src="images/pengurus/bendahara.jpg" alt="Rosa Bandatia" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/3.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Rosa Bandatia</h3><span class="pengurus-position">Bendahara 1</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018028</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>082-249-858-268</span></div></div></div>
+            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span><img src="images/pengurus/rockclimbing.jpg" alt="Tresia Utami Sulensi" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/4.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Tresia Utami Sulensi</h3><span class="pengurus-position">Koordinator Rock Climbing</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024013058</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0858-2245-0087</span></div></div></div>
+            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span><img src="images/pengurus/gununghutan.jpg" alt="Muhammad Musfian Sutrawardi" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/2.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Muhammad Musfian Sutrawardi</h3><span class="pengurus-position">Koordinator Gunung Hutan</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2023013044</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-398-717-626</span></div></div></div>
+            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span><img src="images/pengurus/timgununghutan.jpg" alt="Muhamad Amrullah" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/3.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Muhamad Amrullah</h3><span class="pengurus-position">Tim Gunung Hutan</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024012021</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-659-543-192</span></div></div></div>
+            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Logistik</span><img src="images/pengurus/logistik.jpg" alt="Gahar Albani Rasyid" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/4.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Gahar Albani Rasyid</h3><span class="pengurus-position">Koordinator Logistik</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024019012</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>082-338-021-599</span></div></div></div>
+            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">Dokumentasi</span><img src="images/pengurus/dokumentasi.jpg" alt="Fridolinus Jeri Kasman" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/5.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Fridolinus Jeri Kasman</h3><span class="pengurus-position">Koordinator Dokumentasi</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2023018008</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0822-1442-8371</span></div></div></div>
+            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">Dokumentasi</span><img src="images/pengurus/dokumentasiwakil.jpg" alt="Laura Mahatta Rismavi Hendra" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/5.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Laura Mahatta Rismavi Hendra</h3><span class="pengurus-position">Tim PDD</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024012037</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>089-539-279-3379</span></div></div></div>
         </div>
     </div>
 </section>
 
+<!-- AGENDA KEGIATAN - FITUR BARU -->
+<section id="agenda" class="agenda-section reveal">
+    <div class="container">
+        <h2 class="section-title">📅 Agenda Kegiatan</h2>
+        <div class="agenda-grid" id="agendaGrid"></div>
+    </div>
+</section>
+
+<!-- GALERI - FITUR BARU -->
+<section id="galeri" class="galeri-section reveal">
+    <div class="container">
+        <h2 class="section-title">📸 Galeri Kegiatan</h2>
+        <div class="galeri-grid" id="galeriGrid"></div>
+    </div>
+</section>
+
+<!-- MODAL GALERI - FITUR BARU -->
+<div id="imageModal" class="modal"><span class="modal-close" onclick="closeModal()">&times;</span><div class="modal-content"><img id="modalImage" src="" alt=""></div></div>
+
 <section id="pendaftaran" class="pendaftaran-section reveal">
     <div class="container">
         <h2 class="section-title">Pendaftaran Anggota</h2>
-        <div id="statusContainer" class="text-center">
-            <div class="loading-spinner"></div>
-            <p style="color: var(--gray-600);">Memuat status pendaftaran...</p>
-        </div>
+        <div id="statusContainer" class="text-center"><div class="loading-spinner"></div><p style="color: var(--gray-600);">Memuat status pendaftaran...</p></div>
     </div>
 </section>
 
 <section id="arsip" class="arsip-section reveal">
     <div class="container">
         <h2 class="section-title">Arsip Dokumen</h2>
-        <div class="folder-banner">
-            <i class="fas fa-folder-open fa-3x" style="color: var(--secondary); margin-bottom: 0.75rem;"></i>
-            <h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Akses Semua Arsip Mapatek</h3>
-            <p style="color: var(--gray-600); margin-bottom: 1rem;">Klik di bawah untuk membuka folder lengkap arsip kami di Google Drive</p>
-            <a href="https://drive.google.com/drive/folders/1RdIheR1tqdruke2Xv419HgCd5U9-31Vh?usp=sharing" target="_blank" class="btn-download"><i class="fab fa-google-drive"></i> Buka Folder Arsip</a>
-        </div>
-        <div class="category-tabs">
-            <button class="tab-btn active" onclick="filterKategori('all', this)">Semua</button>
-            <button class="tab-btn" onclick="filterKategori('Laporan Kegiatan', this)">Laporan Kegiatan</button>
-            <button class="tab-btn" onclick="filterKategori('Laporan Keuangan', this)">Keuangan</button>
-            <button class="tab-btn" onclick="filterKategori('AD_ART', this)">AD/ART & SK</button>
-        </div>
+        <div class="folder-banner"><i class="fas fa-folder-open fa-3x" style="color: var(--secondary); margin-bottom: 0.75rem;"></i><h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Akses Semua Arsip Mapatek</h3><p style="color: var(--gray-600); margin-bottom: 1rem;">Klik di bawah untuk membuka folder lengkap arsip kami di Google Drive</p><a href="https://drive.google.com/drive/folders/1RdIheR1tqdruke2Xv419HgCd5U9-31Vh?usp=sharing" target="_blank" class="btn-download"><i class="fab fa-google-drive"></i> Buka Folder Arsip</a></div>
+        <div class="category-tabs"><button class="tab-btn active" onclick="filterKategori('all', this)">Semua</button><button class="tab-btn" onclick="filterKategori('Laporan Kegiatan', this)">Laporan Kegiatan</button><button class="tab-btn" onclick="filterKategori('Laporan Keuangan', this)">Keuangan</button><button class="tab-btn" onclick="filterKategori('AD_ART', this)">AD/ART & SK</button></div>
         <div class="arsip-list" id="arsipList">
-            <div class="arsip-item" data-kategori="Laporan Kegiatan">
-                <div class="arsip-info"><span>Laporan Kegiatan</span><h3>Laporan Ekspedisi Gunung Rinjani 2023</h3><small><i class="far fa-calendar"></i> 25 Mei 2023</small></div>
-                <a href="https://drive.google.com/drive/folders/17UjJIyz7TTggjf6FTc3JE1We9LiNH3n5?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a>
-            </div>
-            <div class="arsip-item" data-kategori="Laporan Keuangan">
-                <div class="arsip-info"><span>Laporan Keuangan</span><h3>Laporan Keuangan Diksar 3 2024</h3><small><i class="far fa-calendar"></i> 15 Feb 2024</small></div>
-                <a href="https://drive.google.com/drive/folders/1-6jqrxYpj3Z_uN2QSFhfMSKZWTNb1Wig?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-excel"></i> Lihat File</a>
-            </div>
-            <div class="arsip-item" data-kategori="AD_ART">
-                <div class="arsip-info"><span>AD/ART</span><h3>Anggaran Dasar & Anggaran Rumah Tangga 2024</h3><small><i class="far fa-calendar"></i> 10 Jan 2024</small></div>
-                <a href="https://drive.google.com/drive/folders/1znUPI68QvmspMElQHIhKJ1y5NSiuJm4O?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a>
-            </div>
-            <div class="arsip-item" data-kategori="Laporan Kegiatan">
-                <div class="arsip-info"><span>Laporan Kegiatan</span><h3>Laporan Bakti Sosial Bersih-bersih Pantai Baros 2025</h3><small><i class="far fa-calendar"></i> 10 Maret 2025</small></div>
-                <a href="https://drive.google.com/drive/folders/1WW9fGEa26TJAIPiAqDE7I1ukx6yz18BA?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a>
-            </div>
-            <div class="arsip-item" data-kategori="AD_ART">
-                <div class="arsip-info"><span>SK Pengurus</span><h3>SK Kepengurusan Periode 2025-2026</h3><small><i class="far fa-calendar"></i> 1 Juni 2025</small></div>
-                <a href="https://drive.google.com/drive/folders/1-DgbGLCuo1zToeGsEhYnb_8ur5EquX6l?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a>
-            </div>
+            <div class="arsip-item" data-kategori="Laporan Kegiatan"><div class="arsip-info"><span>Laporan Kegiatan</span><h3>Laporan Ekspedisi Gunung Rinjani 2023</h3><small><i class="far fa-calendar"></i> 25 Mei 2023</small></div><a href="https://drive.google.com/drive/folders/17UjJIyz7TTggjf6FTc3JE1We9LiNH3n5?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
+            <div class="arsip-item" data-kategori="Laporan Keuangan"><div class="arsip-info"><span>Laporan Keuangan</span><h3>Laporan Keuangan Diksar 3 2024</h3><small><i class="far fa-calendar"></i> 15 Feb 2024</small></div><a href="https://drive.google.com/drive/folders/1-6jqrxYpj3Z_uN2QSFhfMSKZWTNb1Wig?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-excel"></i> Lihat File</a></div>
+            <div class="arsip-item" data-kategori="AD_ART"><div class="arsip-info"><span>AD/ART</span><h3>Anggaran Dasar & Anggaran Rumah Tangga 2024</h3><small><i class="far fa-calendar"></i> 10 Jan 2024</small></div><a href="https://drive.google.com/drive/folders/1znUPI68QvmspMElQHIhKJ1y5NSiuJm4O?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
+            <div class="arsip-item" data-kategori="Laporan Kegiatan"><div class="arsip-info"><span>Laporan Kegiatan</span><h3>Laporan Bakti Sosial Bersih-bersih Pantai Baros 2025</h3><small><i class="far fa-calendar"></i> 10 Maret 2025</small></div><a href="https://drive.google.com/drive/folders/1WW9fGEa26TJAIPiAqDE7I1ukx6yz18BA?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
+            <div class="arsip-item" data-kategori="AD_ART"><div class="arsip-info"><span>SK Pengurus</span><h3>SK Kepengurusan Periode 2025-2026</h3><small><i class="far fa-calendar"></i> 1 Juni 2025</small></div><a href="https://drive.google.com/drive/folders/1-DgbGLCuo1zToeGsEhYnb_8ur5EquX6l?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
         </div>
     </div>
 </section>
@@ -490,31 +510,141 @@
     <p style="font-size: 0.75rem; margin-top: 0.5rem;">Sistem Kearsipan Internal | Dibuat dengan ❤️ untuk keluarga besar Mapatek</p>
 </footer>
 
+<!-- BACK TO TOP - FITUR BARU -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
+
+<!-- TOAST NOTIFICATION - FITUR BARU -->
+<div id="toast" class="toast"></div>
+
 <!-- Chatbot Widget -->
 <div class="chatbot-widget">
-    <div class="chatbot-toggle" onclick="toggleChatbot()">
-        <i class="fas fa-comment-dots"></i>
-    </div>
+    <div class="chatbot-toggle" onclick="toggleChatbot()"><i class="fas fa-comment-dots"></i></div>
     <div class="chatbot-container" id="chatbotContainer">
-        <div class="chatbot-header">
-            <h3><i class="fas fa-robot"></i> Asisten Mapatek AI</h3>
-            <button class="chatbot-close" onclick="toggleChatbot()"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="chatbot-messages" id="chatMessages">
-            <div class="message bot">
-                <div class="message-avatar"><i class="fas fa-robot" style="font-size: 0.7rem;"></i></div>
-                <div class="message-content">🌲 Halo! Saya Asisten Virtual Mapatek Abhipraya. Saya siap membantu Anda seputar:<br>📌 Organisasi & Sejarah Mapatek<br>📌 SOP & Alat-alat Pecinta Alam<br>📌 Teknik Survival & Pengetahuan Alam<br>📌 Universitas Sarjanawiyata Tamansiswa<br>📌 Pendaftaran & Arsip<br><br>Ada yang bisa saya bantu hari ini? 🏔️</div>
-            </div>
-        </div>
-        <div class="chatbot-input">
-            <input type="text" id="chatInput" placeholder="Tanyakan apapun tentang Mapatek, alam, atau UST..." onkeypress="if(event.key==='Enter') sendMessage()">
-            <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-        </div>
+        <div class="chatbot-header"><h3><i class="fas fa-robot"></i> Asisten Mapatek AI</h3><button class="chatbot-close" onclick="toggleChatbot()"><i class="fas fa-times"></i></button></div>
+        <div class="chatbot-messages" id="chatMessages"><div class="message bot"><div class="message-avatar"><i class="fas fa-robot"></i></div><div class="message-content">🌲 Halo! Saya Asisten Virtual Mapatek Abhipraya. Tanyakan apapun tentang organisasi, pendakian, atau UST! 🏔️</div></div></div>
+        <div class="chatbot-input"><input type="text" id="chatInput" placeholder="Tanyakan sesuatu..." onkeypress="if(event.key==='Enter') sendMessage()"><button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button></div>
     </div>
 </div>
 
 <script>
-    // Toggle Mobile Menu
+    // ==================== FITUR-FITUR BARU ====================
+    
+    // Data Agenda
+    const agendas = [
+        { day: "15", month: "JUN", title: "Pendakian Gunung Prau", location: "Dieng, Jawa Tengah", desc: "Ekspedisi rutin anggota dan Latihan Dasar", status: "upcoming" },
+        { day: "22", month: "JUN", title: "Latihan Rock Climbing", location: "Tebing Gamping", desc: "Teknik dasar panjat tebing dan belaying", status: "upcoming" },
+        { day: "05", month: "JUL", title: "Bakti Sosial & Konservasi", location: "Desa Wisata Pentingsari", desc: "Bersih-bersih sungai dan edukasi lingkungan", status: "upcoming" }
+    ];
+
+    // Data Galeri
+    const galeriImages = [
+        "https://images.unsplash.com/photo-1551632811-561732d1e306?w=400&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1486718448742-163732cd1544?w=400&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1533130061792-64b345e4a833?w=400&h=400&fit=crop",
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=400&h=400&fit=crop"
+    ];
+
+    // Load Agenda
+    function loadAgenda() {
+        const container = document.getElementById('agendaGrid');
+        if (!container) return;
+        container.innerHTML = agendas.map(a => `
+            <div class="agenda-card">
+                <div class="agenda-date"><div class="day">${a.day}</div><div class="month">${a.month}</div></div>
+                <div class="agenda-content">
+                    <h3 class="agenda-title">${a.title}</h3>
+                    <div class="agenda-location"><i class="fas fa-map-marker-alt"></i> ${a.location}</div>
+                    <p class="agenda-desc">${a.desc}</p>
+                    <span class="agenda-status status-${a.status}">${a.status === 'upcoming' ? '📅 Akan Datang' : a.status === 'ongoing' ? '🔴 Berlangsung' : '✅ Selesai'}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Load Galeri
+    function loadGaleri() {
+        const container = document.getElementById('galeriGrid');
+        if (!container) return;
+        container.innerHTML = galeriImages.map((img, i) => `
+            <div class="galeri-item" onclick="openModal('${img}')">
+                <img src="${img}" alt="Galeri ${i+1}">
+                <div class="galeri-overlay"><p><i class="fas fa-camera"></i> Kegiatan Mapatek</p></div>
+            </div>
+        `).join('');
+    }
+
+    // Counter Animation
+    function animateCounter(element, target) {
+        let current = 0;
+        const increment = target / 50;
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+                element.textContent = target;
+                clearInterval(timer);
+            } else {
+                element.textContent = Math.floor(current);
+            }
+        }, 30);
+    }
+
+    // Dark Mode
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        const icon = document.querySelector('.dark-mode-toggle i');
+        if (document.body.classList.contains('dark-mode')) {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+        showToast(document.body.classList.contains('dark-mode') ? '🌙 Mode Gelap Aktif' : '☀️ Mode Terang Aktif');
+    }
+
+    // Back to Top
+    function scrollToTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Toast Notification
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // Modal Galeri
+    function openModal(src) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        modal.classList.add('active');
+        modalImg.src = src;
+    }
+    function closeModal() {
+        document.getElementById('imageModal').classList.remove('active');
+    }
+
+    // Scroll event untuk Back to Top
+    window.addEventListener('scroll', () => {
+        const backBtn = document.getElementById('backToTop');
+        if (window.scrollY > 300) backBtn.classList.add('show');
+        else backBtn.classList.remove('show');
+    });
+
+    // Inisialisasi Dark Mode dari localStorage
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        document.querySelector('.dark-mode-toggle i').classList.remove('fa-moon');
+        document.querySelector('.dark-mode-toggle i').classList.add('fa-sun');
+    }
+
+    // ==================== FUNGSI LAMA (DI PERTAHANKAN) ====================
+    
     function toggleMenu() {
         document.getElementById('navLinks').classList.toggle('active');
     }
@@ -522,12 +652,10 @@
         link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active'));
     });
 
-    // Navbar scroll effect
     window.addEventListener('scroll', () => {
         document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
     });
 
-    // Reveal animation
     const revealElements = document.querySelectorAll('.reveal');
     function checkReveal() {
         const windowHeight = window.innerHeight;
@@ -539,7 +667,6 @@
     window.addEventListener('scroll', checkReveal);
     checkReveal();
 
-    // Filter arsip
     function filterArsip() {
         const input = document.getElementById('searchInput').value.toLowerCase();
         document.querySelectorAll('.arsip-item').forEach(item => {
@@ -596,7 +723,7 @@
             botMessageDiv.innerHTML = `<div class="message-avatar"><i class="fas fa-robot" style="font-size: 0.7rem;"></i></div><div class="message-content">${botResponse}</div>`;
             messagesContainer.appendChild(botMessageDiv);
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        }, 300);
+        }, 500);
     }
     
     function escapeHtml(text) {
@@ -608,183 +735,78 @@
     function getIntelligentResponse(message) {
         const msg = message.toLowerCase();
         
-        // ========== PROFIL & SEJARAH MAPATEK ==========
+        // Profil & Sejarah
         if (msg.includes('apa itu mapatek') || (msg.includes('mapatek') && msg.includes('itu'))) {
-            return "🌲 <strong>Mapatek Abhipraya</strong> adalah organisasi mahasiswa pencinta alam yang berdiri pada <strong>19 Maret 2023</strong> di Universitas Sarjanawiyata Tamansiswa Yogyakarta. Nama 'Abhipraya' berasal dari bahasa Sanskerta yang berarti 'harapan' atau 'cita-cita'. Kami bergerak di bidang konservasi lingkungan, pendidikan alam bebas, kegiatan petualangan, dan kemanusiaan.";
+            return "🌲 <strong>Mapatek Abhipraya</strong> adalah organisasi mahasiswa pencinta alam yang berdiri pada <strong>19 Maret 2023</strong> di Universitas Sarjanawiyata Tamansiswa Yogyakarta. Nama 'Abhipraya' berarti 'harapan' atau 'cita-cita'.";
         }
-        
         if (msg.includes('sejarah') || (msg.includes('berdiri') && msg.includes('mapatek'))) {
-            return "📜 <strong>Sejarah Mapatek Abhipraya</strong><br><br>Mapatek Abhipraya berdiri pada <strong>19 Maret 2023</strong> di Universitas Sarjanawiyata Tamansiswa Yogyakarta. Berawal dari kegelisahan 5 mahasiswa pencinta alam akan minimnya wadah ekspresi dan pengembangan diri di bidang kealamaan. Kelima pendiri yang tergabung dalam <strong>Angkatan PancaTompak</strong> (2023) berkomitmen menciptakan organisasi yang fokus pada konservasi alam, pendidikan petualangan, dan pembentukan karakter.";
+            return "📜 Mapatek Abhipraya berdiri pada 19 Maret 2023. Angkatan pendiri bernama PancaTompak (5 orang). Berawal dari kegelisahan akan minimnya wadah pecinta alam di kampus.";
+        }
+        if (msg.includes('angkatan') || msg.includes('pancatompak')) {
+            return "🌟 Angkatan Mapatek: PancaTompak(2023), TapakKaki(2024), TedakDaivat(2025), LitaniAram(2026).";
         }
         
-        if (msg.includes('visi') && msg.includes('mapatek')) {
-            return "🎯 <strong>Visi Mapatek Abhipraya:</strong> Menjadi organisasi pecinta alam yang unggul dalam konservasi lingkungan dan pembentukan karakter generasi muda yang berwawasan kebangsaan serta berjiwa kepemimpinan.";
+        // Pendakian & Alat
+        if (msg.includes('carrier') || msg.includes('packing')) {
+            return "🎒 Cara Packing Carrier: Barang berat dekat punggung, barang ringan di bawah, air di kedua sisi. Berat ideal 20-25% berat badan.";
+        }
+        if (msg.includes('pendakian') && (msg.includes('tips') || msg.includes('persiapan'))) {
+            return "⛰️ Tips pendakian: latihan 2 minggu, cek cuaca, urus izin, bawa 10 essentials, jangan malu turnback jika kondisi tidak aman.";
         }
         
-        if (msg.includes('misi') && msg.includes('mapatek')) {
-            return "📋 <strong>Misi Mapatek Abhipraya:</strong><br>1. Melestarikan alam melalui kegiatan konservasi dan edukasi<br>2. Mengembangkan softskill kepemimpinan, kemandirian, dan kerja sama tim<br>3. Menyelenggarakan pendidikan dan latihan dasar kependakian<br>4. Menjalin kerjasama dengan organisasi pecinta alam lainnya<br>5. Mengabadikan kegiatan melalui dokumentasi dan publikasi ilmiah";
+        // Rock Climbing
+        if (msg.includes('harness') && msg.includes('fungsi')) {
+            return "🪢 Harness menghubungkan tubuh pemanjat dengan tali. Bagian: Waist Belt, Leg Loop, Belay Loop, Gear Loop.";
+        }
+        if (msg.includes('carabiner')) {
+            return "🔗 Carabiner: penghubung sistem pengaman. Jenis: Oval, D Shape, HMS. Gate: Screw Lock, Auto Lock, Wire Gate.";
         }
         
-        if (msg.includes('angkatan') || msg.includes('pancatompak') || msg.includes('tapakkaki') || msg.includes('tedakdaivat') || msg.includes('litaniaram')) {
-            return "🌟 <strong>Angkatan Mapatek Abhipraya:</strong><br><br>• <strong>PancaTompak (2023)</strong> - Angkatan pendiri, 5 orang perintis yang meletakkan fondasi organisasi. Nama berarti 'Lima Puncak Harapan'.<br>• <strong>TapakKaki (2024)</strong> - Pengukir jejak ekspedisi dan konservasi alam. 'Mengukir Jejak Perjuangan'.<br>• <strong>TedakDaivat (2025)</strong> - Spesialis pendakian gunung dan rock climbing. 'Menapaki Puncak Tertinggi'.<br>• <strong>LitaniAram (2026)</strong> - Generasi penerus dengan fokus konservasi dan edukasi lingkungan. 'Pelita bagi Alam'.";
-        }
-        
-        // ========== GUNUNG HUTAN & PENDAKIAN ==========
-        if ((msg.includes('carrier') || msg.includes('tas gunung') || msg.includes('packing')) && !msg.includes('fungsi')) {
-            return "🎒 <strong>Cara Packing Carrier yang Benar:</strong><br><br>1. Barang berat (air, kompor) dekat punggung (tengah carrier)<br>2. Barang ringan (sleeping bag) di bagian bawah<br>3. Barang sering dipakai (raincoat, snack) di top lid/akses cepat<br>4. Tenda bisa diikat di luar bagian bawah/atas<br>5. Matras digulung di sisi kiri/kanan carrier<br>6. Air minum di kedua sisi untuk keseimbangan<br><br>Tips: Berat total ideal 20-25% dari berat badan!";
-        }
-        
-        if (msg.includes('fungsi carrier') || (msg.includes('carrier') && msg.includes('fungsi'))) {
-            return "🎒 <strong>Fungsi Carrier/Tas Gunung:</strong><br><br>Carrier adalah ransel khusus pendakian dengan kapasitas 40-80 liter. Fungsinya:<br>• Mendistribusikan beban secara merata ke pinggul dan bahu<br>• Menyimpan peralatan dengan sistem kompartemen<br>• Dilengkapi rain cover untuk proteksi hujan<br>• Frame internal/aluminium untuk menjaga bentuk dan kenyamanan<br><br>Tips: Untuk pendakian 1-3 hari gunakan kapasitas 40-50L, untuk >3 hari gunakan 60-80L.";
-        }
-        
-        if (msg.includes('navigasi') || (msg.includes('kompas') && msg.includes('arah'))) {
-            return "🧭 <strong>Teknik Navigasi Dasar dengan Kompas:</strong><br><br>1. <strong>Orientasi Peta:</strong> Sejajarkan peta dengan arah utara kompas<br>2. <strong>Back Bearing:</strong> Tentukan arah dari posisi kita ke target<br>3. <strong>Resection:</strong> Tentukan posisi dengan dua titik referensi<br>4. <strong>Azimuth:</strong> Sudut arah perjalanan (0-360 derajat)<br><br>Rumus: Azimuth = Azimuth + 180° (jika >360 kurangi 360)<br>Ingat: Kompas tidak berfungsi optimal di dekat besi/logam besar!";
-        }
-        
-        if (msg.includes('persiapan pendakian') || (msg.includes('tips') && msg.includes('pendakian'))) {
-            return "⛰️ <strong>Tips Persiapan Pendakian Gunung:</strong><br><br>✓ Latihan fisik 2 minggu sebelum (jogging, naik tangga dengan beban 10-15kg)<br>✓ Cek kondisi cuaca di BMKG/website resmi gunung<br>✓ Urus izin (SIMAKSI/SIMAKS) ke pihak Taman Nasional<br>✓ Siapkan 10 essentials perlengkapan (navigasi, headlamp, P3K, dll)<br>✓ Bawa obat pribadi dan P3K lengkap<br>✓ Bawa uang tunai cadangan dan power bank<br>✓ Informasikan rencana pendakian ke keluarga/teman<br>✓ Jangan malu untuk turnback jika kondisi tidak memungkinkan!";
-        }
-        
-        // ========== ROCK CLIMBING ==========
-        if ((msg.includes('harness') || msg.includes('sabuk pengaman')) && msg.includes('fungsi')) {
-            return "🪢 <strong>Fungsi Harness (Sabuk Pengaman):</strong><br><br>Harness adalah alat yang menghubungkan tubuh pemanjat dengan sistem tali pengaman.<br><br><strong>Bagian-bagian Harness:</strong><br>• Waist Belt (ikat pinggang) - menahan beban utama<br>• Leg Loop (lingkar paha) - untuk stabilitas<br>• Belay Loop (lingkar tambat) - tempat menggantungkan peralatan belay<br>• Gear Loop - tempat menggantung carabiner dan peralatan<br><br><strong>Pemeriksaan sebelum pakai:</strong> cek jahitan, gesper, webbing tidak ada sobek!";
-        }
-        
-        if (msg.includes('carabiner') && (msg.includes('fungsi') || msg.includes('jenis'))) {
-            return "🔗 <strong>Carabiner (Gesper Pengaman):</strong><br><br>Fungsi: Penghubung antar sistem pengaman dalam panjat tebing.<br><br><strong>Jenis berdasarkan bentuk:</strong><br>• Oval: Serbaguna, beban merata<br>• D Shape: Lebih kuat, distribusi beban baik ke belakang<br>• HMS (Pear Shape): Untuk belaying dengan munter hitch<br><br><strong>Jenis gate (pintu):</strong><br>• Screw Lock: Manual diputar untuk mengunci<br>• Auto Lock: Otomatis mengunci saat gate tertutup<br>• Wire Gate: Ringan dan anti-beku untuk es";
-        }
-        
-        if (msg.includes('dynamic rope') || (msg.includes('tali dinamis'))) {
-            return "🧗 <strong>Dynamic Rope (Tali Dinamis):</strong><br><br>Fungsi: Tali yang elastis dan dapat menyerap energi jatuh, digunakan untuk lead climbing dan top rope.<br><br><strong>Diameter dan kegunaan:</strong><br>• 8-9mm: Tali half/double rope (ekspedisi, pendakian panjang)<br>• 9-10mm: Single rope (pemanjat pemula, lebih ringan)<br>• 10-11mm: Single rope (tahan lama, cocok pemakaian intensif di gym)<br><br><strong>Standar UIAA/CE:</strong> Harus lolos uji jatuh minimal 5 kali berturut-turut!";
-        }
-        
-        if (msg.includes('static rope') || (msg.includes('tali statis'))) {
-            return "🪢 <strong>Static Rope (Tali Statis):</strong><br><br>Karakteristik: Elastisitas sangat rendah (hampir tidak mulur).<br><br><strong>Kegunaan:</strong><br>• Rescue / penyelamatan (menaikkan/menurunkan korban)<br>• Caving (penjelajahan gua)<br>• Rappelling (turun tebing dengan kontrol penuh)<br>• Highlining / slackline<br><br>⚠️ JANGAN gunakan static rope untuk lead climbing! Tidak ada penyerapan energi jatuh, bisa berbahaya.";
-        }
-        
-        if (msg.includes('anchor') || (msg.includes('sistem pengaman') && msg.includes('tebing'))) {
-            return "⚓ <strong>Prinsip Anchor SERENE (Sistem Pengaman):</strong><br><br>S - <strong>Strong</strong> (Kuat): Bahan anchor harus kuat menahan beban minimal 15kN<br>E - <strong>Equalized</strong> (Setara): Beban terdistribusi merata ke semua titik<br>R - <strong>Redundant</strong> (Berlebih): Minimal 2 titik pengaman independen<br>E - <strong>Efficient</strong> (Efisien): Sistem tidak berbelit-belit, mudah diperiksa<br>N - <strong>No Extension</strong> (Tanpa ekstensi): Jika satu titik gagal, tidak ada benturan tambahan";
-        }
-        
-        // ========== SIMPUL ==========
-        if (msg.includes('simpul figure eight') || msg.includes('figure eight')) {
-            return "🪢 <strong>Simpul Figure Eight Follow Through:</strong><br><br>Kegunaan: Simpul paling umum untuk mengikat tali ke harness pemanjat.<br><br><strong>Kelebihan:</strong><br>• Kuat dan tidak mudah terlepas<br>• Mudah diperiksa kebenarannya<br>• Tidak merusak serat tali<br><br><strong>Cara buat:</strong> Buat simpul figure eight di ujung tali (seperti angka 8), lalu ikuti jalurnya kembali (follow through) dan masukkan ke harness. Pastikan ada sisa tali (tail) minimal 5-10cm!";
-        }
-        
-        if (msg.includes('prusik') || (msg.includes('simpul') && msg.includes('backup'))) {
-            return "🪢 <strong>Simpul Prusik:</strong><br><br>Simpul yang dapat bergerak satu arah dan mengunci saat diberikan beban.<br><br><strong>Kegunaan:</strong><br>• Backup / pengaman saat rappelling (turun tebing)<br>• Ascending (membantu naik di tali statis)<br>• Sistem self-rescue jika terjebak<br>• Membuat sistem mechanical advantage (3:1 atau 5:1)<br><br>Keunggulan: Tidak merusak selubung tali, bisa dipasang dan dilepas dengan mudah.";
-        }
-        
-        if (msg.includes('clove hitch')) {
-            return "🪢 <strong>Simpul Clove Hitch:</strong><br><br>Kegunaan: Pengikatan cepat pada anchor atau carabiner yang dapat diatur panjang pendeknya.<br><br><strong>Kelebihan:</strong><br>• Mudah diikat dan dilepas meski dalam keadaan tegang (loaded)<br>• Dapat disesuaikan (adjustable) posisi anchor<br>• Umum digunakan untuk mengikat tali ke carabiner HMS saat belaying<br><br>Cara buat: Dua lilitan berlawanan arah pada carabiner, lalu kunci dengan simpul stopper.";
-        }
-        
-        // ========== SURVIVAL ==========
+        // Survival
         if (msg.includes('membuat api') || (msg.includes('api') && msg.includes('alam'))) {
-            return "🔥 <strong>Cara Membuat Api di Alam Liar:</strong><br><br><strong>1. Siapkan bahan:</strong><br>• Tinder (bahan bakar awal): serat kayu kering, lumut kering, kapas + vaselin<br>• Kindling (kayu kecil): ranting kering ukuran pensil<br>• Fuel wood: kayu yang lebih besar<br><br><strong>2. Metode menyalakan api:</strong><br>• Ferro Rod: Goreskan striker ke rod ke arah tinder (paling umum)<br>• Korek api/light tahan air<br>• Lensa/kaca pembesar (butuh sinar matahari kuat)<br>• Bow drill (metode manual, butuh latihan dan teknik khusus)<br><br>Tips: Bawa kapas beri vaselin sebagai tinder super!";
+            return "🔥 Cara membuat api: siapkan tinder (kapas+vaselin), kindling, fuel wood. Metode: Ferro rod, korek api, lensa.";
+        }
+        if (msg.includes('shelter') || msg.includes('tempat berlindung')) {
+            return "🏕️ Shelter darurat: Lean To, Debris Hut, A-Frame. Pilih lokasi aman dari bahaya dan lindungi dari angin.";
         }
         
-        if (msg.includes('shelter') || (msg.includes('tempat berlindung') && msg.includes('alam'))) {
-            return "🏕️ <strong>Jenis Shelter (Tempat Berlindung) Darurat:</strong><br><br>1. <strong>Lean To (Satu Sisi):</strong> Cari pohon besar, letakkan dahan miring 45°, tutup daun. Ideal untuk angin dari satu arah.<br><br>2. <strong>Debris Hut (Gundukan Daun):</strong> Buat rangka lengkung dari dahan, timbun dengan daun kering setebal 30-50cm. Paling hangat!<br><br>3. <strong>A-Frame (Segitiga):</strong> Dua sisi berbentuk segitiga. Jika pakai ponco/tarp, sangat praktis dan cepat.<br><br>4. <strong>Natural Shelter:</strong> Gua kecil, bawah pohon besar yang rindang, celah batu yang terlindung.<br><br>Prinsip: Jauh dari bahaya (tebing rapuh, aliran air) dan lindungi dari angin!";
+        // P3K
+        if (msg.includes('hipotermia')) {
+            return "❄️ Hipotermia: cari tempat berlindung, ganti baju basah, beri minum hangat, hangatkan leher/ketiak/selangkangan. Jangan gosok anggota tubuh!";
+        }
+        if (msg.includes('gigitan ular')) {
+            return "🐍 Gigitan ular: jangan panik, immobilisasi bagian yg terkena, segera ke rumah sakit. JANGAN menghisap bisa atau tourniquet!";
         }
         
-        if (msg.includes('menjernihkan air') || (msg.includes('air') && msg.includes('minum') && msg.includes('alam'))) {
-            return "💧 <strong>Metode Memurnikan Air di Alam:</strong><br><br>1. <strong>Mendidihkan (paling aman):</strong> Rebus air hingga mendidih 3-5 menit. Matikan 99.9% bakteri, virus, parasit.<br><br>2. <strong>Filter Air Portable:</strong> Saring partikel dan sebagian bakteri (0.1-0.01 mikron).<br><br>3. <strong>Tablet Penjernih (Iodine/Chlorine):</strong> Masukkan tablet, tunggu 30 menit. Efektif untuk air jernih.<br><br>4. <strong>SODIS (Sinar Matahari):</strong> Air dalam botol bening, jemur 6 jam di bawah sinar matahari langsung.<br><br>⚠️ Hindari air keruh, berwarna, atau berbau. Lebih baik cari mata air pegunungan yang jernih!";
+        // Universitas UST
+        if (msg.includes('universitas sarjanawiyata') || msg.includes('ust')) {
+            return "🏛️ UST Yogyakarta berdiri 15 Desember 1955 atas prakarsa Ki Hajar Dewantara. Fakultas: FKIP, FEB, FST, FISIPOL.";
         }
-        
-        // ========== P3K & KESEHATAN ==========
-        if (msg.includes('hipotermia') || (msg.includes('kedinginan') && msg.includes('penanganan'))) {
-            return "❄️ <strong>Penanganan Hipotermia:</strong><br><br><strong>Gejala:</strong> Menggigil hebat, bicara pelo, gerakan kaku, kebingungan, nadi lemah.<br><br><strong>Tindakan:</strong><br>1. Segera cari tempat berlindung dari angin dan hujan<br>2. Ganti pakaian basah dengan yang kering (prioritas keringkan tubuh)<br>3. Beri minuman hangat (bukan alkohol/kafein - justru memperburuk)<br>4. Hangatkan area leher, ketiak, selangkangan (bukan langsung tangan/kaki)<br>5. Gunakan sleeping bag, emergency blanket, atau body contact dengan orang lain<br>6. Jika tidak sadar, posisi miring (recovery position) dan segera evakuasi ke bawah<br><br>⚠️ Jangan menggosok-gosok anggota tubuh yang kedinginan!";
-        }
-        
-        if (msg.includes('gigitan ular') || (msg.includes('ular') && msg.includes('penanganan'))) {
-            return "🐍 <strong>Penanganan Gigitan Ular:</strong><br><br>✓ Jangan panik, jangan bergerak terlalu banyak (agar bisa tidak cepat menyebar ke jantung)<br>✓ Lepaskan perhiasan/jam tangan di sekitar area gigitan (karena bisa bengkak)<br>✓ Immobilisasi (imobilisasi) bagian yang terkena, posisikan lebih rendah dari jantung<br>✓ Bersihkan luka dengan air sabun, tutup dengan kain bersih<br>✓ Catat ciri-ciri ular (warna, bentuk kepala, pola sisik) untuk antisera<br>✓ SEGERA KE FASILITAS KESEHATAN terdekat (rumah sakit)<br><br>✗ JANGAN: Menghisap bisa (berbahaya untuk mulut), membalut terlalu ketat (tourniquet), menggorok luka, minum alkohol, memakai es!";
-        }
-        
-        if (msg.includes('patah tulang') || msg.includes('fraktur')) {
-            return "🦴 <strong>Penanganan Fraktur (Patah Tulang) di Alam:</strong><br><br>1. Jangan memindahkan korban jika tidak perlu (risiko kerusakan saraf)<br>2. Immobilisasi (imobilisasi) dengan bidai darurat (tongkat, carrier frame, sleeping pad)<br>3. Pasang bidai dari sendi atas ke sendi bawah patahan<br>4. Bantalan di antara bidai dan kulit dengan pakaian/matras<br>5. Ikat dengan tali/selempang, jangan terlalu kencang<br>6. Untuk tulang terbuka: tutup dengan kain steril, jangan dorong tulang ke dalam<br>7. Segera evakuasi ke fasilitas kesehatan";
-        }
-        
-        if (msg.includes('cpr') || msg.includes('henti jantung')) {
-            return "❤️ <strong>Cara CPR (Cardiopulmonary Resuscitation):</strong><br><br>Langkah CPR (30:2):<br>1. Pastikan korban tidak sadar dan tidak bernapas<br>2. Panggil bantuan / minta orang lain hubungi ambulans<br>3. Lakukan kompresi dada: 30 kali (kedalaman 5-6cm, kecepatan 100-120/menit)<br>4. Beri napas buatan: 2 kali (tiup hingga dada mengembang)<br>5. Ulangi siklus 30:2 hingga bantuan datang atau korban sadar<br><br>Lagu referensi kecepatan kompresi: 'Stayin Alive' (Bee Gees) atau 'Baby Shark'!";
-        }
-        
-        // ========== SAR & EVAKUASI ==========
-        if (msg.includes('tahapan sar') || (msg.includes('search and rescue'))) {
-            return "🚨 <strong>Tahapan Search and Rescue (SAR) Mapala:</strong><br><br>1. <strong>Planning & Assessment:</strong> Kumpulkan informasi, analisis medan, tentukan kebutuhan tim dan alat<br>2. <strong>Organizing:</strong> Bentuk tim, bagi tugas (komandan, medic, navigator, komunikasi, logistik)<br>3. <strong>Searching (Pencarian):</strong> Terapkan metode grid, line search, atau area search berdasarkan medan<br>4. <strong>Rescue (Penyelamatan):</strong> Stabilisasi korban, pertolongan pertama, evakuasi dari lokasi<br>5. <strong>Evacuation (Evakuasi):</strong> Bawa korban ke tempat aman atau fasilitas kesehatan terdekat<br><br>PRINSIP: Safety of rescuer adalah prioritas utama!";
-        }
-        
-        if (msg.includes('tandu') || msg.includes('evakuasi korban')) {
-            return "🛏️ <strong>Jenis Tandu untuk Evakuasi:</strong><br><br>1. <strong>Basket Stretcher (Tandu Keranjang):</strong> Untuk korban dengan cedera tulang belakang, medan ekstrim.<br>2. <strong>SKED Stretcher:</strong> Ringan, fleksibel, bisa ditarik di berbagai medan.<br>3. <strong>Improvisasi (Tandu Darurat):</strong><br>   • Dari carrier + tongkat (dua carrier disatukan)<br>   • Dari sleeping pad + tali<br>   • Dari jaket + kayu (cocoon method)<br><br>Pastikan korban diikat dengan aman (immobilisasi) sebelum dievakuasi!";
-        }
-        
-        // ========== LINGKUNGAN & KONSERVASI ==========
-        if (msg.includes('leave no trace') || (msg.includes('etika') && msg.includes('alam'))) {
-            return "🌿 <strong>7 Prinsip Leave No Trace (LNT) - Etika Pecinta Alam:</strong><br><br>1. <strong>Rencanakan dan persiapkan</strong> perjalanan dengan matang<br>2. <strong>Berada di permukaan tahan banting</strong> (jalan setapak, bebatuan, salju)<br>3. <strong>Kelola sampah dengan benar</strong> - Bawa turun semua sampah! Jangan ada yang tertinggal.<br>4. <strong>Tinggalkan apa yang Anda temukan</strong> (jangan mengambil flora/fauna, batuan, atau benda sejarah)<br>5. <strong>Minimalkan dampak api unggun</strong> - gunakan kompor jika memungkinkan<br>6. <strong>Hormati satwa liar</strong> - jangan memberi makan, mendekati, atau mengganggu<br>7. <strong>Hormati pengunjung lain</strong> - jaga ketenangan alam, hindari suara berisik";
-        }
-        
-        // ========== UNIVERSITAS UST & TAMANSISWA ==========
-        if (msg.includes('universitas sarjanawiyata') || (msg.includes('ust') && msg.includes('yogyakarta'))) {
-            return "🏛️ <strong>Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta</strong><br><br>UST adalah perguruan tinggi swasta di Yogyakarta di bawah naungan Majelis Luhur Persatuan Tamansiswa. Didirikan pada <strong>15 Desember 1955</strong> atas prakarsa Ki Hajar Dewantara.<br><br><strong>Visi:</strong> Menjadi universitas unggul dan berdaya saing berbasis kearifan lokal Tamansiswa.<br><br><strong>Fakultas:</strong><br>• FKIP (Keguruan dan Ilmu Pendidikan)<br>• FEB (Ekonomi & Bisnis)<br>• FST (Sains & Teknologi)<br>• FISIPOL (Ilmu Sosial & Politik)<br><br>📌 Alamat: Jl. Batikan UH III/1043, Tuntungan, Yogyakarta 55167";
-        }
-        
         if (msg.includes('ki hajar') || msg.includes('dewantara')) {
-            return "📚 <strong>Ki Hajar Dewantara (Bapak Pendidikan Nasional)</strong><br><br>Ki Hajar Dewantara (Raden Mas Soewardi Soerjaningrat) adalah Bapak Pendidikan Nasional Indonesia. Beliau mendirikan <strong>Tamansiswa</strong> pada 3 Juli 1922 di Yogyakarta dengan semboyan abadi yang terkenal:<br><br><strong><em>'Ing Ngarsa Sung Tuladha, Ing Madya Mangun Karsa, Tut Wuri Handayani'</em></strong><br><br>(Di depan memberi contoh/teladan, di tengah membangun semangat/kemauan, di belakang memberi dorongan/daya)<br><br>Beliau juga mendirikan Universitas Sarjanawiyata Tamansiswa (UST) sebagai bentuk implementasi pendidikan tinggi berciri Tamansiswa.";
+            return "📚 Ki Hajar Dewantara: Bapak Pendidikan Nasional, pendiri Tamansiswa (3 Juli 1922). Semboyan: 'Ing Ngarsa Sung Tuladha, Ing Madya Mangun Karsa, Tut Wuri Handayani'.";
         }
         
-        if (msg.includes('tamansiswa') && !msg.includes('universitas')) {
-            return "🏫 <strong>Persatuan Tamansiswa</strong><br><br>Tamansiswa adalah organisasi pergerakan pendidikan yang didirikan oleh Ki Hajar Dewantara pada 3 Juli 1922. Tujuannya adalah mewujudkan pendidikan yang merdeka, berbudaya, dan berpihak pada rakyat.<br><br><strong>Prinsip Tamansiswa (Panca Dharma):</strong><br>1. Kodrat Alam<br>2. Kemerdekaan<br>3. Kebudayaan<br>4. Kebangsaan<br>5. Kemanusiaan<br><br>Semboyan: <em>\"Ing Ngarsa Sung Tuladha, Ing Madya Mangun Karsa, Tut Wuri Handayani\"</em>";
+        // Pendaftaran
+        if (msg.includes('pendaftaran') || msg.includes('daftar anggota') || msg.includes('bergabung')) {
+            return "📝 Pendaftaran anggota: cek menu Pendaftaran di website atau hubungi WA 0822-1442-8371. Pendaftaran dibuka setiap awal semester.";
         }
         
-        // ========== ALAT-ALAT PECINTA ALAM ==========
-        if ((msg.includes('alat pendakian') || msg.includes('perlengkapan wajib')) && !msg.includes('fungsi')) {
-            return "🎒 <strong>10 Essentials (Perlengkapan Wajib Pendakian):</strong><br><br>1. Navigasi (peta, kompas, GPS, whistle)<br>2. Headlamp/Senter + baterai cadangan<br>3. Perlindungan (jaket windproof/raincoat, sunscreen, topi)<br>4. P3K + obat pribadi<br>5. Pisau serbaguna/multitool<br>6. Api (korek api waterproof, lighter, ferro rod)<br>7. Tenda darurat / bivy sack<br>8. Peralatan masak (kompor portable, mess tin)<br>9. Makanan cadangan (energy bar, coklat)<br>10. Air + sistem filtrasi (minimal 3L per hari)";
+        // Kontak
+        if (msg.includes('kontak') || msg.includes('wa') || msg.includes('instagram')) {
+            return "📞 Kontak: WA 0822-1442-8371, IG @mapatek_abhipraya, Email mapatek.abhipraya@gmail.com";
         }
         
-        if (msg.includes('sleeping bag') && !msg.includes('fungsi')) {
-            return "🛌 <strong>Sleeping Bag (Kantung Tidur):</strong><br><br><strong>Jenis berdasarkan bahan:</strong><br>• <strong>Synthetic (Serat sintetis):</strong> Lebih murah, tetap hangat meski basah, tapi lebih berat dan bulky.<br>• <strong>Down (Bulu angsa):</strong> Lebih ringan, kompresi kecil, lebih hangat, tapi mahal dan tidak hangat jika basah.<br><br><strong>Suhu operasional:</strong><br>• Comfort: Suhu nyaman untuk tidur<br>• Limit: Batas bawah masih nyaman untuk pria<br>• Extreme: Batas survival (tidak nyaman, hanya bertahan hidup)<br><br>Perawatan: Jangan simpan dalam kondisi terkompresi, gantung atau simpan longgar!";
+        // Sapaan
+        if (msg.match(/\b(halo|hai|hello|pagi|siang|sore)\b/)) {
+            return "Halo! 👋 Ada yang bisa saya bantu tentang Mapatek Abhipraya, pendakian, atau UST?";
         }
         
-        if (msg.includes('tenda') && (msg.includes('jenis') || msg.includes('pendakian'))) {
-            return "🏕️ <strong>Jenis Tenda Pendakian:</strong><br><br><strong>1. Dome Tent (Kubah):</strong> Paling umum, kuat terhadap angin, mudah didirikan.<br><br><strong>2. Tunnel Tent (Terowongan):</strong> Ringan, luas, tapi kurang stabil di angin samping.<br><br><strong>3. A-Frame (Segitiga):</strong> Desain klasik, ringan, tapi ruang sempit.<br><br><strong>4. Ultralight Tent (Trekking Pole):</strong> Sangat ringan, menggunakan tiang trekking pole sebagai penyangga.<br><br><strong>Komponen tenda:</strong> Flysheet (lapisan luar anti air), Inner (lapisan dalam mesh), Pole (tiang), Pasak, dan Guyline (tali penguat).";
+        // Terima kasih
+        if (msg.includes('terima kasih') || msg.includes('makasih')) {
+            return "Sama-sama! 😊 Senang bisa membantu. Terus dukung Mapatek Abhipraya! 🏔️";
         }
         
-        if (msg.includes('kompor') && (msg.includes('pendakian') || msg.includes('alat masak'))) {
-            return "🔥 <strong>Kompor Pendakian & Cara Penggunaan:</strong><br><br><strong>Jenis kompor:</strong><br>• <strong>Kompor Gas (canister):</strong> Praktis, mudah digunakan, cocok untuk ketinggian <3000 mdpl. Gunakan gas campuran isobutane-propane.<br>• <strong>Kompor Spiritus (alkohol):</strong> Ringan, senyap, tidak berisik, tapi lebih lambat dan tidak cocok angin.<br>• <strong>Kompor Multifuel:</strong> Bisa pakai bensin/kerosene, cocok untuk ekspedisi panjang dan ketinggian ekstrim.<br><br><strong>Cara pakai kompor gas:</strong> pasang canister → buka katup sedikit → nyalakan api → masak → tutup katup setelah selesai. Selalu gunakan wind shield dan jauhkan dari tenda!";
-        }
-        
-        // ========== PENDAFTARAN ==========
-        if (msg.includes('pendaftaran') || msg.includes('daftar anggota') || msg.includes('join mapatek') || msg.includes('bergabung mapatek')) {
-            return "📝 <strong>Pendaftaran Anggotaa Mapatek Abhipraya</strong><br><br>Untuk info pendaftaran anggota baru, silakan:<br>• Cek bagian <strong>Pendaftaran</strong> di website ini (status akan ditampilkan)<br>• Hubungi WhatsApp admin: <strong>0822-1442-8371</strong><br>• Follow Instagram: <strong>@mapatek_abhipraya</strong><br><br>Pendaftaran biasanya dibuka setiap awal semester (September dan Februari). Nantikan pengumuman resmi dari kami ya! 🏔️";
-        }
-        
-        if (msg.includes('syarat pendaftaran') || msg.includes('persyaratan anggota')) {
-            return "📋 <strong>Syarat Pendaftaran Anggota Mapatek Abhipraya:</strong><br><br>1. Mahasiswa aktif Universitas Sarjanawiyata Tamansiswa (UST)<br>2. Memiliki komitmen tinggi terhadap konservasi alam<br>3. Bersedia mengikuti seluruh rangkaian Diksar (Pendidikan Dasar)<br>4. Sehat jasmani dan rohani (surat keterangan sehat)<br>5. Mengisi formulir pendaftaran dan membayar biaya pendaftaran<br>6. Mengikuti wawancara seleksi<br><br>Untuk informasi lebih lanjut, hubungi admin kami!";
-        }
-        
-        // ========== ARSIP ==========
-        if (msg.includes('arsip') || msg.includes('dokumen') || msg.includes('laporan mapatek')) {
-            return "📁 <strong>Arsip Dokumen Mapatek Abhipraya</strong><br><br>Arsip dokumen Mapatek Abhipraya bisa diakses melalui menu <strong>Arsip</strong> di website ini. Kami menyediakan:<br>• Laporan Kegiatan (Ekspedisi, Diksar, Bakti sosial)<br>• Laporan Keuangan (LPJ, RAB)<br>• AD/ART (Anggaran Dasar & Rumah Tangga)<br>• SK Kepengurusan<br>• Dokumentasi kegiatan<br><br>Juga tersedia folder Google Drive lengkap! Klik tombol 'Buka Folder Arsip' di bagian Arsip.";
-        }
-        
-        // ========== KONTAK ==========
-        if (msg.includes('kontak') || msg.includes('hubungi') || msg.includes('wa mapatek') || msg.includes('instagram mapatek')) {
-            return "📞 <strong>Kontak Mapatek Abhipraya:</strong><br><br>• <strong>WhatsApp Admin:</strong> 0822-1442-8371<br>• <strong>Instagram:</strong> @mapatek_abhipraya<br>• <strong>Email:</strong> mapatek.abhipraya@gmail.com<br>• <strong>Basecamp:</strong> Universitas Sarjanawiyata Tamansiswa, Yogyakarta<br><br>Jangan ragu untuk menghubungi kami jika ada pertanyaan atau ingin berkolaborasi! 🏔️";
-        }
-        
-        // ========== GREETINGS ==========
-        if (msg.match(/\b(halo|hai|hello|hi|pagi|siang|sore|malam|assalamualaikum)\b/)) {
-            return "Halo! 👋 Senang berkenalan dengan Anda. Saya asisten virtual Mapatek Abhipraya. Ada yang bisa saya bantu? Silakan tanya tentang organisasi, pendakian, alat panjat tebing, survival, P3K, atau Universitas UST! 🏔️";
-        }
-        
-        // ========== TERIMA KASIH ==========
-        if (msg.includes('terima kasih') || msg.includes('makasih') || msg.includes('thanks') || msg.includes('thank you')) {
-            return "Sama-sama! 😊 Senang bisa membantu Anda. Terus dukung Mapatek Abhipraya dengan mengikuti kegiatan-kegiatan kami ya! Jangan ragu bertanya lagi jika ada hal lain yang ingin diketahui. Selamat berpetualang! 🏔️";
-        }
-        
-        // ==================== DEFAULT ====================
-        return "🌿 Maaf, saya belum sepenuhnya memahami pertanyaan Anda. Coba tanyakan tentang:<br><br>📌 <strong>Organisasi Mapatek:</strong> sejarah, angkatan, visi misi<br>📌 <strong>SOP & Alat:</strong> prosedur pendakian, fungsi alat, standar operasional<br>📌 <strong>Survival:</strong> teknik bertahan hidup, membuat api, menjernihkan air<br>📌 <strong>Pengetahuan Alam:</strong> tips pendakian, cuaca, hewan buas<br>📌 <strong>Universitas UST:</strong> informasi kampus, Ki Hajar Dewantara, Tamansiswa<br>📌 <strong>Pendaftaran & Arsip</strong><br><br>Atau hubungi admin kami di WhatsApp 0822-1442-8371 untuk bantuan lebih lanjut! 🙏";
+        return "🌿 Maaf, saya belum paham pertanyaan Anda. Coba tanyakan tentang: organisasi Mapatek, pendakian, alat climbing, survival, P3K, atau UST. Atau hubungi WA 0822-1442-8371.";
     }
     
     document.addEventListener('click', function(event) {
@@ -793,6 +815,17 @@
         if (container.classList.contains('active') && !widget.contains(event.target)) {
             container.classList.remove('active');
         }
+    });
+
+    // Load semua fitur baru setelah halaman load
+    window.addEventListener('load', () => {
+        loadAgenda();
+        loadGaleri();
+        animateCounter(document.getElementById('memberCount'), 50);
+        animateCounter(document.getElementById('expeditionCount'), 12);
+        animateCounter(document.getElementById('trainingCount'), 8);
+        animateCounter(document.getElementById('documentCount'), 25);
+        showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
     });
 </script>
 </body>
