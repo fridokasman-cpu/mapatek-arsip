@@ -4,94 +4,189 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portal Kearsipan | Mapatek Abhipraya</title>
-    <link href="https://docs.google.com/spreadsheets/d/13LJ21xL-7ZOiGZmqwlRSur7BuiYwQhZou0VqYuh4vlk/edit?usp=sharing">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --primary: #1b4332; --accent: #d8f3dc; --text: #2d3436; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
         body { background: #f8f9fa; color: var(--text); }
         
+        /* NAVBAR */
         .navbar {
-            position: fixed; top: 0; width: 100%;
+            position: fixed;
+            top: 0;
+            width: 100%;
             background: rgba(27, 67, 50, 0.95);
             backdrop-filter: blur(10px);
             padding: 1rem 2rem;
-            display: flex; justify-content: space-between; align-items: center;
-            z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        .navbar .logo { color: white; font-weight: 800; font-size: 1.3rem; }
-        .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
-        .nav-links a { color: white; text-decoration: none; font-weight: 600; transition: 0.3s; }
-        .nav-links a:hover { color: var(--accent); }
+        .navbar .logo {
+            color: white;
+            font-weight: 800;
+            font-size: 1.3rem;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .nav-links a:hover {
+            color: var(--accent);
+        }
         .btn-login-nav {
             background: rgba(255,255,255,0.2);
-            padding: 0.5rem 1.2rem; border-radius: 20px; font-size: 0.85rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
         }
-        .btn-login-nav:hover { background: var(--accent); color: var(--primary) !important; }
-        .hamburger { display: none; color: white; font-size: 1.5rem; cursor: pointer; }
+        .btn-login-nav:hover {
+            background: var(--accent);
+            color: var(--primary) !important;
+        }
+        .hamburger {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
         
+        /* HERO */
         .hero { 
             background: linear-gradient(rgba(27, 67, 50, 0.85), rgba(27, 67, 50, 0.9)), 
                         url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1200') center/cover; 
-            color: white; padding: 8rem 1rem 5rem; text-align: center; 
+            color: white; 
+            padding: 8rem 1rem 5rem; 
+            text-align: center; 
         }
         .hero h1 { font-size: 2.5rem; margin-bottom: 0.5rem; font-weight: 800; }
         .hero p { opacity: 0.9; max-width: 600px; margin: 0 auto 2rem; font-size: 1.1rem; }
         
-        .search-box { max-width: 500px; margin: 0 auto; }
+        .search-box { max-width: 500px; margin: 0 auto; position: relative; }
         .search-box input { 
-            width: 100%; padding: 1rem 1.5rem; border-radius: 50px; border: none; 
-            font-size: 1rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); outline: none; 
+            width: 100%; 
+            padding: 1rem 1.5rem; 
+            border-radius: 50px; 
+            border: none; 
+            font-size: 1rem; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            outline: none; 
         }
         
         .container { max-width: 900px; margin: 3rem auto; padding: 0 1.5rem; }
-        .section-title { text-align: center; font-size: 2rem; color: var(--primary); margin-bottom: 2rem; font-weight: 800; }
         
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-weight: 800;
+        }
+        
+        /* TENTANG KAMI */
         .tentang-section { background: white; padding: 4rem 1.5rem; }
         .tentang-content { max-width: 800px; margin: 0 auto; line-height: 1.8; }
         .tentang-content p { margin-bottom: 1.5rem; text-align: justify; }
         .sejarah-box {
-            background: var(--accent); padding: 2rem; border-radius: 15px;
-            border-left: 5px solid var(--primary); margin: 2rem 0;
+            background: var(--accent);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid var(--primary);
+            margin: 2rem 0;
         }
         
+        /* PENDAFTARAN */
         .pendaftaran-section { background: #f0f4f8; padding: 4rem 1.5rem; }
         .status-box {
-            max-width: 700px; margin: 0 auto; padding: 3rem 2rem;
-            border-radius: 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        .status-buka { background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%); border: 3px solid #28a745; }
-        .status-tutup { background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%); border: 3px solid #dc3545; }
+        .status-buka {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            border: 3px solid #28a745;
+        }
+        .status-tutup {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            border: 3px solid #dc3545;
+        }
         .status-icon { font-size: 5rem; margin-bottom: 1rem; }
         .status-buka .status-icon { color: #28a745; }
         .status-tutup .status-icon { color: #dc3545; }
         .btn-daftar {
-            display: inline-block; padding: 1rem 3rem; background: #28a745; color: white;
-            text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 1.2rem;
-            margin-top: 1.5rem; transition: 0.3s; box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+            display: inline-block;
+            padding: 1rem 3rem;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
         }
-        .btn-daftar:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(40, 167, 69, 0.6); color: white; }
+        .btn-daftar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(40, 167, 69, 0.6);
+            color: white;
+        }
         .info-periode {
-            background: white; padding: 1rem 2rem; border-radius: 10px;
-            margin-top: 1.5rem; display: inline-block; font-weight: 600; color: #1b4332;
+            background: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            margin-top: 1.5rem;
+            display: inline-block;
+            font-weight: 600;
+            color: #1b4332;
         }
         
+        /* KONTAK */
         .kontak-section { background: white; padding: 4rem 1.5rem; }
         .kontak-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem; max-width: 900px; margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
         }
         .kontak-card {
-            background: #f8f9fa; padding: 2rem; border-radius: 15px;
-            text-align: center; transition: 0.3s; border: 2px solid transparent;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: 0.3s;
+            border: 2px solid transparent;
         }
-        .kontak-card:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .kontak-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
         .kontak-card i { font-size: 3rem; color: var(--primary); margin-bottom: 1rem; }
         .kontak-card h3 { color: var(--primary); margin-bottom: 0.5rem; }
         .kontak-card a { color: var(--text); text-decoration: none; font-weight: 600; }
         .kontak-card a:hover { color: var(--primary); }
         
-        .category-tabs { display: flex; gap: 0.8rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; }
+        /* ARSIP */
+        .category-tabs { 
+            display: flex; gap: 0.8rem; justify-content: center; 
+            margin-bottom: 2rem; flex-wrap: wrap; 
+        }
         .tab-btn { 
             padding: 0.6rem 1.5rem; border: 2px solid var(--primary); 
             background: transparent; color: var(--primary); 
@@ -131,20 +226,17 @@
         }
         footer a { color: var(--accent); text-decoration: none; }
         
-        .loading-spinner {
-            border: 4px solid rgba(0,0,0,0.1);
-            border-top: 4px solid var(--primary);
-            border-radius: 50%;
-            width: 40px; height: 40px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
-        }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
         @media (max-width: 768px) {
             .nav-links {
-                display: none; position: absolute; top: 100%; left: 0; width: 100%;
-                background: var(--primary); flex-direction: column; padding: 1rem; gap: 1rem;
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 1rem;
             }
             .nav-links.active { display: flex; }
             .hamburger { display: block; }
@@ -156,6 +248,7 @@
 </head>
 <body>
 
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="logo">🏕️ Mapatek Abhipraya</div>
         <ul class="nav-links" id="navLinks">
@@ -166,9 +259,12 @@
             <li><a href="#kontak">Kontak</a></li>
             <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav" title="Khusus Admin"><i class="fas fa-lock"></i> Login Admin</a></li>
         </ul>
-        <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        <div class="hamburger" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
     </nav>
 
+    <!-- HERO -->
     <section id="home" class="hero">
         <h1>📂 Portal Kearsipan Digital</h1>
         <p>Mapatek Abhipraya | Berdiri sejak 19 Maret 2023<br>Pusat transparansi laporan, dokumen organisasi, dan dokumentasi kegiatan.</p>
@@ -177,56 +273,113 @@
         </div>
     </section>
 
+    <!-- TENTANG KAMI -->
     <section id="tentang" class="tentang-section">
         <div class="container">
             <h2 class="section-title">🌲 Tentang Kami</h2>
             <div class="tentang-content">
-                <p><strong>Mapatek Abhipraya</strong> merupakan organisasi mahasiswa pencinta alam yang berdiri pada tanggal <strong>19 Maret 2023</strong>.</p>
+                <p>
+                    <strong>Mapatek Abhipraya</strong> merupakan organisasi mahasiswa pencinta alam yang berdiri pada tanggal <strong>19 Maret 2023</strong>. 
+                    Organisasi ini lahir dari semangat sekelompok mahasiswa yang memiliki visi untuk melestarikan alam sekaligus membangun karakter 
+                    kepribadian yang tangguh melalui kegiatan-kegiatan alam terbuka.
+                </p>
+                
                 <div class="sejarah-box">
                     <h3 style="color: var(--primary); margin-bottom: 1rem;"><i class="fas fa-history"></i> Sejarah Berdiri</h3>
-                    <p style="margin-bottom: 0;">Berawal dari kegiatan pendakian bersama, pada tanggal 19 Maret 2023, Mapatek Abhipraya secara resmi didirikan sebagai organisasi mahasiswa yang berfokus pada kegiatan alam, konservasi lingkungan, dan pengembangan softskill.</p>
+                    <p style="margin-bottom: 0;">
+                        Berawal dari kegiatan pendakian bersama dan diskusi-diskusi kecil tentang pentingnya konservasi alam, 
+                        beberapa mahasiswa berinisiatif untuk membentuk wadah resmi yang dapat menampung aspirasi dan kegiatan 
+                        pecinta alam di lingkungan kampus. Setelah melalui proses musyawarah dan penyusunan anggaran dasar, 
+                        maka pada tanggal 19 Maret 2023, Mapatek Abhipraya secara resmi didirikan sebagai organisasi mahasiswa 
+                        yang berfokus pada kegiatan alam, konservasi lingkungan, dan pengembangan softskill melalui pendidikan 
+                        non-formal di alam terbuka.
+                    </p>
                 </div>
-                <p>Nama <strong>"Abhipraya"</strong> berasal dari bahasa Sanskerta yang berarti <em>"harapan"</em>.</p>
+
+                <p>
+                    Nama <strong>"Abhipraya"</strong> berasal dari bahasa Sanskerta yang berarti <em>"harapan" atau "cita-cita"</em>. 
+                    Nama ini mencerminkan harapan besar para pendiri organisasi untuk menjadi garda terdepan dalam pelestarian alam 
+                    dan pembentukan karakter mahasiswa yang peduli terhadap lingkungan.
+                </p>
+
+                <p>
+                    Sejak berdirinya, Mapatek Abhipraya telah melaksanakan berbagai kegiatan seperti pendidikan dan latihan dasar (Diksar), 
+                    ekspedisi pendakian gunung, aksi konservasi lingkungan, bersih-bersih pantai, penanaman pohon, serta berbagai 
+                    kegiatan sosial kemasyarakatan. Organisasi ini terus berkembang dan menjadi rumah bagi mahasiswa yang ingin 
+                    belajar tentang alam, kepemimpinan, dan kerja sama tim.
+                </p>
             </div>
         </div>
     </section>
 
+    <!-- PENDAFTARAN -->
     <section id="pendaftaran" class="pendaftaran-section">
         <div class="container">
             <h2 class="section-title">🎯 Pendaftaran Anggota</h2>
+            
             <div id="statusContainer" class="text-center">
-                <div class="loading-spinner"></div>
-                <p>Memuat status pendaftaran...</p>
+                <div class="spinner-border text-success" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Memuat status pendaftaran...</p>
             </div>
         </div>
     </section>
 
+    <!-- ARSIP -->
     <section id="arsip" class="container">
         <h2 class="section-title">📁 Arsip Dokumen</h2>
+        
         <div class="folder-banner">
             <i class="fas fa-folder-open fa-2x" style="color: var(--primary); margin-bottom: 0.5rem;"></i>
             <h3>Akses Semua Arsip Mapatek</h3>
+            <p>Klik di bawah untuk membuka folder lengkap arsip kami di Google Drive</p>
             <a href="https://drive.google.com/drive/folders/1kq-TJI0r7p8zXTg4lJw9pTSLRmnnfTwd?usp=sharing" target="_blank" class="btn-download" style="display: inline-flex; margin-top: 1rem;">
                 <i class="fab fa-google-drive"></i> Buka Folder Arsip Lengkap
             </a>
         </div>
+
         <div class="category-tabs">
             <button class="tab-btn active" onclick="filterKategori('all', this)">Semua</button>
             <button class="tab-btn" onclick="filterKategori('Laporan Kegiatan', this)">Laporan Kegiatan</button>
             <button class="tab-btn" onclick="filterKategori('Laporan Keuangan', this)">Keuangan</button>
             <button class="tab-btn" onclick="filterKategori('AD_ART', this)">AD/ART & SK</button>
         </div>
+
         <div class="arsip-list" id="arsipList">
             <div class="arsip-item" data-kategori="Laporan Kegiatan">
                 <div class="arsip-info">
                     <h3>Laporan Ekspedisi Gunung Gede 2023</h3>
                     <span>Laporan Kegiatan</span> <small>• 25 Mei 2023</small>
                 </div>
-                <a href="https://drive.google.com/your-link-here" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a>
+                <a href="https://drive.google.com/your-link-here" target="_blank" class="btn-download">
+                    <i class="fas fa-file-pdf"></i> Lihat File
+                </a>
+            </div>
+
+            <div class="arsip-item" data-kategori="AD_ART">
+                <div class="arsip-info">
+                    <h3>Anggaran Dasar & Anggaran Rumah Tangga (Revisi 2024)</h3>
+                    <span>AD/ART</span> <small>• 10 Jan 2024</small>
+                </div>
+                <a href="https://drive.google.com/your-link-here" target="_blank" class="btn-download">
+                    <i class="fas fa-file-pdf"></i> Lihat File
+                </a>
+            </div>
+
+            <div class="arsip-item" data-kategori="Laporan Keuangan">
+                <div class="arsip-info">
+                    <h3>Laporan Pertanggungjawaban Keuangan Diksar XII</h3>
+                    <span>Laporan Keuangan</span> <small>• 15 Feb 2024</small>
+                </div>
+                <a href="https://drive.google.com/your-link-here" target="_blank" class="btn-download">
+                    <i class="fas fa-file-excel"></i> Lihat File
+                </a>
             </div>
         </div>
     </section>
 
+    <!-- KONTAK -->
     <section id="kontak" class="kontak-section">
         <div class="container">
             <h2 class="section-title">📞 Hubungi Kami</h2>
@@ -234,25 +387,42 @@
                 <div class="kontak-card">
                     <i class="fab fa-whatsapp"></i>
                     <h3>WhatsApp Admin</h3>
-                    <a href="https://wa.me/6282214428371" target="_blank"><strong>0822-1442-8371</strong></a>
+                    <p>Chat langsung dengan admin kami</p>
+                    <a href="https://wa.me/6282214428371" target="_blank">
+                        <strong>0822-1442-8371</strong>
+                    </a>
                 </div>
+
                 <div class="kontak-card">
                     <i class="fab fa-instagram"></i>
                     <h3>Instagram</h3>
-                    <a href="https://instagram.com/mapatek_abhipraya" target="_blank"><strong>@mapatek_abhipraya</strong></a>
+                    <p>Follow untuk info terbaru</p>
+                    <a href="https://instagram.com/mapatek_abhipraya" target="_blank">
+                        <strong>@mapatek_abhipraya</strong>
+                    </a>
                 </div>
+
                 <div class="kontak-card">
                     <i class="fas fa-map-marker-alt"></i>
                     <h3>Lokasi</h3>
-                    <a href="https://maps.app.goo.gl/aWpAXADTecgmY1EG9" target="_blank"><strong>Lihat di Maps</strong></a>
+                    <p>Kunjungi basecamp kami</p>
+                    <a href="https://maps.app.goo.gl/aWpAXADTecgmY1EG9" target="_blank">
+                        <strong>Lihat di Maps</strong>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer>
         <p class="fw-bold">&copy; 2023 - 2026 Mapatek Abhipraya. All Rights Reserved.</p>
-        <p style="margin-top: 0.5rem;"><small>Sistem Kearsipan Internal</small></p>
+        <p style="margin-top: 0.5rem;">
+            <small>Sistem Kearsipan Internal | Dibuat dengan ❤️ untuk keluarga besar Mapatek</small>
+        </p>
+        <p style="margin-top: 1rem;">
+            <small>🔐 <a href="http://localhost/mapatek-arsip/login.php" title="Khusus Admin - Hanya bisa diakses dari laptop admin">Login Admin</a> (Khusus Pengurus)</small>
+        </p>
     </footer>
 
     <script>
@@ -278,8 +448,10 @@
         function filterKategori(kategori, btnElement) {
             let items = document.getElementsByClassName('arsip-item');
             let buttons = document.getElementsByClassName('tab-btn');
+            
             for(let btn of buttons) btn.classList.remove('active');
             btnElement.classList.add('active');
+
             for (let i = 0; i < items.length; i++) {
                 if (kategori === 'all' || items[i].getAttribute('data-kategori') === kategori) {
                     items[i].style.display = 'flex';
@@ -289,23 +461,9 @@
             }
         }
 
-        // ============================================
-        // BACA STATUS DARI GOOGLE SHEETS (CSV)
-        // ============================================
-        fetch('GANTI_DENGAN_LINK_CSV_ANDA')
-            .then(response => response.text())
-            .then(csv => {
-                // Parse CSV
-                const rows = csv.split('\n').filter(row => row.trim() !== '');
-                const values = rows[1].split(',');
-                
-                const data = {
-                    status: values[0] ? values[0].trim().toLowerCase() : 'tutup',
-                    periode: values[1] ? values[1].trim() : '',
-                    info_lanjutan: values[2] ? values[2].trim() : '',
-                    link_form: values[3] ? values[3].trim() : ''
-                };
-                
+        fetch('status.json?t=' + new Date().getTime())
+            .then(response => response.json())
+            .then(data => {
                 const container = document.getElementById('statusContainer');
                 
                 if (data.status === 'buka') {
@@ -337,7 +495,7 @@
                                 <i class="fas fa-info-circle"></i> ${data.periode}
                             </div>
                             <p style="margin-top: 1.5rem; font-size: 0.95rem;">
-                                Follow Instagram kami:<br>
+                                Follow Instagram kami untuk info terbaru:<br>
                                 <a href="https://instagram.com/mapatek_abhipraya" target="_blank" style="color: #e1306c; font-weight: bold;">
                                     <i class="fab fa-instagram"></i> @mapatek_abhipraya
                                 </a>
@@ -347,17 +505,19 @@
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
                 document.getElementById('statusContainer').innerHTML = `
                     <div class="status-box status-tutup">
                         <div class="status-icon"><i class="fas fa-info-circle"></i></div>
                         <h2 style="color: #721c24;">INFORMASI PENDAFTARAN</h2>
-                        <p style="margin-top: 1rem; color: #721c24;">
-                            Hubungi admin kami untuk info pendaftaran.
+                        <p style="margin-top: 1rem; color: #721c24; font-size: 1.1rem;">
+                            Untuk informasi mengenai pendaftaran anggota baru, silakan hubungi admin kami melalui WhatsApp atau Instagram.
                         </p>
                         <div style="margin-top: 2rem;">
-                            <a href="https://wa.me/6282214428371" target="_blank" class="btn-daftar" style="background: #25D366;">
+                            <a href="https://wa.me/6282214428371" target="_blank" class="btn-daftar" style="background: #25D366; margin-right: 1rem;">
                                 <i class="fab fa-whatsapp"></i> Chat Admin
+                            </a>
+                            <a href="https://instagram.com/mapatek_abhipraya" target="_blank" class="btn-daftar" style="background: #E1306C;">
+                                <i class="fab fa-instagram"></i> Follow IG
                             </a>
                         </div>
                     </div>
