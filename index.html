@@ -2067,23 +2067,172 @@
         `).join('');
     }
 
-    // === PETA INTERAKTIF ===
-    let petaMap;
-    function loadPeta() {
-        petaMap = L.map('petaMap').setView([-7.5, 110.4], 9);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap'
-        }).addTo(petaMap);
-        const colors = { basecamp: '#dc2626', gunung: '#2563eb', konservasi: '#16a34a', latihan: '#9333ea' };
-        petaLocations.forEach(loc => {
-            const icon = L.divIcon({
-                className: 'custom-marker',
-                html: `<div style="background:${colors[loc.type]};width:30px;height:30px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>`,
-                iconSize: [30, 30]
-            });
-            L.marker([loc.lat, loc.lng], { icon }).addTo(petaMap)
-                .bindPopup(`<b>${loc.name}</b><br>${loc.desc}`);
+   // === PETA INTERAKTIF ===
+let petaMap;
+function loadPeta() {
+    petaMap = L.map('petaMap').setView([-7.5, 110.4], 6);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap'
+    }).addTo(petaMap);
+    
+    const colors = { 
+        basecamp: '#dc2626', 
+        gunung: '#2563eb', 
+        konservasi: '#16a34a', 
+        latihan: '#9333ea' 
+    };
+    
+    const petaLocations = [
+        // BASECAMP
+        { 
+            name: "Basecamp Mapatek Abhipraya", 
+            lat: -7.8014, 
+            lng: 110.3826, 
+            type: "basecamp", 
+            desc: "🏛️ Sekretariat di UST Yogyakarta<br>Fakultas Teknik - Universitas Sarjanawiyata Tamansiswa"
+        },
+        
+        // GUNUNG-GUNUNG
+        { 
+            name: "Gunung Sumbing", 
+            lat: -7.3408, 
+            lng: 110.0703, 
+            type: "gunung", 
+            desc: "⛰️ Puncak 3.371 mdpl<br>Wonosobo, Jawa Tengah"
+        },
+        { 
+            name: "Gunung Sindoro", 
+            lat: -7.3056, 
+            lng: 110.0028, 
+            type: "gunung", 
+            desc: "⛰️ Puncak 3.153 mdpl<br>Wonosobo, Jawa Tengah"
+        },
+        { 
+            name: "Gunung Merbabu", 
+            lat: -7.4500, 
+            lng: 110.4333, 
+            type: "gunung", 
+            desc: "⛰️ Puncak 3.145 mdpl<br>Boyolali/Magelang, Jawa Tengah"
+        },
+        { 
+            name: "Gunung Prau", 
+            lat: -7.1458, 
+            lng: 109.9208, 
+            type: "gunung", 
+            desc: "⛰️ Puncak 2.590 mdpl<br>Dieng Plateau, Jawa Tengah"
+        },
+        { 
+            name: "Gunung Lawu", 
+            lat: -7.6250, 
+            lng: 111.1917, 
+            type: "gunung", 
+            desc: "⛰️ Puncak 3.265 mdpl<br>Perbatasan Jawa Tengah & Jawa Timur"
+        },
+        { 
+            name: "Gunung Rinjani", 
+            lat: -8.4250, 
+            lng: 116.4583, 
+            type: "gunung", 
+            desc: "⛰️ Puncak 3.726 mdpl<br>Lombok, Nusa Tenggara Barat"
+        },
+        { 
+            name: "Gunung Semeru", 
+            lat: -8.1083, 
+            lng: 112.9217, 
+            type: "gunung", 
+            desc: "⛰️ Puncak 3.676 mdpl<br>Gunung tertinggi di Pulau Jawa"
+        },
+        { 
+            name: "Gunung Kerinci", 
+            lat: -1.6972, 
+            lng: 101.2639, 
+            type: "gunung", 
+            desc: "⛰️ Puncak 3.805 mdpl<br>Gunung tertinggi di Sumatera"
+        },
+        { 
+            name: "Gunung Raung", 
+            lat: -8.1250, 
+            lng: 114.0417, 
+            type: "gunung", 
+            desc: "⛰️ Puncak 3.332 mdpl<br>Perbatasan Jawa Timur & Bali"
+        },
+        { 
+            name: "Gunung Slamet", 
+            lat: -7.2458, 
+            lng: 109.2083, 
+            type: "gunung", 
+            desc: "⛰️ Puncak 3.428 mdpl<br>Gunung tertinggi di Jawa Tengah"
+        },
+        
+        // LOKASI KONSERVASI
+        { 
+            name: "Lokasi Konservasi 1", 
+            lat: -7.7956, 
+            lng: 110.3692, 
+            type: "konservasi", 
+            desc: "🌱 Kegiatan konservasi lingkungan<br>Mapatek Abhipraya"
+        },
+        { 
+            name: "Lokasi Konservasi 2", 
+            lat: -7.8500, 
+            lng: 110.4200, 
+            type: "konservasi", 
+            desc: "🌿 Program pelestarian alam<br>Bersih-bersih & penanaman pohon"
+        },
+        { 
+            name: "Lokasi Konservasi 3", 
+            lat: -7.7800, 
+            lng: 110.4000, 
+            type: "konservasi", 
+            desc: "🌳 Aksi konservasi & edukasi<br>Lingkungan Yogyakarta"
+        }
+    ];
+
+    petaLocations.forEach(loc => {
+        const icon = L.divIcon({
+            className: 'custom-marker',
+            html: `<div style="background:${colors[loc.type]};width:35px;height:35px;border-radius:50%;border:3px solid white;box-shadow:0 3px 10px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;">
+                <i class="fas fa-${loc.type === 'basecamp' ? 'home' : loc.type === 'gunung' ? 'mountain' : loc.type === 'konservasi' ? 'tree' : 'location'}" style="color:white;font-size:16px;"></i>
+            </div>`,
+            iconSize: [35, 35],
+            iconAnchor: [17, 17]
         });
+        
+        L.marker([loc.lat, loc.lng], { icon })
+            .addTo(petaMap)
+            .bindPopup(`
+                <div style="min-width:200px;">
+                    <b style="font-size:1.1rem;color:var(--primary);">${loc.name}</b><br>
+                    <span style="color:#666;font-size:0.9rem;">${loc.desc}</span>
+                </div>
+            `);
+    });
+
+    // Tambahkan layer control
+    const basecampLayer = L.layerGroup();
+    const gunungLayer = L.layerGroup();
+    const konservasiLayer = L.layerGroup();
+
+    petaLocations.forEach(loc => {
+        const marker = L.marker([loc.lat, loc.lng]);
+        if (loc.type === 'basecamp') basecampLayer.addLayer(marker);
+        else if (loc.type === 'gunung') gunungLayer.addLayer(marker);
+        else if (loc.type === 'konservasi') konservasiLayer.addLayer(marker);
+    });
+
+    const overlayMaps = {
+        "🏠 Basecamp": basecampLayer,
+        "⛰️ Gunung (10)": gunungLayer,
+        "🌳 Konservasi (3)": konservasiLayer
+    };
+
+    L.control.layers(null, overlayMaps, { collapsed: false }).addTo(petaMap);
+    
+    // Tampilkan semua layer
+    basecampLayer.addTo(petaMap);
+    gunungLayer.addTo(petaMap);
+    konservasiLayer.addTo(petaMap);
+
     }
 
     // === BERITA ===
