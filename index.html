@@ -536,7 +536,7 @@
         { day: "05", month: "JUL", title: "Bakti Sosial & Konservasi", location: "Desa Wisata Pentingsari", desc: "Bersih-bersih sungai dan edukasi lingkungan", status: "upcoming" }
     ];
 
-  // Data Galeri dengan caption (lebih profesional)
+ // Data Galeri dengan caption (lebih profesional)
 const galeriImages = [
     { src: "images/galeri/ekspedisi_rinjani.jpg", caption: "Ekspedisi Gunung Rinjani 2023" },
     { src: "images/galeri/diksar.jpg", caption: "Pendidikan Dasar (Diksar) Angkatan III" },
@@ -549,42 +549,62 @@ const galeriImages = [
 // Fungsi loadGaleri yang dimodifikasi untuk support caption
 function loadGaleri() {
     const container = document.getElementById('galeriGrid');
-    if (!container) return;
+    if (!container) {
+        console.error('Element galeriGrid tidak ditemukan!');
+        return;
+    }
+    
     container.innerHTML = galeriImages.map((img, i) => `
         <div class="galeri-item" onclick="openModal('${img.src}')">
-            <img src="${img.src}" alt="${img.caption}" onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
-            <div class="galeri-overlay"><p><i class="fas fa-camera"></i> ${img.caption}</p></div>
+            <img src="${img.src}" alt="${img.caption}" 
+                 onerror="this.onerror=null; this.src='https://via.placeholder.com/400x400?text=No+Image'; console.error('Gambar tidak ditemukan: ${img.src}');">
+            <div class="galeri-overlay">
+                <p><i class="fas fa-camera"></i> ${img.caption}</p>
+            </div>
         </div>
     `).join('');
 }
-    // Load Agenda
-    function loadAgenda() {
-        const container = document.getElementById('agendaGrid');
-        if (!container) return;
-        container.innerHTML = agendas.map(a => `
-            <div class="agenda-card">
-                <div class="agenda-date"><div class="day">${a.day}</div><div class="month">${a.month}</div></div>
-                <div class="agenda-content">
-                    <h3 class="agenda-title">${a.title}</h3>
-                    <div class="agenda-location"><i class="fas fa-map-marker-alt"></i> ${a.location}</div>
-                    <p class="agenda-desc">${a.desc}</p>
-                    <span class="agenda-status status-${a.status}">${a.status === 'upcoming' ? '📅 Akan Datang' : a.status === 'ongoing' ? '🔴 Berlangsung' : '✅ Selesai'}</span>
-                </div>
-            </div>
-        `).join('');
-    }
 
-    // Load Galeri
-    function loadGaleri() {
-        const container = document.getElementById('galeriGrid');
-        if (!container) return;
-        container.innerHTML = galeriImages.map((img, i) => `
-            <div class="galeri-item" onclick="openModal('${img}')">
-                <img src="${img}" alt="Galeri ${i+1}">
-                <div class="galeri-overlay"><p><i class="fas fa-camera"></i> Kegiatan Mapatek</p></div>
+// Load Agenda
+function loadAgenda() {
+    const container = document.getElementById('agendaGrid');
+    if (!container) return;
+    container.innerHTML = agendas.map(a => `
+        <div class="agenda-card">
+            <div class="agenda-date"><div class="day">${a.day}</div><div class="month">${a.month}</div></div>
+            <div class="agenda-content">
+                <h3 class="agenda-title">${a.title}</h3>
+                <div class="agenda-location"><i class="fas fa-map-marker-alt"></i> ${a.location}</div>
+                <p class="agenda-desc">${a.desc}</p>
+                <span class="agenda-status status-${a.status}">${a.status === 'upcoming' ? '📅 Akan Datang' : a.status === 'ongoing' ? '🔴 Berlangsung' : '✅ Selesai'}</span>
             </div>
-        `).join('');
+        </div>
+    `).join('');
+}
+
+// Modal Galeri
+function openModal(src) {
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    if (modal && modalImg) {
+        modal.classList.add('active');
+        modalImg.src = src;
     }
+}
+
+function closeModal() {
+    const modal = document.getElementById('imageModal');
+    if (modal) {
+        modal.classList.remove('active');
+    }
+}
+
+// Tutup modal saat klik di luar gambar
+document.getElementById('imageModal')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
 
     // Counter Animation
     function animateCounter(element, target) {
@@ -993,16 +1013,16 @@ function loadGaleri() {
         }
     });
 
-    // Load semua fitur baru setelah halaman load
-    window.addEventListener('load', () => {
-        loadAgenda();
-        loadGaleri();
-        animateCounter(document.getElementById('memberCount'), 50);
-        animateCounter(document.getElementById('expeditionCount'), 12);
-        animateCounter(document.getElementById('trainingCount'), 8);
-        animateCounter(document.getElementById('documentCount'), 25);
-        showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
-    });
+   // Load semua fitur baru setelah halaman load
+window.addEventListener('load', () => {
+    loadAgenda();
+    loadGaleri();  // Pastikan ini dipanggil!
+    animateCounter(document.getElementById('memberCount'), 50);
+    animateCounter(document.getElementById('expeditionCount'), 12);
+    animateCounter(document.getElementById('trainingCount'), 8);
+    animateCounter(document.getElementById('documentCount'), 25);
+    showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
+});
 </script>
 </body>
 </html>
