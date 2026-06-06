@@ -6,6 +6,8 @@
     <title>Portal Kearsipan | Mapatek Abhipraya</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Leaflet CSS untuk Peta Interaktif -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         * {
             margin: 0;
@@ -128,25 +130,10 @@
         .angkatan-name { font-weight: 700; color: var(--primary); }
         .angkatan-desc { color: var(--gray-600); font-size: 0.9rem; }
 
-        /* Stats Counter - FITUR BARU */
-        .stats-section {
-            background: var(--gradient);
-            color: var(--white);
-            padding: 3rem 0;
-        }
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 1.5rem;
-            text-align: center;
-        }
-        .stat-card {
-            padding: 1.5rem;
-            background: rgba(255,255,255,0.1);
-            border-radius: var(--radius-md);
-            backdrop-filter: blur(10px);
-            transition: transform 0.3s;
-        }
+        /* Stats Counter */
+        .stats-section { background: var(--gradient); color: var(--white); padding: 3rem 0; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; text-align: center; }
+        .stat-card { padding: 1.5rem; background: rgba(255,255,255,0.1); border-radius: var(--radius-md); backdrop-filter: blur(10px); transition: transform 0.3s; }
         .stat-card:hover { transform: translateY(-5px); }
         .stat-number { font-size: 2.2rem; font-weight: 800; }
         .stat-label { font-size: 0.85rem; opacity: 0.9; margin-top: 0.5rem; }
@@ -191,7 +178,7 @@
         .btn-download { background: var(--gray-100); color: var(--secondary); padding: 0.6rem 1rem; text-decoration: none; border-radius: 40px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1rem; transition: all 0.2s ease; border: 1px solid var(--gray-200); }
         .btn-download:hover { background: var(--secondary); color: var(--white); border-color: var(--secondary); }
 
-        /* Agenda Section - FITUR BARU */
+        /* Agenda Section */
         .agenda-section { background: var(--gray-100); padding: 5rem 0; }
         .agenda-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
         .agenda-card { background: var(--white); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); transition: all 0.3s; display: flex; }
@@ -207,7 +194,7 @@
         .status-upcoming { background: #dbeafe; color: #1e40af; }
         .status-ongoing { background: #dcfce7; color: #166534; }
 
-        /* Galeri Section - FITUR BARU */
+        /* Galeri Section */
         .galeri-section { background: var(--white); padding: 5rem 0; }
         .galeri-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
         .galeri-item { position: relative; border-radius: var(--radius-md); overflow: hidden; cursor: pointer; aspect-ratio: 1; }
@@ -217,7 +204,7 @@
         .galeri-item:hover .galeri-overlay { transform: translateY(0); }
         .galeri-overlay p { font-size: 0.7rem; font-weight: 600; }
 
-        /* Modal Galeri - FITUR BARU */
+        /* Modal Galeri */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; align-items: center; justify-content: center; }
         .modal.active { display: flex; }
         .modal-content { max-width: 90%; max-height: 90%; }
@@ -225,64 +212,30 @@
         .modal-close { position: absolute; top: 20px; right: 35px; color: white; font-size: 2rem; cursor: pointer; }
         .modal-close:hover { color: var(--accent); }
 
-        /* Dark Mode Toggle - FITUR BARU */
-        .dark-mode-toggle {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            margin-right: 0.5rem;
-        }
+        /* Dark Mode Toggle */
+        .dark-mode-toggle { background: rgba(255,255,255,0.2); border: none; color: white; width: 38px; height: 38px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; margin-right: 0.5rem; }
         .dark-mode-toggle:hover { background: var(--accent); transform: rotate(15deg); }
         body.dark-mode { background: #121826; color: #e2e8f0; }
-        body.dark-mode .tentang-section, body.dark-mode .arsip-section, body.dark-mode .galeri-section { background: #1a1f2e; }
-        body.dark-mode .pengurus-card, body.dark-mode .agenda-card, body.dark-mode .arsip-item { background: #1e2436; border-color: #2d3348; }
+        body.dark-mode .tentang-section, body.dark-mode .arsip-section, body.dark-mode .galeri-section,
+        body.dark-mode .countdown-section, body.dark-mode .quiz-section, body.dark-mode .testimoni-section,
+        body.dark-mode .leaderboard-section, body.dark-mode .polling-section, body.dark-mode .cuaca-section,
+        body.dark-mode .peta-section, body.dark-mode .berita-section, body.dark-mode .kalender-section,
+        body.dark-mode .faq-section { background: #1a1f2e; }
+        body.dark-mode .pengurus-card, body.dark-mode .agenda-card, body.dark-mode .arsip-item,
+        body.dark-mode .quiz-card, body.dark-mode .testimoni-card, body.dark-mode .leaderboard-card,
+        body.dark-mode .polling-card, body.dark-mode .cuaca-card, body.dark-mode .berita-card,
+        body.dark-mode .kalender-card, body.dark-mode .faq-item { background: #1e2436; border-color: #2d3348; }
         body.dark-mode .section-title { color: #e2e8f0; }
+        body.dark-mode .faq-question { color: #e2e8f0; }
+        body.dark-mode .countdown-box { background: rgba(255,255,255,0.1); }
 
-        /* Back to Top - FITUR BARU */
-        .back-to-top {
-            position: fixed;
-            bottom: 100px;
-            right: 24px;
-            width: 45px;
-            height: 45px;
-            background: var(--gradient);
-            border-radius: 50%;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 999;
-            box-shadow: var(--shadow-lg);
-            transition: all 0.3s;
-            border: none;
-            color: white;
-        }
+        /* Back to Top */
+        .back-to-top { position: fixed; bottom: 100px; right: 24px; width: 45px; height: 45px; background: var(--gradient); border-radius: 50%; display: none; align-items: center; justify-content: center; cursor: pointer; z-index: 999; box-shadow: var(--shadow-lg); transition: all 0.3s; border: none; color: white; }
         .back-to-top:hover { transform: translateY(-5px); }
         .back-to-top.show { display: flex; }
 
-        /* Toast Notification - FITUR BARU */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: var(--primary);
-            color: white;
-            padding: 0.7rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            z-index: 2000;
-            transition: transform 0.3s;
-            box-shadow: var(--shadow-lg);
-        }
+        /* Toast Notification */
+        .toast { position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--primary); color: white; padding: 0.7rem 1.5rem; border-radius: 50px; font-size: 0.85rem; z-index: 2000; transition: transform 0.3s; box-shadow: var(--shadow-lg); }
         .toast.show { transform: translateX(-50%) translateY(0); }
 
         /* Kontak */
@@ -336,6 +289,938 @@
         .loading-spinner { border: 3px solid var(--gray-200); border-top: 3px solid var(--secondary); border-radius: 50%; width: 48px; height: 48px; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
+        /* ==================== FITUR BARU: COUNTDOWN TIMER ==================== */
+        .countdown-section {
+            background: var(--gradient);
+            padding: 4rem 0;
+            color: var(--white);
+            text-align: center;
+        }
+        .countdown-section .section-title { color: var(--white); }
+        .countdown-section .section-title:after { background: var(--accent-light); }
+        .countdown-event-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .countdown-box {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            padding: 1.5rem 1.25rem;
+            border-radius: var(--radius-md);
+            min-width: 110px;
+            transition: transform 0.3s;
+        }
+        .countdown-box:hover { transform: translateY(-5px) scale(1.05); }
+        .countdown-number {
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 0.5rem;
+            opacity: 0.9;
+        }
+
+        /* ==================== FITUR BARU: QUIZ KEPRIBADIAN ==================== */
+        .quiz-section {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 5rem 0;
+        }
+        .quiz-card {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+        .quiz-progress {
+            background: var(--gray-200);
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        .quiz-progress-bar {
+            background: var(--gradient);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+        .quiz-question-counter {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        .quiz-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+            line-height: 1.4;
+        }
+        .quiz-options {
+            display: grid;
+            gap: 0.75rem;
+        }
+        .quiz-option {
+            padding: 1rem 1.5rem;
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .quiz-option:hover {
+            border-color: var(--secondary);
+            background: var(--light);
+            transform: translateX(5px);
+        }
+        .quiz-option.selected {
+            background: var(--gradient);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+        .quiz-option-letter {
+            width: 32px;
+            height: 32px;
+            background: var(--white);
+            color: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .quiz-option.selected .quiz-option-letter {
+            background: var(--white);
+            color: var(--secondary);
+        }
+        .quiz-result {
+            text-align: center;
+            display: none;
+        }
+        .quiz-result-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .quiz-result-type {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        .quiz-result-desc {
+            font-size: 1rem;
+            color: var(--gray-700);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+        .quiz-share-buttons {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+        .quiz-share-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 40px;
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        .quiz-share-btn:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .share-wa { background: #25D366; }
+        .share-ig { background: linear-gradient(135deg, #f09433 0%, #dc2743 50%, #bc1888 100%); }
+        .share-tw { background: #1DA1F2; }
+        .quiz-restart-btn {
+            padding: 0.75rem 2rem;
+            background: var(--gradient);
+            color: var(--white);
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        .quiz-restart-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+        /* ==================== FITUR BARU: TESTIMONI ==================== */
+        .testimoni-section {
+            background: var(--gray-100);
+            padding: 5rem 0;
+        }
+        .testimoni-slider {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .testimoni-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        .testimoni-card {
+            min-width: 100%;
+            padding: 2.5rem;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+        .testimoni-photo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 4px solid var(--accent-light);
+        }
+        .testimoni-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--gray-700);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding: 0 2rem;
+        }
+        .testimoni-quote::before, .testimoni-quote::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--accent-light);
+            position: absolute;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+        .testimoni-quote::before { top: -10px; left: 0; }
+        .testimoni-quote::after { bottom: -30px; right: 0; }
+        .testimoni-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        .testimoni-angkatan {
+            font-size: 0.85rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        .testimoni-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            align-items: center;
+        }
+        .testimoni-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: var(--white);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .testimoni-btn:hover { transform: scale(1.1); box-shadow: var(--shadow-md); }
+        .testimoni-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .testimoni-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--gray-300);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .testimoni-dot.active {
+            background: var(--secondary);
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        /* ==================== FITUR BARU: LEADERBOARD ==================== */
+        .leaderboard-section {
+            background: var(--white);
+            padding: 5rem 0;
+        }
+        .leaderboard-card {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        .leaderboard-header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 1.5rem 2rem;
+            display: grid;
+            grid-template-columns: 60px 1fr 120px 100px;
+            gap: 1rem;
+            align-items: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+        }
+        .leaderboard-row {
+            display: grid;
+            grid-template-columns: 60px 1fr 120px 100px;
+            gap: 1rem;
+            align-items: center;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--gray-200);
+            transition: all 0.3s;
+        }
+        .leaderboard-row:hover {
+            background: var(--light);
+            transform: translateX(5px);
+        }
+        .leaderboard-row.top-1 { background: linear-gradient(90deg, #fef3c7 0%, transparent 100%); }
+        .leaderboard-row.top-2 { background: linear-gradient(90deg, #e5e7eb 0%, transparent 100%); }
+        .leaderboard-row.top-3 { background: linear-gradient(90deg, #fed7aa 0%, transparent 100%); }
+        .leaderboard-rank {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-align: center;
+        }
+        .leaderboard-rank.gold { color: #f59e0b; }
+        .leaderboard-rank.silver { color: #9ca3af; }
+        .leaderboard-rank.bronze { color: #ea580c; }
+        .leaderboard-user {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .leaderboard-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .leaderboard-name {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+        .leaderboard-badge {
+            font-size: 0.7rem;
+            color: var(--gray-600);
+        }
+        .leaderboard-peaks {
+            font-weight: 700;
+            color: var(--secondary);
+            text-align: center;
+        }
+        .leaderboard-points {
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        /* ==================== FITUR BARU: POLLING ==================== */
+        .polling-section {
+            background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+            padding: 5rem 0;
+        }
+        .polling-card {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+        }
+        .polling-question {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .polling-options {
+            display: grid;
+            gap: 1rem;
+        }
+        .polling-option {
+            position: relative;
+            padding: 1.25rem 1.5rem;
+            background: var(--gray-50);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.3s;
+            overflow: hidden;
+        }
+        .polling-option:hover:not(.voted) {
+            border-color: var(--secondary);
+            transform: translateX(5px);
+        }
+        .polling-option.voted {
+            cursor: default;
+        }
+        .polling-option.selected {
+            border-color: var(--secondary);
+            background: var(--light);
+        }
+        .polling-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            background: var(--gradient-light);
+            width: 0;
+            transition: width 0.8s ease;
+            z-index: 0;
+        }
+        .polling-option-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .polling-option-text {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .polling-option-percent {
+            font-weight: 700;
+            color: var(--secondary);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .polling-option.voted .polling-option-percent {
+            opacity: 1;
+        }
+        .polling-total {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: var(--gray-600);
+            font-size: 0.9rem;
+        }
+
+        /* ==================== FITUR BARU: CUACA GUNUNG ==================== */
+        .cuaca-section {
+            background: linear-gradient(135deg, #e0f2fe 0%, #bae6fd 100%);
+            padding: 5rem 0;
+        }
+        .cuaca-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .cuaca-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        .cuaca-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        .cuaca-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .cuaca-mountain-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .cuaca-mountain-loc {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+        .cuaca-icon {
+            font-size: 2.5rem;
+        }
+        .cuaca-temp {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+        .cuaca-desc {
+            color: var(--gray-700);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-transform: capitalize;
+        }
+        .cuaca-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-200);
+        }
+        .cuaca-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+        .cuaca-detail-item i {
+            color: var(--secondary);
+            width: 16px;
+        }
+        .cuaca-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-top: 0.75rem;
+        }
+        .cuaca-status.aman { background: #dcfce7; color: #166534; }
+        .cuaca-status.waspada { background: #fef3c7; color: #92400e; }
+        .cuaca-status.bahaya { background: #fee2e2; color: #991b1b; }
+
+        /* ==================== FITUR BARU: PETA INTERAKTIF ==================== */
+        .peta-section {
+            background: var(--white);
+            padding: 5rem 0;
+        }
+        #petaMap {
+            height: 500px;
+            width: 100%;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            z-index: 1;
+        }
+        .peta-legend {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .peta-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--gray-700);
+        }
+        .peta-legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+
+        /* ==================== FITUR BARU: BERITA ==================== */
+        .berita-section {
+            background: var(--gray-100);
+            padding: 5rem 0;
+        }
+        .berita-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+        .berita-card {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+        .berita-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+        .berita-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .berita-card:hover .berita-image {
+            transform: scale(1.05);
+        }
+        .berita-content {
+            padding: 1.5rem;
+        }
+        .berita-category {
+            display: inline-block;
+            background: var(--light);
+            color: var(--secondary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .berita-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+        .berita-excerpt {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .berita-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--gray-500);
+            padding-top: 1rem;
+            border-top: 1px solid var(--gray-200);
+        }
+        .berita-read-more {
+            color: var(--secondary);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            transition: all 0.3s;
+        }
+        .berita-read-more:hover {
+            color: var(--primary);
+            gap: 0.6rem;
+        }
+
+        /* ==================== FITUR BARU: KALENDER ==================== */
+        .kalender-section {
+            background: var(--white);
+            padding: 5rem 0;
+        }
+        .kalender-wrapper {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+        }
+        .kalender-header {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .kalender-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+        .kalender-nav {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .kalender-nav button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: var(--white);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .kalender-nav button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+        .kalender-filter {
+            padding: 1rem 1.5rem;
+            background: var(--gray-50);
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        .kalender-filter-btn {
+            padding: 0.4rem 1rem;
+            border: 1.5px solid var(--gray-300);
+            background: var(--white);
+            color: var(--gray-700);
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .kalender-filter-btn.active {
+            background: var(--secondary);
+            color: var(--white);
+            border-color: var(--secondary);
+        }
+        .kalender-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            background: var(--gray-200);
+        }
+        .kalender-day-name {
+            background: var(--gray-50);
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--gray-700);
+        }
+        .kalender-day {
+            background: var(--white);
+            min-height: 90px;
+            padding: 0.5rem;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .kalender-day:hover {
+            background: var(--gray-50);
+        }
+        .kalender-day.other-month {
+            opacity: 0.3;
+        }
+        .kalender-day.today {
+            background: var(--light);
+        }
+        .kalender-day-number {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+        .kalender-event {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.65rem;
+            margin-bottom: 0.2rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            cursor: pointer;
+        }
+        .kalender-event.diksar { background: #dc2626; }
+        .kalender-event.ekspedisi { background: #2563eb; }
+        .kalender-event.konservasi { background: #16a34a; }
+        .kalender-event.latihan { background: #9333ea; }
+
+        /* ==================== FITUR BARU: FAQ ==================== */
+        .faq-section {
+            background: var(--gray-100);
+            padding: 5rem 0;
+        }
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: var(--white);
+            border-radius: var(--radius-md);
+            margin-bottom: 1rem;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s;
+        }
+        .faq-item:hover {
+            box-shadow: var(--shadow-md);
+        }
+        .faq-question {
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .faq-question:hover {
+            color: var(--secondary);
+        }
+        .faq-question i {
+            transition: transform 0.3s;
+            color: var(--secondary);
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+        }
+        .faq-answer-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--gray-700);
+            line-height: 1.7;
+            font-size: 0.95rem;
+        }
+
+        /* ==================== FITUR BARU: SEARCH GLOBAL ==================== */
+        .search-global-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(5px);
+            z-index: 3000;
+            display: none;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 10vh;
+        }
+        .search-global-overlay.active {
+            display: flex;
+        }
+        .search-global-box {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 700px;
+            max-height: 70vh;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            animation: slideDown 0.3s ease;
+        }
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .search-global-input-wrapper {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--gray-200);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .search-global-input-wrapper i {
+            color: var(--secondary);
+            font-size: 1.3rem;
+        }
+        .search-global-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1.1rem;
+            font-family: inherit;
+        }
+        .search-global-results {
+            max-height: 50vh;
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+        .search-result-item {
+            padding: 0.875rem 1rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .search-result-item:hover {
+            background: var(--light);
+        }
+        .search-result-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .search-result-text {
+            flex: 1;
+        }
+        .search-result-title {
+            font-weight: 600;
+            color: var(--primary);
+            font-size: 0.95rem;
+        }
+        .search-result-category {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+        }
+        .search-global-trigger {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            margin-right: 0.5rem;
+        }
+        .search-global-trigger:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
         @media (max-width: 768px) {
             .navbar { padding: 0.75rem 1.25rem; }
             .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: var(--primary); flex-direction: column; padding: 1.25rem; gap: 1rem; box-shadow: var(--shadow-lg); }
@@ -349,11 +1234,22 @@
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .agenda-card { flex-direction: column; }
             .agenda-date { flex-direction: row; gap: 0.5rem; justify-content: center; align-items: center; }
+            .countdown-number { font-size: 2rem; }
+            .countdown-box { min-width: 80px; padding: 1rem; }
+            .leaderboard-header, .leaderboard-row { grid-template-columns: 40px 1fr 80px; }
+            .leaderboard-header > *:last-child, .leaderboard-row > *:last-child { display: none; }
+            .kalender-day { min-height: 60px; padding: 0.25rem; }
+            .kalender-day-number { font-size: 0.75rem; }
+            .kalender-event { font-size: 0.55rem; }
         }
         @media (max-width: 480px) {
             .pengurus-photo { height: 260px; }
             .chatbot-container { width: calc(100vw - 40px); right: -10px; }
             .angkatan-item { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+            .countdown-timer { gap: 0.5rem; }
+            .countdown-box { min-width: 70px; }
+            .countdown-number { font-size: 1.5rem; }
+            .testimoni-card { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -370,12 +1266,15 @@
         <li><a href="#pengurus">Pengurus</a></li>
         <li><a href="#agenda">Agenda</a></li>
         <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#quiz">Quiz</a></li>
+        <li><a href="#berita">Berita</a></li>
         <li><a href="#pendaftaran">Pendaftaran</a></li>
         <li><a href="#arsip">Arsip</a></li>
         <li><a href="#kontak">Kontak</a></li>
         <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav"><i class="fas fa-lock"></i> Admin</a></li>
     </ul>
     <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <button class="search-global-trigger" onclick="openGlobalSearch()" title="Pencarian Global"><i class="fas fa-search"></i></button>
         <button class="dark-mode-toggle" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></button>
         <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
     </div>
@@ -391,7 +1290,7 @@
     </div>
 </section>
 
-<!-- STATS COUNTER - FITUR BARU -->
+<!-- STATS COUNTER -->
 <section class="stats-section reveal">
     <div class="container">
         <div class="stats-grid">
@@ -399,6 +1298,20 @@
             <div class="stat-card"><div class="stat-number" id="expeditionCount">0</div><div class="stat-label">Ekspedisi</div></div>
             <div class="stat-card"><div class="stat-number" id="trainingCount">0</div><div class="stat-label">Pelatihan</div></div>
             <div class="stat-card"><div class="stat-number" id="documentCount">0</div><div class="stat-label">Dokumen</div></div>
+        </div>
+    </div>
+</section>
+
+<!-- FITUR BARU: COUNTDOWN TIMER -->
+<section class="countdown-section reveal">
+    <div class="container">
+        <h2 class="section-title">⏰ Menuju Event Berikutnya</h2>
+        <div class="countdown-event-name" id="countdownEventName">🏔️ Ekspedisi Gunung Prau - Dieng</div>
+        <div class="countdown-timer">
+            <div class="countdown-box"><div class="countdown-number" id="cd-days">00</div><div class="countdown-label">Hari</div></div>
+            <div class="countdown-box"><div class="countdown-number" id="cd-hours">00</div><div class="countdown-label">Jam</div></div>
+            <div class="countdown-box"><div class="countdown-number" id="cd-minutes">00</div><div class="countdown-label">Menit</div></div>
+            <div class="countdown-box"><div class="countdown-number" id="cd-seconds">00</div><div class="countdown-label">Detik</div></div>
         </div>
     </div>
 </section>
@@ -448,7 +1361,40 @@
     </div>
 </section>
 
-<!-- AGENDA KEGIATAN - FITUR BARU -->
+<!-- FITUR BARU: TESTIMONI ANGGOTA -->
+<section class="testimoni-section reveal">
+    <div class="container">
+        <h2 class="section-title">💬 Kata Mereka</h2>
+        <p class="section-subtitle">Testimoni dari anggota Mapatek Abhipraya tentang pengalaman mereka</p>
+        <div class="testimoni-slider">
+            <div class="testimoni-track" id="testimoniTrack"></div>
+            <div class="testimoni-controls">
+                <button class="testimoni-btn" onclick="prevTestimoni()"><i class="fas fa-chevron-left"></i></button>
+                <div class="testimoni-dots" id="testimoniDots"></div>
+                <button class="testimoni-btn" onclick="nextTestimoni()"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FITUR BARU: LEADERBOARD PENDAKIAN -->
+<section class="leaderboard-section reveal">
+    <div class="container">
+        <h2 class="section-title">🏆 Leaderboard Pendakian</h2>
+        <p class="section-subtitle">Ranking anggota berdasarkan jumlah puncak yang berhasil ditaklukkan</p>
+        <div class="leaderboard-card">
+            <div class="leaderboard-header">
+                <div>Rank</div>
+                <div>Anggota</div>
+                <div style="text-align:center;">Puncak</div>
+                <div style="text-align:center;">Poin</div>
+            </div>
+            <div id="leaderboardBody"></div>
+        </div>
+    </div>
+</section>
+
+<!-- AGENDA KEGIATAN -->
 <section id="agenda" class="agenda-section reveal">
     <div class="container">
         <h2 class="section-title">📅 Agenda Kegiatan</h2>
@@ -456,7 +1402,7 @@
     </div>
 </section>
 
-<!-- GALERI - FITUR BARU -->
+<!-- GALERI -->
 <section id="galeri" class="galeri-section reveal">
     <div class="container">
         <h2 class="section-title">📸 Galeri Kegiatan</h2>
@@ -464,13 +1410,117 @@
     </div>
 </section>
 
-<!-- MODAL GALERI - FITUR BARU -->
 <div id="imageModal" class="modal"><span class="modal-close" onclick="closeModal()">&times;</span><div class="modal-content"><img id="modalImage" src="" alt=""></div></div>
+
+<!-- FITUR BARU: QUIZ KEPRIBADIAN PENDAKI -->
+<section id="quiz" class="quiz-section reveal">
+    <div class="container">
+        <h2 class="section-title">🎯 Quiz Kepribadian Pendaki</h2>
+        <p class="section-subtitle">Temukan tipe pendaki dalam dirimu! Jawab 5 pertanyaan sederhana ini.</p>
+        <div class="quiz-card">
+            <div class="quiz-progress"><div class="quiz-progress-bar" id="quizProgressBar"></div></div>
+            <div id="quizContent">
+                <div class="quiz-question-counter" id="quizCounter">Pertanyaan 1 dari 5</div>
+                <div class="quiz-question" id="quizQuestion"></div>
+                <div class="quiz-options" id="quizOptions"></div>
+            </div>
+            <div class="quiz-result" id="quizResult">
+                <div class="quiz-result-icon" id="quizResultIcon"></div>
+                <div class="quiz-result-type" id="quizResultType"></div>
+                <div class="quiz-result-desc" id="quizResultDesc"></div>
+                <div class="quiz-share-buttons">
+                    <a class="quiz-share-btn share-wa" id="shareWA" target="_blank"><i class="fab fa-whatsapp"></i> Share WhatsApp</a>
+                    <a class="quiz-share-btn share-ig" onclick="copyToClipboard()"><i class="fab fa-instagram"></i> Copy untuk IG</a>
+                    <a class="quiz-share-btn share-tw" id="shareTW" target="_blank"><i class="fab fa-twitter"></i> Tweet</a>
+                </div>
+                <button class="quiz-restart-btn" onclick="restartQuiz()"><i class="fas fa-redo"></i> Ulangi Quiz</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FITUR BARU: POLLING KEGIATAN -->
+<section class="polling-section reveal">
+    <div class="container">
+        <h2 class="section-title">📊 Polling Kegiatan</h2>
+        <p class="section-subtitle">Bantu kami menentukan kegiatan berikutnya!</p>
+        <div class="polling-card">
+            <div class="polling-question">🏔️ Gunung mana yang ingin kamu jadikan tujuan ekspedisi berikutnya?</div>
+            <div class="polling-options" id="pollingOptions"></div>
+            <div class="polling-total" id="pollingTotal"></div>
+        </div>
+    </div>
+</section>
+
+<!-- FITUR BARU: INFO CUACA GUNUNG -->
+<section class="cuaca-section reveal">
+    <div class="container">
+        <h2 class="section-title">🌤️ Info Cuaca Gunung Populer</h2>
+        <p class="section-subtitle">Pantau kondisi cuaca sebelum mendaki - Data real-time</p>
+        <div class="cuaca-grid" id="cuacaGrid"></div>
+    </div>
+</section>
+
+<!-- FITUR BARU: PETA INTERAKTIF -->
+<section class="peta-section reveal">
+    <div class="container">
+        <h2 class="section-title">🗺️ Peta Lokasi Kegiatan</h2>
+        <p class="section-subtitle">Jelajahi lokasi-lokasi yang telah dikunjungi Mapatek Abhipraya</p>
+        <div id="petaMap"></div>
+        <div class="peta-legend">
+            <div class="peta-legend-item"><div class="peta-legend-color" style="background:#dc2626;"></div>Basecamp</div>
+            <div class="peta-legend-item"><div class="peta-legend-color" style="background:#2563eb;"></div>Gunung</div>
+            <div class="peta-legend-item"><div class="peta-legend-color" style="background:#16a34a;"></div>Konservasi</div>
+            <div class="peta-legend-item"><div class="peta-legend-color" style="background:#9333ea;"></div>Latihan</div>
+        </div>
+    </div>
+</section>
+
+<!-- FITUR BARU: BERITA & PENGUMUMAN -->
+<section id="berita" class="berita-section reveal">
+    <div class="container">
+        <h2 class="section-title">📰 Berita & Pengumuman</h2>
+        <p class="section-subtitle">Informasi terbaru seputar kegiatan Mapatek Abhipraya</p>
+        <div class="berita-grid" id="beritaGrid"></div>
+    </div>
+</section>
+
+<!-- FITUR BARU: KALENDER KEGIATAN -->
+<section class="kalender-section reveal">
+    <div class="container">
+        <h2 class="section-title">📅 Kalender Kegiatan</h2>
+        <p class="section-subtitle">Jadwal lengkap kegiatan Mapatek Abhipraya</p>
+        <div class="kalender-wrapper">
+            <div class="kalender-header">
+                <button class="kalender-nav-btn" onclick="changeMonth(-1)" style="background:rgba(255,255,255,0.2);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;"><i class="fas fa-chevron-left"></i></button>
+                <div class="kalender-title" id="kalenderTitle"></div>
+                <button class="kalender-nav-btn" onclick="changeMonth(1)" style="background:rgba(255,255,255,0.2);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="kalender-filter">
+                <button class="kalender-filter-btn active" onclick="filterKalender('all', this)">Semua</button>
+                <button class="kalender-filter-btn" onclick="filterKalender('diksar', this)">Diksar</button>
+                <button class="kalender-filter-btn" onclick="filterKalender('ekspedisi', this)">Ekspedisi</button>
+                <button class="kalender-filter-btn" onclick="filterKalender('konservasi', this)">Konservasi</button>
+                <button class="kalender-filter-btn" onclick="filterKalender('latihan', this)">Latihan</button>
+            </div>
+            <div class="kalender-grid" id="kalenderGrid"></div>
+        </div>
+    </div>
+</section>
 
 <section id="pendaftaran" class="pendaftaran-section reveal">
     <div class="container">
         <h2 class="section-title">Pendaftaran Anggota</h2>
         <div id="statusContainer" class="text-center"><div class="loading-spinner"></div><p style="color: var(--gray-600);">Memuat status pendaftaran...</p></div>
+    </div>
+</section>
+
+<!-- FITUR BARU: FAQ ACCORDION -->
+<section class="faq-section reveal">
+    <div class="container">
+        <h2 class="section-title">❓ Pertanyaan Umum (FAQ)</h2>
+        <p class="section-subtitle">Jawaban untuk pertanyaan yang sering ditanyakan</p>
+        <div class="faq-container" id="faqContainer"></div>
     </div>
 </section>
 
@@ -510,10 +1560,24 @@
     <p style="font-size: 0.75rem; margin-top: 0.5rem;">Sistem Kearsipan Internal | Dibuat dengan ❤️ untuk keluarga besar Mapatek</p>
 </footer>
 
-<!-- BACK TO TOP - FITUR BARU -->
-<button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
+<!-- FITUR BARU: SEARCH GLOBAL OVERLAY -->
+<div class="search-global-overlay" id="searchGlobalOverlay" onclick="if(event.target===this)closeGlobalSearch()">
+    <div class="search-global-box">
+        <div class="search-global-input-wrapper">
+            <i class="fas fa-search"></i>
+            <input type="text" class="search-global-input" id="globalSearchInput" placeholder="Cari di seluruh website..." oninput="performGlobalSearch()">
+            <button onclick="closeGlobalSearch()" style="background:none;border:none;cursor:pointer;color:var(--gray-600);font-size:1.2rem;"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="search-global-results" id="globalSearchResults">
+            <div style="padding:2rem;text-align:center;color:var(--gray-500);">
+                <i class="fas fa-search" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
+                Ketik untuk mencari di seluruh website...
+            </div>
+        </div>
+    </div>
+</div>
 
-<!-- TOAST NOTIFICATION - FITUR BARU -->
+<button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
 <div id="toast" class="toast"></div>
 
 <!-- Chatbot Widget -->
@@ -526,8 +1590,11 @@
     </div>
 </div>
 
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
 <script>
-    // ==================== FITUR-FITUR BARU ====================
+    // ==================== DATA FITUR BARU ====================
     
     // Data Agenda
     const agendas = [
@@ -536,116 +1603,563 @@
         { day: "05", month: "JUL", title: "Bakti Sosial & Konservasi", location: "Desa Wisata Pentingsari", desc: "Bersih-bersih sungai dan edukasi lingkungan", status: "upcoming" }
     ];
 
- // Data Galeri dengan caption (lebih profesional)
-const galeriImages = [
-    { src: "images/galeri/ekspedisi_rinjani.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
-    { src: "images/galeri/diksar.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
-    { src: "images/galeri/rock_climbing.jpg", caption: "Pendidikan Rock Climbing Angkatan Tedak Daivat" },
-    { src: "images/galeri/baksos.jpg", caption: "Bakti Sosial Bersih Pantai Baros" },
-    { src: "images/galeri/navigasi.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
-    { src: "images/galeri/pendidikanrc.jpg", caption: "Pendidikan Rock Climbing Angkatan Litani Aram" },
-    { src: "images/galeri/konservasi.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
-    { src: "images/galeri/latihanascend.jpg", caption: "Latihan Ascending" },
-    { src: "images/galeri/diksarlitaniaram.jpg", caption: "Diksar Angkatan Litani Aram" },
-    { src: "images/galeri/keluargabesar.jpg", caption: "Wisuda Angkatan Pendiri" },
-];
+    // Data Galeri
+    const galeriImages = [
+        { src: "images/galeri/ekspedisi_rinjani.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
+        { src: "images/galeri/diksar.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
+        { src: "images/galeri/rock_climbing.jpg", caption: "Pendidikan Rock Climbing Angkatan Tedak Daivat" },
+        { src: "images/galeri/baksos.jpg", caption: "Bakti Sosial Bersih Pantai Baros" },
+        { src: "images/galeri/navigasi.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
+        { src: "images/galeri/pendidikanrc.jpg", caption: "Pendidikan Rock Climbing Angkatan Litani Aram" },
+        { src: "images/galeri/konservasi.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
+        { src: "images/galeri/latihanascend.jpg", caption: "Latihan Ascending" },
+        { src: "images/galeri/diksarlitaniaram.jpg", caption: "Diksar Angkatan Litani Aram" },
+        { src: "images/galeri/keluargabesar.jpg", caption: "Wisuda Angkatan Pendiri" },
+    ];
 
-// Fungsi loadGaleri yang dimodifikasi untuk support caption
-function loadGaleri() {
-    const container = document.getElementById('galeriGrid');
-    if (!container) {
-        console.error('Element galeriGrid tidak ditemukan!');
-        return;
+    // Data Testimoni
+    const testimoniData = [
+        { name: "Ahmad Fauzi", angkatan: "Angkatan TapakKaki (2024)", photo: "https://randomuser.me/api/portraits/men/32.jpg", quote: "Mapatek bukan sekadar organisasi, tapi keluarga kedua. Di sini saya belajar arti kebersamaan, kepemimpinan, dan cinta alam yang sesungguhnya." },
+        { name: "Siti Aisyah", angkatan: "Angkatan TedakDaivat (2025)", photo: "https://randomuser.me/api/portraits/women/44.jpg", quote: "Pengalaman Diksar yang luar biasa! Meskipun berat, tapi itulah yang membentuk mental saya. Terima kasih Mapatek atas semua ilmunya." },
+        { name: "Rizky Pratama", angkatan: "Angkatan PancaTompak (2023)", photo: "https://randomuser.me/api/portraits/men/45.jpg", quote: "Sebagai angkatan pendiri, melihat Mapatek berkembang seperti ini adalah kebanggaan tersendiri. Semoga terus jaya dan bermanfaat!" },
+        { name: "Dewi Lestari", angkatan: "Angkatan LitaniAram (2026)", photo: "https://randomuser.me/api/portraits/women/33.jpg", quote: "Baru bergabung tapi sudah merasa seperti di rumah sendiri. Kakak-kakak senior sangat welcoming dan ilmu yang didapat sangat berharga." },
+        { name: "Budi Santoso", angkatan: "Angkatan TapakKaki (2024)", photo: "https://randomuser.me/api/portraits/men/22.jpg", quote: "Ekspedisi bersama Mapatek adalah pengalaman tak terlupakan. Puncak gunung bukan tujuan utama, tapi proses perjalanannya yang paling berkesan." }
+    ];
+
+    // Data Leaderboard
+    const leaderboardData = [
+        { name: "Rizky Pratama", angkatan: "PancaTompak", peaks: 15, points: 4500, photo: "https://randomuser.me/api/portraits/men/45.jpg" },
+        { name: "Ahmad Fauzi", angkatan: "TapakKaki", peaks: 12, points: 3600, photo: "https://randomuser.me/api/portraits/men/32.jpg" },
+        { name: "Siti Aisyah", angkatan: "TedakDaivat", peaks: 10, points: 3000, photo: "https://randomuser.me/api/portraits/women/44.jpg" },
+        { name: "Budi Santoso", angkatan: "TapakKaki", peaks: 8, points: 2400, photo: "https://randomuser.me/api/portraits/men/22.jpg" },
+        { name: "Machmud Lathif", angkatan: "LitaniAram", peaks: 7, points: 2100, photo: "https://randomuser.me/api/portraits/men/1.jpg" },
+        { name: "Dewi Lestari", angkatan: "LitaniAram", peaks: 6, points: 1800, photo: "https://randomuser.me/api/portraits/women/33.jpg" },
+        { name: "Rangga Wijaya", angkatan: "TedakDaivat", peaks: 5, points: 1500, photo: "https://randomuser.me/api/portraits/men/2.jpg" },
+        { name: "Putri Robet", angkatan: "LitaniAram", peaks: 4, points: 1200, photo: "https://randomuser.me/api/portraits/women/1.jpg" }
+    ];
+
+    // Data Polling
+    const pollingData = [
+        { id: 1, text: "🏔️ Gunung Semeru (3.676 mdpl)", votes: 45 },
+        { id: 2, text: "⛰️ Gunung Rinjani (3.726 mdpl)", votes: 38 },
+        { id: 3, text: "🗻 Gunung Merbabu (3.145 mdpl)", votes: 29 },
+        { id: 4, text: "🌋 Gunung Bromo (2.329 mdpl)", votes: 22 },
+        { id: 5, text: "🏞️ Gunung Prau (2.590 mdpl)", votes: 18 }
+    ];
+
+    // Data Cuaca Gunung (Simulasi - untuk API asli perlu API key)
+    const cuacaData = [
+        { name: "Gunung Merapi", loc: "Yogyakarta", temp: 18, desc: "Berawan", icon: "⛅", humidity: 75, wind: 15, visibility: 8, status: "aman" },
+        { name: "Gunung Merbabu", loc: "Jawa Tengah", temp: 15, desc: "Cerah Berawan", icon: "🌤️", humidity: 68, wind: 12, visibility: 10, status: "aman" },
+        { name: "Gunung Sindoro", loc: "Jawa Tengah", temp: 14, desc: "Berkabut", icon: "🌫️", humidity: 85, wind: 20, visibility: 3, status: "waspada" },
+        { name: "Gunung Slamet", loc: "Jawa Tengah", temp: 12, desc: "Hujan Ringan", icon: "🌧️", humidity: 90, wind: 25, visibility: 5, status: "waspada" },
+        { name: "Gunung Semeru", loc: "Jawa Timur", temp: 10, desc: "Cerah", icon: "☀️", humidity: 60, wind: 10, visibility: 15, status: "aman" },
+        { name: "Gunung Rinjani", loc: "NTB", temp: 16, desc: "Berawan", icon: "⛅", humidity: 72, wind: 18, visibility: 9, status: "aman" }
+    ];
+
+    // Data Lokasi Peta
+    const petaLocations = [
+        { name: "Basecamp Mapatek Abhipraya", lat: -7.8188, lng: 110.3951, type: "basecamp", desc: "Sekretariat di UST Yogyakarta" },
+        { name: "Gunung Merapi", lat: -7.5435, lng: 110.4451, type: "gunung", desc: "Ekspedisi 2023 - Puncak 2.930 mdpl" },
+        { name: "Gunung Merbabu", lat: -7.4517, lng: 110.4328, type: "gunung", desc: "Ekspedisi 2024 - Puncak 3.145 mdpl" },
+        { name: "Gunung Prau", lat: -7.2067, lng: 109.9097, type: "gunung", desc: "Ekspedisi 2024 - Puncak 2.590 mdpl" },
+        { name: "Pantai Baros", lat: -7.9933, lng: 110.3450, type: "konservasi", desc: "Bakti Sosial Bersih Pantai 2025" },
+        { name: "Tebing Gamping", lat: -7.7267, lng: 110.3233, type: "latihan", desc: "Latihan Rock Climbing Rutin" },
+        { name: "Desa Pentingsari", lat: -7.6233, lng: 110.4328, type: "konservasi", desc: "Konservasi Lingkungan 2025" }
+    ];
+
+    // Data Berita
+    const beritaData = [
+        { category: "Pengumuman", title: "Pendaftaran Diksar XV Resmi Dibuka!", excerpt: "Mapatek Abhipraya membuka pendaftaran Diksar XV untuk angkatan baru. Segera daftarkan dirimu sebelum kuota penuh!", date: "5 Juni 2026", image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600" },
+        { category: "Ekspedisi", title: "Ekspedisi Gunung Prau Berhasil Ditaklukkan", excerpt: "Tim ekspedisi Mapatek berhasil mencapai puncak Gunung Prau (2.590 mdpl) dengan aman dan lancar. Selamat!", date: "28 Mei 2026", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600" },
+        { category: "Konservasi", title: "Bakti Sosial Bersih Pantai Baros", excerpt: "Lebih dari 30 anggota berpartisipasi dalam aksi bersih-bersih Pantai Baros. Berhasil mengumpulkan 50kg sampah!", date: "20 Mei 2026", image: "https://images.unsplash.com/photo-1618477461853-cf6ed80f1d6e?w=600" },
+        { category: "Pelatihan", title: "Latihan Rock Climbing Angkatan LitaniAram", excerpt: "Angkatan LitaniAram mengikuti pelatihan panjat tebing dengan materi dasar belaying dan teknik ascending.", date: "15 Mei 2026", image: "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=600" },
+        { category: "Organisasi", title: "Musyawarah Besar Mapatek 2026", excerpt: "Musyawarah besar tahunan telah dilaksanakan untuk evaluasi kinerja dan pemilihan pengurus periode berikutnya.", date: "10 Mei 2026", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600" },
+        { category: "Prestasi", title: "Juara 1 Lomba Mapala Tingkat DIY", excerpt: "Mapatek Abhipraya meraih juara 1 dalam kompetisi pecinta alam tingkat DIY. Prestasi membanggakan!", date: "5 Mei 2026", image: "https://images.unsplash.com/photo-1569103 place-holder?w=600" }
+    ];
+
+    // Data Kalender
+    const kalenderEvents = [
+        { date: "2026-06-08", title: "Latihan Navigasi", type: "latihan" },
+        { date: "2026-06-15", title: "Ekspedisi Prau", type: "ekspedisi" },
+        { date: "2026-06-22", title: "Rock Climbing", type: "latihan" },
+        { date: "2026-06-28", title: "Rapat Pengurus", type: "latihan" },
+        { date: "2026-07-05", title: "Bakti Sosial", type: "konservasi" },
+        { date: "2026-07-12", title: "Diksar XV Hari 1", type: "diksar" },
+        { date: "2026-07-13", title: "Diksar XV Hari 2", type: "diksar" },
+        { date: "2026-07-14", title: "Diksar XV Hari 3", type: "diksar" },
+        { date: "2026-07-20", title: "Pendakian Merbabu", type: "ekspedisi" },
+        { date: "2026-06-06", title: "Ulang Tahun Mapatek", type: "latihan" }
+    ];
+
+    // Data FAQ
+    const faqData = [
+        { q: "Apa itu Mapatek Abhipraya?", a: "Mapatek Abhipraya adalah organisasi mahasiswa pencinta alam yang berdiri pada 19 Maret 2023 di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta. Kami bergerak di bidang konservasi lingkungan, pendidikan alam bebas, kegiatan petualangan, dan kemanusiaan." },
+        { q: "Bagaimana cara bergabung dengan Mapatek?", a: "Untuk bergabung, kamu harus mahasiswa aktif UST dan mengikuti rangkaian Diksar (Pendidikan Dasar) yang biasanya dibuka 2x setahun. Cek status pendaftaran di website ini atau hubungi admin via WhatsApp di 0822-1442-8371." },
+        { q: "Apa saja kegiatan rutin Mapatek?", a: "Kegiatan rutin kami meliputi: Latihan rutin (navigasi, rock climbing, survival), ekspedisi pendakian gunung, bakti sosial & konservasi lingkungan, pendidikan dasar (Diksar), dan berbagai pelatihan skill kealaman lainnya." },
+        { q: "Apakah ada biaya untuk bergabung?", a: "Terdapat biaya pendaftaran dan biaya Diksar yang bervariasi tergantung kebutuhan kegiatan. Biaya sudah termasuk akomodasi, konsumsi, perlengkapan, dan merchandise Mapatek. Informasi detail akan diberikan saat pendaftaran dibuka." },
+        { q: "Apa syarat mengikuti Diksar?", a: "Syarat utama: (1) Mahasiswa aktif UST, (2) Sehat jasmani dan rohani, (3) Bersedia mengikuti seluruh rangkaian Diksar, (4) Mengisi formulir pendaftaran, (5) Lolos wawancara seleksi, dan (6) Membayar biaya pendaftaran." },
+        { q: "Dimana lokasi basecamp Mapatek?", a: "Basecamp/sekretariat Mapatek Abhipraya berada di lingkungan Universitas Sarjanawiyata Tamansiswa (UST), Jl. Batikan UH III/1043, Tuntungan, Umbulharjo, Yogyakarta. Buka Senin-Jumat 15.00-18.00 WIB." },
+        { q: "Apakah perempuan boleh bergabung?", a: "Tentu saja! Mapatek Abhipraya terbuka untuk semua mahasiswa UST tanpa membedakan gender. Banyak anggota perempuan kami yang aktif dan berprestasi di berbagai kegiatan." },
+        { q: "Bagaimana jika saya pemula dan belum punya pengalaman?", a: "Tidak masalah! Diksar kami dirancang untuk semua level, dari pemula hingga berpengalaman. Kamu akan diajarkan semua skill dasar dari nol oleh senior yang sudah berpengalaman." }
+    ];
+
+    // Data Quiz
+    const quizQuestions = [
+        {
+            q: "Apa yang paling kamu cari dari kegiatan pendakian?",
+            options: [
+                { text: "Tantangan fisik dan adrenalin", type: "petualang" },
+                { text: "Ketenangan dan meditasi di alam", type: "kontemplatif" },
+                { text: "Menjaga kelestarian alam", type: "konservasionis" },
+                { text: "Bertemu dan belajar dari orang baru", type: "sosial" }
+            ]
+        },
+        {
+            q: "Saat berkemah, apa yang paling kamu nikmati?",
+            options: [
+                { text: "Api unggun dan cerita petualangan", type: "sosial" },
+                { text: "Menatap bintang di malam hari", type: "kontemplatif" },
+                { text: "Memasak bersama di alam terbuka", type: "petualang" },
+                { text: "Mengamati flora dan fauna sekitar", type: "konservasionis" }
+            ]
+        },
+        {
+            q: "Perlengkapan mana yang paling penting menurutmu?",
+            options: [
+                { text: "Peta dan kompas untuk navigasi", type: "petualang" },
+                { text: "Kantong sampah untuk bawa turun sampah", type: "konservasionis" },
+                { text: "Kamera untuk dokumentasi", type: "sosial" },
+                { text: "Buku catatan untuk jurnal perjalanan", type: "kontemplatif" }
+            ]
+        },
+        {
+            q: "Jika bertemu sampah di jalur pendakian, kamu akan?",
+            options: [
+                { text: "Pungut dan bawa turun, meski bukan sampahku", type: "konservasionis" },
+                { text: "Laporkan ke pengelola gunung", type: "sosial" },
+                { text: "Terus mendaki, fokus ke tujuan", type: "petualang" },
+                { text: "Dokumentasikan untuk edukasi", type: "kontemplatif" }
+            ]
+        },
+        {
+            q: "Apa motivasi utamamu mengikuti kegiatan alam?",
+            options: [
+                { text: "Menaklukkan puncak-puncak baru", type: "petualang" },
+                { text: "Melestarikan alam untuk generasi depan", type: "konservasionis" },
+                { text: "Membangun relasi dan persaudaraan", type: "sosial" },
+                { text: "Menemukan jati diri di alam", type: "kontemplatif" }
+            ]
+        }
+    ];
+
+    const quizResults = {
+        petualang: { icon: "🏔️", type: "The Adventurer - Si Petualang Sejati", desc: "Kamu adalah tipe pendaki yang selalu mencari tantangan dan adrenalin! Puncak-puncak tinggi dan jalur ekstrem adalah playground-mu. Kamu berani mengambil risiko dan selalu ingin mencoba hal baru. Semangat petualangmu menginspirasi orang di sekitarmu!" },
+        konservasionis: { icon: "🌿", type: "The Guardian - Penjaga Alam", desc: "Kamu adalah tipe pendaki yang sangat peduli terhadap kelestarian alam! Bagimu, gunung bukan hanya tempat untuk ditaklukkan, tapi ekosistem yang harus dilindungi. Prinsip Leave No Trace adalah pedoman hidupmu. Kamu adalah pahlawan bagi alam!" },
+        kontemplatif: { icon: "🌌", type: "The Philosopher - Sang Perenung", desc: "Kamu adalah tipe pendaki yang mencari makna dan kedamaian di alam! Setiap langkah pendakian adalah meditasi bagimu. Kamu suka mengamati keindahan alam, merenung di puncak, dan menulis jurnal perjalanan. Alam adalah guru terbesarmu!" },
+        sosial: { icon: "🤝", type: "The Connector - Penghubung Hati", desc: "Kamu adalah tipe pendaki yang paling menikmati kebersamaan! Bagimu, siapa yang mendaki lebih penting daripada ke mana mendaki. Kamu selalu ceria, mudah bergaul, dan menjadi lem yang menyatukan tim. Energi positipmu menular ke semua orang!" }
+    };
+
+    // ==================== FUNGSI FITUR BARU ====================
+
+    // === COUNTDOWN TIMER ===
+    const targetDate = new Date('2026-06-15T08:00:00').getTime();
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = targetDate - now;
+        if (distance < 0) {
+            document.getElementById('cd-days').textContent = '00';
+            document.getElementById('cd-hours').textContent = '00';
+            document.getElementById('cd-minutes').textContent = '00';
+            document.getElementById('cd-seconds').textContent = '00';
+            document.getElementById('countdownEventName').textContent = '🎉 Event Sedang Berlangsung!';
+            return;
+        }
+        document.getElementById('cd-days').textContent = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
+        document.getElementById('cd-hours').textContent = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
+        document.getElementById('cd-minutes').textContent = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+        document.getElementById('cd-seconds').textContent = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
     }
-    
-    container.innerHTML = galeriImages.map((img, i) => `
-        <div class="galeri-item" onclick="openModal('${img.src}')">
-            <img src="${img.src}" alt="${img.caption}" 
-                 onerror="this.onerror=null; this.src='https://via.placeholder.com/400x400?text=No+Image'; console.error('Gambar tidak ditemukan: ${img.src}');">
-            <div class="galeri-overlay">
-                <p><i class="fas fa-camera"></i> ${img.caption}</p>
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // === TESTIMONI ===
+    let currentTestimoni = 0;
+    function loadTestimoni() {
+        const track = document.getElementById('testimoniTrack');
+        const dots = document.getElementById('testimoniDots');
+        track.innerHTML = testimoniData.map(t => `
+            <div class="testimoni-card">
+                <img src="${t.photo}" alt="${t.name}" class="testimoni-photo" onerror="this.src='https://via.placeholder.com/100'">
+                <div class="testimoni-quote">${t.quote}</div>
+                <div class="testimoni-name">${t.name}</div>
+                <div class="testimoni-angkatan">${t.angkatan}</div>
             </div>
-        </div>
-    `).join('');
-}
+        `).join('');
+        dots.innerHTML = testimoniData.map((_, i) => `<div class="testimoni-dot ${i === 0 ? 'active' : ''}" onclick="goToTestimoni(${i})"></div>`).join('');
+    }
+    function updateTestimoni() {
+        const track = document.getElementById('testimoniTrack');
+        track.style.transform = `translateX(-${currentTestimoni * 100}%)`;
+        document.querySelectorAll('.testimoni-dot').forEach((d, i) => d.classList.toggle('active', i === currentTestimoni));
+    }
+    function nextTestimoni() { currentTestimoni = (currentTestimoni + 1) % testimoniData.length; updateTestimoni(); }
+    function prevTestimoni() { currentTestimoni = (currentTestimoni - 1 + testimoniData.length) % testimoniData.length; updateTestimoni(); }
+    function goToTestimoni(i) { currentTestimoni = i; updateTestimoni(); }
+    setInterval(nextTestimoni, 6000);
 
-// Load Agenda
-function loadAgenda() {
-    const container = document.getElementById('agendaGrid');
-    if (!container) return;
-    container.innerHTML = agendas.map(a => `
-        <div class="agenda-card">
-            <div class="agenda-date"><div class="day">${a.day}</div><div class="month">${a.month}</div></div>
-            <div class="agenda-content">
-                <h3 class="agenda-title">${a.title}</h3>
-                <div class="agenda-location"><i class="fas fa-map-marker-alt"></i> ${a.location}</div>
-                <p class="agenda-desc">${a.desc}</p>
-                <span class="agenda-status status-${a.status}">${a.status === 'upcoming' ? '📅 Akan Datang' : a.status === 'ongoing' ? '🔴 Berlangsung' : '✅ Selesai'}</span>
+    // === LEADERBOARD ===
+    function loadLeaderboard() {
+        const body = document.getElementById('leaderboardBody');
+        body.innerHTML = leaderboardData.map((u, i) => {
+            const rank = i + 1;
+            let rankClass = '', medal = rank;
+            if (rank === 1) { rankClass = 'top-1'; medal = '🥇'; }
+            else if (rank === 2) { rankClass = 'top-2'; medal = '🥈'; }
+            else if (rank === 3) { rankClass = 'top-3'; medal = '🥉'; }
+            return `
+                <div class="leaderboard-row ${rankClass}">
+                    <div class="leaderboard-rank">${medal}</div>
+                    <div class="leaderboard-user">
+                        <img src="${u.photo}" class="leaderboard-avatar" onerror="this.src='https://via.placeholder.com/40'">
+                        <div>
+                            <div class="leaderboard-name">${u.name}</div>
+                            <div class="leaderboard-badge">${u.angkatan}</div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-peaks">${u.peaks} puncak</div>
+                    <div class="leaderboard-points">${u.points} pts</div>
+                </div>
+            `;
+        }).join('');
+    }
+
+    // === POLLING ===
+    let hasVoted = localStorage.getItem('hasVotedPolling') === 'true';
+    function loadPolling() {
+        const container = document.getElementById('pollingOptions');
+        const totalVotes = pollingData.reduce((sum, p) => sum + p.votes, 0);
+        container.innerHTML = pollingData.map(p => {
+            const percent = ((p.votes / totalVotes) * 100).toFixed(1);
+            return `
+                <div class="polling-option ${hasVoted ? 'voted' : ''}" data-id="${p.id}" onclick="votePolling(${p.id})">
+                    <div class="polling-bar" style="width:${hasVoted ? percent : 0}%"></div>
+                    <div class="polling-option-content">
+                        <div class="polling-option-text">${p.text}</div>
+                        <div class="polling-option-percent">${percent}% (${p.votes})</div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        document.getElementById('pollingTotal').textContent = `Total ${totalVotes} suara`;
+    }
+    function votePolling(id) {
+        if (hasVoted) return;
+        const item = pollingData.find(p => p.id === id);
+        item.votes++;
+        hasVoted = true;
+        localStorage.setItem('hasVotedPolling', 'true');
+        loadPolling();
+        document.querySelector(`[data-id="${id}"]`).classList.add('selected');
+        showToast('✅ Terima kasih atas votingmu!');
+    }
+
+    // === CUACA GUNUNG ===
+    function loadCuaca() {
+        const grid = document.getElementById('cuacaGrid');
+        grid.innerHTML = cuacaData.map(c => `
+            <div class="cuaca-card">
+                <div class="cuaca-card-header">
+                    <div>
+                        <div class="cuaca-mountain-name">${c.name}</div>
+                        <div class="cuaca-mountain-loc"><i class="fas fa-map-marker-alt"></i> ${c.loc}</div>
+                    </div>
+                    <div class="cuaca-icon">${c.icon}</div>
+                </div>
+                <div class="cuaca-temp">${c.temp}°C</div>
+                <div class="cuaca-desc">${c.desc}</div>
+                <div class="cuaca-details">
+                    <div class="cuaca-detail-item"><i class="fas fa-tint"></i> ${c.humidity}%</div>
+                    <div class="cuaca-detail-item"><i class="fas fa-wind"></i> ${c.wind} km/h</div>
+                    <div class="cuaca-detail-item"><i class="fas fa-eye"></i> ${c.visibility} km</div>
+                </div>
+                <div class="cuaca-status ${c.status}">${c.status === 'aman' ? '✅ AMAN' : c.status === 'waspada' ? '⚠️ WASPADA' : '🚫 BAHAYA'}</div>
             </div>
-        </div>
-    `).join('');
-}
-
-// Modal Galeri
-function openModal(src) {
-    const modal = document.getElementById('imageModal');
-    const modalImg = document.getElementById('modalImage');
-    if (modal && modalImg) {
-        modal.classList.add('active');
-        modalImg.src = src;
+        `).join('');
     }
-}
 
-function closeModal() {
-    const modal = document.getElementById('imageModal');
-    if (modal) {
-        modal.classList.remove('active');
+    // === PETA INTERAKTIF ===
+    let petaMap;
+    function loadPeta() {
+        petaMap = L.map('petaMap').setView([-7.5, 110.4], 9);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap'
+        }).addTo(petaMap);
+        const colors = { basecamp: '#dc2626', gunung: '#2563eb', konservasi: '#16a34a', latihan: '#9333ea' };
+        petaLocations.forEach(loc => {
+            const icon = L.divIcon({
+                className: 'custom-marker',
+                html: `<div style="background:${colors[loc.type]};width:30px;height:30px;border-radius:50%;border:3px solid white;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>`,
+                iconSize: [30, 30]
+            });
+            L.marker([loc.lat, loc.lng], { icon }).addTo(petaMap)
+                .bindPopup(`<b>${loc.name}</b><br>${loc.desc}`);
+        });
     }
-}
 
-// Tutup modal saat klik di luar gambar
-document.getElementById('imageModal')?.addEventListener('click', function(e) {
-    if (e.target === this) {
-        closeModal();
+    // === BERITA ===
+    function loadBerita() {
+        const grid = document.getElementById('beritaGrid');
+        grid.innerHTML = beritaData.map(b => `
+            <div class="berita-card">
+                <img src="${b.image}" class="berita-image" onerror="this.src='https://via.placeholder.com/600x400?text=Mapatek'">
+                <div class="berita-content">
+                    <span class="berita-category">${b.category}</span>
+                    <h3 class="berita-title">${b.title}</h3>
+                    <p class="berita-excerpt">${b.excerpt}</p>
+                    <div class="berita-meta">
+                        <span><i class="far fa-calendar"></i> ${b.date}</span>
+                        <a href="#" class="berita-read-more">Baca <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        `).join('');
     }
-});
 
-    // Counter Animation
+    // === KALENDER ===
+    let kalenderDate = new Date();
+    let kalenderFilter = 'all';
+    function loadKalender() {
+        const grid = document.getElementById('kalenderGrid');
+        const year = kalenderDate.getFullYear();
+        const month = kalenderDate.getMonth();
+        const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+        document.getElementById('kalenderTitle').textContent = `${monthNames[month]} ${year}`;
+        
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+        const daysInPrevMonth = new Date(year, month, 0).getDate();
+        const today = new Date();
+        
+        let html = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].map(d => `<div class="kalender-day-name">${d}</div>`).join('');
+        
+        for (let i = 0; i < firstDay; i++) {
+            html += `<div class="kalender-day other-month"><div class="kalender-day-number">${daysInPrevMonth - firstDay + i + 1}</div></div>`;
+        }
+        
+        for (let d = 1; d <= daysInMonth; d++) {
+            const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+            const isToday = today.getDate() === d && today.getMonth() === month && today.getFullYear() === year;
+            const dayEvents = kalenderEvents.filter(e => e.date === dateStr && (kalenderFilter === 'all' || e.type === kalenderFilter));
+            html += `<div class="kalender-day ${isToday ? 'today' : ''}"><div class="kalender-day-number">${d}</div>${dayEvents.map(e => `<div class="kalender-event ${e.type}" title="${e.title}">${e.title}</div>`).join('')}</div>`;
+        }
+        
+        const totalCells = firstDay + daysInMonth;
+        const remaining = (7 - (totalCells % 7)) % 7;
+        for (let i = 1; i <= remaining; i++) {
+            html += `<div class="kalender-day other-month"><div class="kalender-day-number">${i}</div></div>`;
+        }
+        
+        grid.innerHTML = html;
+    }
+    function changeMonth(delta) {
+        kalenderDate.setMonth(kalenderDate.getMonth() + delta);
+        loadKalender();
+    }
+    function filterKalender(type, btn) {
+        kalenderFilter = type;
+        document.querySelectorAll('.kalender-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        loadKalender();
+    }
+
+    // === FAQ ===
+    function loadFAQ() {
+        const container = document.getElementById('faqContainer');
+        container.innerHTML = faqData.map((f, i) => `
+            <div class="faq-item" onclick="toggleFAQ(${i})">
+                <div class="faq-question">
+                    <span>${f.q}</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-content">${f.a}</div>
+                </div>
+            </div>
+        `).join('');
+    }
+    function toggleFAQ(i) {
+        document.querySelectorAll('.faq-item')[i].classList.toggle('active');
+    }
+
+    // === QUIZ ===
+    let currentQuiz = 0;
+    let quizAnswers = [];
+    function loadQuizQuestion() {
+        const q = quizQuestions[currentQuiz];
+        document.getElementById('quizCounter').textContent = `Pertanyaan ${currentQuiz + 1} dari ${quizQuestions.length}`;
+        document.getElementById('quizQuestion').textContent = q.q;
+        document.getElementById('quizProgressBar').style.width = `${((currentQuiz) / quizQuestions.length) * 100}%`;
+        const letters = ['A', 'B', 'C', 'D'];
+        document.getElementById('quizOptions').innerHTML = q.options.map((o, i) => `
+            <div class="quiz-option" onclick="answerQuiz('${o.type}')">
+                <div class="quiz-option-letter">${letters[i]}</div>
+                <div>${o.text}</div>
+            </div>
+        `).join('');
+    }
+    function answerQuiz(type) {
+        quizAnswers.push(type);
+        currentQuiz++;
+        if (currentQuiz < quizQuestions.length) {
+            loadQuizQuestion();
+        } else {
+            showQuizResult();
+        }
+    }
+    function showQuizResult() {
+        const counts = {};
+        quizAnswers.forEach(a => counts[a] = (counts[a] || 0) + 1);
+        const result = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+        const r = quizResults[result];
+        document.getElementById('quizContent').style.display = 'none';
+        document.getElementById('quizResult').style.display = 'block';
+        document.getElementById('quizResultIcon').textContent = r.icon;
+        document.getElementById('quizResultType').textContent = r.type;
+        document.getElementById('quizResultDesc').textContent = r.desc;
+        document.getElementById('quizProgressBar').style.width = '100%';
+        const shareText = `🎯 Hasil Quiz Kepribadian Pendaki: ${r.type} ${r.icon}%0A%0A${r.desc}%0A%0ACoba quiz-nya di Portal Mapatek Abhipraya!`;
+        document.getElementById('shareWA').href = `https://wa.me/?text=${shareText}`;
+        document.getElementById('shareTW').href = `https://twitter.com/intent/tweet?text=${shareText}`;
+        window.quizShareText = `Hasil Quiz Kepribadian Pendaki: ${r.type} ${r.icon}\n\n${r.desc}\n\nCoba quiz-nya di Portal Mapatek Abhipraya!`;
+    }
+    function restartQuiz() {
+        currentQuiz = 0;
+        quizAnswers = [];
+        document.getElementById('quizContent').style.display = 'block';
+        document.getElementById('quizResult').style.display = 'none';
+        loadQuizQuestion();
+    }
+    function copyToClipboard() {
+        navigator.clipboard.writeText(window.quizShareText || 'Coba Quiz Kepribadian Pendaki di Portal Mapatek Abhipraya!');
+        showToast('📋 Teks berhasil disalin! Paste di Instagram');
+    }
+
+    // === SEARCH GLOBAL ===
+    const searchData = [
+        { title: "Tentang Mapatek Abhipraya", category: "Informasi", icon: "fa-info-circle", section: "#tentang" },
+        { title: "Struktur Pengurus", category: "Informasi", icon: "fa-users", section: "#pengurus" },
+        { title: "Agenda Kegiatan", category: "Kegiatan", icon: "fa-calendar", section: "#agenda" },
+        { title: "Galeri Foto", category: "Media", icon: "fa-images", section: "#galeri" },
+        { title: "Quiz Kepribadian Pendaki", category: "Interaktif", icon: "fa-question-circle", section: "#quiz" },
+        { title: "Berita & Pengumuman", category: "Informasi", icon: "fa-newspaper", section: "#berita" },
+        { title: "Pendaftaran Anggota", category: "Pendaftaran", icon: "fa-user-plus", section: "#pendaftaran" },
+        { title: "Arsip Dokumen", category: "Dokumen", icon: "fa-folder", section: "#arsip" },
+        { title: "Kontak Kami", category: "Kontak", icon: "fa-phone", section: "#kontak" },
+        { title: "Laporan Ekspedisi Gunung Rinjani", category: "Arsip", icon: "fa-file-pdf", section: "#arsip" },
+        { title: "AD/ART Mapatek", category: "Arsip", icon: "fa-file-pdf", section: "#arsip" },
+        { title: "WhatsApp Admin", category: "Kontak", icon: "fa-whatsapp", section: "#kontak" },
+        { title: "Instagram Mapatek", category: "Kontak", icon: "fa-instagram", section: "#kontak" },
+        { title: "FAQ Pertanyaan Umum", category: "Informasi", icon: "fa-question", section: ".faq-section" },
+        { title: "Leaderboard Pendakian", category: "Interaktif", icon: "fa-trophy", section: ".leaderboard-section" },
+        { title: "Info Cuaca Gunung", category: "Informasi", icon: "fa-cloud-sun", section: ".cuaca-section" },
+        { title: "Peta Lokasi Kegiatan", category: "Informasi", icon: "fa-map", section: ".peta-section" },
+        { title: "Kalender Kegiatan", category: "Kegiatan", icon: "fa-calendar-alt", section: ".kalender-section" }
+    ];
+    function openGlobalSearch() {
+        document.getElementById('searchGlobalOverlay').classList.add('active');
+        setTimeout(() => document.getElementById('globalSearchInput').focus(), 100);
+    }
+    function closeGlobalSearch() {
+        document.getElementById('searchGlobalOverlay').classList.remove('active');
+        document.getElementById('globalSearchInput').value = '';
+    }
+    function performGlobalSearch() {
+        const query = document.getElementById('globalSearchInput').value.toLowerCase();
+        const results = document.getElementById('globalSearchResults');
+        if (!query) {
+            results.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--gray-500);"><i class="fas fa-search" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>Ketik untuk mencari...</div>';
+            return;
+        }
+        const filtered = searchData.filter(d => d.title.toLowerCase().includes(query) || d.category.toLowerCase().includes(query));
+        if (filtered.length === 0) {
+            results.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--gray-500);">Tidak ada hasil ditemukan</div>';
+            return;
+        }
+        results.innerHTML = filtered.map(d => `
+            <div class="search-result-item" onclick="navigateTo('${d.section}')">
+                <div class="search-result-icon"><i class="fas ${d.icon}"></i></div>
+                <div class="search-result-text">
+                    <div class="search-result-title">${d.title}</div>
+                    <div class="search-result-category">${d.category}</div>
+                </div>
+                <i class="fas fa-arrow-right" style="color:var(--gray-400);"></i>
+            </div>
+        `).join('');
+    }
+    function navigateTo(section) {
+        closeGlobalSearch();
+        const el = document.querySelector(section);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+            e.preventDefault();
+            openGlobalSearch();
+        }
+        if (e.key === 'Escape') closeGlobalSearch();
+    });
+
+    // === LOAD AGENDA & GALERI (FUNGSI LAMA) ===
+    function loadAgenda() {
+        const container = document.getElementById('agendaGrid');
+        if (!container) return;
+        container.innerHTML = agendas.map(a => `
+            <div class="agenda-card">
+                <div class="agenda-date"><div class="day">${a.day}</div><div class="month">${a.month}</div></div>
+                <div class="agenda-content">
+                    <h3 class="agenda-title">${a.title}</h3>
+                    <div class="agenda-location"><i class="fas fa-map-marker-alt"></i> ${a.location}</div>
+                    <p class="agenda-desc">${a.desc}</p>
+                    <span class="agenda-status status-${a.status}">${a.status === 'upcoming' ? '📅 Akan Datang' : a.status === 'ongoing' ? '🔴 Berlangsung' : '✅ Selesai'}</span>
+                </div>
+            </div>
+        `).join('');
+    }
+    function loadGaleri() {
+        const container = document.getElementById('galeriGrid');
+        if (!container) return;
+        container.innerHTML = galeriImages.map(img => `
+            <div class="galeri-item" onclick="openModal('${img.src}')">
+                <img src="${img.src}" alt="${img.caption}" onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
+                <div class="galeri-overlay"><p><i class="fas fa-camera"></i> ${img.caption}</p></div>
+            </div>
+        `).join('');
+    }
+
+    // === COUNTER ANIMATION ===
     function animateCounter(element, target) {
         let current = 0;
         const increment = target / 50;
         const timer = setInterval(() => {
             current += increment;
-            if (current >= target) {
-                element.textContent = target;
-                clearInterval(timer);
-            } else {
-                element.textContent = Math.floor(current);
-            }
+            if (current >= target) { element.textContent = target; clearInterval(timer); }
+            else { element.textContent = Math.floor(current); }
         }, 30);
     }
 
-    // Dark Mode
+    // === DARK MODE ===
     function toggleDarkMode() {
         document.body.classList.toggle('dark-mode');
         localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
         const icon = document.querySelector('.dark-mode-toggle i');
-        if (document.body.classList.contains('dark-mode')) {
-            icon.classList.remove('fa-moon');
-            icon.classList.add('fa-sun');
-        } else {
-            icon.classList.remove('fa-sun');
-            icon.classList.add('fa-moon');
-        }
+        if (document.body.classList.contains('dark-mode')) { icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); }
+        else { icon.classList.remove('fa-sun'); icon.classList.add('fa-moon'); }
         showToast(document.body.classList.contains('dark-mode') ? '🌙 Mode Gelap Aktif' : '☀️ Mode Terang Aktif');
+        if (petaMap) setTimeout(() => petaMap.invalidateSize(), 300);
     }
 
-    // Back to Top
-    function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Toast Notification
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
     function showToast(message) {
         const toast = document.getElementById('toast');
         toast.textContent = message;
@@ -653,36 +2167,27 @@ document.getElementById('imageModal')?.addEventListener('click', function(e) {
         setTimeout(() => toast.classList.remove('show'), 3000);
     }
 
-    // Modal Galeri
     function openModal(src) {
         const modal = document.getElementById('imageModal');
-        const modalImg = document.getElementById('modalImage');
+        document.getElementById('modalImage').src = src;
         modal.classList.add('active');
-        modalImg.src = src;
     }
-    function closeModal() {
-        document.getElementById('imageModal').classList.remove('active');
-    }
+    function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
 
-    // Scroll event untuk Back to Top
     window.addEventListener('scroll', () => {
         const backBtn = document.getElementById('backToTop');
         if (window.scrollY > 300) backBtn.classList.add('show');
         else backBtn.classList.remove('show');
     });
 
-    // Inisialisasi Dark Mode dari localStorage
     if (localStorage.getItem('darkMode') === 'true') {
         document.body.classList.add('dark-mode');
         document.querySelector('.dark-mode-toggle i').classList.remove('fa-moon');
         document.querySelector('.dark-mode-toggle i').classList.add('fa-sun');
     }
 
-    // ==================== FUNGSI LAMA (DI PERTAHANKAN) ====================
-    
-    function toggleMenu() {
-        document.getElementById('navLinks').classList.toggle('active');
-    }
+    // === FUNGSI LAMA (DI PERTAHANKAN) ===
+    function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
     document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active'));
     });
@@ -716,7 +2221,6 @@ document.getElementById('imageModal')?.addEventListener('click', function(e) {
         });
     }
 
-    // Fetch status pendaftaran
     fetch('status.json?t=' + Date.now())
         .then(res => res.json())
         .then(data => {
@@ -731,26 +2235,19 @@ document.getElementById('imageModal')?.addEventListener('click', function(e) {
             document.getElementById('statusContainer').innerHTML = `<div class="status-box status-tutup"><div class="status-icon"><i class="fas fa-info-circle"></i></div><h2 style="color:#991b1b;">INFORMASI PENDAFTARAN</h2><p>Untuk informasi pendaftaran anggota baru, hubungi admin kami.</p><div style="margin-top:1.5rem;"><a href="https://wa.me/6282214428371" target="_blank" class="btn-daftar" style="background:#25D366;"><i class="fab fa-whatsapp"></i> Chat Admin</a></div></div>`;
         });
 
-    // Chatbot functionality
-    function toggleChatbot() {
-        const container = document.getElementById('chatbotContainer');
-        container.classList.toggle('active');
-    }
+    function toggleChatbot() { document.getElementById('chatbotContainer').classList.toggle('active'); }
 
     function sendMessage() {
         const input = document.getElementById('chatInput');
         const message = input.value.trim();
         if (!message) return;
-        
         const messagesContainer = document.getElementById('chatMessages');
         const userMessageDiv = document.createElement('div');
         userMessageDiv.className = 'message user';
         userMessageDiv.innerHTML = `<div class="message-avatar"><i class="fas fa-user" style="font-size: 0.7rem;"></i></div><div class="message-content">${escapeHtml(message)}</div>`;
         messagesContainer.appendChild(userMessageDiv);
-        
         input.value = '';
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
-        
         setTimeout(() => {
             const botResponse = getIntelligentResponse(message);
             const botMessageDiv = document.createElement('div');
@@ -769,246 +2266,14 @@ document.getElementById('imageModal')?.addEventListener('click', function(e) {
     
     function getIntelligentResponse(message) {
         const msg = message.toLowerCase();
-    }
-        function getIntelligentResponse(message) {
-    const msg = message.toLowerCase();
-    
-    // ==================== PROFIL & SEJARAH MAPATEK (50+ variasi) ====================
-    if (msg.includes('apa itu mapatek') || msg.includes('mapatek itu apa') || msg.includes('pengertian mapatek') || 
-        msg.includes('mapatek adalah') || (msg.includes('mapatek') && msg.includes('organisasi')) ||
-        msg.includes('mapatek abhipraya itu') || msg.includes('jelaskan mapatek')) {
-        return "🌲 <strong>Mapatek Abhipraya</strong> adalah organisasi mahasiswa pecinta alam yang berdiri pada <strong>19 Maret 2023</strong> di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta. Nama 'Abhipraya' berasal dari bahasa Sanskerta yang berarti 'harapan' atau 'cita-cita'. Organisasi ini bergerak di bidang konservasi lingkungan, pendidikan alam bebas, kegiatan petualangan, dan kemanusiaan. Visi kami adalah menjadi garda terdepan dalam pelestarian alam dan pembentukan karakter generasi muda yang berwawasan kebangsaan.";
-    }
-    
-    if (msg.includes('sejarah mapatek') || msg.includes('sejarah berdirinya mapatek') || msg.includes('mapatek berdiri') ||
-        msg.includes('kapan mapatek berdiri') || msg.includes('tanggal berdirinya mapatek') || msg.includes('awal mula mapatek') ||
-        msg.includes('bagaimana sejarah mapatek') || msg.includes('cerita berdirinya mapatek') || (msg.includes('sejarah') && msg.includes('mapatek'))) {
-        return "📜 <strong>Sejarah Mapatek Abhipraya</strong><br><br>Mapatek Abhipraya berdiri pada <strong>19 Maret 2023</strong> di Universitas Sarjanawiyata Tamansiswa Yogyakarta. Berawal dari kegelisahan 5 mahasiswa pencinta alam akan minimnya wadah ekspresi dan pengembangan diri di bidang kealamaan. Kelima pendiri yang tergabung dalam <strong>Angkatan PancaTompak</strong> (2023) berkomitmen menciptakan organisasi yang fokus pada konservasi alam, pendidikan petualangan, dan pembentukan karakter. Hingga kini, Mapatek telah melahirkan 4 angkatan: PancaTompak (2023), TapakKaki (2024), TedakDaivat (2025), dan LitaniAram (2026).";
-    }
-    
-    if (msg.includes('visi mapatek') || msg.includes('visi misi mapatek') || msg.includes('tujuan mapatek') ||
-        msg.includes('mapatek bertujuan') || msg.includes('apa visi mapatek') || msg.includes('visi organisasi mapatek')) {
-        return "🎯 <strong>Visi & Misi Mapatek Abhipraya</strong><br><br><strong>Visi:</strong> Menjadi organisasi pecinta alam yang unggul dalam konservasi lingkungan dan pembentukan karakter generasi muda yang berwawasan kebangsaan serta berjiwa kepemimpinan.<br><br><strong>Misi:</strong><br>1. Melestarikan alam melalui kegiatan konservasi dan edukasi lingkungan<br>2. Mengembangkan softskill kepemimpinan, kemandirian, dan kerja sama tim<br>3. Menyelenggarakan pendidikan dan latihan dasar kependakian (Diksar)<br>4. Menjalin kerjasama dengan organisasi pecinta alam lainnya<br>5. Mengabadikan kegiatan melalui dokumentasi dan publikasi ilmiah<br>6. Membentuk kader-kader pecinta alam yang tangguh dan berwawasan luas";
-    }
-    
-    if (msg.includes('angkatan mapatek') || msg.includes('nama angkatan mapatek') || msg.includes('pancatompak') || 
-        msg.includes('tapakkaki') || msg.includes('tedakdaivat') || msg.includes('litaniaram') || msg.includes('angkatan pendiri') ||
-        msg.includes('ada berapa angkatan') || msg.includes('daftar angkatan mapatek')) {
-        return "🌟 <strong>Angkatan Mapatek Abhipraya:</strong><br><br>• <strong>PancaTompak (2023)</strong> - Angkatan pendiri, 5 orang perintis yang meletakkan fondasi organisasi. Nama berarti 'Lima Puncak Harapan'.<br>• <strong>TapakKaki (2024)</strong> - Pengukir jejak ekspedisi dan konservasi alam. 'Mengukir Jejak Perjuangan'.<br>• <strong>TedakDaivat (2025)</strong> - Spesialis pendakian gunung dan rock climbing. 'Menapaki Puncak Tertinggi'.<br>• <strong>LitaniAram (2026)</strong> - Generasi penerus dengan fokus konservasi dan edukasi lingkungan. 'Pelita bagi Alam'.<br><br>Setiap angkatan memiliki ciri khas dan kontribusi unik bagi perkembangan Mapatek! 🏔️";
-    }
-    
-    if (msg.includes('pendiri mapatek') || msg.includes('siapa pendiri mapatek') || msg.includes('pencetus mapatek') ||
-        msg.includes('siapa yang mendirikan mapatek') || msg.includes('pendiri organisasi mapatek')) {
-        return "👥 <strong>Pendiri Mapatek Abhipraya</strong><br><br>Mapatek Abhipraya didirikan oleh 5 orang mahasiswa pencinta alam yang tergabung dalam Angkatan <strong>PancaTompak</strong> pada tahun 2023. Kelima pendiri ini memiliki visi yang sama untuk menciptakan wadah bagi mahasiswa pecinta alam di lingkungan Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta. Mereka adalah arsitek mimpi yang meletakkan batu pertama berdirinya Mapatek Abhipraya hingga saat ini.";
-    }
-    
-    if (msg.includes('struktur mapatek') || msg.includes('pengurus mapatek') || msg.includes('kepengurusan mapatek') ||
-        msg.includes('siapa ketua mapatek') || msg.includes('struktur organisasi mapatek') || msg.includes('pengurus inti mapatek')) {
-        return "👥 <strong>Struktur Pengurus Mapatek Abhipraya Periode 2025-2026</strong><br><br>• <strong>Ketua Umum:</strong> Machmud Chabibul Lathif (NIM: 2024018064)<br>• <strong>Sekretaris Jenderal:</strong> Putri Robet (NIM: 2024018007)<br>• <strong>Sekretaris Wakil:</strong> Tsyei Dayana Knyartutu (NIM: 2024018006)<br>• <strong>Bendahara 1:</strong> Rosa Bandatia (NIM: 2024018028)<br>• <strong>Koordinator Rock Climbing:</strong> Tresia Utami Sulensi (NIM: 2024013058)<br>• <strong>Koordinator Gunung Hutan:</strong> Muhammad Musfian Sutrawardi (NIM: 2023013044)<br>• <strong>Koordinator Logistik:</strong> Gahar Albani Rasyid (NIM: 2024019012)<br>• <strong>Koordinator Dokumentasi:</strong> Fridolinus Jeri Kasman (NIM: 2023018008)<br>• <strong>Tim PDD:</strong> Laura Mahatta Rismavi Hendra (NIM: 2024012037)";
+        if (msg.includes('apa itu mapatek') || msg.includes('mapatek itu apa')) return "🌲 <strong>Mapatek Abhipraya</strong> adalah organisasi mahasiswa pecinta alam yang berdiri pada <strong>19 Maret 2023</strong> di UST Yogyakarta.";
+        if (msg.includes('sejarah')) return "📜 Mapatek Abhipraya berdiri pada <strong>19 Maret 2023</strong> di UST Yogyakarta oleh 5 mahasiswa pencinta alam (Angkatan PancaTompak).";
+        if (msg.includes('pendaftaran') || msg.includes('daftar')) return "📝 Cek bagian <strong>Pendaftaran</strong> di website ini atau hubungi WA: <strong>0822-1442-8371</strong>";
+        if (msg.includes('terima kasih') || msg.includes('makasih')) return "Sama-sama! 😊 Senang bisa membantu! 🏔️";
+        if (msg.match(/\b(halo|hai|hello|hi|pagi|siang|sore|malam)\b/)) return "Halo! 👋 Ada yang bisa saya bantu tentang Mapatek, pendakian, atau UST?";
+        return "🌿 Maaf, saya belum memahami pertanyaan Anda. Coba tanyakan tentang: organisasi Mapatek, pendakian, rock climbing, survival, P3K, konservasi, atau UST!";
     }
 
-    // ==================== GUNUNG HUTAN & PENDAKIAN (500+ variasi) ====================
-    if (msg.includes('cara packing carrier') || msg.includes('packing carrier yang benar') || msg.includes('cara mengemas carrier') ||
-        msg.includes('cara masukkan barang ke carrier') || msg.includes('cara menata carrier') || msg.includes('packing tas gunung') ||
-        (msg.includes('carrier') && msg.includes('cara')) || (msg.includes('tas gunung') && msg.includes('packing'))) {
-        return "🎒 <strong>Cara Packing Carrier yang Benar:</strong><br><br>📌 <strong>Aturan Dasar:</strong><br>• Barang berat (air, kompor, logistik) diletakkan dekat punggung (tengah carrier)<br>• Barang ringan (sleeping bag, pakaian) di bagian bawah carrier<br>• Barang sering dipakai (raincoat, snack, P3K) di top lid/akses cepat<br>• Tenda bisa diikat di luar bagian bawah atau atas carrier<br>• Matras digulung di sisi kiri/kanan carrier (seimbang)<br>• Air minum diletakkan di kedua sisi carrier untuk keseimbangan<br><br>📏 <strong>Tips:</strong> Berat total carrier ideal 20-25% dari berat badan! Jangan melebihi 30% untuk pendakian panjang.";
-    }
-    
-    if ((msg.includes('fungsi carrier') || msg.includes('guna carrier') || msg.includes('manfaat carrier')) && 
-        (msg.includes('tas gunung') || msg.includes('ransel'))) {
-        return "🎒 <strong>Fungsi Carrier/Tas Gunung:</strong><br><br>Carrier adalah ransel khusus pendakian dengan kapasitas 40-80 liter. Fungsinya:<br>• Mendistribusikan beban secara merata ke pinggul (hip belt) dan bahu<br>• Menyimpan peralatan dengan sistem kompartemen yang terorganisir<br>• Dilengkapi rain cover untuk proteksi dari hujan<br>• Frame internal/aluminium untuk menjaga bentuk dan kenyamanan saat didaki<br>• Sistem suspensi yang dapat disesuaikan dengan panjang punggung<br><br>📌 Tips: Untuk pendakian 1-3 hari gunakan kapasitas 40-50L, untuk >3 hari gunakan 60-80L.";
-    }
-    
-    if (msg.includes('teknik navigasi') || msg.includes('cara menggunakan kompas') || msg.includes('membaca peta') ||
-        msg.includes('navigasi darat') || msg.includes('orientasi medan') || msg.includes('back bearing') ||
-        msg.includes('azimuth') || msg.includes('resection') || (msg.includes('kompas') && msg.includes('arah'))) {
-        return "🧭 <strong>Teknik Navigasi Dasar dengan Kompas & Peta:</strong><br><br>📌 <strong>1. Orientasi Peta:</strong> Sejajarkan peta dengan arah utara kompas (putar peta hingga garis utara peta searah dengan jarum utara kompas)<br><br>📌 <strong>2. Back Bearing:</strong> Tentukan arah dari posisi kita ke target dengan rumus: Azimuth = Azimuth + 180° (jika >360 kurangi 360)<br><br>📌 <strong>3. Resection:</strong> Tentukan posisi kita di peta dengan menggunakan minimal 2 titik referensi yang diketahui<br><br>📌 <strong>4. Azimuth:</strong> Sudut arah perjalanan (0-360 derajat). 0° = Utara, 90° = Timur, 180° = Selatan, 270° = Barat<br><br>⚠️ Ingat: Kompas tidak berfungsi optimal di dekat besi/logam besar, kabel listrik tegangan tinggi, atau handphone!";
-    }
-    
-    if (msg.includes('persiapan pendakian') || msg.includes('tips pendakian gunung') || msg.includes('syarat pendakian') ||
-        msg.includes('apa yang harus disiapkan untuk pendakian') || msg.includes('perlengkapan pendakian pemula') ||
-        msg.includes('persiapan sebelum naik gunung') || (msg.includes('tips') && msg.includes('pendakian'))) {
-        return "⛰️ <strong>Tips Persiapan Pendakian Gunung untuk Pemula:</strong><br><br>✅ <strong>H-14 s.d H-7:</strong><br>✓ Latihan fisik: jogging 3-4x/minggu, naik turun tangga dengan beban carrier 10-15kg<br>✓ Cek kondisi cuaca di BMKG atau website resmi gunung<br><br>✅ <strong>H-7 s.d H-3:</strong><br>✓ Urus izin pendakian (SIMAKSI/SIMAKS) ke pihak Taman Nasional/Balai Konservasi<br>✓ Siapkan perlengkapan 10 essentials<br>✓ Bawa obat pribadi dan P3K lengkap<br>✓ Bawa uang tunai cadangan dan power bank<br><br>✅ <strong>H-1:</strong><br>✓ Informasikan rencana pendakian ke keluarga/teman (rute, jadwal, kontak darurat)<br>✓ Cek ulang perlengkapan<br>✓ Istirahat cukup, jaga hidrasi<br><br>✅ <strong>Saat Pendakian:</strong><br>✓ Jangan malu untuk turnback jika kondisi tidak memungkinkan (cuaca buruk, fisik drop)<br>✓ Jaga kebersihan: bawa turun semua sampah!<br><br>📌 Prinsip: Puncak bukan segalanya, keselamatan adalah nomor satu!";
-    }
-    
-    if (msg.includes('10 essentials') || msg.includes('perlengkapan wajib pendakian') || msg.includes('peralatan pendakian wajib') ||
-        msg.includes('alat yang harus dibawa saat pendakian') || msg.includes('daftar barang pendakian')) {
-        return "🎒 <strong>10 Essentials (Perlengkapan Wajib Pendakian):</strong><br><br>1. <strong>Navigasi:</strong> Peta, kompas, GPS (cadangan), whistle (peluit)<br>2. <strong>Headlamp/Senter:</strong> + baterai cadangan minimal 1 set<br>3. <strong>Perlindungan:</strong> Jaket windproof/raincoat, sunscreen, topi/bandana, sarung tangan<br>4. <strong>P3K + Obat Pribadi:</strong> Plester, betadine, perban, obat sakit kepala, obat diare, minyak kayu putih<br>5. <strong>Pisau Serbaguna/Multitool:</strong> Untuk memotong, membuka kaleng, dll<br>6. <strong>Api:</strong> Korek api waterproof (simpan di tempat kedap air), lighter, ferro rod (cadangan)<br>7. <strong>Tempat Berlindung Darurat:</strong> Tenda darurat / bivy sack / ponco<br>8. <strong>Peralatan Masak:</strong> Kompor portable, mess tin, sendok+gabus, wind shield<br>9. <strong>Makanan Cadangan:</strong> Energy bar, coklat, kacang-kacangan (minimal 1 hari ekstra)<br>10. <strong>Air + Sistem Filtrasi:</strong> Minimal 3L per hari + tablet pemurni air / filter air portable<br><br>⚠️ Jangan lupa: Sleeping bag, matras, tenda (untuk pendakian >1 hari)!";
-    }
-    
-    if (msg.includes('sleeping bag') && (msg.includes('jenis') || msg.includes('pilih') || msg.includes('fungsi'))) {
-        return "🛌 <strong>Sleeping Bag (Kantung Tidur) untuk Pendakian:</strong><br><br><strong>Jenis Berdasarkan Bahan:</strong><br>• <strong>Synthetic (Serat Sintetis):</strong> Lebih murah, tetap hangat meski basah, cepat kering, tapi lebih berat dan bulky. Cocok untuk pemula dan cuaca basah.<br>• <strong>Down (Bulu Angsa):</strong> Lebih ringan, kompresi kecil (hemat tempat), lebih hangat per gram, tapi mahal dan TIDAK hangat jika basah. Cocok untuk ekspedisi panjang dan cuaca kering.<br><br><strong>Suhu Operasional (Rating Suhu):</strong><br>• <strong>Comfort (TS舒适):</strong> Suhu nyaman untuk tidur (wanita)<br>• <strong>Limit (TS limit):</strong> Batas bawah masih nyaman untuk pria<br>• <strong>Extreme (TS ekstrem):</strong> Batas survival (tidak nyaman, hanya bertahan hidup)<br><br><strong>Perawatan:</strong> Jangan simpan dalam kondisi terkompresi dalam waktu lama! Gantung atau simpan longgar di tempat kering.";
-    }
-    
-    if (msg.includes('tenda pendakian') || (msg.includes('jenis tenda') && msg.includes('gunung')) || msg.includes('cara memilih tenda')) {
-        return "🏕️ <strong>Jenis Tenda Pendakian & Cara Memilihnya:</strong><br><br><strong>1. Dome Tent (Tenda Kubah):</strong> Paling umum digunakan, kuat terhadap angin dari berbagai arah, mudah didirikan. Cocok untuk pemula.<br><br><strong>2. Tunnel Tent (Tenda Terowongan):</strong> Ringan, luas, aerodinamis, tapi kurang stabil di angin samping yang kencang. Cocok untuk ekspedisi.<br><br><strong>3. A-Frame (Tenda Segitiga):</strong> Desain klasik, sangat ringan, mudah didirikan, tapi ruang dalam sempit. Cocok untuk backpacking ultralight.<br><br><strong>4. Ultralight Tent (Trekking Pole Tent):</strong> Sangat ringan (bisa <1kg), menggunakan tiang trekking pole sebagai penyangga. Cocok untuk pendaki berpengalaman.<br><br><strong>Komponen Tenda:</strong><br>• Flysheet (lapisan luar anti air)<br>• Inner (lapisan dalam dari mesh untuk sirkulasi)<br>• Pole (tiang dari alumunium/fiberglass)<br>• Pasak (stakes) untuk mengikat ke tanah<br>• Guyline (tali penguat tambahan untuk angin kencang)";
-    }
-    
-    if (msg.includes('kompor pendakian') || (msg.includes('kompor') && msg.includes('gunung')) || msg.includes('alat masak pendakian')) {
-        return "🔥 <strong>Kompor Pendakian & Cara Penggunaan:</strong><br><br><strong>Jenis Kompor Berdasarkan Bahan Bakar:</strong><br><br>1. <strong>Kompor Gas (Canister):</strong><br>   • Praktis, mudah digunakan, nyala api stabil<br>   • Gunakan gas campuran isobutane-propane (lebih efisien di ketinggian)<br>   • Cocok untuk ketinggian <3000 mdpl<br>   • Kekurangan: repot membawa canister bekas<br><br>2. <strong>Kompor Spiritus (Alkohol):</strong><br>   • Ringan, senyap (tidak berisik), minim moving part<br>   • Bahan bakar mudah didapat (alkohol 96%)<br>   • Lebih lambat memasak, tidak cocok di angin kencang<br><br>3. <strong>Kompor Multifuel:</strong><br>   • Bisa pakai bensin, kerosene, atau gas<br>   • Cocok untuk ekspedisi panjang dan ketinggian ekstrim (>4000 mdpl)<br>   • Lebih berat dan mahal<br><br><strong>Cara Pakai Kompor Gas:</strong> Pasang canister → buka katup sedikit → nyalakan api (gunting api atau korek) → masak → tutup katup setelah selesai. Selalu gunakan wind shield (pelindung angin) dan jauhkan dari tenda/kain mudah terbakar!";
-    }
-
-    // ==================== ROCK CLIMBING (500+ variasi) ====================
-    if ((msg.includes('harness') || msg.includes('sabuk pengaman panjat')) && (msg.includes('fungsi') || msg.includes('bagian'))) {
-        return "🪢 <strong>Harness (Sabuk Pengaman Panjat Tebing):</strong><br><br><strong>Fungsi:</strong> Menghubungkan tubuh pemanjat dengan sistem tali pengaman, mendistribusikan beban jatuh ke seluruh tubuh.<br><br><strong>Bagian-bagian Harness:</strong><br>• <strong>Waist Belt (Ikat Pinggang):</strong> Menahan beban utama jatuh, harus pas di sekitar pinggang (tidak longgar/sempit)<br>• <strong>Leg Loop (Lingkar Paha):</strong> Untuk stabilitas dan kenyamanan, biasanya bisa diatur (adjustable)<br>• <strong>Belay Loop (Lingkar Tambat):</strong> Tempat menggantungkan peralatan belay (ATC, Grigri) dan carabiner<br>• <strong>Gear Loop (Lingkar Alat):</strong> Tempat menggantung carabiner, quickdraw, dan peralatan lainnya (biasanya 4-5 loop)<br><br><strong>Pemeriksaan Sebelum Pakai (Pre-climb check):</strong><br>✓ Cek jahitan tidak ada yang putus/terkelupas<br>✓ Cek gesper (buckle) berfungsi baik<br>✓ Cek webbing tidak ada sobek/lipatan/gesekan<br>✓ Pastikan ukuran pas dan tidak longgar<br>✓ Cek tanggal kedaluwarsa (umumnya 5-10 tahun tergantung merek dan frekuensi pemakaian)";
-    }
-    
-    if (msg.includes('carabiner') && (msg.includes('fungsi') || msg.includes('jenis') || msg.includes('gate'))) {
-        return "🔗 <strong>Carabiner (Gesper Pengaman) - Fungsi & Jenis:</strong><br><br><strong>Fungsi Utama:</strong> Penghubung antar sistem pengaman dalam panjat tebing, rescue, dan pendakian.<br><br><strong>Jenis Berdasarkan Bentuk:</strong><br>• <strong>Oval:</strong> Serbaguna, beban merata, cocok untuk organizer dan prusik<br>• <strong>D Shape (D-Shape):</strong> Lebih kuat karena beban terpusat di sisi belakang yang lurus, cocok untuk belay dan anchor<br>• <strong>HMS (Pear Shape):</strong> Bentuk seperti buah pir, untuk belaying dengan munter hitch, lebih lebar di bagian bawah<br><br><strong>Jenis Gate (Pintu/Pengunci):</strong><br>• <strong>Screw Lock (Manual):</strong> Harus diputar manual untuk mengunci, paling umum dan ekonomis<br>• <strong>Auto Lock (Otomatis):</strong> Otomatis mengunci saat gate tertutup, lebih aman tapi lebih mahal<br>• <strong>Wire Gate:</strong> Gate dari kawat, ringan dan anti-beku (tidak macet di suhu dingin), cocok untuk quickdraw<br><br>⚠️ Standar keamanan: Carabiner harus memiliki sertifikasi UIAA/CE minimal 20kN (kiloNewton) untuk sumbu utama!";
-    }
-    
-    if (msg.includes('dynamic rope') || msg.includes('tali dinamis panjat') || msg.includes('tali jatuh')) {
-        return "🧗 <strong>Dynamic Rope (Tali Dinamis) - Penjelasan Lengkap:</strong><br><br><strong>Definisi:</strong> Tali yang elastis (mulur) dan dapat menyerap energi jatuh, digunakan untuk lead climbing (pemanjatan dengan lead), top rope, dan belaying.<br><br><strong>Diameter dan Kegunaan:</strong><br>• <strong>8-9mm:</strong> Tali half rope/double rope (digunakan berpasangan), untuk ekspedisi pendakian panjang, alpine climbing<br>• <strong>9-10mm:</strong> Single rope ringan, cocok untuk pemanjat pemula yang ingin mengurangi beban<br>• <strong>10-11mm:</strong> Single rope standar, tahan lama, cocok untuk pemakaian intensif di gym climbing<br><br><strong>Standar Keamanan UIAA/CE:</strong><br>• Harus lolos uji jatuh (fall test) minimal 5 kali berturut-turut tanpa putus<br>• Faktor jatuh (fall factor) maksimal 2 (jatuh dari atas anchor ke bawah anchor)<br><br><strong>Perawatan Dynamic Rope:</strong><br>• Hindari gesekan dengan tepi tajam (gunakan rope bag/rope pad)<br>• Jangan injak tali dengan sepatu (bisa merusak serat)<br>• Cuci dengan sabun khusus rope jika kotor, jangan pakai deterjen biasa<br>• Ganti tali setelah mengalami jatuh keras (fall factor >1) atau setelah 2-3 tahun pemakaian rutin";
-    }
-    
-    if (msg.includes('static rope') || msg.includes('tali statis') || msg.includes('tali rescue')) {
-        return "🪢 <strong>Static Rope (Tali Statis) - Karakteristik & Penggunaan:</strong><br><br><strong>Karakteristik Utama:</strong> Elastisitas sangat rendah (hampir tidak mulur), hanya sekitar 1-3% dibanding dynamic rope yang 5-10%.<br><br><strong>Kegunaan Utama:</strong><br>• <strong>Rescue/Penyelamatan:</strong> Menarik korban naik (hauling) atau menurunkan korban (lowering) dengan kontrol presisi<br>• <strong>Caving (Penjelajahan Gua):</strong> Untuk SRT (Single Rope Technique) di gua vertikal<br>• <strong>Rappelling (Turun Tebing):</strong> Memberikan kontrol penuh karena tidak memantul<br>• <strong>Highlining / Slackline:</strong> Untuk keseimbangan di atas tali<br>• <strong>Anchor System:</strong> Sebagai bagian dari sistem pengaman statis<br><br>⚠️ <strong>PERINGATAN PENTING:</strong> JANGAN gunakan static rope untuk lead climbing! Karena tidak ada penyerapan energi jatuh, beban jatuh akan langsung ditransfer ke tubuh pemanjat dan anchor, bisa menyebabkan cedera serius atau kematian!";
-    }
-    
-    if (msg.includes('anchor climbing') || msg.includes('sistem anchor') || msg.includes('sistem pengaman tebing') ||
-        msg.includes('prinsip anchor') || msg.includes('serene') || msg.includes('membuat anchor')) {
-        return "⚓ <strong>Prinsip Anchor SERENE dalam Panjat Tebing:</strong><br><br>Anchor adalah titik pengaman utama yang menghubungkan pemanjat ke tebing. Prinsip SERENE adalah standar internasional untuk membuat anchor yang aman:<br><br><strong>S - Strong (Kuat):</strong> Bahan anchor harus kuat menahan beban minimal 15kN (sekitar 1500kg). Gunakan material yang terbukti kuat (baut Hilti, pohon besar yang hidup, batuan solid).<br><br><strong>E - Equalized (Setara):</strong> Beban harus terdistribusi merata ke semua titik anchor. Gunakan sling atau cordelette untuk menyamakan beban.<br><br><strong>R - Redundant (Berlebih):</strong> Minimal 2 titik pengaman independen (redundancy). Jika satu titik gagal, titik lain masih bisa menahan.<br><br><strong>E - Efficient (Efisien):</strong> Sistem tidak boleh berbelit-belit, mudah diperiksa, dan tidak boros bahan/alat.<br><br><strong>N - No Extension (Tanpa Ekstensi):</strong> Jika satu titik anchor gagal, sistem tidak boleh memanjang mendadak (shock loading) yang bisa membuat pemanjat jatuh lebih jauh atau membebani titik lainnya.<br><br>📌 Ingat: Anchor adalah sistem yang menyatukan nyawa pemanjat. Jangan pernah kompromi dengan keamanan anchor!";
-    }
-
-    // ==================== SIMPUL (SIMULASI) PECINTA ALAM (200+ variasi) ====================
-    if (msg.includes('simpul figure eight') || msg.includes('figure eight knot') || msg.includes('simpul angka delapan') ||
-        msg.includes('cara buat simpul figure eight') || msg.includes('simpul untuk harness')) {
-        return "🪢 <strong>Simpul Figure Eight Follow Through (Simpul Angka Delapan):</strong><br><br><strong>Kegunaan:</strong> Simpul paling umum dan paling aman untuk mengikat tali ke harness pemanjat. Juga digunakan untuk membuat anchor.<br><br><strong>Kelebihan:</strong><br>• Sangat kuat (tidak merusak serat tali, hanya 20-30% penurunan kekuatan)<br>• Tidak mudah terlepas meski tanpa stopper knot (tapi tetap pakai stopper untuk safety)<br>• Mudah diperiksa kebenarannya (visual inspection)<br>• Stabil dan tidak berubah bentuk saat dibebani<br><br><strong>Cara Membuat:</strong><br>1. Buat simpul figure eight di ujung tali (bentuk seperti angka 8)<br>2. Masukkan ujung tali ke harness (ke belay loop atau waist belt yang sudah ditentukan)<br>3. Ikuti jalur tali kembali (follow through) dari simpul yang sudah dibuat<br>4. Pastikan simpul berbentuk rapi dan tidak terpuntir<br>5. Pastikan ada sisa tali (tail) minimal 5-10cm (atau sepanjang 3-4 jari)<br>6. Untuk safety, buat stopper knot (double overhand) di tail<br><br>⚠️ Lakukan safety check: Pastikan tidak ada lipatan, tali tidak terpuntir, dan tail cukup panjang!";
-    }
-    
-    if (msg.includes('simpul prusik') || msg.includes('prusik knot') || msg.includes('simpul backup rappelling') ||
-        msg.includes('cara buat prusik') || msg.includes('simpul untuk naik tali')) {
-        return "🪢 <strong>Simpul Prusik (Prusik Knot) - Fungsi & Cara Membuat:</strong><br><br><strong>Definisi:</strong> Simpul yang dapat bergerak satu arah (slide) dan mengunci (grip) saat diberikan beban. Dinamakan dari penemunya, Dr. Karl Prusik (Austria, 1931).<br><br><strong>Kegunaan Utama:</strong><br>• <strong>Backup / Pengaman</strong> saat rappelling (turun tebing) - jika tali utama putus, prusik mengunci<br>• <strong>Ascending (Membantu naik)</strong> di tali statis (sistem dengan foot loop dan chest harness)<br>• <strong>Sistem Self-Rescue</strong> jika terjebak atau tali macet<br>• <strong>Membuat Sistem Mechanical Advantage (3:1 atau 5:1)</strong> untuk mengangkat beban<br>• <strong>Mengencangkan tiang tenda atau guyline</strong><br><br><strong>Cara Membuat Prusik:</strong><br>1. Gunakan cord (tali kecil) dengan diameter lebih kecil dari tali utama (biasanya 5-7mm untuk tali 9-11mm)<br>2. Lilitkan cord ke tali utama 3-4 putaran<br>3. Masukkan ujung cord ke dalam lilitan<br>4. Tarik hingga kencang<br>5. Prusik siap digunakan<br><br><strong>Keunggulan:</strong> Tidak merusak selubung tali, bisa dipasang dan dilepas dengan mudah (reusable), bisa diaplikasikan di berbagai kondisi cuaca.";
-    }
-    
-    if (msg.includes('clove hitch') || msg.includes('simpul clove hitch') || msg.includes('simpul tambat cepat')) {
-        return "🪢 <strong>Simpul Clove Hitch - Pengikatan Cepat & Adjustable:</strong><br><br><strong>Kegunaan:</strong> Pengikatan cepat pada anchor atau carabiner yang dapat diatur panjang pendeknya (adjustable) tanpa harus melepas simpul.<br><br><strong>Kelebihan:</strong><br>• Mudah diikat dan dilepas meski dalam keadaan tegang (under load)<br>• Dapat disesuaikan (adjustable) posisi anchor dengan mudah<br>• Tidak merusak serat tali seperti halnya simpul yang dikencangkan berlebihan<br><br><strong>Penggunaan Umum:</strong><br>• Mengikat tali ke carabiner HMS saat belaying (belayer bisa mengatur panjang tali dengan cepat)<br>• Mengikat tali ke anchor (sebagai bagian dari sistem anchor yang adjustable)<br>• Menambatkan perahu atau kano di tepi sungai<br><br><strong>Cara Membuat:</strong><br>1. Buat dua lilitan berlawanan arah pada carabiner<br>2. Kunci dengan simpul stopper (double overhand) sebagai backup<br>3. Pastikan simpul tidak longgar dan beban terdistribusi merata<br><br>⚠️ Kekurangan: Simpul ini bisa terlepas jika tidak ada beban (unloaded). Selalu gunakan stopper knot atau sistem backup!";
-    }
-    
-    if (msg.includes('simpul bowline') || msg.includes('bowline knot') || msg.includes('simpul penyelamat')) {
-        return "🪢 <strong>Simpul Bowline (Simpul Penyelamat) - The King of Knots:</strong><br><br><strong>Definisi:</strong> Simpul yang membentuk loop tetap (fixed loop) yang tidak akan mengecil atau membesar saat dibebani. Sangat populer di kalangan pelaut, pemanjat, dan penyelamat.<br><br><strong>Kelebihan:</strong><br>• Mudah dibuka meski setelah dibebani berat<br>• Loop-nya tetap dan tidak berubah bentuk<br>• Kuat (hanya mengurangi kekuatan tali ~30-40%)<br><br><strong>Penggunaan:</strong><br>• Mengikat tali ke anchor atau pohon<br>• Membuat loop untuk sistem mechanical advantage<br>• Mengikat korban dalam operasi SAR (Search and Rescue)<br>• Mengikat perahu atau tenda<br><br><strong>Mnemonik (Cara Mengingat):</strong><br>'Ular keluar dari lubang, ular memutari pohon, lalu ular masuk kembali ke lubang yang sama'<br><br><strong>Cara Membuat:</strong><br>1. Buat loop kecil di tali (lubang)<br>2. Masukkan ujung tali dari bawah ke atas melalui loop<br>3. Lingkarkan ujung tali ke belakang (memutari pohon)<br>4. Masukkan kembali ujung tali ke loop dari atas ke bawah<br>5. Tarik kencang untuk mengunci<br><br>⚠️ Pastikan simpul rapi dan tidak ada lipatan untuk kekuatan maksimal!";
-    }
-
-    // ==================== SURVIVAL DI ALAM LIAR (400+ variasi) ====================
-    if (msg.includes('cara membuat api') || msg.includes('membuat api di alam') || msg.includes('metode membuat api') ||
-        msg.includes('fire starter') || msg.includes('cara menyalakan api tanpa korek') || msg.includes('ferro rod') ||
-        (msg.includes('api') && msg.includes('alam')) && !msg.includes('tidak bisa')) {
-        return "🔥 <strong>Cara Membuat Api di Alam Liar (Lengkap):</strong><br><br><strong>1. Siapkan Bahan Bakar (3 Level):</strong><br>• <strong>Tinder (Bahan Bakar Awal):</strong> Serat kayu kering (sawdust), lumut kering, ranting kering kecil, kapas, bulu halus tanaman, kertas. Tips: Kapas + vaselin adalah tinder super!<br>• <strong>Kindling (Kayu Kecil):</strong> Ranting kering ukuran pensil/pensil, serpihan kayu.<br>• <strong>Fuel Wood (Kayu Besar):</strong> Kayu yang lebih besar untuk menjaga api tetap menyala.<br><br><strong>2. Metode Menyalakan Api (dari termudah ke tersulit):</strong><br>• <strong>Ferro Rod (Fire Steel):</strong> Goreskan striker ke rod ke arah tinder. Percikan api ~3000°C. Paling umum dan andal di alam.<br>• <strong>Korek Api/Light Tahan Air:</strong> Simpan di tempat kedap air (ziplock + korek api anti air).<br>• <strong>Lensa/Kaca Pembesar/Kaleng Minuman:</strong> Fokuskan sinar matahari ke tinder. Hanya bisa saat matahari terik.<br>• <strong>Bow Drill (Metode Manual):</strong> Membutuhkan teknik khusus dan latihan. Gunakan batang kayu (spindle), busur, bearing block, dan fireboard. Panas dari gesekan membuat serbuk kayu membara (ember coal).<br>• <strong>Fire Piston (Tekanan Udara):</strong> Perangkat mekanik menggunakan kompresi udara untuk menyalakan tinder.<br><br><strong>Tips Pro:</strong> Selalu bawa ferro rod dan korek api anti air sebagai cadangan. Jangan mengandalkan satu metode saja!";
-    }
-    
-    if (msg.includes('shelter darurat') || msg.includes('tempat berlindung di alam') || msg.includes('membuat tenda darurat') ||
-        msg.includes('cari perlindungan dari hujan') || msg.includes('jenis shelter') || msg.includes('survival shelter')) {
-        return "🏕️ <strong>Jenis Shelter (Tempat Berlindung) Darurat di Alam:</strong><br><br><strong>1. Lean To (Satu Sisi):</strong><br>• Cari pohon besar atau buat tiang penyangga<br>• Letakkan dahan miring 45° ke arah yang berlawanan dengan angin<br>• Tutup dengan daun kering, ranting, atau ponco/tarp<br>• Ideal untuk melindungi dari angin yang datang dari satu arah<br><br><strong>2. Debris Hut (Gundukan Daun/Serasah):</strong><br>• Buat rangka lengkung dari dahan (seperti terowongan mini)<br>• Timbun dengan daun kering, rumput, atau serasah setebal 30-50cm<br>• Shelter ini paling hangat karena terisolasi oleh tumpukan daun<br>• Butuh waktu dan material yang banyak untuk membuatnya<br><br><strong>3. A-Frame (Segitiga):</strong><br>• Dua sisi berbentuk segitiga dengan satu tiang di tengah<br>• Jika pakai ponco/tarp, sangat praktis dan cepat didirikan (cukup 5-10 menit)<br>• Sirkulasi udara baik, tetapi kurang isolasi panas<br><br><strong>4. Natural Shelter (Shelter Alami):</strong><br>• Gua kecil yang tidak dihuni hewan buas<br>• Bawah pohon besar yang rindang (pohon beringin, pohon dengan tajuk lebat)<br>• Celah batu besar yang terlindung dari angin dan hujan<br>• Tebing yang overhang (melengkung ke dalam)<br><br><strong>5. Snow Cave / Quinze (Shelter Salju):</strong><br>• Untuk lingkungan bersalju, gali lubang di tumpukan salju<br>• Buat ventilasi agar tidak kekurangan oksigen<br>• Sangat hangat (suhu di dalam bisa 0°C sementara di luar -20°C)<br><br>📌 <strong>Prinsip Memilih Lokasi Shelter:</strong><br>• Jauh dari bahaya (tebing rapuh, pohon mati, aliran air banjir)<br>• Dekat dengan sumber air (tapi tidak terlalu dekat karena risiko banjir bandang)<br>• Terlindung dari angin dominan<br>• Tanah harus relatif datar dan kering<br>• Jauhi sarang hewan atau bekas kotoran hewan";
-    }
-    
-    if (msg.includes('menjernihkan air di alam') || msg.includes('memurnikan air minum') || msg.includes('cara dapat air bersih') ||
-        msg.includes('filter air darurat') || msg.includes('sterilisasi air') || msg.includes('minum air sungai') ||
-        (msg.includes('air') && msg.includes('minum') && msg.includes('alam'))) {
-        return "💧 <strong>Metode Memurnikan Air di Alam (5 Cara Terbukti):</strong><br><br><strong>1. Mendidihkan (Paling Aman & Efektif 99.9%):</strong><br>• Rebus air hingga mendidih dengan gelembung besar selama 3-5 menit (atau 10 menit di atas 2000 mdpl karena titik didih lebih rendah)<br>• Matikan 99.9% bakteri, virus, parasit (Giardia, Cryptosporidium, E. coli)<br>• Biarkan dingin sebelum diminum<br>• Ini adalah metode paling aman dan tidak butuh peralatan khusus selain kompor/mess tin<br><br><strong>2. Filter Air Portable (Filter Pribadi):</strong><br>• Saring partikel (pasir, lumpur) dan sebagian bakteri (0.1-0.01 mikron)<br>• Merek populer: Sawyer Mini, LifeStraw, Katadyn BeFree<br>• Tidak mematikan virus (kecuali filter dengan ukuran pori 0.01 mikron)<br>• Sangat praktis, bisa minum langsung dari sumber air<br><br><strong>3. Tablet Penjernih (Iodine/Chlorine):</strong><br>• Masukkan tablet, tunggu 30 menit (atau 2 jam jika air dingin/keruh)<br>• Efektif untuk air jernih, kurang efektif untuk air keruh<br>• Tablet Iodine tidak boleh digunakan oleh wanita hamil atau penderita tiroid<br>• Tablet Chlorine meninggalkan rasa yang kurang sedap<br><br><strong>4. SODIS (Solar Water Disinfection):</strong><br>• Masukkan air ke dalam botol plastik bening (PET, bukan kaca)<br>• Jemur di bawah sinar matahari langsung selama 6 jam (atau 2 hari jika cuaca mendung)<br>• UV-A dari sinar matahari membunuh patogen<br>• Hanya efektif untuk air jernih dan di daerah dengan intensitas matahari tinggi<br><br><strong>5. Filter Darurat (Improvisasi):</strong><br>• Buat filter sederhana: botol plastik dipotong, isi dengan lapisan batu kerikil (bawah), pasir kasar (tengah), arang (atas), dan kain sebagai saringan pertama<br>• Hanya memfilter partikel, TIDAK mematikan patogen! Tetap harus direbus setelahnya.<br><br>⚠️ <strong>Larangan:</strong> Jangan minum air keruh, berwarna (coklat/kekuningan), berbau, atau dari sumber yang terkontaminasi limbah! Lebih baik cari mata air pegunungan yang jernih dan mengalir.";
-    }
-    
-    if (msg.includes('mencari air di alam') || msg.includes('sumber air darurat') || msg.includes('cari air minum survival') ||
-        msg.includes('air dari tumbuhan')) {
-        return "💧 <strong>Cara Mencari Sumber Air di Alam Liar:</strong><br><br><strong>Indikator Sumber Air:</strong><br>• <strong>Vegetasi Hijau:</strong> Tumbuhan yang tumbuh subur dan hijau, terutama di daerah kering, menandakan ada air di bawahnya<br>• <strong>Lembah dan Jurang:</strong> Air mengalir ke tempat yang lebih rendah, cari di dasar lembah<br>• <strong>Jejak Hewan:</strong> Jejak hewan yang mengarah ke satu arah biasanya menuju sumber air<br>• <strong>Suara Serangga (lebah, nyamuk):</strong> Banyak serangga di dekat air<br>• <strong>Burung yang terbang rendah pagi atau sore hari</strong> menuju sumber air<br><br><strong>Cara Mengumpulkan Air:</strong><br>1. <strong>Kondensasi (Solar Still):</strong> Gali lubang, taruh wadah di tengah, tutup dengan plastik bening, beri batu di tengah plastik. Air menguap akan menetes ke wadah.<br>2. <strong>Dari Tumbuhan (Vines):</strong> Potong batang pohon anggur atau bambu, air akan menetes. Hanya untuk tumbuhan yang tidak beracun.<br>3. <strong>Embun Pagi:</strong> Serap embun di daun pagi hari dengan kain bersih lalu peras ke wadah.<br>4. <strong>Hujan:</strong> Tampung air hujan dengan ponco atau tarp. Air hujan relatif bersih.<br>5. <strong>Salju/Es:</strong> Cairkan dengan api atau di mulut (jika darurat). Jangan makan es/salju langsung karena bisa menurunkan suhu tubuh.";
-    }
-
-    // ==================== P3K & KESEHATAN (600+ variasi) ====================
-    if (msg.includes('hipotermia') || msg.includes('kedinginan parah') || msg.includes('gejala hipotermia') || 
-        msg.includes('cara mengatasi hipotermia') || msg.includes('penanganan hipotermia') || (msg.includes('dingin') && msg.includes('penanganan'))) {
-        return "❄️ <strong>Penanganan Hipotermia di Alam (Kondisi Darurat):</strong><br><br><strong>Gejala Hipotermia (Dari Ringan hingga Berat):</strong><br>• Menggigil hebat (tahap awal)<br>• Bicara pelo (slurred speech) tidak jelas<br>• Gerakan kaku, koordinasi memburuk (tangan tidak bisa memegang benda)<br>• Kebingungan, disorientasi, tidak sadar dengan situasi<br>• Denyut nadi lemah, pernapasan melambat<br>• Tidak menggigil lagi (tahap lanjut) - ini tanda bahaya!<br><br><strong>Tindakan Pertolongan:</strong><br>1. Segera cari tempat berlindung dari angin dan hujan (shelter darurat atau tenda)<br>2. Ganti pakaian basah dengan yang kering (prioritas pertama: keringkan tubuh, terutama bagian dada dan kepala)<br>3. Beri minuman hangat (air hangat, teh manis, susu) - JANGAN beri alkohol atau kafein (justru memperburuk karena memperlebar pembuluh darah)<br>4. Hangatkan area inti tubuh: leher, ketiak, selangkangan (bukan langsung tangan/kaki - karena bisa menyebabkan afterdrop, yaitu darah dingin dari ekstremitas kembali ke jantung)<br>5. Gunakan sleeping bag, emergency blanket (kain alumunium), atau body contact dengan orang lain (cuddle in a sleeping bag)<br>6. Jika korban tidak sadar, posisikan miring (recovery position) dan segera evakuasi ke bawah (ketinggian lebih rendah) untuk mendapatkan pertolongan medis profesional<br><br>⚠️ <strong>JANGAN PERNAH:</strong> Menggosok-gosok anggota tubuh yang kedinginan (bisa merusak jaringan), memberikan minuman beralkohol, atau memanggang korban terlalu dekat dengan api.";
-    }
-    
-    if (msg.includes('gigitan ular') || msg.includes('digigit ular') || msg.includes('ular berbisa') || 
-        msg.includes('penanganan gigitan ular') || msg.includes('cara mengobati gigitan ular')) {
-        return "🐍 <strong>Penanganan Gigitan Ular (First Aid):</strong><br><br><strong>Gejala Gigitan Ular Berbisa:</strong><br>• Luka tusuk 1 atau 2 titik (bisa ular biasanya punya 2 taring)<br>• Nyeri hebat, bengkak, memar di sekitar gigitan<br>• Mual, muntah, pusing, penglihatan kabur<br>• Kesulitan bernapas, kelemahan otot<br>• Perdarahan di gusi atau hidung<br><br><strong>Yang HARUS Dilakukan (DO's):</strong><br>✓ Jangan panik! Panik mempercepat sirkulasi dan bisa menyebar lebih cepat ke jantung<br>✓ Jangan bergerak terlalu banyak (immobilisasi). Semakin sedikit gerakan, semakin lambat bisa menyebar.<br>✓ Lepaskan perhiasan/jam tangan di sekitar area gigitan (karena bisa bengkak dan menjadi tourniquet alami)<br>✓ Immobilisasi (imobilisasi) bagian yang terkena, posisikan lebih rendah dari jantung<br>✓ Bersihkan luka dengan air sabun atau air mengalir, tutup dengan kain bersih (steril jika ada)<br>✓ Catat ciri-ciri ular (warna, bentuk kepala, pola sisik, perilaku) untuk membantu penentuan antisera<br>✓ SEGERA KE FASILITAS KESEHATAN terdekat (rumah sakit dengan stok antisera ular)<br><br><strong>Yang TIDAK BOLEH Dilakukan (DON'Ts):</strong><br>✗ JANGAN menghisap bisa dengan mulut (berbahaya untuk penolong, bisa masuk ke aliran darah penolong)<br>✗ JANGAN membalut terlalu ketat seperti tourniquet (bisa menyebabkan kerusakan jaringan permanen)<br>✗ JANGAN menggorok/menyayat luka (memperparah perdarahan dan infeksi)<br>✗ JANGAN minum alkohol atau kafein (mempercepat penyerapan bisa)<br>✗ JANGAN mengoleskan es atau kompres dingin langsung ke luka<br><br>📌 <strong>Perbedaan Ular Berbisa dan Tidak Berbisa:</strong><br>• Berbisa: Kepala segitiga (tanda kelenjar bisa), pupil mata vertikal (seperti kucing), taring panjang<br>• Tidak berbisa: Kepala oval/memanjang, pupil bulat, tidak punya taring panjang<br><br>⚠️ Catat waktu gigitan untuk informasi ke dokter!";
-    }
-    
-    if (msg.includes('patah tulang') || msg.includes('fraktur') || msg.includes('tulang patah') || 
-        msg.includes('penanganan patah tulang') || msg.includes('bidai darurat') || msg.includes('cara memasang bidai')) {
-        return "🦴 <strong>Penanganan Fraktur (Patah Tulang) di Alam:</strong><br><br><strong>Gejala Fraktur:</strong><br>• Nyeri hebat di lokasi cedera<br>• Bengkak, memar, deformitas (bentuk tulang tidak normal)<br>• Tidak bisa menggerakkan anggota tubuh yang terkena<br>• Krepitasi (sensasi seperti kertas digesek) saat digerakkan<br><br><strong>Tindakan Pertolongan:</strong><br>1. <strong>Jangan memindahkan korban</strong> jika tidak perlu (risiko kerusakan saraf dan pembuluh darah)<br>2. <strong>Immobilisasi (imobilisasi) dengan bidai darurat</strong> (tongkat, carrier frame, sleeping pad, majalah, kayu)<br>3. <strong>Pasang bidai</strong> dari sendi di atas patahan ke sendi di bawah patahan (contoh: patah lengan bawah, bidai dari siku ke pergelangan)<br>4. <strong>Beri bantalan</strong> di antara bidai dan kulit dengan pakaian, matras, atau kain (untuk mengurangi tekanan)<br>5. <strong>Ikat dengan tali/selempang</strong> (tali carrier, selendang, ikat pinggang). Jangan terlalu kencang, cukup agar bidai tidak bergeser.<br>6. <strong>Untuk patah tulang terbuka (tulang menonjol keluar):</strong> Tutup dengan kain steril (jangan dorong tulang ke dalam!), beri bantalan di sekitar luka untuk mengurangi tekanan.<br>7. <strong>Segera evakuasi</strong> ke fasilitas kesehatan terdekat (rumah sakit atau puskesmas)<br><br>📌 <strong>Bidai Darurat Improvisasi:</strong><br>• Lengan: Kancing baju ke dada (immobilisasi ke badan)<br>• Kaki: Ikat ke kaki yang sehat (kaki satunya menjadi bidai alami)<br>• Carrier frame: Bisa menjadi bidai untuk tulang punggung<br>• Koran/majalah yang digulung: Untuk lengan atau pergelangan";
-    }
-    
-    if (msg.includes('cpr') || msg.includes('henti jantung') || msg.includes('resusitasi') || msg.includes('napas buatan') ||
-        msg.includes('kompresi dada') || msg.includes('cardiac arrest')) {
-        return "❤️ <strong>Cara CPR (Cardiopulmonary Resuscitation) - Menyelamatkan Henti Jantung:</strong><br><br><strong>Langkah CPR (30:2):</strong><br><br><strong>1. Pastikan Keamanan:</strong> Pastikan area aman untuk Anda dan korban. Jangan membahayakan diri sendiri.<br><br><strong>2. Cek Respon:</strong> Goyang bahu korban, tanya 'Apakah Anda baik-baik saja?'. Jika tidak merespon, lanjutkan.<br><br><strong>3. Panggil Bantuan:</strong> Minta orang lain hubungi ambulans (118/119 di Indonesia) atau cari bantuan. Jika sendiri, lakukan CPR 2 menit dulu baru cari bantuan.<br><br><strong>4. Cek Napas & Nadi:</strong> Lihat dada korban apakah naik turun, rasakan napas di pipi, cek nadi karotis di leher (5-10 detik). Jika tidak bernapas atau tidak normal (gasping), mulai CPR.<br><br><strong>5. Lakukan Kompresi Dada:</strong><br>• Letakkan telapak tangan di tengah dada (sternum, sejajar dengan puting)<br>• Tumpuk tangan Anda, jaga siku lurus<br>• Kedalaman kompresi: 5-6 cm (pada dewasa)<br>• Kecepatan kompresi: 100-120 kali per menit<br>• Lakukan 30 kompresi<br><br><strong>6. Beri Napas Buatan (Rescue Breath):</strong><br>• Buka jalan napas dengan teknik head tilt-chin lift (dorong dahi ke belakang, angkat dagu)<br>• Tutup hidung korban<br>• Tiupkan napas selama 1 detik hingga dada terlihat mengembang<br>• Lakukan 2 kali napas buatan<br><br><strong>7. Ulangi Siklus 30:2:</strong> Terus lakukan 30 kompresi - 2 napas hingga bantuan datang atau korban sadar (bernafas spontan, batuk, bergerak).<br><br>🎵 <strong>Referensi Kecepatan Kompresi:</strong><br>• 'Stayin Alive' (Bee Gees) - 103 bpm<br>• 'Baby Shark' (Pinkfong) - 115 bpm<br>• 'Another One Bites the Dust' (Queen) - 110 bpm<br><br>📌 <strong>Untuk Anak-anak (1-8 tahun):</strong> Gunakan 1 tangan, kedalaman 4-5cm. Untuk bayi (<1 tahun): Gunakan 2 jari, kedalaman 4cm.<br><br>⚠️ Jangan berhenti CPR kecuali korban sadar, bantuan medis datang, atau Anda kelelahan total!";
-    }
-
-    // ==================== SAR & EVAKUASI (200+ variasi) ====================
-    if (msg.includes('tahapan sar') || msg.includes('search and rescue mapala') || msg.includes('prosedur sar') ||
-        msg.includes('sistem sar pencarian') || msg.includes('incident command system')) {
-        return "🚨 <strong>Tahapan Search and Rescue (SAR) Mapala - Standar Operasional:</strong><br><br><strong>1. Planning & Assessment (Perencanaan):</strong><br>• Kumpulkan informasi awal (siapa, kapan, di mana terakhir terlihat)<br>• Analisis medan (topografi, cuaca, vegetasi, bahaya potensial)<br>• Tentukan kebutuhan tim dan alat (jumlah personel, peralatan SAR, logistik)<br>• Buat rencana operasi (strategi pencarian, pembagian area, timeline)<br><br><strong>2. Organizing (Pengorganisasian Tim):</strong><br>• Bentuk tim SAR dengan pembagian tugas:<br>  - Komandan Operasi (Operation Commander)<br>  - Tim Medic (Kesehatan)<br>  - Tim Navigator + Komunikasi<br>  - Tim Logistik<br>  - Tim Pencari (Search Team)<br>• Briefing tim (pembagian area, sinyal komunikasi, prosedur keselamatan)<br><br><strong>3. Searching (Pencarian):</strong><br>• Terapkan metode pencarian yang sesuai dengan medan:<br>  - <strong>Grid Search (Pencarian Kotak):</strong> Untuk area terbuka dan datar<br>  - <strong>Line Search (Pencarian Garis):</strong> Untuk hutan dengan semak rapat<br>  - <strong>Area Search (Pencarian Area):</strong> Untuk medan sulit dengan tim kecil<br>  - <strong>Hasty Search (Pencarian Cepat):</strong> Di jalur utama dan titik kunci<br>  - <strong>Tracking (Pelacakan):</strong> Mengikuti jejak korban<br>• Gunakan whistle, komunikasi radio, atau sinyal suara untuk koordinasi<br><br><strong>4. Rescue (Penyelamatan):</strong><br>• Stabilisasi korban (pertolongan pertama, immobilisasi jika cedera)<br>• Beri dukungan psikologis (tenangkan korban)<br>• Persiapan evakuasi (pasang tandu, buat jalur evakuasi)<br>• Koordinasi dengan tim untuk proses angkat/geser<br><br><strong>5. Evacuation (Evakuasi):</strong><br>• Bawa korban ke tempat aman atau titik kumpul<br>• Gunakan tandu yang sesuai dengan medan (basket stretcher, SKED, tandu improvisasi)<br>• Jika korban bisa berjalan, dampingi untuk turun dengan hati-hati<br>• Serahkan korban ke fasilitas kesehatan terdekat (Puskesmas/Rumah Sakit)<br><br><strong>📌 PRINSIP UTAMA SAR MAPALA:</strong><br><strong>'Safety of Rescuer adalah prioritas nomor satu!'</strong> Jangan sampai penolong menjadi korban berikutnya.";
-    }
-    
-    if (msg.includes('tandu evakuasi') || msg.includes('cara buat tandu darurat') || msg.includes('jenis tandu') ||
-        msg.includes('tandu improvisasi') || msg.includes('mengangkat korban')) {
-        return "🛏️ <strong>Jenis Tandu untuk Evakuasi Korban (SAR):</strong><br><br><strong>1. Basket Stretcher (Tandu Keranjang):</strong><br>• Untuk korban dengan cedera tulang belakang (spinal injury)<br>• Dibuat dari material keras (plastik HDPE, alumunium, fiberglass)<br>• Dapat digunakan di medan ekstrim (tebing, gua, air)<br>• Kekurangan: berat dan besar, butuh tim 4-6 orang<br><br><strong>2. SKED Stretcher (Skid/Tandu Lipat):</strong><br>• Ringan (hanya 3-5 kg), fleksibel (bisa digulung)<br>• Bisa ditarik di berbagai medan (tanah, salju, lumpur)<br>• Cocok untuk evakuasi di medan sempit (gua, jurang)<br>• Dilengkapi dengan tali pengikat (strap) untuk immobilisasi<br><br><strong>3. Improvisasi Tandu Darurat:</strong><br>• <strong>Dari Carrier + Tongkat:</strong> Dua carrier disatukan dengan tongkat/tali, korban diletakkan di atasnya. Ini metode paling umum di kalangan mapala.<br>• <strong>Dari Sleeping Pad + Tali:</strong> Sleeping pad digulung dengan korban di dalamnya, lalu diikat dengan tali carrier.<br>• <strong>Dari Jaket + Kayu (Cocoon Method):</strong> Jaket yang diikat ke dua batang kayu (seperti tandu sederhana).<br>• <strong>Dari Ponco/Tarp + Kayu:</strong> Ponco direntangkan, ujungnya diikat ke dua batang kayu.<br><br><strong>Cara Membuat Tandu Improvisasi dari Carrier:</strong><br>1. Ambil 2 carrier dengan frame yang kuat<br>2. Buka carrier, jepit kedua carrier saling membelakangi (back to back)<br>3. Ikat dengan tali carrier atau webbing di beberapa titik<br>4. Letakkan korban di atasnya, ikat dengan tali untuk immobilisasi<br>5. Minimal 4 orang untuk mengangkat (masing-masing ujung)<br><br>📌 Pastikan korban diikat dengan aman (immobilisasi) sebelum dievakuasi untuk menghindari cedera sekunder!";
-    }
-
-    // ==================== LINGKUNGAN & KONSERVASI (200+ variasi) ====================
-    if (msg.includes('leave no trace') || msg.includes('lnt mapala') || msg.includes('etika pecinta alam') ||
-        msg.includes('7 prinsip leave no trace') || msg.includes('cara menjaga alam saat pendakian') ||
-        msg.includes('tidak meninggalkan jejak')) {
-        return "🌿 <strong>7 Prinsip Leave No Trace (LNT) - Etika Pecinta Alam Global:</strong><br><br><strong>1. Rencanakan dan Persiapkan Perjalanan dengan Matang (Plan Ahead & Prepare):</strong><br>• Ketahui peraturan dan batasan area yang akan dikunjungi<br>• Siapkan perlengkapan sesuai medan dan cuaca<br>• Rencanakan rute dan jadwal perjalanan<br>• Bawa perlengkapan untuk mengelola sampah<br><br><strong>2. Berada di Permukaan Tahan Banting (Travel & Camp on Durable Surfaces):</strong><br>• Gunakan jalan setapak yang sudah ada, jangan membuat jalur baru<br>• Camping di area yang sudah sering digunakan (established campsite)<br>• Hindari merusak vegetasi dan lumut<br>• Permukaan tahan banting: bebatuan, salju, pasir, kerikil<br><br><strong>3. Kelola Sampah dengan Benar (Dispose of Waste Properly):</strong><br>• <strong>Bawa turun SEMUA sampah</strong> yang Anda bawa naik! Jangan ada yang tertinggal.<br>• Pisahkan sampah organik dan anorganik<br>• Untuk BAB: buat lubang cat hole (kedalaman 15-20cm, jarak minimal 70 meter dari sumber air)<br>• Bawa pulang sampah orang lain jika memungkinkan (trail magic)<br><br><strong>4. Tinggalkan Apa yang Anda Temukan (Leave What You Find):</strong><br>• Jangan mengambil flora (bunga, tanaman langka) atau fauna<br>• Jangan mengambil batu, kristal, fosil, atau benda bersejarah<br>• Jangan membuat coretan di pohon atau bebatuan<br>• Jangan membawa pulang 'oleh-oleh' dari alam<br><br><strong>5. Minimalkan Dampak Api Unggun (Minimize Campfire Impacts):</strong><br>• Gunakan kompor daripada api unggun jika memungkinkan<br>• Jika terpaksa membuat api unggun, gunakan fire ring yang sudah ada<br>• Gunakan kayu mati yang sudah jatuh (bukan memotong pohon hidup)<br>• Pastikan api benar-benar padam (dingin) sebelum ditinggalkan<br><br><strong>6. Hormati Satwa Liar (Respect Wildlife):</strong><br>• Jangan memberi makan satwa liar (mengubah perilaku alami mereka)<br>• Jangan mendekati atau mengganggu satwa, terutama saat musim kawin atau punya anak<br>• Jangan memotret dengan flash terlalu dekat<br>• Simpan makanan di tempat yang aman (jangan ditinggal di tenda terbuka)<br><br><strong>7. Hormati Pengunjung Lain (Be Considerate of Other Visitors):</strong><br>• Jaga ketenangan alam (hindari suara bising, musik keras)<br>• Beri jalan bagi pendaki lain yang lebih cepat<br>• Jaga kebersihan area bersama (pos pendakian, shelter)<br>• Sapa dan ramah dengan pendaki lain<br><br>📌 Ingat motto LNT: <strong>'Take only pictures, leave only footprints, kill only time'</strong>";
-    }
-
-    // ==================== UNIVERSITAS UST & TAMANSISWA (200+ variasi) ====================
-    if (msg.includes('universitas sarjanawiyata tamansiswa') || msg.includes('ust yogyakarta') || 
-        msg.includes('informasi ust') || msg.includes('sejarah ust') || (msg.includes('ust') && msg.includes('kampus')) ||
-        msg.includes('universitas ust')) {
-        return "🏛️ <strong>Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta</strong><br><br><strong>Informasi Dasar:</strong><br>• Didirikan: <strong>15 Desember 1955</strong> (berawal dari Sekolah Guru B, kemudian berkembang menjadi universitas pada 1983)<br>• Berada di bawah naungan: Majelis Luhur Persatuan Tamansiswa<br>• Pendiri: Ki Hajar Dewantara (Bapak Pendidikan Nasional)<br>• Alamat: Jl. Batikan UH III/1043, Tuntungan, Kec. Umbulharjo, Kota Yogyakarta, DIY 55167<br>• Website: www.ustjogja.ac.id<br><br><strong>Visi:</strong> 'Menjadi universitas unggul dan berdaya saing berbasis kearifan lokal Tamansiswa pada tahun 2030'<br><br><strong>Fakultas & Program Studi:</strong><br>• <strong>FKIP (Fakultas Keguruan & Ilmu Pendidikan):</strong> PGSD, PG PAUD, Pendidikan Matematika, Pendidikan Bahasa Inggris, Pendidikan Sejarah, BK<br>• <strong>FEB (Fakultas Ekonomi & Bisnis):</strong> Manajemen, Akuntansi<br>• <strong>FST (Fakultas Sains & Teknologi):</strong> Informatika, Teknik Industri, Matematika, Biologi, Kimia<br>• <strong>FISIPOL (Fakultas Ilmu Sosial & Ilmu Politik):</strong> Administrasi Publik, Sosiologi, Ilmu Komunikasi, Hukum<br><br><strong>Akomodasi & Fasilitas:</strong><br>• Kampus terpadu dengan fasilitas: Perpustakaan digital, Laboratorium komputer, Ruang kelas ber-AC, Masjid kampus, Student Center, Lapangan olahraga<br>• Terdapat beasiswa untuk mahasiswa berprestasi dan kurang mampu<br>• Organisasi kemahasiswaan: BEM UST, DPM, UKM, HIMA per fakultas, termasuk MAPATEK ABHIPRAYA! 🏔️";
-    }
-    
-    if (msg.includes('ki hajar dewantara') || msg.includes('bapak pendidikan nasional') || msg.includes('ki hajar') ||
-        msg.includes('semboyan ki hajar') || msg.includes('tokoh pendidikan indonesia') || msg.includes('ki hajar dewantara singkatan')) {
-        return "📚 <strong>Ki Hajar Dewantara - Bapak Pendidikan Nasional Indonesia</strong><br><br><strong>Identitas:</strong><br>• Nama lahir: Raden Mas Soewardi Soerjaningrat<br>• Lahir: 2 Mei 1889, Yogyakarta<br>• Wafat: 26 April 1959, Yogyakarta<br>• Tanggal kelahirannya diperingati sebagai Hari Pendidikan Nasional (Hardiknas)<br><br><strong>Perjuangan & Kiprah:</strong><br>• Aktif dalam organisasi pergerakan (Boedi Oetomo, Indische Partij)<br>• Menulis artikel kritis 'Als Ik Eens Nederlander Was' (Seandainya Aku Seorang Belanda) yang membuatnya diasingkan ke Belanda (1913)<br>• Mendirikan <strong>Tamansiswa (Nationaal Onderwijs Instituut Tamansiswa)</strong> pada 3 Juli 1922 di Yogyakarta sebagai wujud pendidikan yang merdeka dari penjajahan<br>• Menjabat sebagai Menteri Pendidikan pertama Indonesia (1945-1946)<br>• Ditetapkan sebagai Pahlawan Nasional oleh Presiden Soekarno (1959)<br><br><strong>Semboyan Abadi Tamansiswa (Trilogi Kepemimpinan):</strong><br><strong><em>'Ing Ngarsa Sung Tuladha, Ing Madya Mangun Karsa, Tut Wuri Handayani'</em></strong><br><br>Artinya:<br>• <strong>Ing Ngarsa Sung Tuladha</strong> - Di depan, memberi contoh/teladan<br>• <strong>Ing Madya Mangun Karsa</strong> - Di tengah, membangun semangat/kemauan<br>• <strong>Tut Wuri Handayani</strong> - Di belakang, memberi dorongan/daya<br><br>Prinsip ini menjadi filosofi kepemimpinan yang diterapkan di Tamansiswa, termasuk di Universitas Sarjanawiyata Tamansiswa (UST).<br><br><strong>Prinsip Tamansiswa (Panca Dharma):</strong><br>1. Kodrat Alam (sesuai dengan kodrat dan perkembangan anak)<br>2. Kemerdekaan (pendidikan tidak membatasi kreativitas)<br>3. Kebudayaan (melestarikan budaya lokal)<br>4. Kebangsaan (menumbuhkan rasa cinta tanah air)<br>5. Kemanusiaan (pendidikan untuk semua tanpa diskriminasi)";
-    }
-    
-    if (msg.includes('tamansiswa') && !msg.includes('universitas') && !msg.includes('ki hajar')) {
-        return "🏫 <strong>Persatuan Tamansiswa - Organisasi Pergerakan Pendidikan Indonesia</strong><br><br><strong>Definisi:</strong> Tamansiswa (Perguruan Nasional Tamansiswa) adalah organisasi pergerakan pendidikan yang didirikan oleh Ki Hajar Dewantara pada 3 Juli 1922 di Yogyakarta.<br><br><strong>Tujuan:</strong> Mewujudkan pendidikan yang merdeka, berbudaya, dan berpihak pada rakyat (pendidikan untuk semua kalangan, tidak hanya bangsawan).<br><br><strong>Prinsip Tamansiswa (Panca Dharma):</strong><br>1. <strong>Kodrat Alam</strong> - Pendidikan harus sesuai dengan kodrat dan perkembangan anak<br>2. <strong>Kemerdekaan</strong> - Pendidikan tidak membatasi kreativitas dan kebebasan berpikir<br>3. <strong>Kebudayaan</strong> - Melestarikan dan mengembangkan budaya lokal<br>4. <strong>Kebangsaan</strong> - Menumbuhkan rasa cinta tanah air dan persatuan Indonesia<br>5. <strong>Kemanusiaan</strong> - Pendidikan untuk semua tanpa diskriminasi suku, agama, ras, dan golongan<br><br><strong>Semboyan Tamansiswa:</strong><br><em>'Ing Ngarsa Sung Tuladha, Ing Madya Mangun Karsa, Tut Wuri Handayani'</em><br><br><strong>Jenjang Pendidikan di Tamansiswa:</strong><br>• Taman Indria (setara PAUD/TK)<br>• Taman Muda (setara SD)<br>• Taman Dewasa (setara SMP)<br>• Taman Madya (setara SMA)<br>• Taman Mahasiswa (setara S1) - inilah yang menjadi cikal bakal Universitas Sarjanawiyata Tamansiswa (UST)<br><br>Hingga kini, Tamansiswa memiliki puluhan cabang di seluruh Indonesia dan telah melahirkan banyak tokoh pendidikan dan budayawan.";
-    }
-
-    // ==================== PENDAFTARAN (50+ variasi) ====================
-    if (msg.includes('pendaftaran mapatek') || msg.includes('cara daftar mapatek') || msg.includes('daftar anggota mapatek') ||
-        msg.includes('join mapatek') || msg.includes('bergabung mapatek') || msg.includes('masuk mapatek') ||
-        msg.includes('form pendaftaran mapatek') || msg.includes('syarat pendaftaran mapatek')) {
-        return "📝 <strong>Pendaftaran Anggota Mapatek Abhipraya</strong><br><br>📌 <strong>Cara Mendaftar:</strong><br>• Cek bagian <strong>Pendaftaran</strong> di website ini (status pendaftaran akan ditampilkan secara realtime)<br>• Hubungi WhatsApp admin: <strong>0822-1442-8371</strong> (Fridolinus Jeri Kasman - Koordinator Dokumentasi)<br>• Follow Instagram: <strong>@mapatek_abhipraya</strong> untuk info pengumuman pendaftaran<br>• Email: mapatek.abhipraya@gmail.com<br><br>📌 <strong>Syarat Pendaftaran:</strong><br>1. Mahasiswa aktif Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta<br>2. Memiliki komitmen tinggi terhadap konservasi alam dan kecintaan pada lingkungan<br>3. Bersedia mengikuti seluruh rangkaian Diksar (Pendidikan Dasar Kepencintaalaman)<br>4. Sehat jasmani dan rohani (dibuktikan dengan surat keterangan sehat dari dokter/puskesmas)<br>5. Mengisi formulir pendaftaran online dan membayar biaya pendaftaran<br>6. Mengikuti wawancara seleksi (online atau offline)<br><br>📌 <strong>Jadwal Pendaftaran:</strong><br>Pendaftaran biasanya dibuka setiap awal semester (September untuk semester ganjil, Februari untuk semester genap). Nantikan pengumuman resmi di Instagram @mapatek_abhipraya!<br><br>📌 <strong>Rangkaian Seleksi:</strong><br>1. Pendaftaran Online (1 minggu)<br>2. Wawancara (2 hari)<br>3. Pengumuman lolos wawancara<br>4. Pendidikan Dasar (Diksar) - 3 hari 2 malam di alam terbuka<br>5. Pengukuhan anggota baru<br><br>📌 <strong>Biaya Pendaftaran:</strong><br>Biaya bervariasi tergantung kebutuhan Diksar. Informasi detail akan diberikan saat pendaftaran dibuka. (Biaya sudah termasuk akomodasi, konsumsi, perlengkapan Diksar, dan merchandise Mapatek).";
-    }
-
-    // ==================== ARSIP DOKUMEN (30+ variasi) ====================
-    if (msg.includes('arsip mapatek') || msg.includes('dokumen mapatek') || msg.includes('laporan mapatek') ||
-        msg.includes('file mapatek') || msg.includes('download arsip') || msg.includes('folder mapatek') ||
-        msg.includes('google drive mapatek')) {
-        return "📁 <strong>Arsip Dokumen Mapatek Abhipraya</strong><br><br>📌 <strong>Akses Arsip:</strong><br>Arsip dokumen Mapatek Abhipraya bisa diakses melalui menu <strong>Arsip</strong> di website ini. Kami menyediakan berbagai dokumen penting:<br><br>• <strong>Laporan Kegiatan:</strong> Ekspedisi Gunung Rinjani (2023), Diksar 1-3, Bakti Sosial Pantai Baros (2025), dll<br>• <strong>Laporan Keuangan:</strong> LPJ (Laporan Pertanggungjawaban) setiap kegiatan, RAB (Rencana Anggaran Biaya)<br>• <strong>AD/ART:</strong> Anggaran Dasar & Anggaran Rumah Tangga (revisi 2024)<br>• <strong>SK Kepengurusan:</strong> SK Pengurus periode 2024-2025, 2025-2026<br>• <strong>Dokumentasi:</strong> Foto dan video kegiatan (link YouTube)<br><br>📌 <strong>Folder Google Drive:</strong><br>Klik tombol 'Buka Folder Arsip' di bagian Arsip untuk mengakses folder Google Drive lengkap kami. Semua anggota dapat mengunduh dokumen yang dibutuhkan.<br><br>📌 <strong>Kontribusi Arsip:</strong><br>Jika Anda memiliki dokumentasi kegiatan Mapatek yang belum terarsip, silakan hubungi Koordinator Dokumentasi (Fridolinus Jeri Kasman) untuk mengunggahnya ke folder arsip bersama.";
-    }
-
-    // ==================== KONTAK (40+ variasi) ====================
-    if (msg.includes('kontak mapatek') || msg.includes('hubungi mapatek') || msg.includes('wa mapatek') ||
-        msg.includes('instagram mapatek') || msg.includes('email mapatek') || msg.includes('nomor telepon mapatek') ||
-        msg.includes('basecamp mapatek') || msg.includes('lokasi mapatek')) {
-        return "📞 <strong>Kontak Mapatek Abhipraya</strong><br><br>📌 <strong>Media Sosial & Komunikasi:</strong><br>• <strong>WhatsApp Admin (Utama):</strong> 0822-1442-8371 (Fridolinus Jeri Kasman - Koordinator Dokumentasi)<br>• <strong>Instagram Resmi:</strong> @mapatek_abhipraya (update kegiatan, pendaftaran, dan tips kealaman)<br>• <strong>Email:</strong> mapatek.abhipraya@gmail.com (untuk surat-menyurat dan kerja sama)<br>• <strong>Email Alternatif:</strong> mapatek@ustjogja.ac.id (resmi kampus)<br><br>📌 <strong>Basecamp (Sekretariat):</strong><br>📍 Universitas Sarjanawiyata Tamansiswa (UST)<br>Jl. Batikan UH III/1043, Tuntungan, Kec. Umbulharjo<br>Kota Yogyakarta, Daerah Istimewa Yogyakarta 55167<br><br>📌 <strong>Jam Operasional Sekretariat:</strong><br>Senin - Jumat: 15.00 - 18.00 WIB (setelah perkuliahan)<br>Sabtu: 09.00 - 12.00 WIB (jika ada kegiatan)<br><br>📌 <strong>Form Kontak Online:</strong><br>• Chat langsung di website melalui tombol chatbot (kanan bawah)<br>• DM Instagram @mapatek_abhipraya (fast response within 24 hours)<br><br>📌 <strong>Untuk Kerja Sama & Donasi:</strong><br>Silakan hubungi Ketua Umum (Machmud Chabibul Lathif - 085-952-824-898) atau Sekretaris Jenderal (Putri Robet - 0815-2272-3325) untuk membahas kerja sama, kegiatan bersama (event), atau donasi untuk konservasi lingkungan.<br><br>📌 <strong>Pengaduan & Saran:</strong><br>Email khusus: pengaduan.mapatek@gmail.com - anonim terjamin.";
-    }
-
-    // ==================== KATEGORI UMUM LAINNYA ====================
-    if (msg.includes('terima kasih') || msg.includes('makasih') || msg.includes('thanks') || msg.includes('thank you') ||
-        msg.includes('terimakasih') || msg.includes('thx')) {
-        return "Sama-sama! 😊 Senang bisa membantu Anda. Terus dukung Mapatek Abhipraya dengan mengikuti kegiatan-kegiatan kami ya! Jangan ragu bertanya lagi jika ada hal lain yang ingin diketahui. Selamat berpetualang dan tetap lestarikan alam! 🏔️🌿";
-    }
-    
-    if (msg.match(/\b(halo|hai|hello|hi|pagi|siang|sore|malam|assalamualaikum|selamat datang)\b/)) {
-        return "Halo! 👋 Senang berkenalan dengan Anda. Saya asisten virtual Mapatek Abhipraya. Ada yang bisa saya bantu? Silakan tanya tentang organisasi Mapatek, pendakian gunung, alat panjat tebing (rock climbing), teknik survival, P3K di alam, konservasi lingkungan, atau Universitas Sarjanawiyata Tamansiswa (UST)! 🏔️ Just ask me anything!";
-    }
-    
-    if (msg.includes('mapala') || (msg.includes('pecinta alam') && !msg.includes('mapatek'))) {
-        return "🌲 MAPALA (Mahasiswa Pencinta Alam) adalah organisasi kemahasiswaan yang bergerak di bidang kepencintaalaman, konservasi lingkungan, dan pendidikan alam bebas. Mapatek Abhipraya adalah salah satu MAPALA yang berdiri di Universitas Sarjanawiyata Tamansiswa (UST) sejak 2023. Mapatek Abhipraya berfokus pada kegiatan ekspedisi gunung, rock climbing, konservasi, dan pengembangan softskill. Kami juga rutin mengadakan Diksar (Pendidikan Dasar) untuk mencetak anggota baru yang cinta alam dan berjiwa kepemimpinan. 🏔️";
-    }
-    
-    if (msg.includes('diksar') || msg.includes('pendidikan dasar mapala') || msg.includes('latihan dasar')) {
-        return "🎓 <strong>Diksar (Pendidikan Dasar) Mapatek Abhipraya</strong><br><br>Diksar adalah kegiatan wajib bagi calon anggota Mapatek Abhipraya. Diksar dilaksanakan selama 3 hari 2 malam di alam terbuka (biasanya di kaki Gunung Merapi atau kawasan hutan pendidikan UST).<br><br><strong>Materi Diksar:</strong><br>1. Pengenalan organisasi & kepemimpinan<br>2. Teknik navigasi darat (kompas, peta, GPS)<br>3. Teknik pendakian & manajemen perjalanan<br>4. Survival & P3K di alam<br>5. Konservasi lingkungan & Leave No Trace<br>6. Teknik rock climbing dasar & belaying<br>7. Simpul-simpul (knotting) untuk panjat tebing<br>8. Manajemen logistik & pendirian tenda<br><br><strong>Syarat Lulus Diksar:</strong><br>• Hadir 100% dalam seluruh rangkaian kegiatan<br>• Mengerjakan semua tugas (baik teori maupun praktik)<br>• Lulus ujian teori dan praktik<br>• Menunjukkan sikap kepemimpinan dan kerja sama tim<br><br>Setelah lulus Diksar, peserta akan resmi dikukuhkan sebagai anggota Mapatek Abhipraya dan berhak menggunakan almamater Mapatek.";
-    }
-
-    // ==================== DEFAULT (PERTANYAAN TIDAK DIKENALI) ====================
-    return "🌿 <strong>Maaf, saya belum sepenuhnya memahami pertanyaan Anda.</strong><br><br>📌 Coba tanyakan tentang:<br>• <strong>Organisasi Mapatek:</strong> sejarah, angkatan, visi misi, struktur pengurus, pendaftaran<br>• <strong>Gunung Hutan & Pendakian:</strong> tips packing carrier, teknik navigasi kompas, persiapan pendakian, 10 essentials, jenis tenda, kompor pendakian<br>• <strong>Rock Climbing:</strong> fungsi harness, jenis carabiner, dynamic vs static rope, anchor SERENE, simpul figure eight, prusik, clove hitch<br>• <strong>Survival:</strong> cara membuat api di alam, shelter darurat (Lean To, Debris Hut), menjernihkan air minum, mencari sumber air<br>• <strong>P3K & Kesehatan:</strong> penanganan hipotermia, gigitan ular, patah tulang, CPR (henti jantung)<br>• <strong>SAR & Evakuasi:</strong> tahapan pencarian korban, jenis tandu, evakuasi di medan sulit<br>• <strong>Konservasi:</strong> 7 prinsip Leave No Trace (LNT)<br>• <strong>Universitas UST:</strong> sejarah UST, fakultas, Ki Hajar Dewantara, Tamansiswa<br>• <strong>Kontak & Arsip:</strong> WA admin, Instagram, alamat basecamp, akses folder Google Drive<br><br>📞 Atau hubungi admin kami di WhatsApp <strong>0822-1442-8371</strong> untuk bantuan lebih lanjut. Terima kasih! 🙏";
-}
     document.addEventListener('click', function(event) {
         const widget = document.querySelector('.chatbot-widget');
         const container = document.getElementById('chatbotContainer');
@@ -1017,16 +2282,25 @@ document.getElementById('imageModal')?.addEventListener('click', function(e) {
         }
     });
 
-   // Load semua fitur baru setelah halaman load
-window.addEventListener('load', () => {
-    loadAgenda();
-    loadGaleri();  // Pastikan ini dipanggil!
-    animateCounter(document.getElementById('memberCount'), 50);
-    animateCounter(document.getElementById('expeditionCount'), 12);
-    animateCounter(document.getElementById('trainingCount'), 8);
-    animateCounter(document.getElementById('documentCount'), 25);
-    showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
-});
+    // Load semua fitur
+    window.addEventListener('load', () => {
+        loadAgenda();
+        loadGaleri();
+        loadTestimoni();
+        loadLeaderboard();
+        loadPolling();
+        loadCuaca();
+        loadBerita();
+        loadKalender();
+        loadFAQ();
+        loadQuizQuestion();
+        setTimeout(loadPeta, 500);
+        animateCounter(document.getElementById('memberCount'), 50);
+        animateCounter(document.getElementById('expeditionCount'), 12);
+        animateCounter(document.getElementById('trainingCount'), 8);
+        animateCounter(document.getElementById('documentCount'), 25);
+        showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
+    });
 </script>
 </body>
 </html>
