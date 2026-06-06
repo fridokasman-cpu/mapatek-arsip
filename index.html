@@ -2443,206 +2443,241 @@
         return div.innerHTML;
     }
     
-   function getIntelligentResponse(message) {
-    const msg = message.toLowerCase();
-
-    const knowledge = [
-
-        // =====================
-        // MAPATEK
-        // =====================
-        {
-            keywords: ['apa itu mapatek', 'mapatek', 'organisasi mapatek'],
-            answer: '🌲 MAPATEK ABHIPRAYA adalah organisasi mahasiswa pecinta alam yang berdiri pada 19 Maret 2023 di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta.'
+  function getIntelligentResponse(message) {
+    const msg = message.toLowerCase().trim();
+    
+    // ==================== KAMUS PINTAR ====================
+    const knowledgeBase = {
+        // GREETINGS & SAPAAN
+        greetings: {
+            patterns: ['halo', 'hai', 'hello', 'hi', 'hey', 'selamat pagi', 'selamat siang', 'selamat sore', 'selamat malam', 'assalamualaikum', 'hy', 'helo', 'hallo', 'haii', 'hii', 'hai juga', 'pagi', 'siang', 'sore', 'malam'],
+            response: "👋 Halo! Saya Asisten MAPATEK yang SUPER PINTAR! 🧠 Silakan tanyakan APAPUN tentang:\n\n🏔️ MAPATEK & Organisasi\n⛰️ Pendakian Gunung\n🧗 Rock Climbing & Panjat Tebing\n🧭 Navigasi Darat & Kompas\n🔥 Survival & Bertahan Hidup\n⛑️ P3K & Kesehatan Darurat\n🌱 Konservasi & Leave No Trace\n🏫 UST & Tamansiswa\n📋 Pendaftaran Anggota\n🗺️ Gunung-Gunung Indonesia\n🪢 Simpul & Tali Temali\n📢 Info Kegiatan Terbaru\n\nApa yang ingin Anda tanyakan hari ini?"
         },
-
-        {
-            keywords: ['sejarah mapatek', 'sejarah', 'berdiri'],
-            answer: '📜 MAPATEK ABHIPRAYA didirikan pada 19 Maret 2023 oleh Angkatan PancaTompak sebagai wadah pengembangan minat dan bakat mahasiswa di bidang kepencintaalaman.'
+        
+        thanks: {
+            patterns: ['terima kasih', 'makasih', 'thanks', 'thank you', 'terimakasih', 'thx', 'tq', 'ty', 'thankyou', 'terima kasih banyak', 'makasih banyak'],
+            response: "😊 Sama-sama! Senang bisa membantu. Jangan ragu bertanya lagi ya! Tetap semangat berkegiatan dan selalu utamakan keselamatan di alam! 🏔️"
         },
-
-        {
-            keywords: ['visi mapatek', 'visi'],
-            answer: '🎯 Menjadi organisasi mahasiswa pecinta alam yang unggul, berkarakter, profesional, berjiwa konservasi, dan berlandaskan nilai Tamansiswa.'
+        
+        // ==================== MAPATEK PROFIL ====================
+        mapatekProfile: {
+            patterns: ['apa itu mapatek', 'mapatek abhipraya', 'mapatek itu apa', 'pengertian mapatek', 'mapatek adalah', 'tentang mapatek', 'info mapatek', 'mapatek organisasi', 'mapatek singkatan', 'mapatek abhipraya adalah', 'jelaskan mapatek', 'mapatek artinya', 'mapatek kepanjangan'],
+            response: "🌲 <strong>MAPATEK ABHIPRAYA</strong> adalah organisasi mahasiswa pecinta alam yang resmi berdiri pada <strong>19 Maret 2023</strong> di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta.\n\n📌 <strong>Makna Nama:</strong>\n• MAPATEK = Mahasiswa Pencinta Alam Teknik (disingkat)\n• ABHIPRAYA = Harapan / Cita-cita (bahasa Sanskerta)\n\n🏔️ <strong>Bidang Kegiatan:</strong>\n✓ Ekspedisi Pendakian Gunung\n✓ Rock Climbing & Panjat Tebing\n✓ Konservasi Lingkungan\n✓ Pendidikan & Latihan Dasar (DIKSAR)\n✓ Bakti Sosial & Penanaman Pohon\n✓ Penelitian & Dokumentasi Alam"
         },
-
-        {
-            keywords: ['misi mapatek', 'misi'],
-            answer: '📌 Mengembangkan SDM, meningkatkan keterampilan kepencintaalaman, melestarikan lingkungan, dan mempererat solidaritas anggota.'
+        
+        sejarah: {
+            patterns: ['sejarah mapatek', 'sejarah berdirinya mapatek', 'kapan mapatek berdiri', 'tanggal berdiri mapatek', 'mapatek didirikan', 'awal mula mapatek', 'bagaimana sejarah mapatek', 'cerita berdirinya mapatek', 'mapatek berdiri tahun', 'mapatek lahir', 'pendiri mapatek', 'siapa pendiri mapatek', 'pencetus mapatek', 'founder mapatek', 'mapatek didirikan oleh'],
+            response: "📜 <strong>SEJARAH MAPATEK ABHIPRAYA</strong>\n\n🗓️ <strong>Tanggal Berdiri:</strong> 19 Maret 2023\n📍 <strong>Tempat:</strong> Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta\n\n👥 <strong>Pendiri (Angkatan PancaTompak):</strong>\nAwalnya hanya 5 orang mahasiswa pecinta alam yang memiliki kegelisahan akan minimnya wadah ekspresi di bidang kealamaan di kampus UST.\n\n🌟 <strong>Perjalanan Angkatan:</strong>\n• <strong>PancaTompak (2023)</strong> - Angkatan Pendiri (5 orang)\n• <strong>TapakKaki (2024)</strong> - Angkatan Pengukir Jejak\n• <strong>TedakDaivat (2025)</strong> - Angkatan Penakluk Puncak\n• <strong>LitaniAram (2026)</strong> - Angkatan Pelita Alam\n\n🏆 Hingga saat ini, MAPATEK telah melaksanakan puluhan ekspedisi, kegiatan konservasi, dan melahirkan kader-kader pecinta alam yang tangguh!"
         },
-
-        {
-            keywords: ['pendaftaran', 'daftar anggota', 'join'],
-            answer: '📝 Untuk bergabung dengan MAPATEK, silakan hubungi pengurus atau lihat menu pendaftaran pada website resmi.'
+        
+        visiMisi: {
+            patterns: ['visi mapatek', 'misi mapatek', 'visi misi mapatek', 'tujuan mapatek', 'apa visi mapatek', 'apa misi mapatek', 'mapatek bertujuan', 'visi organisasi mapatek', 'cita-cita mapatek'],
+            response: "🎯 <strong>VISI & MISI MAPATEK ABHIPRAYA</strong>\n\n<strong>🌟 VISI:</strong>\n\"Menjadi organisasi mahasiswa pecinta alam yang unggul, profesional, berkarakter, berjiwa konservasi, dan berlandaskan nilai-nilai Tamansiswa.\"\n\n<strong>📌 MISI:</strong>\n1️⃣ Mengembangkan sumber daya manusia yang berkualitas di bidang kepencintaalaman\n2️⃣ Meningkatkan keterampilan teknis anggota (navigasi, survival, panjat tebing)\n3️⃣ Melestarikan lingkungan melalui aksi konservasi nyata\n4️⃣ Mempererat solidaritas dan kekeluargaan antar anggota\n5️⃣ Menjalin kerjasama dengan organisasi pecinta alam lainnya\n6️⃣ Mengabdikan kegiatan melalui dokumentasi dan publikasi ilmiah\n7️⃣ Menanamkan nilai-nilai kepemimpinan, kemandirian, dan cinta tanah air"
         },
-
-        // =====================
-        // GUNUNG
-        // =====================
-
-        {
-            keywords: ['gunung tertinggi indonesia'],
-            answer: '🏔️ Gunung tertinggi di Indonesia adalah Puncak Jaya (Carstensz Pyramid) dengan ketinggian 4.884 mdpl.'
+        
+        struktur: {
+            patterns: ['struktur mapatek', 'pengurus mapatek', 'kepengurusan mapatek', 'siapa ketua mapatek', 'pengurus inti mapatek', 'nama ketua mapatek', 'ketua umum mapatek', 'sekretaris mapatek', 'bendahara mapatek', 'koordinator mapatek', 'struktur organisasi mapatek', 'pengurus periode', 'pengurus sekarang'],
+            response: "👥 <strong>STRUKTUR PENGURUS MAPATEK ABHIPRAYA</strong>\nPeriode 2025-2026\n\n<strong>🌟 PIMPINAN INTI:</strong>\n• <strong>Ketua Umum:</strong> Machmud Chabibul Lathif (085-952-824-898)\n• <strong>Sekretaris Jenderal:</strong> Putri Robet (0815-2272-3325)\n• <strong>Sekretaris Wakil:</strong> Tsye Dayana Knyartutu\n• <strong>Bendahara 1:</strong> Rosa Bandatia\n\n<strong>🧗 KOORDINATOR LAPANGAN:</strong>\n• <strong>Rock Climbing:</strong> Tresia Utami Sulensi\n• <strong>Gunung Hutan:</strong> Muhammad Musfian Sutrawardi\n• <strong>Tim Gunung Hutan:</strong> Muhamad Amrullah\n\n<strong>📦 KOORDINATOR PENDUKUNG:</strong>\n• <strong>Logistik:</strong> Gahar Albani Rasyid\n• <strong>Dokumentasi:</strong> Fridolinus Jeri Kasman\n• <strong>Tim PDD:</strong> Laura Mahatta Rismavi Hendra\n\n📞 <strong>KONTAK ADMIN:</strong> 0822-1442-8371 (Fridolinus)"
         },
-
-        {
-            keywords: ['persiapan pendakian', 'sebelum mendaki'],
-            answer: '🎒 Persiapan pendakian meliputi latihan fisik, cek cuaca, perlengkapan lengkap, logistik cukup, dan memahami jalur pendakian.'
+        
+        angkatan: {
+            patterns: ['angkatan mapatek', 'nama angkatan mapatek', 'pancatompak', 'tapakkaki', 'tedakdaivat', 'litaniaram', 'ada berapa angkatan', 'daftar angkatan mapatek', 'angkatan pendiri', 'angkatan 2023', 'angkatan 2024', 'angkatan 2025', 'angkatan 2026', 'sejarah angkatan'],
+            response: "🌟 <strong>ANGKATAN MAPATEK ABHIPRAYA</strong>\n\n<strong>🥇 PANCATOMPAK (2023)</strong> - Angkatan Pendiri\n\"Lima Puncak Harapan\" - 5 orang pemberani yang meletakkan fondasi organisasi.\n\n<strong>🥈 TAPAKKAKI (2024)</strong> - Angkatan Pengukir Jejak\n\"Mengukir Jejak Perjuangan\" - Memperluas sayap organisasi dan konservasi.\n\n<strong>🥉 TEDAKDAIVAT (2025)</strong> - Angkatan Penakluk Puncak\n\"Menapaki Puncak Tertinggi\" - Fokus pada ekspedisi ekstrim & rock climbing.\n\n<strong>🏅 LITANIARAM (2026)</strong> - Angkatan Pelita Alam\n\"Pelita bagi Alam\" - Mengusung semangat konservasi & edukasi lingkungan.\n\n📌 Setiap angkatan memiliki ciri khas, motto, dan kontribusi unik bagi perkembangan MAPATEK! 🏔️"
         },
-
-        {
-            keywords: ['seven summit indonesia'],
-            answer: '🏔️ Seven Summit Indonesia merupakan tujuh puncak tertinggi dari tujuh pulau besar Indonesia.'
+        
+        // ==================== PENDAFTARAN ANGGOTA ====================
+        pendaftaran: {
+            patterns: ['pendaftaran mapatek', 'cara daftar mapatek', 'daftar anggota mapatek', 'join mapatek', 'bergabung mapatek', 'masuk mapatek', 'form pendaftaran mapatek', 'syarat pendaftaran mapatek', 'mendaftar mapatek', 'pendaftaran anggota', 'calon anggota', 'rekrutmen mapatek', 'open recruitment mapatek', 'oprec mapatek', 'ingin gabung mapatek'],
+            response: "📝 <strong>PENDAFTARAN ANGGOTA MAPATEK ABHIPRAYA</strong>\n\n<strong>📌 CARA MENDAFTAR:</strong>\n1. Cek bagian <strong>Pendaftaran</strong> di website ini (status real-time)\n2. Hubungi WhatsApp Admin: <strong>0822-1442-8371</strong> (Fridolinus)\n3. DM Instagram: <strong>@mapatek_abhipraya</strong>\n4. Email: mapatek.abhipraya@gmail.com\n\n<strong>✅ SYARAT PENDAFTARAN:</strong>\n• Mahasiswa aktif UST Yogyakarta\n• Memiliki komitmen tinggi terhadap alam & konservasi\n• Bersedia mengikuti DIKSAR (Pendidikan Dasar)\n• Sehat jasmani & rohani (surat keterangan sehat)\n• Mengisi formulir online & membayar biaya pendaftaran\n• Lulus wawancara seleksi\n\n<strong>📅 JADWAL:</strong>\nPendaftaran dibuka setiap awal semester:\n• Semester Ganjil (September - Oktober)\n• Semester Genap (Februari - Maret)\n\n<strong>💰 BIAYA:</strong>\nRp 300.000 - Rp 500.000 (termasuk akomodasi DIKSAR, perlengkapan, & merchandise MAPATEK)"
         },
-
-        // =====================
-        // SURVIVAL
-        // =====================
-
-        {
-            keywords: ['survival', 'bertahan hidup'],
-            answer: '🔥 Survival adalah kemampuan bertahan hidup dalam kondisi darurat dengan memanfaatkan sumber daya yang tersedia.'
+        
+        diksar: {
+            patterns: ['diksar', 'pendidikan dasar mapala', 'latihan dasar mapatek', 'diklat mapatek', 'pendidikan dasar kepencintaalaman', 'apa itu diksar', 'materi diksar', 'pelaksanaan diksar', 'dikdar', 'diklat dasar', 'paldik', 'pendidikan dan latihan dasar'],
+            response: "🎓 <strong>DIKSAR (Pendidikan Dasar) MAPATEK ABHIPRAYA</strong>\n\n<strong>📌 APA ITU DIKSAR?</strong>\nDIKSAR adalah kegiatan wajib bagi calon anggota MAPATEK yang dilaksanakan selama <strong>3 hari 2 malam</strong> di alam terbuka (kaki Gunung Merapi / kawasan hutan pendidikan UST).\n\n<strong>📚 MATERI DIKSAR:</strong>\n1. Pengenalan Organisasi & Kepemimpinan\n2. Teknik Navigasi Darat (Kompas, Peta, GPS)\n3. Teknik Pendakian & Manajemen Perjalanan\n4. Survival & P3K di Alam Liar\n5. Konservasi Lingkungan & Leave No Trace\n6. Rock Climbing Dasar & Belaying\n7. Simpul-Simpul (Knotting) untuk Panjat Tebing\n8. Manajemen Logistik & Pendirian Tenda\n9. Etika Pecinta Alam\n10. Pengetahuan Gunung & Flora-Fauna\n\n<strong>🏆 SYARAT LULUS DIKSAR:</strong>\n✓ Hadir 100% dalam seluruh rangkaian kegiatan\n✓ Mengerjakan semua tugas (teori & praktik)\n✓ Lulus ujian teori & praktik\n✓ Menunjukkan sikap kepemimpinan & kerja sama tim\n\nSetelah lulus DIKSAR, peserta resmi dikukuhkan sebagai anggota MAPATEK dan berhak menggunakan almamater!"
         },
-
-        {
-            keywords: ['aturan survival'],
-            answer: '📌 Prinsip survival: Tenang, Analisa Situasi, Prioritaskan Air, Buat Perlindungan, Cari Bantuan, dan Hemat Energi.'
+        
+        // ==================== PENGETAHUAN GUNUNG ====================
+        gunungTertinggi: {
+            patterns: ['gunung tertinggi indonesia', 'puncak tertinggi indonesia', 'gunung tertinggi di indonesia', 'puncak jaya', 'carstensz pyramid', 'gunung tertinggi ri', 'gunung tertinggi nusantara', 'puncak tertinggi di indonesia', 'gunung apa yang tertinggi di indonesia'],
+            response: "🏔️ <strong>GUNUNG TERTINGGI DI INDONESIA</strong>\n\n1. <strong>PUNCAK JAYA (Carstensz Pyramid)</strong> - 4.884 mdpl\n   (Papua) - Termasuk Seven Summit dunia\n\n2. <strong>PUNCAK MANDALA</strong> - 4.760 mdpl\n   (Papua)\n\n3. <strong>PUNCAK TRIKORA</strong> - 4.750 mdpl\n   (Papua)\n\n4. <strong>GUNUNG KERINCI</strong> - 3.805 mdpl\n   (Sumatera Barat/Jambi)\n\n5. <strong>GUNUNG RINJANI</strong> - 3.726 mdpl\n   (Lombok, NTB)\n\n6. <strong>GUNUNG SEMERU</strong> - 3.676 mdpl\n   (Jawa Timur)\n\n7. <strong>GUNUNG ARJUNA</strong> - 3.339 mdpl\n   (Jawa Timur)"
         },
-
-        {
-            keywords: ['api unggun'],
-            answer: '🔥 Api unggun berfungsi untuk menghangatkan tubuh, memasak, penerangan, dan sinyal darurat.'
+        
+        sevenSummit: {
+            patterns: ['seven summit indonesia', '7 summit indonesia', 'tujuh puncak indonesia', 'seven peaks indonesia', 'puncak tertinggi pulau', 'gunung tertinggi sumatera', 'gunung tertinggi jawa', 'gunung tertinggi sulawesi', 'gunung tertinggi kalimantan', 'gunung tertinggi bali'],
+            response: "🏔️ <strong>SEVEN SUMMIT INDONESIA</strong>\n(Tujuh puncak tertinggi dari tujuh pulau besar)\n\n1️⃣ <strong>PUNCAK JAYA</strong> - 4.884 mdpl (Papua)\n2️⃣ <strong>GUNUNG KERINCI</strong> - 3.805 mdpl (Sumatera)\n3️⃣ <strong>GUNUNG RINJANI</strong> - 3.726 mdpl (Lombok/NTB)\n4️⃣ <strong>GUNUNG SEMERU</strong> - 3.676 mdpl (Jawa)\n5️⃣ <strong>GUNUNG LATIMOJONG</strong> - 3.478 mdpl (Sulawesi)\n6️⃣ <strong>GUNUNG BUKIT RAYA</strong> - 2.278 mdpl (Kalimantan)\n7️⃣ <strong>GUNUNG AGUNG</strong> - 3.031 mdpl (Bali)\n\n🌟 Challenge para pecinta alam Indonesia untuk menaklukkan ketujuh puncak ini!"
         },
-
-        // =====================
-        // P3K
-        // =====================
-
-        {
-            keywords: ['p3k'],
-            answer: '⛑️ P3K adalah Pertolongan Pertama Pada Kecelakaan untuk memberikan bantuan awal sebelum penanganan medis lanjutan.'
+        
+        gunungPopuler: {
+            patterns: ['gunung populer di jawa', 'gunung favorit pendaki', 'gunung yang sering didaki', 'rekomendasi gunung pemula', 'gunung untuk pemula', 'gunung paling ramai', 'gunung terbaik pemula', 'gunung ramah pemula'],
+            response: "⛰️ <strong>REKOMENDASI GUNUNG UNTUK PEMULA (JAWA):</strong>\n\n🥇 <strong>GUNUNG PRAU (Dieng)</strong> - 2.565 mdpl\n✓ Medan tidak terlalu berat\n✓ Pemandian air panas\n✓ Sunrise spectacular\n✓ Cocok untuk camping\n\n🥈 <strong>GUNUNG ANDONG (Magelang)</strong> - 1.726 mdpl\n✓ Jalur pendek (2-3 jam)\n✓ Pemandangan Merbabu & Merapi\n✓ Bisa sunrise tracking\n\n🥉 <strong>GUNUNG MERBABU</strong> - 3.145 mdpl\n✓ Jalur Wekas, Selo, Cunthel\n✓ Medan sabana luas\n✓ View 360 derajat\n\n🏅 <strong>GUNUNG SINDORO (Wonosobo)</strong> - 3.136 mdpl\n✓ Jalur pendakian landai\n✓ Banyak pos untuk istirahat\n✓ Embun es di puncak (suhu 0-5°C)\n\n📌 Tips: Bawa perlengkapan lengkap, jangan sendiri, dan selalu cek cuaca!"
         },
-
-        {
-            keywords: ['hipotermia'],
-            answer: '❄️ Hipotermia adalah kondisi suhu tubuh turun di bawah normal akibat paparan dingin berlebihan.'
+        
+        persiapanPendakian: {
+            patterns: ['persiapan pendakian', 'tips pendakian gunung', 'syarat pendakian', 'persiapan sebelum naik gunung', 'tips pendakian pemula', 'persiapan fisik pendakian', 'perlengkapan wajib pendakian', 'yang harus disiapkan untuk mendaki'],
+            response: "🎒 <strong>TIPS PERSIAPAN PENDAKIAN GUNUNG (PEMULA):</strong>\n\n<strong>📅 H-14 s.d H-7:</strong>\n✓ Latihan fisik: jogging 3-4x/minggu, naik turun tangga dengan beban carrier 10-15kg\n✓ Cek kondisi cuaca di BMKG / website resmi gunung\n✓ Pelajari jalur pendakian (maps, elevasi, water source)\n\n<strong>📅 H-7 s.d H-3:</strong>\n✓ Urus izin pendakian (SIMAKSI/SIMAKS) ke Taman Nasional\n✓ Siapkan perlengkapan 10 Essentials (navigasi, headlamp, P3K, pisau, api, shelter, makanan, air, kompor)\n✓ Bawa obat pribadi & P3K lengkap\n✓ Siapkan uang tunai cadangan & power bank\n\n<strong>📅 H-1:</strong>\n✓ Informasikan rencana pendakian ke keluarga/teman (rute, jadwal, kontak darurat)\n✓ Cek ulang perlengkapan\n✓ Istirahat cukup, jaga hidrasi\n\n<strong>🏔️ SAAT PENDAKIAN:</strong>\n✓ Jangan malu untuk TURNBACK jika kondisi tidak memungkinkan\n✓ Jaga kebersihan: Bawa turun SEMUA sampah!\n✓ Gunakan prinsip Leave No Trace\n✓ Patuhi aturan pendakian setempat\n\n<strong>⚠️ PRINSIP UTAMA:</strong>\n\"Puncak bukan segalanya, keselamatan adalah nomor satu!\""
         },
-
-        {
-            keywords: ['gigitan ular'],
-            answer: '🐍 Tetap tenang, imobilisasi bagian yang tergigit, jangan disedot atau disayat, dan segera cari bantuan medis.'
+        
+        tenEssentials: {
+            patterns: ['10 essentials', 'perlengkapan wajib pendakian', 'peralatan pendakian wajib', 'daftar barang pendakian', 'perlengkapan pendakian pemula', 'alat yang harus dibawa saat pendakian', 'essential gear', 'perlengkapan survival', 'perlengkapan dasar pendakian'],
+            response: "🎒 <strong>10 ESSENTIALS (Perlengkapan Wajib Pendakian)</strong>\n\n1. <strong>NAVIGASI</strong> 🧭\n   Peta, kompas, GPS (cadangan), whistle/peluit\n\n2. <strong>HEADLAMP/SENTER</strong> 🔦\n   + baterai cadangan minimal 1 set\n\n3. <strong>PERLINDUNGAN</strong> 🧥\n   Jaket windproof/raincoat, sunscreen, topi, sarung tangan\n\n4. <strong>P3K + OBAT PRIBADI</strong> ⛑️\n   Plester, betadine, perban, obat sakit kepala, obat diare, minyak kayu putih\n\n5. <strong>PISAU SERBAGUNA</strong> 🔪\n   Multitool untuk memotong, membuka kaleng, dll\n\n6. <strong>API</strong> 🔥\n   Korek api waterproof, lighter, ferro rod (cadangan)\n\n7. <strong>TEMPAT BERLINDUNG</strong> 🏕️\n   Tenda darurat / bivy sack / ponco\n\n8. <strong>PERALATAN MASAK</strong> 🍳\n   Kompor portable, mess tin, sendok+gabus, wind shield\n\n9. <strong>MAKANAN CADANGAN</strong> 🍫\n   Energy bar, coklat, kacang-kacangan (minimal 1 hari ekstra)\n\n10. <strong>AIR + SISTEM FILTRASI</strong> 💧\n    Minimal 3L per hari + tablet pemurni air / filter air portable\n\n⚠️ Tambahan untuk pendakian >1 hari: Sleeping bag, matras, tenda!"
         },
-
-        // =====================
-        // ROCK CLIMBING
-        // =====================
-
-        {
-            keywords: ['rock climbing'],
-            answer: '🧗 Rock Climbing adalah olahraga panjat tebing menggunakan teknik dan perlengkapan keselamatan tertentu.'
+        
+        // ==================== TEKNIK PACKING CARRIER ====================
+        packingCarrier: {
+            patterns: ['cara packing carrier', 'packing carrier yang benar', 'cara mengemas carrier', 'cara masukkan barang ke carrier', 'cara menata carrier', 'packing tas gunung', 'cara merapikan carrier', 'teknik packing carrier', 'tips packing carrier'],
+            response: "🎒 <strong>CARA PACKING CARRIER YANG BENAR</strong>\n\n<strong>📌 ATURAN DASAR:</strong>\n• <strong>Barang berat</strong> (air, kompor, logistik, tenda) diletakkan <strong>DEKAT PUNGGUNG</strong> (tengah carrier) - ini menjaga keseimbangan!\n• <strong>Barang ringan</strong> (sleeping bag, pakaian, sleeping pad) diletakkan di <strong>BAGIAN BAWAH</strong> carrier\n• <strong>Barang sering dipakai</strong> (raincoat, snack, P3K, headlamp, sarung tangan) di <strong>TOP LID/AKSES CEPAT</strong>\n• <strong>Tenda</strong> bisa diikat di <strong>LUAR</strong> bagian bawah atau atas carrier (dalam tas dry bag)\n• <strong>Matras</strong> digulung di <strong>SISI KIRI/KANAN</strong> carrier (seimbang)\n• <strong>Air minum</strong> diletakkan di kedua sisi carrier untuk keseimbangan\n\n<strong>📏 TIPS:</strong>\n✓ Berat total carrier ideal <strong>20-25% dari berat badan</strong>!\n✓ Jangan melebihi 30% untuk pendakian panjang\n✓ Simpan barang dalam kantong plastik/kantong kedap air (waterproof bag)\n✓ Pisahkan pakaian kering dan basah\n✓ Gunakan kompresi bag untuk sleeping bag\n✓ Carrier harus terasa nyaman di pinggul (hip belt menahan 70-80% beban)"
         },
-
-        {
-            keywords: ['carabiner'],
-            answer: '🔗 Carabiner adalah pengait berbahan logam yang digunakan dalam sistem pengamanan panjat tebing.'
+        
+        // ==================== NAVIGASI DARAT ====================
+        navigasi: {
+            patterns: ['teknik navigasi', 'cara menggunakan kompas', 'membaca peta', 'navigasi darat', 'orientasi medan', 'back bearing', 'azimuth', 'resection', 'kompas bidik', 'cara baca kompas'],
+            response: "🧭 <strong>TEKNIK NAVIGASI DASAR dengan KOMPAS & PETA</strong>\n\n<strong>📌 1. ORIENTASI PETA</strong>\nSejajarkan peta dengan arah utara kompas (putar peta hingga garis utara peta searah dengan jarum utara kompas).\n\n<strong>📌 2. BACK BEARING</strong>\nTentukan arah dari posisi kita ke target dengan rumus:\n• Jika Azimuth < 180°: Back Azimuth = Azimuth + 180°\n• Jika Azimuth > 180°: Back Azimuth = Azimuth - 180°\n\n<strong>📌 3. RESECTION</strong>\nTentukan posisi kita di peta dengan menggunakan minimal 2 titik referensi yang diketahui.\n\n<strong>📌 4. AZIMUTH</strong>\nSudut arah perjalanan (0-360 derajat):\n• 0° = Utara\n• 90° = Timur\n• 180° = Selatan\n• 270° = Barat\n\n<strong>📌 5. INTERSECTION</strong>\nMenentukan posisi target dengan menggunakan 2 titik posisi yang diketahui.\n\n⚠️ <strong>CATATAN PENTING:</strong>\nKompas tidak berfungsi optimal di dekat:\n✗ Besi/logam besar\n✗ Kabel listrik tegangan tinggi\n✗ Handphone / perangkat elektronik\n✗ Deposit besi di tanah\n\n📌 TIPS: Selalu kalibrasi kompas sebelum digunakan!"
         },
-
-        {
-            keywords: ['harness'],
-            answer: '🦺 Harness adalah sabuk pengaman yang dikenakan pemanjat untuk menghubungkan tubuh dengan tali.'
+        
+        // ==================== SURVIVAL ====================
+        survival: {
+            patterns: ['survival di alam', 'cara bertahan hidup di hutan', 'survival gunung', 'teknik bertahan hidup', 'survival mapala', 'tips survival', 'survival dasar', 'survival 3a', 'edukasi survival'],
+            response: "🔥 <strong>TEKNIK SURVIVAL DASAR DI ALAM LIAR</strong>\n\n<strong>📌 PRINSIP SURVIVAL (3A + 1P):</strong>\n1. <strong>Alert (Kewaspadaan)</strong> - Tetap tenang, jangan panik\n2. <strong>Assessment (Analisa)</strong> - Nilai situasi, kemampuan, sumber daya\n3. <strong>Action (Tindakan)</strong> - Lakukan sesuai prioritas\n4. <strong>Persistence (Ketekunan)</strong> - Pantang menyerah\n\n<strong>📌 PRIORITAS SURVIVAL:</strong>\n1️⃣ <strong>PERTOLONGAN (First Aid)</strong> - Atasi cedera serius dulu\n2️⃣ <strong>PERLINDUNGAN (Shelter)</strong> - Cari tempat berlindung dari cuaca\n3️⃣ <strong>AIR (Water)</strong> - Cari sumber air bersih (minimal 2 liter/hari)\n4️⃣ <strong>API (Fire)</strong> - Untuk hangat, masak, sinyal\n5️⃣ <strong>MAKANAN (Food)</strong> - Terakhir, karena manusia bisa bertahan berminggu tanpa makan\n\n<strong>📌 METODE MENCARI AIR:</strong>\n• Ikuti lembah/jurang ke bawah (air mengalir ke bawah)\n• Cari vegetasi hijau (pasti ada air)\n• Ikuti jejak hewan (menuju sumber air)\n• Kondensasi (solar still) dengan plastik\n• Potong batang pohon anggur/bambu\n\n<strong>📌 SINYAL DARURAT:</strong>\n• Peluit: 3 tiupan pendek (ulangi)\n• Asap: 3 kepulan\n• Api: 3 api berjajar\n• Cermin/ponsel: pantulkan ke arah pencari"
         },
-
-        {
-            keywords: ['figure 8'],
-            answer: '🪢 Simpul Figure Eight merupakan simpul dasar yang paling umum digunakan dalam panjat tebing.'
+        
+        membuatApi: {
+            patterns: ['cara membuat api', 'membuat api di alam', 'metode membuat api', 'fire starter', 'cara menyalakan api tanpa korek', 'ferro rod', 'bow drill', 'api primitif'],
+            response: "🔥 <strong>CARA MEMBUAT API DI ALAM LIAR (LENGKAP)</strong>\n\n<strong>1. SIAPKAN BAHAN BAKAR (3 LEVEL):</strong>\n• <strong>Tinder (Bahan Awal)</strong> 🔥\n  Serat kayu kering, lumut kering, ranting kecil kering, kapas, bulu halus tanaman, serutan kayu\n  💡 TIPS: Kapas + Vaselin adalah SUPER TINDER!\n  \n• <strong>Kindling (Kayu Kecil)</strong> 🌿\n  Ranting kering ukuran pensil sampai pensil\n  \n• <strong>Fuel Wood (Kayu Besar)</strong> \n  Kayu besar untuk menjaga api tetap menyala\n\n<strong>2. METODE MENYALAKAN API:</strong>\n\n<strong>🔸 Ferro Rod (Fire Steel)</strong> - PALING ANDAL\nGoreskan striker ke rod ke arah tinder. Percikan api ~3000°C!\n\n<strong>🔸 Korek Api/Lighter Tahan Air</strong>\nSimpan di tempat kedap air (ziplock + korek api anti air)\n\n<strong>🔸 Lensa/Kaca Pembesar</strong>\nFokuskan sinar matahari ke tinder. Hanya bisa saat matahari terik.\n\n<strong>🔸 Bow Drill (Metode Manual)</strong>\nButuh latihan! Gunakan batang kayu (spindle), busur, bearing block, dan fireboard. Gesekan membuat serbuk kayu membara.\n\n<strong>🔸 Baterai + Permen Karet/Pisau</strong>\nSentuhkan kutub positif & negatif ke kertas timah/wol baja\n\n<strong>💡 TIPS PRO:</strong>\nSelalu bawa ferro rod dan korek api anti air sebagai CADANGAN! Jangan mengandalkan satu metode saja."
         },
-
-        // =====================
-        // NAVIGASI DARAT
-        // =====================
-
-        {
-            keywords: ['kompas'],
-            answer: '🧭 Kompas adalah alat navigasi yang menunjukkan arah utara magnetis bumi.'
+        
+        shelterDarurat: {
+            patterns: ['shelter darurat', 'tempat berlindung di alam', 'membuat tenda darurat', 'cari perlindungan dari hujan', 'jenis shelter', 'survival shelter', 'membuat tempat berteduh', 'lean to', 'debris hut'],
+            response: "🏕️ <strong>JENIS SHELTER (TEMPAT BERLINDUNG) DARURAT:</strong>\n\n<strong>1. LEAN TO (Satu Sisi):</strong>\n✓ Cari pohon besar atau buat tiang penyangga\n✓ Letakkan dahan miring 45° ke arah yang berlawanan dengan angin\n✓ Tutup dengan daun kering, ranting, ponco/tarp\n✓ Ideal melindungi dari angin satu arah\n\n<strong>2. DEBRIS HUT (Gundukan Daun):</strong>\n✓ Buat rangka lengkung dari dahan (seperti terowongan mini)\n✓ Timbun dengan daun kering, rumput, serasah setebal 30-50cm\n✓ PALING HANGAT karena terisolasi daun\n✓ Butuh waktu & material banyak\n\n<strong>3. A-FRAME (Segitiga):</strong>\n✓ Dua sisi berbentuk segitiga dengan tiang tengah\n✓ Jika pakai ponco/tarp, sangat praktis (5-10 menit)\n✓ Sirkulasi udara baik\n\n<strong>4. NATURAL SHELTER:</strong>\n✓ Gua kecil yang tidak dihuni hewan buas\n✓ Bawah pohon besar rindang (beringin)\n✓ Celah batu besar terlindung angin & hujan\n✓ Tebing overhang (melengkung ke dalam)\n\n<strong>5. SNOW CAVE (Salju):</strong>\n✓ Gali lubang di tumpukan salju\n✓ Buat ventilasi agar tidak kekurangan oksigen\n✓ Sangat hangat (dalam 0°C, luar -20°C)\n\n<strong>📌 PRINSIP MEMILIH LOKASI SHELTER:</strong>\n• Jauh dari bahaya (tebing rapuh, pohon mati, banjir bandang)\n• Dekat sumber air (tapi jangan terlalu dekat)\n• Terlindung dari angin dominan\n• Tanah relatif datar & kering\n• Jauhi sarang hewan"
         },
-
-        {
-            keywords: ['azimuth'],
-            answer: '🧭 Azimuth adalah sudut arah yang dihitung searah jarum jam dari utara.'
+        
+        menjernihkanAir: {
+            patterns: ['menjernihkan air di alam', 'memurnikan air minum', 'cara dapat air bersih', 'filter air darurat', 'sterilisasi air', 'minum air sungai', 'menjernihkan air sungai', 'water purification'],
+            response: "💧 <strong>METODE MEMURNIKAN AIR DI ALAM (5 CARA TERBUKTI):</strong>\n\n<strong>1. MENDIDIHKAN (Paling Aman 99.9%)</strong> 💧\n✓ Rebus air hingga mendidih dengan gelembung besar selama 3-5 menit\n✓ Di atas 2000 mdpl, rebus 10 menit (titik didih lebih rendah)\n✓ Matikan 99.9% bakteri, virus, parasit (Giardia, Cryptosporidium, E. coli)\n\n<strong>2. FILTER AIR PORTABLE</strong> 💧\n✓ Saring partikel & sebagian bakteri (0.1-0.01 mikron)\n✓ Merek: Sawyer Mini, LifeStraw, Katadyn BeFree\n✓ Tidak mematikan virus\n✓ Bisa minum langsung dari sumber air\n\n<strong>3. TABLET PENJERNIH (Iodine/Chlorine)</strong> 💧\n✓ Masukkan tablet, tunggu 30 menit (2 jam jika air dingin/keruh)\n✓ Efektif untuk air jernih\n⚠️ Iodine tidak boleh untuk ibu hamil / penderita tiroid\n\n<strong>4. SODIS (Solar Water Disinfection)</strong> 💧\n✓ Masukkan air ke botol plastik BENING\n✓ Jemur sinar matahari langsung 6 jam\n✓ UV-A membunuh patogen\n✓ Hanya efektif air jernih & cuaca cerah\n\n<strong>5. FILTER DARURAT (Improvisasi)</strong> 💧\n✓ Botol plastik dipotong → lapisan: batu kerikil (bawah) → pasir kasar (tengah) → arang (atas) → kain saringan pertama\n⚠️ HANYA memfilter partikel! TETAP harus direbus setelahnya!\n\n<strong>⚠️ LARANGAN:</strong>\nJANGAN minum air keruh, berwarna (coklat/kekuningan), berbau, atau dari sumber terkontaminasi limbah!"
         },
-
-        {
-            keywords: ['back azimuth'],
-            answer: '🧭 Back Azimuth adalah arah kebalikan dari azimuth yang digunakan untuk kembali ke titik awal.'
+        
+        // ==================== P3K & KESEHATAN ====================
+        hipotermia: {
+            patterns: ['hipotermia', 'kedinginan parah', 'gejala hipotermia', 'cara mengatasi hipotermia', 'penanganan hipotermia', 'suhu tubuh turun', 'kedinginan di gunung', 'menggigil hebat'],
+            response: "❄️ <strong>PENANGANAN HIPOTERMIA DI ALAM (KONDISI DARURAT)</strong>\n\n<strong>📌 GEJALA HIPOTERMIA (Ringan hingga Berat):</strong>\n✓ Menggigil hebat (tahap awal)\n✓ Bicara pelo (slurred speech) tidak jelas\n✓ Gerakan kaku, koordinasi memburuk\n✓ Kebingungan, disorientasi\n✓ Denyut nadi lemah, pernapasan lambat\n⚠️ Tidak menggigil lagi (tahap lanjut) - TANDA BAHAYA!\n\n<strong>🆘 TINDAKAN PERTOLONGAN:</strong>\n\n1️⃣ Cari tempat berlindung dari angin & hujan (shelter/tenda)\n\n2️⃣ Ganti pakaian basah dengan KERING (prioritas: dada & kepala dulu)\n\n3️⃣ Beri minuman HANGAT (air hangat, teh manis, susu)\n🚫 JANGAN beri alkohol atau kafein (memperburuk)\n\n4️⃣ Hangatkan area INTI tubuh: leher, ketiak, selangkangan\n🚫 JANGAN langsung hangatkan tangan/kaki (bisa afterdrop)\n\n5️⃣ Gunakan sleeping bag, emergency blanket, atau body contact\n\n6️⃣ Jika korban tidak sadar, posisikan miring (recovery position)\n\n7️⃣ Segera evakuasi ke bawah (ketinggian lebih rendah) untuk pertolongan medis\n\n<strong>🚫 JANGAN PERNAH:</strong>\n✗ Menggosok anggota tubuh yang kedinginan\n✗ Memberi minuman beralkohol\n✗ Memanggang korban terlalu dekat api"
         },
-
-        // =====================
-        // KONSERVASI
-        // =====================
-
-        {
-            keywords: ['konservasi'],
-            answer: '🌱 Konservasi adalah upaya melindungi dan melestarikan lingkungan hidup serta sumber daya alam.'
+        
+        gigitanUlar: {
+            patterns: ['gigitan ular', 'digigit ular', 'ular berbisa', 'penanganan gigitan ular', 'cara mengobati gigitan ular', 'ular kobra', 'ular weling', 'ular hijau', 'pertolongan gigitan ular'],
+            response: "🐍 <strong>PENANGANAN GIGITAN ULAR (FIRST AID)</strong>\n\n<strong>📌 GEJALA GIGITAN ULAR BERBISA:</strong>\n• Luka tusuk 1 atau 2 titik (taring ular berbisa)\n• Nyeri hebat, bengkak, memar di sekitar gigitan\n• Mual, muntah, pusing, penglihatan kabur\n• Kesulitan bernapas, kelemahan otot\n• Perdarahan di gusi atau hidung\n\n<strong>✅ YANG HARUS DILAKUKAN (DO's):</strong>\n\n✓ JANGAN PANIK! Panik mempercepat sirkulasi bisa\n✓ Jangan bergerak terlalu banyak (immobilisasi)\n✓ Lepaskan perhiasan/jam tangan di sekitar gigitan\n✓ Posisikan bagian tergigit LEBIH RENDAH dari jantung\n✓ Bersihkan luka dengan air sabun / air mengalir\n✓ Tutup dengan kain bersih (steril jika ada)\n✓ Catat ciri-ciri ular (warna, bentuk kepala, pola)\n✓ SEGERA KE FASILITAS KESEHATAN terdekat!\n\n<strong>❌ YANG TIDAK BOLEH DILAKUKAN (DON'Ts):</strong>\n\n✗ JANGAN menghisap bisa dengan mulut (berbahaya untuk penolong)\n✗ JANGAN membalut terlalu ketat seperti tourniquet\n✗ JANGAN menggorok/menyayat luka\n✗ JANGAN minum alkohol atau kafein\n✗ JANGAN mengoleskan es langsung ke luka\n\n<strong>🔍 PERBEDAAN ULAR BERBISA & TIDAK:</strong>\n• Berbisa: Kepala segitiga, pupil vertikal (seperti kucing), taring panjang\n• Tidak berbisa: Kepala oval/memanjang, pupil bulat"
         },
-
-        {
-            keywords: ['leave no trace'],
-            answer: '♻️ Leave No Trace adalah prinsip kegiatan alam bebas tanpa meninggalkan dampak negatif pada lingkungan.'
+        
+        patahTulang: {
+            patterns: ['patah tulang', 'fraktur', 'tulang patah', 'penanganan patah tulang', 'bidai darurat', 'cara memasang bidai', 'patah kaki', 'patah tangan', 'patah tulang saat pendakian'],
+            response: "🦴 <strong>PENANGANAN FRAKTUR (PATAH TULANG) DI ALAM:</strong>\n\n<strong>📌 GEJALA FRAKTUR:</strong>\n• Nyeri hebat di lokasi cedera\n• Bengkak, memar, deformitas (bentuk tidak normal)\n• Tidak bisa menggerakkan anggota yang terkena\n• Krepitasi (sensasi seperti kertas digesek)\n\n<strong>🆘 TINDAKAN PERTOLONGAN:</strong>\n\n1️⃣ Jangan memindahkan korban jika tidak perlu (risiko kerusakan saraf)\n\n2️⃣ Immobilisasi dengan BIDAI DARURAT:\n✓ Tongkat, carrier frame, sleeping pad, majalah, kayu\n\n3️⃣ Pasang bidai dari sendi di atas patahan ke sendi di bawah patahan\nContoh: patah lengan bawah → bidai dari siku ke pergelangan\n\n4️⃣ Beri BANTALAN antara bidai & kulit (pakaian, matras, kain)\n\n5️⃣ Ikat dengan tali carrier / selempang (jangan terlalu kencang)\n\n6️⃣ Untuk patah tulang TERBUKA (tulang menonjol):\n   ✓ Tutup dengan kain STERIL\n   ✓ Jangan dorong tulang ke dalam!\n   ✓ Beri bantalan di sekitar luka\n\n7️⃣ Segera evakuasi ke fasilitas kesehatan terdekat\n\n<strong>📌 BIDAI DARURAT IMPROVISASI:</strong>\n• Lengan: Kancing baju ke dada\n• Kaki: Ikat ke kaki yang sehat\n• Carrier frame: Untuk tulang punggung\n• Koran/majalah digulung: Untuk pergelangan"
         },
-
-        // =====================
-        // UST
-        // =====================
-
-        {
-            keywords: ['ust', 'universitas sarjanawiyata tamansiswa'],
-            answer: '🎓 Universitas Sarjanawiyata Tamansiswa (UST) adalah perguruan tinggi yang didirikan berdasarkan ajaran Ki Hadjar Dewantara.'
+        
+        cpr: {
+            patterns: ['cpr', 'henti jantung', 'resusitasi', 'napas buatan', 'kompresi dada', 'cardiac arrest', 'jantung berhenti', 'cpr jantung', 'bantuan hidup dasar'],
+            response: "❤️ <strong>CARA CPR (Cardiopulmonary Resuscitation)</strong>\n\n<strong>📌 LANGKAH CPR (30:2):</strong>\n\n<strong>1. PASTIKAN KEAMANAN:</strong>\nPastikan area aman untuk Anda dan korban.\n\n<strong>2. CEK RESPON:</strong>\nGoyang bahu korban, tanya \"Apakah Anda baik-baik saja?\"\n\n<strong>3. PANGGIL BANTUAN:</strong>\nMinta orang lain hubungi 118/119 (ambulans)\n\n<strong>4. CEK NAPAS & NADI:</strong>\nLihat dada korban, rasakan napas, cek nadi karotis (5-10 detik)\n\n<strong>5. LAKUKAN KOMPRESI DADA:</strong>\n✓ Letakkan telapak tangan di tengah dada (sternum)\n✓ Tumpuk tangan, siku lurus\n✓ Kedalaman: 5-6 cm (dewasa)\n✓ Kecepatan: 100-120 kali per menit\n✓ Lakukan 30 kompresi\n\n<strong>6. BERI NAPAS BUATAN:</strong>\n✓ Buka jalan napas (head tilt-chin lift)\n✓ Tutup hidung korban\n✓ Tiup napas 1 detik hingga dada mengembang\n✓ Lakukan 2 kali\n\n<strong>7. ULANGI SIKLUS 30:2</strong>\nTerus lakukan hingga bantuan datang atau korban sadar\n\n<strong>🎵 REFERENSI KECEPATAN:</strong>\n• 'Stayin Alive' (Bee Gees) - 103 bpm\n• 'Baby Shark' - 115 bpm\n\n<strong>📌 UNTUK ANAK (1-8 tahun):</strong>\nGunakan 1 tangan, kedalaman 4-5cm\n\n<strong>📌 UNTUK BAYI (<1 tahun):</strong>\nGunakan 2 jari, kedalaman 4cm"
         },
-
-        {
-            keywords: ['ki hadjar dewantara'],
-            answer: '📚 Ki Hadjar Dewantara adalah Bapak Pendidikan Nasional Indonesia dan pendiri Tamansiswa.'
+        
+        // ==================== ROCK CLIMBING ====================
+        rockClimbing: {
+            patterns: ['rock climbing', 'panjat tebing', 'climbing', 'pemanjatan', 'tebing alam', 'wall climbing', 'olahraga panjat', 'teknik panjat', 'belajar panjat tebing'],
+            response: "🧗 <strong>ROCK CLIMBING (PANJAT TEBING)</strong>\n\n<strong>📌 APA ITU ROCK CLIMBING?</strong>\nRock Climbing adalah olahraga panjat tebing menggunakan teknik, kekuatan fisik, dan perlengkapan keselamatan khusus untuk mencapai puncak tebing/target.\n\n<strong>📌 JENIS ROCK CLIMBING:</strong>\n\n1. <strong>BOULDERING</strong> \n   • Tinggi rendah (<4-5 meter)\n   • Tanpa tali, pakai crash pad\n   • Fokus pada power & teknik\n\n2. <strong>TOP ROPE</strong> \n   • Tali dari atas tebing\n   • Paling aman untuk pemula\n   • Anchor sudah tersedia di atas\n\n3. <strong>LEAD CLIMBING</strong> \n   • Pemanjat membawa tali & clip ke quickdraw\n   • Risiko jatuh lebih jauh\n   • Butuh sertifikasi khusus\n\n4. <strong>TRADITIONAL CLIMBING (TRAD)</strong>\n   • Memasang perlengkapan sendiri di celah tebing\n   • Untuk pemanjat berpengalaman\n\n5. <strong>SPORT CLIMBING</strong>\n   • Jalur sudah ada bolt permanen\n   • Lebih aman dari trad climbing\n\n<strong>📌 PERLENGKAPAN DASAR:</strong>\n✓ Harness (sabuk pengaman)\n✓ Helmet (helm)\n✓ Carabiner\n✓ Belay device (ATC/Grigri)\n✓ Dynamic rope\n✓ Climbing shoes\n✓ Chalk bag"
         },
-
-        // =====================
-        // SAPAAN
-        // =====================
-
-        {
-            keywords: ['halo', 'hai', 'hello', 'hi'],
-            answer: '👋 Halo! Saya Asisten MAPATEK. Silakan tanyakan tentang pendakian, survival, rock climbing, konservasi, P3K, atau MAPATEK.'
+        
+        harness: {
+            patterns: ['harness', 'sabuk pengaman panjat', 'sabuk pengaman climbing', 'fungsi harness', 'bagian harness', 'cara memakai harness', 'selempang panjat'],
+            response: "🪢 <strong>HARNESS (SABUK PENGAMAN PANJAT TEBING)</strong>\n\n<strong>📌 FUNGSI:</strong>\nMenghubungkan tubuh pemanjat dengan sistem tali pengaman & mendistribusikan beban jatuh ke seluruh tubuh.\n\n<strong>📌 BAGIAN-BAGIAN HARNESS:</strong>\n\n1. <strong>WAIST BELT (Ikat Pinggang)</strong>\n   • Menahan beban utama jatuh\n   • Harus pas di sekitar pinggang (2 jari bisa masuk)\n\n2. <strong>LEG LOOP (Lingkar Paha)</strong>\n   • Untuk stabilitas & kenyamanan\n   • Biasanya adjustable\n\n3. <strong>BELAY LOOP (Lingkar Tambat)</strong>\n   • Tempat menggantung ATC, Grigri, carabiner\n   • Bagian terkuat dari harness\n\n4. <strong>GEAR LOOP (Lingkar Alat)</strong>\n   • Tempat menggantung carabiner, quickdraw\n   • Biasanya 4-5 loop\n\n<strong>📌 PEMERIKSAAN SEBELUM PAKAI (Pre-climb check):</strong>\n✓ Cek jahitan tidak putus/terkelupas\n✓ Cek gesper (buckle) berfungsi baik\n✓ Cek webbing tidak sobek/gesekan\n✓ Pastikan ukuran PAS & tidak longgar\n✓ Cek tanggal kedaluwarsa (5-10 tahun)"
         },
-
-        {
-            keywords: ['terima kasih', 'makasih'],
-            answer: '😊 Sama-sama! Tetap semangat berkegiatan dan selalu utamakan keselamatan.'
+        
+        carabiner: {
+            patterns: ['carabiner', 'gesper pengaman', 'jenis carabiner', 'fungsi carabiner', 'carabiner climbing', 'carabiner gate', 'kaitan pengaman'],
+            response: "🔗 <strong>CARABINER (GESPER PENGAMAN) - FUNGSI & JENIS</strong>\n\n<strong>📌 FUNGSI UTAMA:</strong>\nPenghubung antar sistem pengaman dalam panjat tebing, rescue, dan pendakian.\n\n<strong>📌 JENIS BERDASARKAN BENTUK:</strong>\n\n1. <strong>OVAL</strong>\n   ✓ Serbaguna, beban merata\n   ✓ Cocok untuk organizer & prusik\n\n2. <strong>D SHAPE (D-Shape)</strong>\n   ✓ Lebih kuat, beban terpusat di sisi belakang\n   ✓ Cocok untuk belay & anchor\n\n3. <strong>HMS (Pear Shape)</strong>\n   ✓ Bentuk seperti buah pir\n   ✓ Untuk belaying dengan munter hitch\n   ✓ Lebih lebar di bagian bawah\n\n<strong>📌 JENIS GATE (PINTU/PENGUNCI):</strong>\n\n1. <strong>SCREW LOCK (Manual)</strong>\n   ✓ Harus diputar manual untuk mengunci\n   ✓ Paling umum & ekonomis\n\n2. <strong>AUTO LOCK (Otomatis)</strong>\n   ✓ Otomatis mengunci saat gate tertutup\n   ✓ Lebih aman tapi lebih mahal\n\n3. <strong>WIRE GATE</strong>\n   ✓ Gate dari kawat\n   ✓ Ringan & anti-beku\n   ✓ Cocok untuk quickdraw\n\n<strong>⚠️ STANDAR KEAMANAN:</strong>\nCarabiner harus memiliki sertifikasi UIAA/CE minimal 20kN (kiloNewton) untuk sumbu utama!"
+        },
+        
+        simpul: {
+            patterns: ['simpul figure eight', 'figure eight knot', 'simpul angka delapan', 'simpul untuk harness', 'cara buat simpul figure eight', 'simpul pengaman climbing'],
+            response: "🪢 <strong>SIMPUL FIGURE EIGHT FOLLOW THROUGH</strong>\n\n<strong>📌 KEGUNAAN:</strong>\nSimpul paling umum & paling aman untuk mengikat tali ke harness pemanjat. Juga untuk membuat anchor.\n\n<strong>📌 KELEBIHAN:</strong>\n✓ Sangat kuat (hanya 20-30% penurunan kekuatan)\n✓ Tidak mudah terlepas meski tanpa stopper knot\n✓ Mudah diperiksa kebenarannya (visual inspection)\n✓ Stabil & tidak berubah bentuk saat dibebani\n\n<strong>📌 CARA MEMBUAT:</strong>\n\n1️⃣ Buat simpul figure eight di ujung tali (bentuk angka 8)\n\n2️⃣ Masukkan ujung tali ke harness (ke belay loop)\n\n3️⃣ Ikuti jalur tali kembali (follow through) dari simpul yang sudah dibuat\n\n4️⃣ Pastikan simpul berbentuk rapi & tidak terpuntir\n\n5️⃣ Pastikan sisa tali (tail) minimal 5-10cm (3-4 jari)\n\n6️⃣ Untuk safety, buat stopper knot (double overhand) di tail\n\n<strong>⚠️ SAFETY CHECK:</strong>\n✓ Pastikan tidak ada lipatan\n✓ Tali tidak terpuntir\n✓ Tail cukup panjang"
+        },
+        
+        prusik: {
+            patterns: ['simpul prusik', 'prusik knot', 'simpul backup rappelling', 'cara buat prusik', 'simpul untuk naik tali', 'prusik climbing'],
+            response: "🪢 <strong>SIMPUL PRUSIK (PRUSIK KNOT)</strong>\n\n<strong>📌 DEFINISI:</strong>\nSimpul yang dapat bergerak satu arah (slide) dan mengunci (grip) saat diberikan beban.\nDinamakan dari penemunya, Dr. Karl Prusik (Austria, 1931).\n\n<strong>📌 KEGUNAAN UTAMA:</strong>\n\n1. <strong>BACKUP / PENGAMAN</strong> saat rappelling - jika tali utama putus, prusik mengunci\n\n2. <strong>ASCENDING</strong> (membantu naik) di tali statis\n\n3. <strong>SELF-RESCUE</strong> jika terjebak atau tali macet\n\n4. <strong>MEKANIKAL ADVANTAGE</strong> (3:1 atau 5:1) untuk mengangkat beban\n\n5. <strong>MENGENCANGKAN</strong> tiang tenda atau guyline\n\n<strong>📌 CARA MEMBUAT PRUSIK:</strong>\n\n1. Gunakan cord (tali kecil) diameter 5-7mm untuk tali 9-11mm\n2. Lilitkan cord ke tali utama 3-4 putaran\n3. Masukkan ujung cord ke dalam lilitan\n4. Tarik hingga kencang\n5. Prusik siap digunakan\n\n<strong>📌 KEUNGGULAN:</strong>\n✓ Tidak merusak selubung tali\n✓ Bisa dipasang & dilepas dengan mudah\n✓ Bisa diaplikasikan di berbagai cuaca"
+        },
+        
+        anchor: {
+            patterns: ['anchor climbing', 'sistem anchor', 'sistem pengaman tebing', 'prinsip anchor', 'serene', 'membuat anchor', 'anchor panjat tebing'],
+            response: "⚓ <strong>PRINSIP ANCHOR SERENE DALAM PANJAT TEBING</strong>\n\n<strong>📌 APA ITU ANCHOR?</strong>\nAnchor adalah titik pengaman utama yang menghubungkan pemanjat ke tebing.\n\n<strong>📌 PRINSIP SERENE:</strong>\n\n<strong>S - STRONG (Kuat)</strong>\n✓ Bahan anchor harus kuat menahan beban minimal 15kN (~1500kg)\n✓ Gunakan baut Hilti, pohon besar hidup, batuan solid\n\n<strong>E - EQUALIZED (Setara)</strong>\n✓ Beban harus terdistribusi merata ke semua titik anchor\n✓ Gunakan sling atau cordelette\n\n<strong>R - REDUNDANT (Berlebih)</strong>\n✓ Minimal 2 titik pengaman independen\n✓ Jika satu titik gagal, titik lain masih bisa menahan\n\n<strong>E - EFFICIENT (Efisien)</strong>\n✓ Sistem tidak berbelit-belit\n✓ Mudah diperiksa\n✓ Tidak boros bahan/alat\n\n<strong>N - NO EXTENSION (Tanpa Ekstensi)</strong>\n✓ Jika satu titik anchor gagal, sistem tidak boleh memanjang mendadak\n✓ Mencegah shock loading\n\n<strong>⚠️ INGAT:</strong>\nAnchor adalah sistem yang menyatukan nyawa pemanjat. JANGAN PERNAH kompromi dengan keamanan anchor!"
+        },
+        
+        // ==================== LEAVE NO TRACE ====================
+        lnt: {
+            patterns: ['leave no trace', 'lnt mapala', 'etika pecinta alam', '7 prinsip leave no trace', 'cara menjaga alam saat pendakian', 'tidak meninggalkan jejak', 'prinsip lnt'],
+            response: "🌿 <strong>7 PRINSIP LEAVE NO TRACE (LNT)</strong>\n\n<strong>1. RENCANAKAN & PERSIAPKAN PERJALANAN</strong>\n✓ Ketahui peraturan & batasan area\n✓ Siapkan perlengkapan sesuai medan\n✓ Rencanakan rute & jadwal\n\n<strong>2. BERADA DI PERMUKAAN TAHAN BANTING</strong>\n✓ Gunakan jalan setapak yang sudah ada\n✓ Camping di area established\n✓ Hindari merusak vegetasi\n\n<strong>3. KELOLA SAMPAH DENGAN BENAR</strong>\n✓ <strong>BAWA TURUN SEMUA SAMPAH!</strong>\n✓ Pisahkan organik & anorganik\n✓ Buat cat hole untuk BAB (15-20cm, 70m dari air)\n\n<strong>4. TINGGALKAN APA YANG ANDA TEMUKAN</strong>\n✓ Jangan mengambil flora atau fauna\n✓ Jangan mengambil batu, kristal, fosil\n✓ Jangan membuat coretan di pohon/batuan\n\n<strong>5. MINIMALKAN DAMPAK API UNGGUN</strong>\n✓ Gunakan kompor daripada api unggun\n✓ Gunakan fire ring yang sudah ada\n✓ Gunakan kayu mati yang sudah jatuh\n✓ Pastikan api benar-benar PADAM!\n\n<strong>6. HORMATI SATWA LIAR</strong>\n✓ Jangan memberi makan satwa liar\n✓ Jangan mendekati atau mengganggu\n✓ Jangan memotret dengan flash dekat\n\n<strong>7. HORMATI PENGUNJUNG LAIN</strong>\n✓ Jaga ketenangan alam\n✓ Beri jalan bagi pendaki lain\n✓ Sapa & ramah dengan pendaki lain\n\n📌 <strong>MOTTO LNT:</strong>\n\"Take only pictures, leave only footprints, kill only time\""
+        },
+        
+        konservasi: {
+            patterns: ['konservasi', 'konservasi alam', 'konservasi lingkungan', 'kegiatan konservasi', 'penghijauan', 'reboisasi', 'penanaman pohon', 'pelestarian alam'],
+            response: "🌱 <strong>KONSERVASI ALAM MAPATEK ABHIPRAYA</strong>\n\n<strong>📌 APA ITU KONSERVASI?</strong>\nKonservasi adalah upaya perlindungan, pengawetan, dan pelestarian lingkungan hidup serta sumber daya alam secara berkelanjutan.\n\n<strong>📌 KEGIATAN KONSERVASI MAPATEK:</strong>\n\n1️⃣ <strong>PENANAMAN POHON</strong> 🌳\n   Di kawasan hutan gundul & daerah aliran sungai\n\n2️⃣ <strong>BERSIH-BERSIH PANTAI</strong> 🏖️\n   Pantai Baros, Pantai Depok, dll\n\n3️⃣ <strong>EDUKASI LINGKUNGAN</strong> 📚\n   Ke sekolah & masyarakat sekitar\n\n4️⃣ <strong>PEMANTAUAN EKOSISTEM</strong> 🔍\n   Flora-fauna di gunung & hutan\n\n5️⃣ <strong>PENGELOLAAN SAMPAH</strong> ♻️\n   Aksi pungut sampah & pengelolaan\n\n<strong>📌 MENGAPA KONSERVASI PENTING?</strong>\n✓ Menjaga keseimbangan ekosistem\n✓ Mencegah bencana alam (banjir, longsor)\n✓ Melestarikan keanekaragaman hayati\n✓ Menjaga sumber air bersih\n✓ Mengurangi dampak perubahan iklim\n\n<strong>🌿 AJAKAN:</strong>\nSetiap pendaki WAJIB menerapkan prinsip Leave No Trace! Bawa turun sampah Anda sendiri + sampah orang lain jika memungkinkan."
+        },
+        
+        // ==================== UST & TAMANSISWA ====================
+        ust: {
+            patterns: ['ust', 'universitas sarjanawiyata tamansiswa', 'ust yogyakarta', 'kampus ust', 'universitas ust', 'info ust', 'fakultas ust', 'program studi ust'],
+            response: "🏛️ <strong>UNIVERSITAS SARJANAWIYATA TAMANSISWA (UST) YOGYAKARTA</strong>\n\n<strong>📌 INFORMASI DASAR:</strong>\n• Didirikan: <strong>15 Desember 1955</strong>\n• Berada di bawah: Majelis Luhur Persatuan Tamansiswa\n• Pendiri: Ki Hajar Dewantara (Bapak Pendidikan Nasional)\n• Alamat: Jl. Batikan UH III/1043, Tuntungan, Umbulharjo, Yogyakarta 55167\n• Website: www.ustjogja.ac.id\n\n<strong>📌 VISI:</strong>\n\"Menjadi universitas unggul & berdaya saing berbasis kearifan lokal Tamansiswa tahun 2030\"\n\n<strong>📌 FAKULTAS & PROGRAM STUDI:</strong>\n\n• <strong>FKIP</strong> (Keguruan & Ilmu Pendidikan)\n  PGSD, PG PAUD, Pendidikan Matematika, Bahasa Inggris, Sejarah, BK\n\n• <strong>FEB</strong> (Ekonomi & Bisnis)\n  Manajemen, Akuntansi\n\n• <strong>FST</strong> (Sains & Teknologi)\n  Informatika, Teknik Industri, Matematika, Biologi, Kimia\n\n• <strong>FISIPOL</strong> (Ilmu Sosial & Politik)\n  Administrasi Publik, Sosiologi, Ilmu Komunikasi, Hukum\n\n<strong>📌 ORGANISASI MAHASISWA:</strong>\n✓ BEM UST\n✓ DPM\n✓ UKM Olahraga, Seni, Penalaran\n✓ <strong>MAPATEK ABHIPRAYA (Pecinta Alam)</strong> 🏔️"
+        },
+        
+        kiHajar: {
+            patterns: ['ki hajar dewantara', 'bapak pendidikan nasional', 'ki hajar', 'ki hadjar dewantara', 'tokoh pendidikan indonesia', 'ki hajar dewantara singkatan', 'semboyan ki hajar', 'tut wuri handayani'],
+            response: "📚 <strong>KI HAJAR DEWANTARA - BAPAK PENDIDIKAN NASIONAL</strong>\n\n<strong>📌 IDENTITAS:</strong>\n• Nama lahir: Raden Mas Soewardi Soerjaningrat\n• Lahir: 2 Mei 1889, Yogyakarta\n• Wafat: 26 April 1959, Yogyakarta\n• Tanggal lahir = Hari Pendidikan Nasional (Hardiknas)\n\n<strong>📌 PERJUANGAN:</strong>\n✓ Aktif di Boedi Oetomo & Indische Partij\n✓ Menulis 'Als Ik Eens Nederlander Was' (dibuang ke Belanda 1913)\n✓ Mendirikan <strong>TAMANSISWA</strong> (3 Juli 1922) - pendidikan merdeka\n✓ Menjabat Menteri Pendidikan pertama Indonesia (1945-1946)\n✓ Pahlawan Nasional (1959)\n\n<strong>📌 SEMBOYAN TAMANSISWA (TRILOGI KEPEMIMPINAN):</strong>\n\n<strong><em>\"ING NGARSA SUNG TULADHA\"</em></strong>\nDi depan, memberi contoh/teladan\n\n<strong><em>\"ING MADYA MANGUN KARSA\"</em></strong>\nDi tengah, membangun semangat/kemauan\n\n<strong><em>\"TUT WURI HANDAYANI\"</em></strong>\nDi belakang, memberi dorongan/daya\n\n<strong>📌 PRINSIP TAMANSISWA (PANCA DHARMA):</strong>\n1. Kodrat Alam (sesuai kodrat & perkembangan anak)\n2. Kemerdekaan (tidak membatasi kreativitas)\n3. Kebudayaan (melestarikan budaya lokal)\n4. Kebangsaan (cinta tanah air)\n5. Kemanusiaan (pendidikan untuk semua)"
+        },
+        
+        tamansiswa: {
+            patterns: ['tamansiswa', 'persatuan tamansiswa', 'perguruan tamansiswa', 'taman siswa', 'pendidikan tamansiswa', 'tamansiswa yogyakarta'],
+            response: "🏫 <strong>PERSATUAN TAMANSISWA</strong>\n\n<strong>📌 DEFINISI:</strong>\nTamansiswa (Perguruan Nasional Tamansiswa) adalah organisasi pergerakan pendidikan yang didirikan oleh Ki Hajar Dewantara pada <strong>3 Juli 1922</strong> di Yogyakarta.\n\n<strong>📌 TUJUAN:</strong>\nMewujudkan pendidikan yang merdeka, berbudaya, dan berpihak pada rakyat (pendidikan untuk semua kalangan, bukan hanya bangsawan).\n\n<strong>📌 PRINSIP TAMANSISWA (PANCA DHARMA):</strong>\n\n1. <strong>KODRAT ALAM</strong> - Pendidikan sesuai kodrat anak\n2. <strong>KEMERDEKAAN</strong> - Pendidikan tidak membatasi kreativitas\n3. <strong>KEBUDAYAAN</strong> - Melestarikan budaya lokal\n4. <strong>KEBANGSAAN</strong> - Cinta tanah air & persatuan\n5. <strong>KEMANUSIAAN</strong> - Pendidikan untuk semua\n\n<strong>📌 JENJANG PENDIDIKAN TAMANSISWA:</strong>\n• Taman Indria (PAUD/TK)\n• Taman Muda (SD)\n• Taman Dewasa (SMP)\n• Taman Madya (SMA)\n• Taman Mahasiswa (S1) → cikal bakal UST\n\nHingga kini, Tamansiswa memiliki puluhan cabang di seluruh Indonesia."
+        },
+        
+        // ==================== FAQ UMUM ====================
+        faqUmum: {
+            patterns: ['info kegiatan', 'kegiatan mapatek', 'jadwal latihan', 'latihan rutin mapatek', 'event mapatek', 'acara mapatek'],
+            response: "📅 <strong>KEGIATAN & JADWAL MAPATEK</strong>\n\n<strong>📌 KEGIATAN RUTIN:</strong>\n✓ Latihan rutin: Sabtu, 15.00-17.00 WIB\n✓ Rock climbing: Minggu pagi (lokasi Tebing Gamping)\n✓ Pendakian: 1x sebulan (gunung berbeda)\n\n<strong>📌 KEGIATAN TAHUNAN:</strong>\n✓ DIKSAR (Pendidikan Dasar) - Maret & September\n✓ Ekspedisi Besar - Juni/Agustus\n✓ Bakti Sosial & Konservasi - Desember\n✓ Halal Bihalal & Syukuran - Lebaran\n\n<strong>📌 AKAN DATANG (2026):</strong>\n• 15 Juni 2026: DIKSAR LitaniAram\n• 22 Juni 2026: Ekspedisi Gunung Prau\n• 5 Juli 2026: Bakti Sosial Pantai\n• 12 Juli 2026: Latihan Rock Climbing\n• 1 Agustus 2026: Pendakian Gunung Merbabu\n\n📌 <strong>INFO LENGKAP:</strong>\nCek Instagram @mapatek_abhipraya atau bagian Kalender di website!"
+        },
+        
+        kontak: {
+            patterns: ['kontak mapatek', 'hubungi mapatek', 'wa mapatek', 'instagram mapatek', 'email mapatek', 'nomor telepon mapatek', 'basecamp mapatek', 'lokasi mapatek', 'sekretariat mapatek'],
+            response: "📞 <strong>KONTAK MAPATEK ABHIPRAYA</strong>\n\n<strong>📌 MEDIA SOSIAL & KOMUNIKASI:</strong>\n\n• <strong>WhatsApp Admin Utama:</strong>\n  0822-1442-8371 (Fridolinus Jeri Kasman)\n\n• <strong>Instagram Resmi:</strong>\n  @mapatek_abhipraya\n\n• <strong>Email Resmi:</strong>\n  mapatek.abhipraya@gmail.com\n\n• <strong>Email Kampus:</strong>\n  mapatek@ustjogja.ac.id\n\n<strong>📌 BASECAMP (SEKRETARIAT):</strong>\n📍 Universitas Sarjanawiyata Tamansiswa (UST)\nJl. Batikan UH III/1043, Tuntungan\nKec. Umbulharjo, Kota Yogyakarta 55167\n\n<strong>📌 JAM OPERASIONAL:</strong>\n• Senin - Jumat: 15.00 - 18.00 WIB\n• Sabtu: 09.00 - 12.00 WIB\n\n<strong>📌 UNTUK KERJA SAMA & DONASI:</strong>\nHubungi Ketua Umum (085-952-824-898) atau Sekretaris Jenderal (0815-2272-3325)"
         }
-    ];
-
-    for (let item of knowledge) {
-        if (item.keywords.some(keyword => msg.includes(keyword))) {
-            return item.answer;
+    };
+    
+    // Fungsi untuk mencocokkan pertanyaan dengan knowledge base
+    for (const [category, data] of Object.entries(knowledgeBase)) {
+        for (const pattern of data.patterns) {
+            if (msg.includes(pattern)) {
+                return data.response;
+            }
         }
     }
-
-    return `
-    🌿 Saya belum menemukan jawaban yang tepat.
-
-    Coba tanyakan:
-    • MAPATEK ABHIPRAYA
-    • Sejarah organisasi
-    • Pendakian gunung
-    • Survival
-    • P3K
-    • Rock Climbing
-    • Konservasi
-    • Navigasi Darat
-    • Gunung Indonesia
-    • Flora dan Fauna
-    • SAR
-    • UST Yogyakarta
-    `;
+    
+    // Deteksi pertanyaan tentang gunung tertentu
+    const gunungList = ['rinjani', 'semeru', 'merapi', 'merbabu', 'prau', 'kerinci', 'sindoro', 'sumbing', 'lawu', 'argo', 'guntur', 'galunggung', 'papandayan', 'ciremai', 'salak', 'gede', 'pangrango', 'bromo', 'ijen', 'tambora', 'batur', 'agung', 'batur'];
+    for (const gunung of gunungList) {
+        if (msg.includes(gunung)) {
+            return `🏔️ <strong>GUNUNG ${gunung.toUpperCase()}</strong>\n\nCek info lengkap tentang Gunung ${gunung.charAt(0).toUpperCase() + gunung.slice(1)} di website atau hubungi admin MAPATEK untuk informasi jalur pendakian, izin, dan tips terbaru! 🧗`;
+        }
+    }
+    
+    // Deteksi pertanyaan tentang survival/P3K lainnya
+    if (msg.includes('p3k') || msg.includes('pertolongan pertama') || msg.includes('obat') || msg.includes('luka')) {
+        return "⛑️ <strong>P3K (Pertolongan Pertama Pada Kecelakaan)</strong>\n\n📌 <strong>ISI P3K DASAR:</strong>\n✓ Plester & perban\n✓ Betadine / antiseptik\n✓ Obat sakit kepala & diare\n✓ Obat alergi & masuk angin\n✓ Minyak kayu putih / balsem\n✓ Gunting kecil & pinset\n✓ Kassa steril & kapas\n✓ Plester luka (band aid)\n✓ Obat pribadi (jika ada)\n\n📌 <strong>PRINSIP DASAR P3K:</strong>\n1. Jangan panik\n2. Cek kesadaran korban\n3. Hentikan perdarahan\n4. Bersihkan luka\n5. Balut dengan steril\n6. Imobilisasi jika perlu\n7. Rujuk ke tenaga medis"
+    }
+    
+    if (msg.includes('sampah') || msg.includes('sampah gunung') || msg.includes('bersih sampah')) {
+        return "🗑️ <strong>PENGELOLAAN SAMPAH SAAT PENDAKIAN</strong>\n\n📌 <strong>PRINSIP UTAMA:</strong>\n<strong>BAWA TURUN SEMUA SAMPAH ANDA!</strong>\n\n📌 <strong>TIPS MENGELOLA SAMPAH:</strong>\n• Pisahkan sampah basah & kering\n• Bawa kantong sampah khusus (ziplock / trash bag)\n• Jangan buang sampah di pos pendakian\n• Sampah organik pun lebih baik dibawa turun (tidak semua terurai di ketinggian)\n• Jika kuat, bawa turun sampah orang lain (trail magic!)\n\n📌 <strong>LARANGAN:</strong>\n✗ Membuang sampah di jalur pendakian\n✗ Membakar sampah plastik (asap beracun)\n✗ Mengubur sampah anorganik (hewan bisa menggali)\n\n🌿 <strong>INGAT:</strong>\nGunung bukan tempat sampah! Jaga keindahan alam untuk generasi mendatang."
+    }
+    
+    // DEFAULT RESPONSE
+    return `🌿 <strong>PERTANYAAN ANDA SANGAT BAGUS!</strong>\n\nMaaf, saya belum memiliki jawaban spesifik untuk pertanyaan tersebut.\n\n📌 <strong>COBA TANYAKAN TENTANG:</strong>\n\n<strong>🏔️ MAPATEK & ORGANISASI</strong>\n• Sejarah, Visi Misi, Struktur, Angkatan\n• Pendaftaran & DIKSAR\n\n<strong>⛰️ PENDAKIAN GUNUNG</strong>\n• Persiapan pendakian & 10 Essentials\n• Teknik packing carrier\n• Rekomendasi gunung pemula\n\n<strong>🧗 ROCK CLIMBING</strong>\n• Harness, Carabiner, Simpul\n• Anchor SERENE\n\n<strong>🔥 SURVIVAL & P3K</strong>\n• Membuat api, shelter, menjernihkan air\n• Hipotermia, gigitan ular, patah tulang, CPR\n\n<strong>🌱 KONSERVASI</strong>\n• Leave No Trace (LNT)\n\n<strong>🏫 UST & TAMANSISWA</strong>\n• Informasi kampus, Ki Hajar Dewantara\n\n<strong>📢 INFO KEGIATAN</strong>\n• Jadwal, kontak, basecamp\n\n📞 Atau hubungi admin di <strong>0822-1442-8371</strong> untuk info lebih lanjut!\n\nTerima kasih sudah bertanya! 🙏`;
 }
+
+// Export function untuk digunakan di global scope
+window.getIntelligentResponse = getIntelligentResponse;
 
     document.addEventListener('click', function(event) {
         const widget = document.querySelector('.chatbot-widget');
