@@ -2443,15 +2443,206 @@
         return div.innerHTML;
     }
     
-    function getIntelligentResponse(message) {
-        const msg = message.toLowerCase();
-        if (msg.includes('apa itu mapatek') || msg.includes('mapatek itu apa')) return "🌲 <strong>Mapatek Abhipraya</strong> adalah organisasi mahasiswa pecinta alam yang berdiri pada <strong>19 Maret 2023</strong> di UST Yogyakarta.";
-        if (msg.includes('sejarah')) return "📜 Mapatek Abhipraya berdiri pada <strong>19 Maret 2023</strong> di UST Yogyakarta oleh 5 mahasiswa pencinta alam (Angkatan PancaTompak).";
-        if (msg.includes('pendaftaran') || msg.includes('daftar')) return "📝 Cek bagian <strong>Pendaftaran</strong> di website ini atau hubungi WA: <strong>0822-1442-8371</strong>";
-        if (msg.includes('terima kasih') || msg.includes('makasih')) return "Sama-sama! 😊 Senang bisa membantu! 🏔️";
-        if (msg.match(/\b(halo|hai|hello|hi|pagi|siang|sore|malam)\b/)) return "Halo! 👋 Ada yang bisa saya bantu tentang Mapatek, pendakian, atau UST?";
-        return "🌿 Maaf, saya belum memahami pertanyaan Anda. Coba tanyakan tentang: organisasi Mapatek, pendakian, rock climbing, survival, P3K, konservasi, atau UST!";
+   function getIntelligentResponse(message) {
+    const msg = message.toLowerCase();
+
+    const knowledge = [
+
+        // =====================
+        // MAPATEK
+        // =====================
+        {
+            keywords: ['apa itu mapatek', 'mapatek', 'organisasi mapatek'],
+            answer: '🌲 MAPATEK ABHIPRAYA adalah organisasi mahasiswa pecinta alam yang berdiri pada 19 Maret 2023 di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta.'
+        },
+
+        {
+            keywords: ['sejarah mapatek', 'sejarah', 'berdiri'],
+            answer: '📜 MAPATEK ABHIPRAYA didirikan pada 19 Maret 2023 oleh Angkatan PancaTompak sebagai wadah pengembangan minat dan bakat mahasiswa di bidang kepencintaalaman.'
+        },
+
+        {
+            keywords: ['visi mapatek', 'visi'],
+            answer: '🎯 Menjadi organisasi mahasiswa pecinta alam yang unggul, berkarakter, profesional, berjiwa konservasi, dan berlandaskan nilai Tamansiswa.'
+        },
+
+        {
+            keywords: ['misi mapatek', 'misi'],
+            answer: '📌 Mengembangkan SDM, meningkatkan keterampilan kepencintaalaman, melestarikan lingkungan, dan mempererat solidaritas anggota.'
+        },
+
+        {
+            keywords: ['pendaftaran', 'daftar anggota', 'join'],
+            answer: '📝 Untuk bergabung dengan MAPATEK, silakan hubungi pengurus atau lihat menu pendaftaran pada website resmi.'
+        },
+
+        // =====================
+        // GUNUNG
+        // =====================
+
+        {
+            keywords: ['gunung tertinggi indonesia'],
+            answer: '🏔️ Gunung tertinggi di Indonesia adalah Puncak Jaya (Carstensz Pyramid) dengan ketinggian 4.884 mdpl.'
+        },
+
+        {
+            keywords: ['persiapan pendakian', 'sebelum mendaki'],
+            answer: '🎒 Persiapan pendakian meliputi latihan fisik, cek cuaca, perlengkapan lengkap, logistik cukup, dan memahami jalur pendakian.'
+        },
+
+        {
+            keywords: ['seven summit indonesia'],
+            answer: '🏔️ Seven Summit Indonesia merupakan tujuh puncak tertinggi dari tujuh pulau besar Indonesia.'
+        },
+
+        // =====================
+        // SURVIVAL
+        // =====================
+
+        {
+            keywords: ['survival', 'bertahan hidup'],
+            answer: '🔥 Survival adalah kemampuan bertahan hidup dalam kondisi darurat dengan memanfaatkan sumber daya yang tersedia.'
+        },
+
+        {
+            keywords: ['aturan survival'],
+            answer: '📌 Prinsip survival: Tenang, Analisa Situasi, Prioritaskan Air, Buat Perlindungan, Cari Bantuan, dan Hemat Energi.'
+        },
+
+        {
+            keywords: ['api unggun'],
+            answer: '🔥 Api unggun berfungsi untuk menghangatkan tubuh, memasak, penerangan, dan sinyal darurat.'
+        },
+
+        // =====================
+        // P3K
+        // =====================
+
+        {
+            keywords: ['p3k'],
+            answer: '⛑️ P3K adalah Pertolongan Pertama Pada Kecelakaan untuk memberikan bantuan awal sebelum penanganan medis lanjutan.'
+        },
+
+        {
+            keywords: ['hipotermia'],
+            answer: '❄️ Hipotermia adalah kondisi suhu tubuh turun di bawah normal akibat paparan dingin berlebihan.'
+        },
+
+        {
+            keywords: ['gigitan ular'],
+            answer: '🐍 Tetap tenang, imobilisasi bagian yang tergigit, jangan disedot atau disayat, dan segera cari bantuan medis.'
+        },
+
+        // =====================
+        // ROCK CLIMBING
+        // =====================
+
+        {
+            keywords: ['rock climbing'],
+            answer: '🧗 Rock Climbing adalah olahraga panjat tebing menggunakan teknik dan perlengkapan keselamatan tertentu.'
+        },
+
+        {
+            keywords: ['carabiner'],
+            answer: '🔗 Carabiner adalah pengait berbahan logam yang digunakan dalam sistem pengamanan panjat tebing.'
+        },
+
+        {
+            keywords: ['harness'],
+            answer: '🦺 Harness adalah sabuk pengaman yang dikenakan pemanjat untuk menghubungkan tubuh dengan tali.'
+        },
+
+        {
+            keywords: ['figure 8'],
+            answer: '🪢 Simpul Figure Eight merupakan simpul dasar yang paling umum digunakan dalam panjat tebing.'
+        },
+
+        // =====================
+        // NAVIGASI DARAT
+        // =====================
+
+        {
+            keywords: ['kompas'],
+            answer: '🧭 Kompas adalah alat navigasi yang menunjukkan arah utara magnetis bumi.'
+        },
+
+        {
+            keywords: ['azimuth'],
+            answer: '🧭 Azimuth adalah sudut arah yang dihitung searah jarum jam dari utara.'
+        },
+
+        {
+            keywords: ['back azimuth'],
+            answer: '🧭 Back Azimuth adalah arah kebalikan dari azimuth yang digunakan untuk kembali ke titik awal.'
+        },
+
+        // =====================
+        // KONSERVASI
+        // =====================
+
+        {
+            keywords: ['konservasi'],
+            answer: '🌱 Konservasi adalah upaya melindungi dan melestarikan lingkungan hidup serta sumber daya alam.'
+        },
+
+        {
+            keywords: ['leave no trace'],
+            answer: '♻️ Leave No Trace adalah prinsip kegiatan alam bebas tanpa meninggalkan dampak negatif pada lingkungan.'
+        },
+
+        // =====================
+        // UST
+        // =====================
+
+        {
+            keywords: ['ust', 'universitas sarjanawiyata tamansiswa'],
+            answer: '🎓 Universitas Sarjanawiyata Tamansiswa (UST) adalah perguruan tinggi yang didirikan berdasarkan ajaran Ki Hadjar Dewantara.'
+        },
+
+        {
+            keywords: ['ki hadjar dewantara'],
+            answer: '📚 Ki Hadjar Dewantara adalah Bapak Pendidikan Nasional Indonesia dan pendiri Tamansiswa.'
+        },
+
+        // =====================
+        // SAPAAN
+        // =====================
+
+        {
+            keywords: ['halo', 'hai', 'hello', 'hi'],
+            answer: '👋 Halo! Saya Asisten MAPATEK. Silakan tanyakan tentang pendakian, survival, rock climbing, konservasi, P3K, atau MAPATEK.'
+        },
+
+        {
+            keywords: ['terima kasih', 'makasih'],
+            answer: '😊 Sama-sama! Tetap semangat berkegiatan dan selalu utamakan keselamatan.'
+        }
+    ];
+
+    for (let item of knowledge) {
+        if (item.keywords.some(keyword => msg.includes(keyword))) {
+            return item.answer;
+        }
     }
+
+    return `
+    🌿 Saya belum menemukan jawaban yang tepat.
+
+    Coba tanyakan:
+    • MAPATEK ABHIPRAYA
+    • Sejarah organisasi
+    • Pendakian gunung
+    • Survival
+    • P3K
+    • Rock Climbing
+    • Konservasi
+    • Navigasi Darat
+    • Gunung Indonesia
+    • Flora dan Fauna
+    • SAR
+    • UST Yogyakarta
+    `;
+}
 
     document.addEventListener('click', function(event) {
         const widget = document.querySelector('.chatbot-widget');
