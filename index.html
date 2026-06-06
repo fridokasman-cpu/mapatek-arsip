@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes">
     <title>Portal Kearsipan | Mapatek Abhipraya</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -46,7 +46,22 @@
             --radius-lg: 24px;
             --radius-xl: 32px;
         }
+        :root {
+            /* Tambahkan ini */
+            font-size: clamp(14px, 2.5vw, 16px);
+        }
 
+        @media (max-width: 768px) {
+            :root {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                font-size: 13px;
+            }
+        }
         body {
             font-family: 'Inter', sans-serif;
             background: var(--gray-50);
@@ -1251,6 +1266,170 @@
             .countdown-number { font-size: 1.5rem; }
             .testimoni-card { padding: 1.5rem; }
         }
+        /* Perbaikan Tampilan Mobile */
+@media screen and (max-width: 480px) {
+    /* Perkecil font di mobile */
+    html {
+        font-size: 14px;
+    }
+    
+    /* Perkecil padding container */
+    .container {
+        padding: 0 1rem;
+    }
+    
+    /* Perkecil navbar */
+    .navbar {
+        padding: 0.75rem 1rem;
+    }
+    
+    .logo {
+        font-size: 1.1rem;
+    }
+    
+    .logo-icon {
+        width: 35px;
+        height: 35px;
+    }
+    
+    /* Perkecil hero section */
+    .hero {
+        padding: 6rem 1rem 3rem;
+    }
+    
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+    
+    .hero p {
+        font-size: 0.9rem;
+    }
+    
+    /* Perkecil section title */
+    .section-title {
+        font-size: 1.5rem;
+    }
+    
+    /* Perkecil cards */
+    .pengurus-card,
+    .agenda-card,
+    .arsip-item,
+    .kontak-card,
+    .testimoni-card,
+    .cuaca-card,
+    .berita-card {
+        padding: 1rem;
+    }
+    
+    /* Perkecil countdown */
+    .countdown-number {
+        font-size: 1.5rem;
+    }
+    
+    .countdown-box {
+        min-width: 60px;
+        padding: 0.75rem;
+    }
+    
+    /* Perkecil quiz */
+    .quiz-card {
+        padding: 1.5rem;
+    }
+    
+    .quiz-question {
+        font-size: 1rem;
+    }
+    
+    /* Perkecil leaderboard */
+    .leaderboard-header,
+    .leaderboard-row {
+        font-size: 0.8rem;
+        padding: 0.75rem;
+    }
+    
+    /* Perkecil kalender */
+    .kalender-day {
+        min-height: 50px;
+        font-size: 0.75rem;
+    }
+    
+    /* Perkecil chatbot */
+    .chatbot-container {
+        width: calc(100vw - 20px);
+        height: 70vh;
+        right: -10px;
+        bottom: 80px;
+    }
+    
+    /* Perbaiki grid */
+    .stats-grid,
+    .pengurus-grid,
+    .agenda-grid,
+    .galeri-grid,
+    .cuaca-grid,
+    .berita-grid,
+    .kontak-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    /* Perkecil tombol */
+    .btn-daftar,
+    .btn-download,
+    .tab-btn {
+        font-size: 0.85rem;
+        padding: 0.75rem 1.25rem;
+    }
+}
+
+/* Perbaikan untuk layar sangat kecil */
+@media screen and (max-width: 360px) {
+    html {
+        font-size: 13px;
+    }
+    
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+    }
+    
+    .countdown-timer {
+        gap: 0.3rem;
+    }
+    
+    .countdown-box {
+        min-width: 50px;
+        padding: 0.5rem;
+    }
+    
+    .countdown-number {
+        font-size: 1.2rem;
+    }
+    
+    .countdown-label {
+        font-size: 0.6rem;
+    }
+}
+
+/* Perbaikan zoom iOS */
+@supports (-webkit-touch-callout: none) {
+    .navbar,
+    .hero,
+    .section-title {
+        -webkit-transform: translateZ(0);
+    }
+}
+
+/* Perbaikan text size adjust */
+* {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
     </style>
 </head>
 <body>
@@ -2301,6 +2480,20 @@
         animateCounter(document.getElementById('documentCount'), 25);
         showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
     });
+            // Fix untuk iOS zoom
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+
+        // Fix viewport untuk mobile
+        function fixViewport() {
+            if (window.innerWidth < 480) {
+                document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5');
+            }
+        }
+
+        window.addEventListener('load', fixViewport);
+        window.addEventListener('resize', fixViewport);
 </script>
 </body>
 </html>
