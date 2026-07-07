@@ -1,0 +1,14 @@
+{
+    "pengumuman": [
+        {
+            "id": 6,
+            "judul": "Pengumuman Baru Anda",
+            "tanggal": "15 Juli 2026",
+            "kategori": "Penting",
+            "deskripsi": "Deskripsi pengumuman...",
+            "link": "https://ustjogja.ac.id/id/berita/",
+            "status": "aktif",
+            "prioritas": "tinggi"
+        }
+    ]
+}

@@ -3624,6 +3624,165 @@ body.dark-mode .sidebar-overlay {
         font-size: 1rem;
     }
 }
+/* ==================== PENGUMUMAN ==================== */
+.pengumuman-section {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    padding: 5rem 0;
+}
+
+body.dark-mode .pengumuman-section {
+    background: linear-gradient(135deg, #2d1f00 0%, #3d2a00 100%);
+}
+
+.pengumuman-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.pengumuman-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: 1.75rem;
+    box-shadow: var(--shadow-md);
+    border-left: 5px solid var(--secondary);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.pengumuman-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-xl);
+    border-left-color: var(--accent);
+}
+
+.pengumuman-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 80px;
+    height: 80px;
+    background: radial-gradient(circle, rgba(52, 165, 120, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.pengumuman-card.prioritas-tinggi {
+    border-left-color: #dc2626;
+}
+
+.pengumuman-card.prioritas-sedang {
+    border-left-color: #f59e0b;
+}
+
+.pengumuman-card.prioritas-rendah {
+    border-left-color: var(--secondary);
+}
+
+.pengumuman-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+    gap: 0.75rem;
+}
+
+.pengumuman-kategori {
+    display: inline-block;
+    background: var(--gradient-accent);
+    color: var(--white);
+    padding: 0.25rem 0.9rem;
+    border-radius: var(--radius-full);
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.pengumuman-tanggal {
+    font-size: 0.75rem;
+    color: var(--gray-500);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    flex-shrink: 0;
+}
+
+.pengumuman-judul {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+}
+
+.pengumuman-deskripsi {
+    color: var(--gray-600);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.pengumuman-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--gray-200);
+}
+
+.pengumuman-baca {
+    color: var(--secondary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.3s ease;
+}
+
+.pengumuman-card:hover .pengumuman-baca {
+    color: var(--primary);
+    gap: 0.7rem;
+}
+
+.pengumuman-status {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: var(--radius-full);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-aktif {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.status-pending {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+@media (max-width: 640px) {
+    .pengumuman-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .pengumuman-card {
+        padding: 1.25rem;
+    }
+    
+    .pengumuman-judul {
+        font-size: 1rem;
+    }
+}
 /* ============================================================
    RESPONSIVE OVERRIDES
    ============================================================ */

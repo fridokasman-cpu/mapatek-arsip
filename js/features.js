@@ -366,11 +366,13 @@ function loadPeta() {
     konservasiLayer.addTo(petaMap);
 }
 
-// ==================== BERITA ====================
+// === BERITA (Semua mengarah ke UST) ===
 function loadBerita() {
     const grid = document.getElementById('beritaGrid');
+    if (!grid) return;
+    
     grid.innerHTML = beritaData.map(b => `
-        <div class="berita-card">
+        <a href="https://ustjogja.ac.id/id/berita/" target="_blank" class="berita-card">
             <img src="${b.image}" class="berita-image" onerror="this.src='https://via.placeholder.com/600x400?text=Mapatek'">
             <div class="berita-content">
                 <span class="berita-category">${b.category}</span>
@@ -378,10 +380,12 @@ function loadBerita() {
                 <p class="berita-excerpt">${b.excerpt}</p>
                 <div class="berita-meta">
                     <span><i class="far fa-calendar"></i> ${b.date}</span>
-                    <a href="#" class="berita-read-more">Baca <i class="fas fa-arrow-right"></i></a>
+                    <span class="berita-read-more">
+                        Baca di UST <i class="fas fa-external-link-alt"></i>
+                    </span>
                 </div>
             </div>
-        </div>
+        </a>
     `).join('');
 }
 

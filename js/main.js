@@ -162,8 +162,10 @@ window.addEventListener('load', () => {
     // Refresh cuaca setiap 30 menit
     if (typeof loadCuacaRealtime === 'function') {
         setInterval(loadCuacaRealtime, 1800000);
+        // Auto-refresh pengumuman setiap 10 menit
+        setInterval(loadPengumuman, 600000);
     }
-    
+
     // Toast sambutan
     if (typeof showToast === 'function') {
         setTimeout(() => {
@@ -183,7 +185,72 @@ function fixViewport() {
         viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5');
     }
 }
-
+// === PENGUMUMAN (dari JSON) ===
+async function loadPengumuman() {
+    const grid = document.getElementById('pengumumanGrid');
+    if (!grid) return;
+    
+    try {
+        const response = await fetch('pengumuman.json?t=' + Date.now());
+        if (!response.ok) throw new Error('Gagal memuat pengumuman');
+        
+        const data = await response.json();
+        
+        if (!data.pengumuman || !Array.isArray(data.pengumuman)) {
+            throw new Error('Format JSON tidak valid');
+        }
+        
+        // Filter hanya yang status aktif
+        const pengumumanAktif = data.pengumuman.filter(p => p.status === 'aktif');
+        
+        if (pengumumanAktif.length === 0) {
+            grid.innerHTML = `
+                <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--gray-500);">
+                    <i class="fas fa-bell-slash" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
+                    Belum ada pengumuman saat ini
+                </div>
+            `;
+            return;
+        }
+        
+        // Sort berdasarkan prioritas
+        const prioritasOrder = { tinggi: 1, sedang: 2, rendah: 3 };
+        pengumumanAktif.sort((a, b) => {
+            return (prioritasOrder[a.prioritas] || 3) - (prioritasOrder[b.prioritas] || 3);
+        });
+        
+        grid.innerHTML = pengumumanAktif.map(p => `
+            <a href="${p.link || 'https://ustjogja.ac.id/id/berita/'}" target="_blank" class="pengumuman-card prioritas-${p.prioritas || 'sedang'}">
+                <div class="pengumuman-header">
+                    <span class="pengumuman-kategori">${p.kategori || 'Pengumuman'}</span>
+                    <span class="pengumuman-tanggal">
+                        <i class="far fa-calendar"></i> ${p.tanggal}
+                    </span>
+                </div>
+                <h3 class="pengumuman-judul">${p.judul}</h3>
+                <p class="pengumuman-deskripsi">${p.deskripsi}</p>
+                <div class="pengumuman-footer">
+                    <span class="pengumuman-baca">
+                        Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                    </span>
+                    <span class="pengumuman-status status-${p.status}">${p.status}</span>
+                </div>
+            </a>
+        `).join('');
+        
+    } catch (error) {
+        console.error('Error loading pengumuman:', error);
+        grid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--gray-500);">
+                <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #ef4444; margin-bottom: 0.5rem; display: block;"></i>
+                <p>Gagal memuat pengumuman</p>
+                <button onclick="loadPengumuman()" style="background: var(--gradient-accent); color: white; border: none; padding: 0.5rem 1.5rem; border-radius: 40px; cursor: pointer; font-weight: 600; margin-top: 0.5rem;">
+                    <i class="fas fa-redo"></i> Coba Lagi
+                </button>
+            </div>
+        `;
+    }
+}
 window.addEventListener('load', fixViewport);
 window.addEventListener('resize', fixViewport);
 window.addEventListener('load', () => {
@@ -193,6 +260,7 @@ window.addEventListener('load', () => {
     loadLeaderboard();
     loadPolling();
     loadCuacaRealtime();
+    loadPengumuman();
     loadBerita();
     loadKalender();
     loadFAQ();
@@ -202,7 +270,7 @@ window.addEventListener('load', () => {
     // ⬇️ TAMBAHKAN INI ⬇️
     loadAgendaFromJSON(); // Load agenda dari JSON (opsional)
     
-    animateCounter(document.getElementById('memberCount'), 50);
+    animateCounter(document.getElementById('memberCount'), 49);
     animateCounter(document.getElementById('expeditionCount'), 12);
     animateCounter(document.getElementById('trainingCount'), 8);
     animateCounter(document.getElementById('documentCount'), 25);
