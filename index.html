@@ -4,374 +4,467 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=1.0, user-scalable=yes">
     <title>Portal Kearsipan | Mapatek Abhipraya</title>
-    
+
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="images/logo.png">
-    
+
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Leaflet CSS (Peta) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    
-    <!-- CSS Eksternal -->
+
+    <!-- CSS Eksternal (sudah sesuai dengan desain modern) -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
-<!-- NAVBAR -->
-<nav class="navbar" id="navbar">
-    <div class="logo">
-        <img src="images/logo.png" alt="Logo Mapatek" class="logo-icon" onerror="this.src='https://via.placeholder.com/40x40?text=M'">
-        <span>Mapatek Abhipraya</span>
-    </div>
-    <ul class="nav-links" id="navLinks">
-        <li><a href="#home">Beranda</a></li>
-        <li><a href="#tentang">Tentang</a></li>
-        <li><a href="#pengurus">Pengurus</a></li>
-        <li><a href="#agenda">Agenda</a></li>
-        <li><a href="#galeri">Galeri</a></li>
-        <li><a href="#quiz">Quiz</a></li>
-        <li><a href="#berita">Berita</a></li>
-        <li><a href="#pendaftaran">Pendaftaran</a></li>
-        <li><a href="#arsip">Arsip</a></li>
-        <li><a href="#kontak">Kontak</a></li>
-        <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav"><i class="fas fa-lock"></i> Admin</a></li>
-    </ul>
-    <div style="display: flex; align-items: center; gap: 0.5rem;">
-        <button class="search-global-trigger" onclick="openGlobalSearch()" title="Pencarian Global (Ctrl+K)"><i class="fas fa-search"></i></button>
-        <button class="dark-mode-toggle" onclick="toggleDarkMode()"><i class="fas fa-moon"></i></button>
-        <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-    </div>
-</nav>
-
-<!-- HERO -->
-<section id="home" class="hero">
-    <div class="hero-content">
-        <h1>Portal Kearsipan Digital</h1>
-        <p>Mapatek Abhipraya | Berdiri sejak 19 Maret 2023<br>Pusat transparansi laporan, dokumen organisasi, dan dokumentasi kegiatan.</p>
-        <div class="search-box">
-            <input type="text" id="searchInput" onkeyup="filterArsip()" placeholder="Cari judul laporan, tahun, atau kategori...">
+    <!-- ============================================================
+    NAVBAR
+    ============================================================ -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <img src="images/logo.png" alt="Logo Mapatek" class="logo-icon" onerror="this.src='https://via.placeholder.com/40x40?text=M'">
+            <span>Mapatek Abhipraya</span>
         </div>
-    </div>
-</section>
-
-<!-- STATS COUNTER -->
-<section class="stats-section reveal">
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-card"><div class="stat-number" id="memberCount">0</div><div class="stat-label">Total Anggota</div></div>
-            <div class="stat-card"><div class="stat-number" id="expeditionCount">0</div><div class="stat-label">Ekspedisi</div></div>
-            <div class="stat-card"><div class="stat-number" id="trainingCount">0</div><div class="stat-label">Pelatihan</div></div>
-            <div class="stat-card"><div class="stat-number" id="documentCount">0</div><div class="stat-label">Dokumen</div></div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Beranda</a></li>
+            <li><a href="#tentang">Tentang</a></li>
+            <li><a href="#pengurus">Pengurus</a></li>
+            <li><a href="#agenda">Agenda</a></li>
+            <li><a href="#galeri">Galeri</a></li>
+            <li><a href="#quiz">Quiz</a></li>
+            <li><a href="#berita">Berita</a></li>
+            <li><a href="#pendaftaran">Pendaftaran</a></li>
+            <li><a href="#arsip">Arsip</a></li>
+            <li><a href="#kontak">Kontak</a></li>
+            <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav"><i class="fas fa-lock"></i> Admin</a></li>
+        </ul>
+        <div class="nav-actions">
+            <button class="nav-icon-btn" onclick="openGlobalSearch()" title="Pencarian (Ctrl+K)"><i class="fas fa-search"></i></button>
+            <button class="nav-icon-btn dark-mode-toggle" onclick="toggleDarkMode()" title="Mode Gelap/Terang"><i class="fas fa-moon"></i></button>
+            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
         </div>
-    </div>
-</section>
+    </nav>
 
-<!-- COUNTDOWN TIMER -->
-<section class="countdown-section reveal">
-    <div class="container">
-        <h2 class="section-title">⏰ Menuju Event Berikutnya</h2>
-        <div class="countdown-event-name" id="countdownEventName">🏔️ Ekspedisi Gunung Prau - Dieng</div>
-        <div class="countdown-timer">
-            <div class="countdown-box"><div class="countdown-number" id="cd-days">00</div><div class="countdown-label">Hari</div></div>
-            <div class="countdown-box"><div class="countdown-number" id="cd-hours">00</div><div class="countdown-label">Jam</div></div>
-            <div class="countdown-box"><div class="countdown-number" id="cd-minutes">00</div><div class="countdown-label">Menit</div></div>
-            <div class="countdown-box"><div class="countdown-number" id="cd-seconds">00</div><div class="countdown-label">Detik</div></div>
+    <!-- ============================================================
+    HERO
+    ============================================================ -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge"><i class="fas fa-flag"></i> Berdiri 19 Maret 2023</div>
+            <h1>Portal Kearsipan Digital</h1>
+            <p>Mapatek Abhipraya — Pusat transparansi laporan, dokumen organisasi, dan dokumentasi kegiatan pecinta alam.</p>
+            <div class="hero-search">
+                <input type="text" id="searchInput" onkeyup="filterArsip()" placeholder="Cari judul laporan, tahun, atau kategori...">
+                <button class="search-icon-btn" onclick="document.getElementById('searchInput').focus()"><i class="fas fa-arrow-right"></i></button>
+            </div>
         </div>
-    </div>
-</section>
+        <div class="hero-scroll-indicator">
+            <i class="fas fa-chevron-down"></i>
+            <span>Scroll</span>
+        </div>
+    </section>
 
-<!-- TENTANG -->
-<section id="tentang" class="tentang-section reveal">
-    <div class="container">
-        <h2 class="section-title">Tentang Kami</h2>
-        <div class="tentang-content">
-            <p><strong>Mapatek Abhipraya</strong> merupakan organisasi mahasiswa pencinta alam yang berdiri pada tanggal <strong>19 Maret 2023</strong> di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta. Organisasi ini lahir dari semangat sekelompok mahasiswa yang memiliki visi untuk melestarikan alam sekaligus membangun karakter kepribadian yang tangguh melalui kegiatan-kegiatan alam terbuka.</p>
-            
-            <div class="sejarah-box">
-                <h3><i class="fas fa-history"></i> Sejarah Berdiri & Perjalanan Angkatan</h3>
-                <p>Berawal dari kegelisahan akan minimnya wadah bagi mahasiswa pecinta alam di kampus, serta keinginan untuk menanamkan nilai-nilai kecintaan terhadap alam dan jiwa kepemimpinan, maka berdirilah Mapatek Abhipraya. Berikut adalah perjalanan angkatan yang telah membentuk sejarah organisasi:</p>
-                
-                <div class="angkatan-list">
-                    <div class="angkatan-item"><span class="angkatan-year">2023 (Angkatan Pendiri)</span><span class="angkatan-name">🌟 PANCATOMPAK</span><span class="angkatan-desc">"Lima Puncak Harapan" - Angkatan pendiri yang beranggotakan 5 orang pemberani.</span></div>
-                    <div class="angkatan-item"><span class="angkatan-year">2024 (Angkatan I)</span><span class="angkatan-name">👣 TAPAKKAKI</span><span class="angkatan-desc">"Mengukir Jejak Perjuangan" - Angkatan yang mulai memperluas sayap organisasi.</span></div>
-                    <div class="angkatan-item"><span class="angkatan-year">2025 (Angkatan II)</span><span class="angkatan-name">⛰️ TEDAKDAIVAT</span><span class="angkatan-desc">"Menapaki Puncak Tertinggi" - Fokus pada pengembangan skill teknis pendakian.</span></div>
-                    <div class="angkatan-item"><span class="angkatan-year">2026 (Angkatan III)</span><span class="angkatan-name">🌿 LITANIARAM</span><span class="angkatan-desc">"Pelita bagi Alam" - Mengusung semangat konservasi dan edukasi lingkungan.</span></div>
+    <!-- ============================================================
+    STATS COUNTER
+    ============================================================ -->
+    <section class="stats-section reveal">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-number" id="memberCount">0</div><div class="stat-label">Total Anggota</div></div>
+                <div class="stat-card"><div class="stat-number" id="expeditionCount">0</div><div class="stat-label">Ekspedisi</div></div>
+                <div class="stat-card"><div class="stat-number" id="trainingCount">0</div><div class="stat-label">Pelatihan</div></div>
+                <div class="stat-card"><div class="stat-number" id="documentCount">0</div><div class="stat-label">Dokumen</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    COUNTDOWN
+    ============================================================ -->
+    <section class="countdown-section reveal">
+        <div class="container">
+            <h2 class="section-title">⏰ Menuju Event <span class="highlight">Berikutnya</span></h2>
+            <div class="countdown-event-name" id="countdownEventName">🏔️ Ekspedisi Gunung Prau — Dieng</div>
+            <div class="countdown-timer">
+                <div class="countdown-box"><div class="countdown-number" id="cd-days">00</div><div class="countdown-label">Hari</div></div>
+                <div class="countdown-box"><div class="countdown-number" id="cd-hours">00</div><div class="countdown-label">Jam</div></div>
+                <div class="countdown-box"><div class="countdown-number" id="cd-minutes">00</div><div class="countdown-label">Menit</div></div>
+                <div class="countdown-box"><div class="countdown-number" id="cd-seconds">00</div><div class="countdown-label">Detik</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    TENTANG
+    ============================================================ -->
+    <section id="tentang" class="tentang-section reveal">
+        <div class="container">
+            <h2 class="section-title">Tentang <span class="highlight">Kami</span></h2>
+            <div class="section-divider"><i class="fas fa-mountain"></i></div>
+            <div class="tentang-content">
+                <p><strong>Mapatek Abhipraya</strong> merupakan organisasi mahasiswa pencinta alam yang berdiri pada tanggal <strong>19 Maret 2023</strong> di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta. Lahir dari semangat sekelompok mahasiswa yang memiliki visi untuk melestarikan alam sekaligus membangun karakter kepribadian yang tangguh melalui kegiatan-kegiatan alam terbuka.</p>
+
+                <div class="sejarah-box">
+                    <h3><i class="fas fa-history"></i> Sejarah &amp; Perjalanan Angkatan</h3>
+                    <p>Berawal dari kegelisahan akan minimnya wadah bagi mahasiswa pecinta alam di kampus, serta keinginan untuk menanamkan nilai-nilai kecintaan terhadap alam dan jiwa kepemimpinan, berdirilah Mapatek Abhipraya. Berikut perjalanan angkatan yang membentuk sejarah organisasi:</p>
+                    <div class="angkatan-list">
+                        <div class="angkatan-item"><span class="angkatan-year">2023 (Angkatan Pendiri)</span><span class="angkatan-name">🌟 PANCATOMPAK</span><span class="angkatan-desc">"Lima Puncak Harapan" — 5 orang pemberani.</span></div>
+                        <div class="angkatan-item"><span class="angkatan-year">2024 (Angkatan I)</span><span class="angkatan-name">👣 TAPAKKAKI</span><span class="angkatan-desc">"Mengukir Jejak Perjuangan"</span></div>
+                        <div class="angkatan-item"><span class="angkatan-year">2025 (Angkatan II)</span><span class="angkatan-name">⛰️ TEDAKDAIVAT</span><span class="angkatan-desc">"Menapaki Puncak Tertinggi"</span></div>
+                        <div class="angkatan-item"><span class="angkatan-year">2026 (Angkatan III)</span><span class="angkatan-name">🌿 LITANIARAM</span><span class="angkatan-desc">"Pelita bagi Alam"</span></div>
+                    </div>
+                    <p style="margin-top:1rem; font-style:italic;">"Setiap angkatan memiliki cerita dan pengabdiannya masing-masing. Mereka adalah mata rantai yang tak terputus dalam perjalanan panjang Mapatek Abhipraya."</p>
                 </div>
-                <p style="margin-top: 1rem; font-style: italic;">"Setiap angkatan memiliki cerita dan pengabdiannya masing-masing. Mereka adalah mata rantai yang tak terputus dalam perjalanan panjang Mapatek Abhipraya."</p>
-            </div>
 
-            <p>Nama <strong>"Abhipraya"</strong> berasal dari bahasa Sanskerta yang berarti <em>"harapan" atau "cita-cita"</em>. Nama ini mencerminkan harapan besar para pendiri organisasi untuk menjadi garda terdepan dalam pelestarian alam dan pembentukan karakter mahasiswa yang peduli terhadap lingkungan.</p>
+                <p>Nama <strong>"Abhipraya"</strong> berasal dari bahasa Sanskerta yang berarti <em>"harapan" atau "cita-cita"</em>. Nama ini mencerminkan harapan besar para pendiri organisasi untuk menjadi garda terdepan dalam pelestarian alam dan pembentukan karakter mahasiswa yang peduli terhadap lingkungan.</p>
 
-            <p>Sejak berdirinya, Mapatek Abhipraya telah melaksanakan berbagai kegiatan seperti pendidikan dan latihan dasar (Diksar), ekspedisi pendakian gunung, aksi konservasi lingkungan, bersih-bersih pantai, penanaman pohon, serta berbagai kegiatan sosial kemasyarakatan. Organisasi ini terus berkembang dan menjadi rumah bagi mahasiswa UST yang ingin belajar tentang alam, kepemimpinan, dan kerja sama tim.</p>
-        </div>
-    </div>
-</section>
-
-<!-- PENGURUS -->
-<section id="pengurus" class="pengurus-section reveal">
-    <div class="container">
-        <h2 class="section-title">Struktur Pengurus</h2>
-        <p class="section-subtitle">Kenali lebih dekat para pengurus Mapatek Abhipraya yang siap melayani dan mengajak Anda menjelajahi keindahan alam</p>
-        <div class="pengurus-grid">
-            <div class="pengurus-card"><span class="badge-role">Ketua</span><img src="images/pengurus/ketua.jpg" alt="Machmud Chabibul Lathif" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/1.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Machmud Chabibul Lathif</h3><span class="pengurus-position">Ketua Umum</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018064</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-952-824-898</span></div></div></div>
-            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Sekretaris</span><img src="images/pengurus/sekretaris.jpg" alt="Putri Robet" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/1.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Putri Robet</h3><span class="pengurus-position">Sekretaris Jenderal</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018007</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0815-2272-3325</span></div></div></div>
-            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #6c757d 0%, #495057 100%);">Sekretaris</span><img src="images/pengurus/sekretariswakil.jpg" alt="Tisye Dayana Knyartutu" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/2.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Tsye Dayana Knyartutu</h3><span class="pengurus-position">Sekretaris Wakil</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018006</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-343-835-369</span></div></div></div>
-            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);">Bendahara</span><img src="images/pengurus/bendahara.jpg" alt="Rosa Bandatia" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/3.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Rosa Bandatia</h3><span class="pengurus-position">Bendahara 1</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018028</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>082-249-858-268</span></div></div></div>
-            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span><img src="images/pengurus/rockclimbing.jpg" alt="Tresia Utami Sulensi" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/4.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Tresia Utami Sulensi</h3><span class="pengurus-position">Koordinator Rock Climbing</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024013058</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0858-2245-0087</span></div></div></div>
-            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span><img src="images/pengurus/gununghutan.jpg" alt="Muhammad Musfian Sutrawardi" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/2.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Muhammad Musfian Sutrawardi</h3><span class="pengurus-position">Koordinator Gunung Hutan</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2023013044</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-398-717-626</span></div></div></div>
-            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);">Lapangan</span><img src="images/pengurus/timgununghutan.jpg" alt="Muhamad Amrullah" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/3.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Muhamad Amrullah</h3><span class="pengurus-position">Tim Gunung Hutan</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024012021</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-659-543-192</span></div></div></div>
-            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">Logistik</span><img src="images/pengurus/logistik.jpg" alt="Gahar Albani Rasyid" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/4.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Gahar Albani Rasyid</h3><span class="pengurus-position">Koordinator Logistik</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024019012</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>082-338-021-599</span></div></div></div>
-            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">Dokumentasi</span><img src="images/pengurus/dokumentasi.jpg" alt="Fridolinus Jeri Kasman" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/5.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Fridolinus Jeri Kasman</h3><span class="pengurus-position">Koordinator Dokumentasi</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2023018008</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0822-1442-8371</span></div></div></div>
-            <div class="pengurus-card"><span class="badge-role" style="background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);">Dokumentasi</span><img src="images/pengurus/dokumentasiwakil.jpg" alt="Laura Mahatta Rismavi Hendra" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/5.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Laura Mahatta Rismavi Hendra</h3><span class="pengurus-position">Tim PDD</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024012037</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>089-539-279-3379</span></div></div></div>
-        </div>
-    </div>
-</section>
-
-<!-- TESTIMONI -->
-<section class="testimoni-section reveal">
-    <div class="container">
-        <h2 class="section-title">💬 Kata Mereka</h2>
-        <p class="section-subtitle">Testimoni dari anggota Mapatek Abhipraya tentang pengalaman mereka</p>
-        <div class="testimoni-slider">
-            <div class="testimoni-track" id="testimoniTrack"></div>
-            <div class="testimoni-controls">
-                <button class="testimoni-btn" onclick="prevTestimoni()"><i class="fas fa-chevron-left"></i></button>
-                <div class="testimoni-dots" id="testimoniDots"></div>
-                <button class="testimoni-btn" onclick="nextTestimoni()"><i class="fas fa-chevron-right"></i></button>
+                <p>Sejak berdirinya, Mapatek Abhipraya telah melaksanakan berbagai kegiatan seperti pendidikan dan latihan dasar (Diksar), ekspedisi pendakian gunung, aksi konservasi lingkungan, bersih-bersih pantai, penanaman pohon, serta berbagai kegiatan sosial kemasyarakatan. Organisasi ini terus berkembang dan menjadi rumah bagi mahasiswa UST yang ingin belajar tentang alam, kepemimpinan, dan kerja sama tim.</p>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- LEADERBOARD -->
-<section class="leaderboard-section reveal">
-    <div class="container">
-        <h2 class="section-title">🏆 Leaderboard Pendakian</h2>
-        <p class="section-subtitle">Ranking anggota berdasarkan jumlah puncak yang berhasil ditaklukkan</p>
-        <div class="leaderboard-card">
-            <div class="leaderboard-header">
-                <div>Rank</div>
-                <div>Anggota</div>
-                <div style="text-align:center;">Puncak</div>
-                <div style="text-align:center;">Poin</div>
+    <!-- ============================================================
+    PENGURUS
+    ============================================================ -->
+    <section id="pengurus" class="pengurus-section reveal">
+        <div class="container">
+            <h2 class="section-title">Struktur <span class="highlight">Pengurus</span></h2>
+            <p class="section-subtitle">Kenali lebih dekat para pengurus Mapatek Abhipraya yang siap melayani dan mengajak Anda menjelajahi keindahan alam</p>
+            <div class="pengurus-grid">
+                <div class="pengurus-card"><span class="badge-role">Ketua</span><img src="images/pengurus/ketua.jpg" alt="Machmud Chabibul Lathif" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/1.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Machmud Chabibul Lathif</h3><span class="pengurus-position">Ketua Umum</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018064</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-952-824-898</span></div></div></div>
+                <div class="pengurus-card"><span class="badge-role" style="background:linear-gradient(145deg,#6c757d,#495057);">Sekretaris</span><img src="images/pengurus/sekretaris.jpg" alt="Putri Robet" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/1.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Putri Robet</h3><span class="pengurus-position">Sekretaris Jenderal</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018007</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0815-2272-3325</span></div></div></div>
+                <div class="pengurus-card"><span class="badge-role" style="background:linear-gradient(145deg,#6c757d,#495057);">Sekretaris</span><img src="images/pengurus/sekretariswakil.jpg" alt="Tsye Dayana Knyartutu" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/2.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Tsye Dayana Knyartutu</h3><span class="pengurus-position">Sekretaris Wakil</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018006</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-343-835-369</span></div></div></div>
+                <div class="pengurus-card"><span class="badge-role" style="background:linear-gradient(145deg,#ffc107,#ff9800);">Bendahara</span><img src="images/pengurus/bendahara.jpg" alt="Rosa Bandatia" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/3.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Rosa Bandatia</h3><span class="pengurus-position">Bendahara 1</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024018028</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>082-249-858-268</span></div></div></div>
+                <div class="pengurus-card"><span class="badge-role" style="background:linear-gradient(145deg,#e74c3c,#c0392b);">Lapangan</span><img src="images/pengurus/rockclimbing.jpg" alt="Tresia Utami Sulensi" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/4.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Tresia Utami Sulensi</h3><span class="pengurus-position">Koordinator Rock Climbing</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024013058</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0858-2245-0087</span></div></div></div>
+                <div class="pengurus-card"><span class="badge-role" style="background:linear-gradient(145deg,#e74c3c,#c0392b);">Lapangan</span><img src="images/pengurus/gununghutan.jpg" alt="Muhammad Musfian Sutrawardi" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/2.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Muhammad Musfian Sutrawardi</h3><span class="pengurus-position">Koordinator Gunung Hutan</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2023013044</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-398-717-626</span></div></div></div>
+                <div class="pengurus-card"><span class="badge-role" style="background:linear-gradient(145deg,#e74c3c,#c0392b);">Lapangan</span><img src="images/pengurus/timgununghutan.jpg" alt="Muhamad Amrullah" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/3.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Muhamad Amrullah</h3><span class="pengurus-position">Tim Gunung Hutan</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024012021</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>085-659-543-192</span></div></div></div>
+                <div class="pengurus-card"><span class="badge-role" style="background:linear-gradient(145deg,#9b59b6,#8e44ad);">Logistik</span><img src="images/pengurus/logistik.jpg" alt="Gahar Albani Rasyid" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/4.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Gahar Albani Rasyid</h3><span class="pengurus-position">Koordinator Logistik</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024019012</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>082-338-021-599</span></div></div></div>
+                <div class="pengurus-card"><span class="badge-role" style="background:linear-gradient(145deg,#1abc9c,#16a085);">Dokumentasi</span><img src="images/pengurus/dokumentasi.jpg" alt="Fridolinus Jeri Kasman" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/men/5.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Fridolinus Jeri Kasman</h3><span class="pengurus-position">Koordinator Dokumentasi</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2023018008</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>0822-1442-8371</span></div></div></div>
+                <div class="pengurus-card"><span class="badge-role" style="background:linear-gradient(145deg,#1abc9c,#16a085);">Dokumentasi</span><img src="images/pengurus/dokumentasiwakil.jpg" alt="Laura Mahatta Rismavi Hendra" class="pengurus-photo" onerror="this.src='https://randomuser.me/api/portraits/women/5.jpg'"><div class="pengurus-info"><h3 class="pengurus-name">Laura Mahatta Rismavi Hendra</h3><span class="pengurus-position">Tim PDD</span><div class="detail-item"><i class="fas fa-id-card"></i><span>NIM: 2024012037</span></div><div class="detail-item"><i class="fas fa-phone"></i><span>089-539-279-3379</span></div></div></div>
             </div>
-            <div id="leaderboardBody"></div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- AGENDA -->
-<section id="agenda" class="agenda-section reveal">
-    <div class="container">
-        <h2 class="section-title">📅 Agenda Kegiatan</h2>
-        <div class="agenda-grid" id="agendaGrid"></div>
-    </div>
-</section>
-
-<!-- GALERI -->
-<section id="galeri" class="galeri-section reveal">
-    <div class="container">
-        <h2 class="section-title">📸 Galeri Kegiatan</h2>
-        <div class="galeri-grid" id="galeriGrid"></div>
-    </div>
-</section>
-
-<!-- MODAL GALERI -->
-<div id="imageModal" class="modal"><span class="modal-close" onclick="closeModal()">&times;</span><div class="modal-content"><img id="modalImage" src="" alt=""></div></div>
-
-<!-- QUIZ -->
-<section id="quiz" class="quiz-section reveal">
-    <div class="container">
-        <h2 class="section-title">🎯 Quiz Kepribadian Pendaki</h2>
-        <p class="section-subtitle">Temukan tipe pendaki dalam dirimu! Jawab 5 pertanyaan sederhana ini.</p>
-        <div class="quiz-card">
-            <div class="quiz-progress"><div class="quiz-progress-bar" id="quizProgressBar"></div></div>
-            <div id="quizContent">
-                <div class="quiz-question-counter" id="quizCounter">Pertanyaan 1 dari 5</div>
-                <div class="quiz-question" id="quizQuestion"></div>
-                <div class="quiz-options" id="quizOptions"></div>
-            </div>
-            <div class="quiz-result" id="quizResult">
-                <div class="quiz-result-icon" id="quizResultIcon"></div>
-                <div class="quiz-result-type" id="quizResultType"></div>
-                <div class="quiz-result-desc" id="quizResultDesc"></div>
-                <div class="quiz-share-buttons">
-                    <a class="quiz-share-btn share-wa" id="shareWA" target="_blank"><i class="fab fa-whatsapp"></i> Share WhatsApp</a>
-                    <a class="quiz-share-btn share-ig" onclick="copyToClipboard()"><i class="fab fa-instagram"></i> Copy untuk IG</a>
-                    <a class="quiz-share-btn share-tw" id="shareTW" target="_blank"><i class="fab fa-twitter"></i> Tweet</a>
+    <!-- ============================================================
+    TESTIMONI
+    ============================================================ -->
+    <section class="testimoni-section reveal">
+        <div class="container">
+            <h2 class="section-title">💬 Kata <span class="highlight">Mereka</span></h2>
+            <p class="section-subtitle">Testimoni dari anggota Mapatek Abhipraya tentang pengalaman mereka</p>
+            <div class="testimoni-slider">
+                <div class="testimoni-track" id="testimoniTrack"></div>
+                <div class="testimoni-controls">
+                    <button class="testimoni-btn" onclick="prevTestimoni()"><i class="fas fa-chevron-left"></i></button>
+                    <div class="testimoni-dots" id="testimoniDots"></div>
+                    <button class="testimoni-btn" onclick="nextTestimoni()"><i class="fas fa-chevron-right"></i></button>
                 </div>
-                <button class="quiz-restart-btn" onclick="restartQuiz()"><i class="fas fa-redo"></i> Ulangi Quiz</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    LEADERBOARD
+    ============================================================ -->
+    <section class="leaderboard-section reveal">
+        <div class="container">
+            <h2 class="section-title">🏆 Leaderboard <span class="highlight">Pendakian</span></h2>
+            <p class="section-subtitle">Ranking anggota berdasarkan jumlah puncak yang berhasil ditaklukkan</p>
+            <div class="leaderboard-card">
+                <div class="leaderboard-header">
+                    <div>Rank</div>
+                    <div>Anggota</div>
+                    <div style="text-align:center;">Puncak</div>
+                    <div style="text-align:center;">Poin</div>
+                </div>
+                <div id="leaderboardBody"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    AGENDA
+    ============================================================ -->
+    <section id="agenda" class="agenda-section reveal">
+        <div class="container">
+            <h2 class="section-title">📅 Agenda <span class="highlight">Kegiatan</span></h2>
+            <p class="section-subtitle">Jadwal kegiatan Mapatek Abhipraya yang akan datang</p>
+            <div class="agenda-grid" id="agendaGrid"></div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    GALERI
+    ============================================================ -->
+    <section id="galeri" class="galeri-section reveal">
+        <div class="container">
+            <h2 class="section-title">📸 Galeri <span class="highlight">Kegiatan</span></h2>
+            <p class="section-subtitle">Dokumentasi perjalanan Mapatek Abhipraya dari masa ke masa</p>
+            <div class="galeri-grid" id="galeriGrid"></div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    MODAL GALERI
+    ============================================================ -->
+    <div id="imageModal" class="modal"><button class="modal-close" onclick="closeModal()">&times;</button><div class="modal-content"><img id="modalImage" src="" alt=""></div></div>
+
+    <!-- ============================================================
+    QUIZ
+    ============================================================ -->
+    <section id="quiz" class="quiz-section reveal">
+        <div class="container">
+            <h2 class="section-title">🎯 Quiz Kepribadian <span class="highlight">Pendaki</span></h2>
+            <p class="section-subtitle">Temukan tipe pendaki dalam dirimu! Jawab 5 pertanyaan sederhana ini.</p>
+            <div class="quiz-card">
+                <div class="quiz-progress"><div class="quiz-progress-bar" id="quizProgressBar"></div></div>
+                <div id="quizContent">
+                    <div class="quiz-question-counter" id="quizCounter">Pertanyaan 1 dari 5</div>
+                    <div class="quiz-question" id="quizQuestion"></div>
+                    <div class="quiz-options" id="quizOptions"></div>
+                </div>
+                <div class="quiz-result" id="quizResult">
+                    <div class="quiz-result-icon" id="quizResultIcon"></div>
+                    <div class="quiz-result-type" id="quizResultType"></div>
+                    <div class="quiz-result-desc" id="quizResultDesc"></div>
+                    <div class="quiz-share-buttons">
+                        <a class="quiz-share-btn share-wa" id="shareWA" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a class="quiz-share-btn share-ig" onclick="copyToClipboard()"><i class="fab fa-instagram"></i> Copy IG</a>
+                        <a class="quiz-share-btn share-tw" id="shareTW" target="_blank"><i class="fab fa-twitter"></i> Tweet</a>
+                    </div>
+                    <button class="quiz-restart-btn" onclick="restartQuiz()"><i class="fas fa-redo"></i> Ulangi Quiz</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    POLLING
+    ============================================================ -->
+    <section class="polling-section reveal">
+        <div class="container">
+            <h2 class="section-title">📊 Polling <span class="highlight">Kegiatan</span></h2>
+            <p class="section-subtitle">Bantu kami menentukan kegiatan berikutnya!</p>
+            <div class="polling-card">
+                <div class="polling-question">🏔️ Gunung mana yang ingin kamu jadikan tujuan ekspedisi berikutnya?</div>
+                <div class="polling-options" id="pollingOptions"></div>
+                <div class="polling-total" id="pollingTotal"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    CUACA
+    ============================================================ -->
+    <section class="cuaca-section reveal">
+        <div class="container">
+            <h2 class="section-title">🌤️ Info Cuaca <span class="highlight">Gunung</span></h2>
+            <p class="section-subtitle">Pantau kondisi cuaca sebelum mendaki — data real-time</p>
+            <div class="cuaca-grid" id="cuacaGrid"></div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    PETA
+    ============================================================ -->
+    <section class="peta-section reveal">
+        <div class="container">
+            <h2 class="section-title">🗺️ Peta Lokasi <span class="highlight">Kegiatan</span></h2>
+            <p class="section-subtitle">Jelajahi lokasi-lokasi yang telah dikunjungi Mapatek Abhipraya</p>
+            <div id="petaMap"></div>
+            <div class="peta-legend">
+                <div class="peta-legend-item"><div class="peta-legend-color" style="background:#dc2626;"></div>Basecamp</div>
+                <div class="peta-legend-item"><div class="peta-legend-color" style="background:#2563eb;"></div>Gunung</div>
+                <div class="peta-legend-item"><div class="peta-legend-color" style="background:#16a34a;"></div>Konservasi</div>
+                <div class="peta-legend-item"><div class="peta-legend-color" style="background:#9333ea;"></div>Latihan</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    BERITA
+    ============================================================ -->
+    <section id="berita" class="berita-section reveal">
+        <div class="container">
+            <h2 class="section-title">📰 Berita &amp; <span class="highlight">Pengumuman</span></h2>
+            <p class="section-subtitle">Informasi terbaru seputar kegiatan Mapatek Abhipraya</p>
+            <div class="berita-grid" id="beritaGrid"></div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    KALENDER
+    ============================================================ -->
+    <section class="kalender-section reveal">
+        <div class="container">
+            <h2 class="section-title">📅 Kalender <span class="highlight">Kegiatan</span></h2>
+            <p class="section-subtitle">Jadwal lengkap kegiatan Mapatek Abhipraya</p>
+            <div class="kalender-wrapper">
+                <div class="kalender-header">
+                    <button onclick="changeMonth(-1)" style="background:rgba(255,255,255,0.12);border:none;color:white;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'"><i class="fas fa-chevron-left"></i></button>
+                    <div class="kalender-title" id="kalenderTitle"></div>
+                    <button onclick="changeMonth(1)" style="background:rgba(255,255,255,0.12);border:none;color:white;width:34px;height:34px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;" onmouseover="this.style.background='rgba(255,255,255,0.22)'" onmouseout="this.style.background='rgba(255,255,255,0.12)'"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <div class="kalender-filter">
+                    <button class="kalender-filter-btn active" onclick="filterKalender('all', this)">Semua</button>
+                    <button class="kalender-filter-btn" onclick="filterKalender('diksar', this)">Diksar</button>
+                    <button class="kalender-filter-btn" onclick="filterKalender('ekspedisi', this)">Ekspedisi</button>
+                    <button class="kalender-filter-btn" onclick="filterKalender('konservasi', this)">Konservasi</button>
+                    <button class="kalender-filter-btn" onclick="filterKalender('latihan', this)">Latihan</button>
+                </div>
+                <div class="kalender-grid" id="kalenderGrid"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    PENDAFTARAN
+    ============================================================ -->
+    <section id="pendaftaran" class="pendaftaran-section reveal">
+        <div class="container">
+            <h2 class="section-title">Pendaftaran <span class="highlight">Anggota</span></h2>
+            <p class="section-subtitle">Gabung bersama keluarga besar Mapatek Abhipraya</p>
+            <div id="statusContainer" class="text-center"><div class="loading-spinner"></div><p style="color:var(--gray-600);">Memuat status pendaftaran...</p></div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FAQ
+    ============================================================ -->
+    <section class="faq-section reveal">
+        <div class="container">
+            <h2 class="section-title">❓ Pertanyaan <span class="highlight">Umum</span></h2>
+            <p class="section-subtitle">Jawaban untuk pertanyaan yang sering ditanyakan</p>
+            <div class="faq-container" id="faqContainer"></div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    ARSIP
+    ============================================================ -->
+    <section id="arsip" class="arsip-section reveal">
+        <div class="container">
+            <h2 class="section-title">Arsip <span class="highlight">Dokumen</span></h2>
+            <p class="section-subtitle">Akses semua laporan dan dokumen resmi Mapatek Abhipraya</p>
+
+            <div class="folder-banner">
+                <i class="fas fa-folder-open fa-3x"></i>
+                <h3>Akses Semua Arsip Mapatek</h3>
+                <p>Klik di bawah untuk membuka folder lengkap arsip kami di Google Drive</p>
+                <a href="https://drive.google.com/drive/folders/1RdIheR1tqdruke2Xv419HgCd5U9-31Vh?usp=sharing" target="_blank" class="btn-download"><i class="fab fa-google-drive"></i> Buka Folder Arsip</a>
+            </div>
+
+            <div class="category-tabs">
+                <button class="tab-btn active" onclick="filterKategori('all', this)">Semua</button>
+                <button class="tab-btn" onclick="filterKategori('Laporan Kegiatan', this)">Laporan Kegiatan</button>
+                <button class="tab-btn" onclick="filterKategori('Laporan Keuangan', this)">Keuangan</button>
+                <button class="tab-btn" onclick="filterKategori('AD_ART', this)">AD/ART &amp; SK</button>
+            </div>
+
+            <div class="arsip-list" id="arsipList">
+                <div class="arsip-item" data-kategori="Laporan Kegiatan"><div class="arsip-info"><span>Laporan Kegiatan</span><h3>Laporan Ekspedisi Gunung Rinjani 2023</h3><small><i class="far fa-calendar"></i> 25 Mei 2023</small></div><a href="https://drive.google.com/drive/folders/17UjJIyz7TTggjf6FTc3JE1We9LiNH3n5?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
+                <div class="arsip-item" data-kategori="Laporan Keuangan"><div class="arsip-info"><span>Laporan Keuangan</span><h3>Laporan Keuangan Diksar 3 2024</h3><small><i class="far fa-calendar"></i> 15 Feb 2024</small></div><a href="https://drive.google.com/drive/folders/1-6jqrxYpj3Z_uN2QSFhfMSKZWTNb1Wig?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-excel"></i> Lihat File</a></div>
+                <div class="arsip-item" data-kategori="AD_ART"><div class="arsip-info"><span>AD/ART</span><h3>Anggaran Dasar &amp; Anggaran Rumah Tangga 2024</h3><small><i class="far fa-calendar"></i> 10 Jan 2024</small></div><a href="https://drive.google.com/drive/folders/1znUPI68QvmspMElQHIhKJ1y5NSiuJm4O?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
+                <div class="arsip-item" data-kategori="Laporan Kegiatan"><div class="arsip-info"><span>Laporan Kegiatan</span><h3>Laporan Bakti Sosial Bersih-bersih Pantai Baros 2025</h3><small><i class="far fa-calendar"></i> 10 Maret 2025</small></div><a href="https://drive.google.com/drive/folders/1WW9fGEa26TJAIPiAqDE7I1ukx6yz18BA?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
+                <div class="arsip-item" data-kategori="AD_ART"><div class="arsip-info"><span>SK Pengurus</span><h3>SK Kepengurusan Periode 2025-2026</h3><small><i class="far fa-calendar"></i> 1 Juni 2025</small></div><a href="https://drive.google.com/drive/folders/1-DgbGLCuo1zToeGsEhYnb_8ur5EquX6l?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    KONTAK
+    ============================================================ -->
+    <section id="kontak" class="kontak-section reveal">
+        <div class="container">
+            <h2 class="section-title">Hubungi <span class="highlight">Kami</span></h2>
+            <p class="section-subtitle" style="color:rgba(255,255,255,0.6);">Kami siap membantu Anda</p>
+            <div class="kontak-grid">
+                <div class="kontak-card"><i class="fab fa-whatsapp"></i><h3>WhatsApp Admin</h3><p>Chat langsung dengan admin kami</p><a href="https://wa.me/6282214428371" target="_blank">0822-1442-8371</a></div>
+                <div class="kontak-card"><i class="fab fa-instagram"></i><h3>Instagram</h3><p>Follow untuk info terbaru</p><a href="https://instagram.com/mapatek_abhipraya" target="_blank">@mapatek_abhipraya</a></div>
+                <div class="kontak-card"><i class="fas fa-map-marker-alt"></i><h3>Lokasi Basecamp</h3><p>Sekretariat Mapatek Abhipraya<br>Universitas Sarjanawiyata Tamansiswa, Yogyakarta</p><a href="https://maps.app.goo.gl/aWpAXADTecgmY1EG9" target="_blank">Lihat di Maps</a></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer>
+        <div class="footer-social">
+            <a href="https://instagram.com/mapatek_abhipraya" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/6282214428371" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="http://localhost/mapatek-arsip/login.php" target="_blank" aria-label="Login Admin"><i class="fas fa-lock"></i></a>
+        </div>
+        <p>🏔️ Mapatek Abhipraya © 2023 — 2026. All Rights Reserved.</p>
+        <p style="font-size:0.7rem; margin-top:0.25rem;">Sistem Kearsipan Internal | Dibuat dengan ❤️ untuk keluarga besar Mapatek</p>
+    </footer>
+
+    <!-- ============================================================
+    SEARCH GLOBAL OVERLAY
+    ============================================================ -->
+    <div class="search-global-overlay" id="searchGlobalOverlay" onclick="if(event.target===this)closeGlobalSearch()">
+        <div class="search-global-box">
+            <div class="search-global-input-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" class="search-global-input" id="globalSearchInput" placeholder="Cari di seluruh website…" oninput="performGlobalSearch()">
+                <button onclick="closeGlobalSearch()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="search-global-results" id="globalSearchResults">
+                <div style="padding:2rem;text-align:center;color:var(--gray-500);">
+                    <i class="fas fa-search" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
+                    Ketik untuk mencari di seluruh website…
+                </div>
             </div>
         </div>
     </div>
-</section>
 
-<!-- POLLING -->
-<section class="polling-section reveal">
-    <div class="container">
-        <h2 class="section-title">📊 Polling Kegiatan</h2>
-        <p class="section-subtitle">Bantu kami menentukan kegiatan berikutnya!</p>
-        <div class="polling-card">
-            <div class="polling-question">🏔️ Gunung mana yang ingin kamu jadikan tujuan ekspedisi berikutnya?</div>
-            <div class="polling-options" id="pollingOptions"></div>
-            <div class="polling-total" id="pollingTotal"></div>
-        </div>
-    </div>
-</section>
+    <!-- ============================================================
+    BACK TO TOP
+    ============================================================ -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Kembali ke atas"><i class="fas fa-arrow-up"></i></button>
 
-<!-- CUACA -->
-<section class="cuaca-section reveal">
-    <div class="container">
-        <h2 class="section-title">🌤️ Info Cuaca Gunung Populer</h2>
-        <p class="section-subtitle">Pantau kondisi cuaca sebelum mendaki - Data real-time</p>
-        <div class="cuaca-grid" id="cuacaGrid"></div>
-    </div>
-</section>
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div id="toast" class="toast"></div>
 
-<!-- PETA -->
-<section class="peta-section reveal">
-    <div class="container">
-        <h2 class="section-title">🗺️ Peta Lokasi Kegiatan</h2>
-        <p class="section-subtitle">Jelajahi lokasi-lokasi yang telah dikunjungi Mapatek Abhipraya</p>
-        <div id="petaMap"></div>
-        <div class="peta-legend">
-            <div class="peta-legend-item"><div class="peta-legend-color" style="background:#dc2626;"></div>Basecamp</div>
-            <div class="peta-legend-item"><div class="peta-legend-color" style="background:#2563eb;"></div>Gunung</div>
-            <div class="peta-legend-item"><div class="peta-legend-color" style="background:#16a34a;"></div>Konservasi</div>
-            <div class="peta-legend-item"><div class="peta-legend-color" style="background:#9333ea;"></div>Latihan</div>
-        </div>
-    </div>
-</section>
-
-<!-- BERITA -->
-<section id="berita" class="berita-section reveal">
-    <div class="container">
-        <h2 class="section-title">📰 Berita & Pengumuman</h2>
-        <p class="section-subtitle">Informasi terbaru seputar kegiatan Mapatek Abhipraya</p>
-        <div class="berita-grid" id="beritaGrid"></div>
-    </div>
-</section>
-
-<!-- KALENDER -->
-<section class="kalender-section reveal">
-    <div class="container">
-        <h2 class="section-title">📅 Kalender Kegiatan</h2>
-        <p class="section-subtitle">Jadwal lengkap kegiatan Mapatek Abhipraya</p>
-        <div class="kalender-wrapper">
-            <div class="kalender-header">
-                <button onclick="changeMonth(-1)" style="background:rgba(255,255,255,0.2);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;"><i class="fas fa-chevron-left"></i></button>
-                <div class="kalender-title" id="kalenderTitle"></div>
-                <button onclick="changeMonth(1)" style="background:rgba(255,255,255,0.2);border:none;color:white;width:36px;height:36px;border-radius:50%;cursor:pointer;"><i class="fas fa-chevron-right"></i></button>
+    <!-- ============================================================
+    CHATBOT
+    ============================================================ -->
+    <div class="chatbot-widget">
+        <button class="chatbot-toggle" onclick="toggleChatbot()" aria-label="Buka chatbot"><i class="fas fa-comment-dots"></i></button>
+        <div class="chatbot-container" id="chatbotContainer">
+            <div class="chatbot-header">
+                <h3><i class="fas fa-robot"></i> Asisten Mapatek AI</h3>
+                <button class="chatbot-close" onclick="toggleChatbot()"><i class="fas fa-times"></i></button>
             </div>
-            <div class="kalender-filter">
-                <button class="kalender-filter-btn active" onclick="filterKalender('all', this)">Semua</button>
-                <button class="kalender-filter-btn" onclick="filterKalender('diksar', this)">Diksar</button>
-                <button class="kalender-filter-btn" onclick="filterKalender('ekspedisi', this)">Ekspedisi</button>
-                <button class="kalender-filter-btn" onclick="filterKalender('konservasi', this)">Konservasi</button>
-                <button class="kalender-filter-btn" onclick="filterKalender('latihan', this)">Latihan</button>
+            <div class="chatbot-messages" id="chatMessages">
+                <div class="message bot">
+                    <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="message-content">🌲 Halo! Saya Asisten Virtual Mapatek Abhipraya. Tanyakan apapun tentang organisasi, pendakian, atau UST! 🏔️</div>
+                </div>
             </div>
-            <div class="kalender-grid" id="kalenderGrid"></div>
-        </div>
-    </div>
-</section>
-
-<!-- PENDAFTARAN -->
-<section id="pendaftaran" class="pendaftaran-section reveal">
-    <div class="container">
-        <h2 class="section-title">Pendaftaran Anggota</h2>
-        <div id="statusContainer" class="text-center"><div class="loading-spinner"></div><p style="color: var(--gray-600);">Memuat status pendaftaran...</p></div>
-    </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-section reveal">
-    <div class="container">
-        <h2 class="section-title">❓ Pertanyaan Umum (FAQ)</h2>
-        <p class="section-subtitle">Jawaban untuk pertanyaan yang sering ditanyakan</p>
-        <div class="faq-container" id="faqContainer"></div>
-    </div>
-</section>
-
-<!-- ARSIP -->
-<section id="arsip" class="arsip-section reveal">
-    <div class="container">
-        <h2 class="section-title">Arsip Dokumen</h2>
-        <div class="folder-banner"><i class="fas fa-folder-open fa-3x" style="color: var(--secondary); margin-bottom: 0.75rem;"></i><h3 style="font-size: 1.25rem; margin-bottom: 0.5rem;">Akses Semua Arsip Mapatek</h3><p style="color: var(--gray-600); margin-bottom: 1rem;">Klik di bawah untuk membuka folder lengkap arsip kami di Google Drive</p><a href="https://drive.google.com/drive/folders/1RdIheR1tqdruke2Xv419HgCd5U9-31Vh?usp=sharing" target="_blank" class="btn-download"><i class="fab fa-google-drive"></i> Buka Folder Arsip</a></div>
-        <div class="category-tabs"><button class="tab-btn active" onclick="filterKategori('all', this)">Semua</button><button class="tab-btn" onclick="filterKategori('Laporan Kegiatan', this)">Laporan Kegiatan</button><button class="tab-btn" onclick="filterKategori('Laporan Keuangan', this)">Keuangan</button><button class="tab-btn" onclick="filterKategori('AD_ART', this)">AD/ART & SK</button></div>
-        <div class="arsip-list" id="arsipList">
-            <div class="arsip-item" data-kategori="Laporan Kegiatan"><div class="arsip-info"><span>Laporan Kegiatan</span><h3>Laporan Ekspedisi Gunung Rinjani 2023</h3><small><i class="far fa-calendar"></i> 25 Mei 2023</small></div><a href="https://drive.google.com/drive/folders/17UjJIyz7TTggjf6FTc3JE1We9LiNH3n5?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
-            <div class="arsip-item" data-kategori="Laporan Keuangan"><div class="arsip-info"><span>Laporan Keuangan</span><h3>Laporan Keuangan Diksar 3 2024</h3><small><i class="far fa-calendar"></i> 15 Feb 2024</small></div><a href="https://drive.google.com/drive/folders/1-6jqrxYpj3Z_uN2QSFhfMSKZWTNb1Wig?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-excel"></i> Lihat File</a></div>
-            <div class="arsip-item" data-kategori="AD_ART"><div class="arsip-info"><span>AD/ART</span><h3>Anggaran Dasar & Anggaran Rumah Tangga 2024</h3><small><i class="far fa-calendar"></i> 10 Jan 2024</small></div><a href="https://drive.google.com/drive/folders/1znUPI68QvmspMElQHIhKJ1y5NSiuJm4O?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
-            <div class="arsip-item" data-kategori="Laporan Kegiatan"><div class="arsip-info"><span>Laporan Kegiatan</span><h3>Laporan Bakti Sosial Bersih-bersih Pantai Baros 2025</h3><small><i class="far fa-calendar"></i> 10 Maret 2025</small></div><a href="https://drive.google.com/drive/folders/1WW9fGEa26TJAIPiAqDE7I1ukx6yz18BA?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
-            <div class="arsip-item" data-kategori="AD_ART"><div class="arsip-info"><span>SK Pengurus</span><h3>SK Kepengurusan Periode 2025-2026</h3><small><i class="far fa-calendar"></i> 1 Juni 2025</small></div><a href="https://drive.google.com/drive/folders/1-DgbGLCuo1zToeGsEhYnb_8ur5EquX6l?usp=sharing" target="_blank" class="btn-download"><i class="fas fa-file-pdf"></i> Lihat File</a></div>
-        </div>
-    </div>
-</section>
-
-<!-- KONTAK -->
-<section id="kontak" class="kontak-section reveal">
-    <div class="container">
-        <h2 class="section-title">Hubungi Kami</h2>
-        <div class="kontak-grid">
-            <div class="kontak-card"><i class="fab fa-whatsapp"></i><h3>WhatsApp Admin</h3><p>Chat langsung dengan admin kami</p><a href="https://wa.me/6282214428371" target="_blank">0822-1442-8371</a></div>
-            <div class="kontak-card"><i class="fab fa-instagram"></i><h3>Instagram</h3><p>Follow untuk info terbaru</p><a href="https://instagram.com/mapatek_abhipraya" target="_blank">@mapatek_abhipraya</a></div>
-            <div class="kontak-card"><i class="fas fa-map-marker-alt"></i><h3>Lokasi Basecamp</h3><p>Sekretariat Mapatek Abhipraya<br>Universitas Sarjanawiyata Tamansiswa, Yogyakarta</p><a href="https://maps.app.goo.gl/aWpAXADTecgmY1EG9" target="_blank">Lihat di Maps</a></div>
-        </div>
-    </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-    <div class="footer-social">
-        <a href="https://instagram.com/mapatek_abhipraya" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://wa.me/6282214428371" target="_blank"><i class="fab fa-whatsapp"></i></a>
-        <a href="http://localhost/mapatek-arsip/login.php" target="_blank"><i class="fas fa-lock"></i></a>
-    </div>
-    <p>️ Mapatek Abhipraya © 2023 - 2026 All Rights Reserved.</p>
-    <p style="font-size: 0.75rem; margin-top: 0.5rem;">Sistem Kearsipan Internal | Dibuat dengan ❤️ untuk keluarga besar Mapatek</p>
-</footer>
-
-<!-- SEARCH GLOBAL OVERLAY -->
-<div class="search-global-overlay" id="searchGlobalOverlay" onclick="if(event.target===this)closeGlobalSearch()">
-    <div class="search-global-box">
-        <div class="search-global-input-wrapper">
-            <i class="fas fa-search"></i>
-            <input type="text" class="search-global-input" id="globalSearchInput" placeholder="Cari di seluruh website... (Ctrl+K)" oninput="performGlobalSearch()">
-            <button onclick="closeGlobalSearch()" style="background:none;border:none;cursor:pointer;color:var(--gray-600);font-size:1.2rem;"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="search-global-results" id="globalSearchResults">
-            <div style="padding:2rem;text-align:center;color:var(--gray-500);">
-                <i class="fas fa-search" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                Ketik untuk mencari di seluruh website...
+            <div class="chatbot-input">
+                <input type="text" id="chatInput" placeholder="Tanyakan sesuatu…" onkeypress="if(event.key==='Enter') sendMessage()">
+                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
-</div>
 
-<button class="back-to-top" id="backToTop" onclick="scrollToTop()"><i class="fas fa-arrow-up"></i></button>
-<div id="toast" class="toast"></div>
+    <!-- ============================================================
+    SCRIPTS
+    ============================================================ -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
 
-<!-- CHATBOT -->
-<div class="chatbot-widget">
-    <div class="chatbot-toggle" onclick="toggleChatbot()"><i class="fas fa-comment-dots"></i></div>
-    <div class="chatbot-container" id="chatbotContainer">
-        <div class="chatbot-header"><h3><i class="fas fa-robot"></i> Asisten Mapatek AI</h3><button class="chatbot-close" onclick="toggleChatbot()"><i class="fas fa-times"></i></button></div>
-        <div class="chatbot-messages" id="chatMessages"><div class="message bot"><div class="message-avatar"><i class="fas fa-robot"></i></div><div class="message-content">🌲 Halo! Saya Asisten Virtual Mapatek Abhipraya. Tanyakan apapun tentang organisasi, pendakian, atau UST! 🏔️</div></div></div>
-        <div class="chatbot-input"><input type="text" id="chatInput" placeholder="Tanyakan sesuatu..." onkeypress="if(event.key==='Enter') sendMessage()"><button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button></div>
-    </div>
-</div>
-
-<!-- LEAFLET JS (Peta) -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-
-<!-- JAVASCRIPT FILES (URUTAN PENTING!) -->
-<script src="js/data.js"></script>
-<script src="js/features.js"></script>
-<script src="js/chatbot.js"></script>
-<script src="js/main.js"></script>
+    <!-- JAVASCRIPT FILES (URUTAN PENTING!) -->
+    <script src="js/data.js"></script>
+    <script src="js/features.js"></script>
+    <script src="js/chatbot.js"></script>
+    <script src="js/main.js"></script>
 
 </body>
 </html>
