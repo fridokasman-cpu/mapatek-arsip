@@ -869,10 +869,11 @@ Pahlawan Nasional (1959), Menteri Pendidikan pertama Indonesia.`;
 • Website: www.ustjogja.ac.id
 
 📌 <strong>FAKULTAS:</strong>
-• FKIP (Keguruan & Ilmu Pendidikan)
-• FEB (Ekonomi & Bisnis)
-• FST (Sains & Teknologi)
-• FISIPOL (Ilmu Sosial & Politik)
+• Fakultas Keguruan dan Ilmu Pendidikan (FKIP)
+•Fakultas Ekonomi
+•Fakultas Pertanian
+•Fakultas Psikologi
+•Fakultas Teknik
 
 📌 <strong>ORGANISASI MAHASISWA:</strong>
 ✓ BEM UST, DPM
