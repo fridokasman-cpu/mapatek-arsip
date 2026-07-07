@@ -3,25 +3,107 @@
 // ================================================================
 
 // ==================== COUNTDOWN TIMER ====================
-const targetDate = new Date('2026-06-15T08:00:00').getTime();
+// === COUNTDOWN OTOMATIS DARI AGENDA ===
+let currentEvent = null;
 
-function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
-    if (distance < 0) {
-        document.getElementById('cd-days').textContent = '00';
-        document.getElementById('cd-hours').textContent = '00';
-        document.getElementById('cd-minutes').textContent = '00';
-        document.getElementById('cd-seconds').textContent = '00';
-        document.getElementById('countdownEventName').textContent = '🎉 Event Sedang Berlangsung!';
-        return;
-    }
-    document.getElementById('cd-days').textContent = String(Math.floor(distance / (1000 * 60 * 60 * 24))).padStart(2, '0');
-    document.getElementById('cd-hours').textContent = String(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))).padStart(2, '0');
-    document.getElementById('cd-minutes').textContent = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
-    document.getElementById('cd-seconds').textContent = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+// Fungsi untuk mencari event terdekat yang belum lewat
+function getNextEvent() {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0); // Reset ke awal hari
+    
+    // Filter event yang tanggalnya >= hari ini
+    const upcomingEvents = agendas.filter(event => {
+        const eventDate = new Date(event.date);
+        return eventDate >= now;
+    });
+    
+    // Sort berdasarkan tanggal terdekat
+    upcomingEvents.sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+    });
+    
+    // Return event pertama (terdekat)
+    return upcomingEvents.length > 0 ? upcomingEvents[0] : null;
 }
 
+// Fungsi update countdown
+function updateCountdown() {
+    const event = getNextEvent();
+    const daysEl = document.getElementById('cd-days');
+    const hoursEl = document.getElementById('cd-hours');
+    const minutesEl = document.getElementById('cd-minutes');
+    const secondsEl = document.getElementById('cd-seconds');
+    const eventNameEl = document.getElementById('countdownEventName');
+    
+    if (!event) {
+        // Tidak ada event terjadwal
+        daysEl.textContent = '00';
+        hoursEl.textContent = '00';
+        minutesEl.textContent = '00';
+        secondsEl.textContent = '00';
+        eventNameEl.textContent = '📅 Belum ada event terjadwal';
+        return;
+    }
+    
+    // Cek apakah event hari ini
+    const eventDate = new Date(event.date + 'T08:00:00');
+    const now = new Date();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    if (eventDate.toDateString() === today.toDateString()) {
+        // Event hari ini
+        daysEl.textContent = '00';
+        hoursEl.textContent = '00';
+        minutesEl.textContent = '00';
+        secondsEl.textContent = '00';
+        eventNameEl.textContent = `🎉 Hari Ini: ${event.title}`;
+        return;
+    }
+    
+    // Hitung selisih waktu
+    const distance = eventDate - now;
+    
+    if (distance < 0) {
+        // Event sudah lewat
+        daysEl.textContent = '00';
+        hoursEl.textContent = '00';
+        minutesEl.textContent = '00';
+        secondsEl.textContent = '00';
+        eventNameEl.textContent = `✅ ${event.title} - Selesai!`;
+        return;
+    }
+    
+    // Update display
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    daysEl.textContent = String(days).padStart(2, '0');
+    hoursEl.textContent = String(hours).padStart(2, '0');
+    minutesEl.textContent = String(minutes).padStart(2, '0');
+    secondsEl.textContent = String(seconds).padStart(2, '0');
+    
+    // Update nama event dengan info lokasi
+    const eventDateFormatted = new Date(event.date).toLocaleDateString('id-ID', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+    
+    eventNameEl.innerHTML = `
+        <span style="font-size: 0.9rem; opacity: 0.8;">Event Berikutnya:</span><br>
+        <strong>${event.title}</strong>
+        <span style="font-size: 0.85rem; display: block; margin-top: 0.5rem;">
+            📅 ${eventDateFormatted} | 📍 ${event.location}
+        </span>
+    `;
+}
+
+// Jalankan countdown
+setInterval(updateCountdown, 1000);
+updateCountdown(); // Panggil langsung saat load
 // ==================== TESTIMONI ====================
 let currentTestimoni = 0;
 
@@ -544,7 +626,28 @@ function openModal(src) {
 }
 
 function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
-
+// === LOAD AGENDA DARI JSON (OPSIONAL) ===
+async function loadAgendaFromJSON() {
+    try {
+        const response = await fetch('agenda.json?t=' + Date.now());
+        const data = await response.json();
+        
+        if (data.agendas && Array.isArray(data.agendas)) {
+            agendas.length = 0; // Kosongkan array
+            agendas.push(...data.agendas);
+            
+            // Reload agenda grid
+            loadAgenda();
+            
+            // Update countdown dengan data baru
+            updateCountdown();
+            
+            console.log('✅ Agenda updated from JSON');
+        }
+    } catch (error) {
+        console.log('ℹ️ Using default agenda data (no agenda.json found)');
+    }
+}
 // ==================== EXPOSE FUNCTIONS TO GLOBAL ====================
 // Semua fungsi yang dipanggil dari HTML (onclick, dll) harus tersedia di window.
 window.updateCountdown = updateCountdown;

@@ -3,12 +3,54 @@
 // ================================================================
 
 // -------------------- AGENDA --------------------
+// Data Agenda dengan tanggal lengkap
 const agendas = [
-    { day: "15", month: "JUN", title: "Pendakian Gunung Prau", location: "Dieng, Jawa Tengah", desc: "Ekspedisi rutin anggota dan Latihan Dasar", status: "upcoming" },
-    { day: "22", month: "JUN", title: "Latihan Rock Climbing", location: "Tebing Gamping", desc: "Teknik dasar panjat tebing dan belaying", status: "upcoming" },
-    { day: "05", month: "JUL", title: "Bakti Sosial & Konservasi", location: "Desa Wisata Pentingsari", desc: "Bersih-bersih sungai dan edukasi lingkungan", status: "upcoming" }
+    { 
+        date: "2026-07-15",  // Format: YYYY-MM-DD
+        day: "15", 
+        month: "JUL", 
+        title: "Pendakian Gunung Prau", 
+        location: "Dieng, Jawa Tengah", 
+        desc: "Ekspedisi rutin anggota dan Latihan Dasar", 
+        status: "upcoming" 
+    },
+    { 
+        date: "2026-07-22", 
+        day: "22", 
+        month: "JUL", 
+        title: "Latihan Rock Climbing", 
+        location: "Tebing Gamping", 
+        desc: "Teknik dasar panjat tebing dan belaying", 
+        status: "upcoming" 
+    },
+    { 
+        date: "2026-08-05", 
+        day: "05", 
+        month: "AGS", 
+        title: "Bakti Sosial & Konservasi", 
+        location: "Desa Wisata Pentingsari", 
+        desc: "Bersih-bersih sungai dan edukasi lingkungan", 
+        status: "upcoming" 
+    },
+    { 
+        date: "2026-08-15", 
+        day: "15", 
+        month: "AGS", 
+        title: "Diksar XV Angkatan Baru", 
+        location: "Kaki Gunung Merapi", 
+        desc: "Pendidikan Dasar Kepencintaalaman 3 hari 2 malam", 
+        status: "upcoming" 
+    },
+    { 
+        date: "2026-09-10", 
+        day: "10", 
+        month: "SEP", 
+        title: "Ekspedisi Gunung Merbabu", 
+        location: "Magelang, Jawa Tengah", 
+        desc: "Pendakian puncak 3.145 mdpl", 
+        status: "upcoming" 
+    }
 ];
-
 // -------------------- GALERI --------------------
 const galeriImages = [
     { src: "images/galeri/ekspedisi_rinjani.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },

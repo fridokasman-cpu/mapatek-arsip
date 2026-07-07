@@ -186,7 +186,29 @@ function fixViewport() {
 
 window.addEventListener('load', fixViewport);
 window.addEventListener('resize', fixViewport);
-
+window.addEventListener('load', () => {
+    loadAgenda();
+    loadGaleri();
+    loadTestimoni();
+    loadLeaderboard();
+    loadPolling();
+    loadCuacaRealtime();
+    loadBerita();
+    loadKalender();
+    loadFAQ();
+    loadQuizQuestion();
+    setTimeout(loadPeta, 500);
+    
+    // ⬇️ TAMBAHKAN INI ⬇️
+    loadAgendaFromJSON(); // Load agenda dari JSON (opsional)
+    
+    animateCounter(document.getElementById('memberCount'), 50);
+    animateCounter(document.getElementById('expeditionCount'), 12);
+    animateCounter(document.getElementById('trainingCount'), 8);
+    animateCounter(document.getElementById('documentCount'), 25);
+    
+    setTimeout(() => showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!'), 800);
+});
 // ================================================================
 // EKSPOSE FUNGSI KE GLOBAL (agar bisa dipanggil dari HTML onclick)
 // ================================================================

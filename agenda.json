@@ -1,0 +1,22 @@
+{
+    "agendas": [
+        {
+            "date": "2026-07-15",
+            "day": "15",
+            "month": "JUL",
+            "title": "Pendakian Gunung Prau",
+            "location": "Dieng, Jawa Tengah",
+            "desc": "Ekspedisi rutin anggota dan Latihan Dasar",
+            "status": "upcoming"
+        },
+        {
+            "date": "2026-07-22",
+            "day": "22",
+            "month": "JUL",
+            "title": "Latihan Rock Climbing",
+            "location": "Tebing Gamping",
+            "desc": "Teknik dasar panjat tebing dan belaying",
+            "status": "upcoming"
+        }
+    ]
+}
