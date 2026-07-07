@@ -30,24 +30,147 @@ window.addEventListener('scroll', checkReveal);
 checkReveal();
 
 function filterArsip() {
-    const input = document.getElementById('searchInput').value.toLowerCase();
-    const items = document.querySelectorAll('.arsip-item');
+    const input = document.getElementById('searchInput');
+    const searchValue = input.value.toLowerCase().trim();
+    const arsipSection = document.getElementById('arsip');
+    const arsipItems = document.querySelectorAll('.arsip-item');
     let visibleCount = 0;
+    let firstVisibleItem = null;
     
-    items.forEach(item => {
-        const text = item.innerText.toLowerCase();
-        const match = text.includes(input);
-        item.style.display = match ? 'flex' : 'none';
-        if (match) visibleCount++;
+    // Highlight reset
+    document.querySelectorAll('.search-highlight').forEach(el => {
+        const parent = el.parentNode;
+        parent.replaceChild(document.createTextNode(el.textContent), el);
+        parent.normalize();
     });
     
-    // Auto scroll ke arsip jika mengetik
-    if (input.length >= 2) {
-        const arsipSection = document.getElementById('arsip');
-        if (arsipSection) {
-            arsipSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Filter items
+    arsipItems.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        const match = text.includes(searchValue);
+        
+        if (match) {
+            item.style.display = 'flex';
+            visibleCount++;
+            if (!firstVisibleItem) {
+                firstVisibleItem = item;
+            }
+            
+            // Highlight matching text
+            if (searchValue.length > 0) {
+                highlightText(item, searchValue);
+            }
+        } else {
+            item.style.display = 'none';
         }
+    });
+    
+    // Auto-scroll ke arsip section jika ada input
+    if (searchValue.length > 0) {
+        // Scroll ke section arsip
+        arsipSection.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+        });
+        
+        // Highlight item pertama setelah scroll selesai
+        setTimeout(() => {
+            if (firstVisibleItem) {
+                firstVisibleItem.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                
+                // Tambahkan efek highlight sementara
+                firstVisibleItem.style.transition = 'all 0.3s';
+                firstVisibleItem.style.boxShadow = '0 0 0 3px var(--accent), 0 8px 32px rgba(52, 165, 120, 0.3)';
+                
+                setTimeout(() => {
+                    firstVisibleItem.style.boxShadow = '';
+                }, 2000);
+            }
+        }, 500);
+        
+        // Tampilkan pesan jika tidak ada hasil
+        const existingMessage = document.querySelector('.search-no-results');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+        
+        if (visibleCount === 0) {
+            const message = document.createElement('div');
+            message.className = 'search-no-results';
+            message.style.cssText = `
+                text-align: center;
+                padding: 3rem 2rem;
+                color: var(--gray-500);
+                grid-column: 1 / -1;
+            `;
+            message.innerHTML = `
+                <i class="fas fa-search" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.5;"></i>
+                <h3 style="margin-bottom: 0.5rem;">Tidak ada hasil ditemukan</h3>
+                <p>Coba kata kunci lain seperti "Rinjani", "2024", atau "Laporan"</p>
+            `;
+            
+            const arsipList = document.getElementById('arsipList');
+            if (arsipList) {
+                arsipList.appendChild(message);
+            }
+        }
+    } else {
+        // Reset jika input kosong
+        arsipItems.forEach(item => {
+            item.style.display = 'flex';
+        });
     }
+}
+
+// Fungsi untuk highlight teks yang cocok
+function highlightText(element, searchTerm) {
+    if (!searchTerm) return;
+    
+    const walker = document.createTreeWalker(
+        element,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
+    
+    const nodes = [];
+    while (walker.nextNode()) {
+        nodes.push(walker.currentNode);
+    }
+    
+    nodes.forEach(node => {
+        const text = node.textContent.toLowerCase();
+        const index = text.indexOf(searchTerm);
+        
+        if (index !== -1) {
+            const span = document.createElement('span');
+            span.className = 'search-highlight';
+            span.style.cssText = `
+                background: linear-gradient(120deg, rgba(52, 165, 120, 0.3) 0%, rgba(52, 165, 120, 0.1) 100%);
+                padding: 0.1rem 0.3rem;
+                border-radius: 3px;
+                font-weight: 600;
+                color: var(--primary);
+            `;
+            
+            const before = node.textContent.substring(0, index);
+            const match = node.textContent.substring(index, index + searchTerm.length);
+            const after = node.textContent.substring(index + searchTerm.length);
+            
+            const fragment = document.createDocumentFragment();
+            if (before) fragment.appendChild(document.createTextNode(before));
+            
+            span.textContent = match;
+            fragment.appendChild(span);
+            
+            if (after) fragment.appendChild(document.createTextNode(after));
+            
+            node.parentNode.replaceChild(fragment, node);
+        }
+    });
 }
 // ==================== STATUS PENDAFTARAN ====================
 fetch('status.json?t=' + Date.now())

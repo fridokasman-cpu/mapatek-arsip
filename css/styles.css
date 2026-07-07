@@ -3783,6 +3783,36 @@ body.dark-mode .pengumuman-section {
         font-size: 1rem;
     }
 }
+/* Search Highlight Effect */
+.search-highlight {
+    background: linear-gradient(120deg, rgba(52, 165, 120, 0.3) 0%, rgba(52, 165, 120, 0.1) 100%);
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    font-weight: 600;
+    color: var(--primary);
+    transition: all 0.2s;
+}
+
+.arsip-item:focus-within {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+/* Search No Results Message */
+.search-no-results {
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
 /* ============================================================
    RESPONSIVE OVERRIDES
    ============================================================ */
