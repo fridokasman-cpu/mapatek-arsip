@@ -391,7 +391,7 @@ button {
     align-items: center;
     justify-content: center;
     padding: 8rem 5% 5rem;
-    background: var(--gradient-hero), url('images/background.jpg');
+   background: var(--gradient-hero), url('images/background.jpg');
     background-size: cover;
     background-position: center 35%;
     background-repeat: no-repeat;
