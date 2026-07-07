@@ -1848,16 +1848,110 @@ const leaderboardData = [
         { id: 5, text: "🏞️ Gunung Prau (2.590 mdpl)", votes: 18 }
     ];
 
-    // Data Cuaca Gunung (Simulasi - untuk API asli perlu API key)
-    const cuacaData = [
-        { name: "Gunung Merapi", loc: "Yogyakarta", temp: 18, desc: "Berawan", icon: "⛅", humidity: 75, wind: 15, visibility: 8, status: "aman" },
-        { name: "Gunung Merbabu", loc: "Jawa Tengah", temp: 15, desc: "Cerah Berawan", icon: "🌤️", humidity: 68, wind: 12, visibility: 10, status: "aman" },
-        { name: "Gunung Sindoro", loc: "Jawa Tengah", temp: 14, desc: "Berkabut", icon: "🌫️", humidity: 85, wind: 20, visibility: 3, status: "waspada" },
-        { name: "Gunung Slamet", loc: "Jawa Tengah", temp: 12, desc: "Hujan Ringan", icon: "🌧️", humidity: 90, wind: 25, visibility: 5, status: "waspada" },
-        { name: "Gunung Semeru", loc: "Jawa Timur", temp: 10, desc: "Cerah", icon: "☀️", humidity: 60, wind: 10, visibility: 15, status: "aman" },
-        { name: "Gunung Rinjani", loc: "NTB", temp: 16, desc: "Berawan", icon: "⛅", humidity: 72, wind: 18, visibility: 9, status: "aman" }
-    ];
+    // API Key OpenWeatherMap (DAFTAR DULU DI https://openweathermap.org/api)
+// Ganti bagian ini di kode Anda:
+const API_KEY = '41cdf78032a3fc2031fcdc09192f0f19'; // ← Paste API key di sini
 
+// Daftar gunung dengan koordinat
+const gunungList = [
+    { name: "Gunung Merapi", lat: -7.5435, lon: 110.4451, loc: "Yogyakarta" },
+    { name: "Gunung Merbabu", lat: -7.4517, lon: 110.4328, loc: "Jawa Tengah" },
+    { name: "Gunung Sindoro", lat: -7.3089, lon: 109.9056, loc: "Jawa Tengah" },
+    { name: "Gunung Slamet", lat: -7.2500, lon: 109.2083, loc: "Jawa Tengah" },
+    { name: "Gunung Semeru", lat: -8.1083, lon: 112.9222, loc: "Jawa Timur" },
+    { name: "Gunung Rinjani", lat: -8.4200, lon: 116.4700, loc: "NTB" }
+];
+
+async function loadCuacaRealtime() {
+    const grid = document.getElementById('cuacaGrid');
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><div class="loading-spinner"></div><p>Memuat data cuaca...</p></div>';
+    
+    try {
+        const cuacaPromises = gunungList.map(async (gunung) => {
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${gunung.lat}&lon=${gunung.lon}&appid=${API_KEY}&units=metric&lang=id`;
+            
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Failed to fetch');
+            
+            const data = await response.json();
+            
+            const temp = Math.round(data.main.temp);
+            const humidity = data.main.humidity;
+            const wind = data.wind.speed;
+            const visibility = Math.round(data.visibility / 1000); // m to km
+            const desc = data.weather[0].description;
+            const iconCode = data.weather[0].icon;
+            
+            // Convert icon code ke emoji
+            const icon = getOpenWeatherIcon(iconCode);
+            
+            // Tentukan status
+            let status = 'aman';
+            if (data.weather[0].main === 'Rain' || data.weather[0].main === 'Thunderstorm') {
+                status = 'waspada';
+            }
+            if (wind > 15 || temp < 5) {
+                status = 'waspada';
+            }
+            
+            return {
+                name: gunung.name,
+                loc: gunung.loc,
+                temp: temp,
+                desc: desc.charAt(0).toUpperCase() + desc.slice(1),
+                icon: icon,
+                humidity: humidity,
+                wind: Math.round(wind * 3.6), // m/s to km/h
+                visibility: visibility,
+                status: status
+            };
+        });
+        
+        const cuacaData = await Promise.all(cuacaPromises);
+        
+        grid.innerHTML = cuacaData.map(c => `
+            <div class="cuaca-card">
+                <div class="cuaca-card-header">
+                    <div>
+                        <div class="cuaca-mountain-name">${c.name}</div>
+                        <div class="cuaca-mountain-loc"><i class="fas fa-map-marker-alt"></i> ${c.loc}</div>
+                    </div>
+                    <div class="cuaca-icon">${c.icon}</div>
+                </div>
+                <div class="cuaca-temp">${c.temp}°C</div>
+                <div class="cuaca-desc">${c.desc}</div>
+                <div class="cuaca-details">
+                    <div class="cuaca-detail-item"><i class="fas fa-tint"></i> ${c.humidity}%</div>
+                    <div class="cuaca-detail-item"><i class="fas fa-wind"></i> ${c.wind} km/h</div>
+                    <div class="cuaca-detail-item"><i class="fas fa-eye"></i> ${c.visibility} km</div>
+                </div>
+                <div class="cuaca-status ${c.status}">
+                    ${c.status === 'aman' ? '✅ AMAN' : c.status === 'waspada' ? '⚠️ WASPADA' : '🚫 BAHAYA'}
+                </div>
+            </div>
+        `).join('');
+        
+    } catch (error) {
+        console.error('Error fetching weather:', error);
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-600);"><i class="fas fa-exclamation-triangle" style="font-size:2rem;margin-bottom:1rem;display:block;"></i><p>Gagal memuat data cuaca. Periksa API Key atau koneksi internet.</p></div>';
+    }
+}
+
+// Convert OpenWeatherMap icon code ke emoji
+function getOpenWeatherIcon(code) {
+    const icons = {
+        '01d': '☀️', '01n': '🌙',
+        '02d': '⛅', '02n': '☁️',
+        '03d': '☁️', '03n': '☁️',
+        '04d': '☁️', '04n': '☁️',
+        '09d': '🌧️', '09n': '🌧️',
+        '10d': '🌦️', '10n': '🌧️',
+        '11d': '⛈️', '11n': '⛈️',
+        '13d': '🌨️', '13n': '🌨️',
+        '50d': '🌫️', '50n': '🌫️'
+    };
+    return icons[code] || '🌡️';
+}
     // Data Lokasi Peta
     const petaLocations = [
         { name: "Basecamp Mapatek Abhipraya", lat: -7.8188, lng: 110.3951, type: "basecamp", desc: "Sekretariat di UST Yogyakarta" },
@@ -2877,6 +2971,11 @@ window.getIntelligentResponse = getIntelligentResponse;
         animateCounter(document.getElementById('documentCount'), 25);
         showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
     });
+
+    // ==================== AUTO REFRESH CUACA ====================
+// Refresh cuaca setiap 30 menit
+setInterval(loadCuacaRealtime, 1800000);
+
             // Fix untuk iOS zoom
         document.addEventListener('gesturestart', function (e) {
             e.preventDefault();
