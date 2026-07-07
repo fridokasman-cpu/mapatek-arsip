@@ -15,8 +15,8 @@
     <!-- Leaflet CSS (Peta) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-    <!-- CSS Modern Premium (gantikan css/styles.css) -->
-    <link rel="stylesheet" href="css/styles-modern.css">
+    <!-- CSS Eksternal (sudah sesuai dengan desain modern) -->
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -40,6 +40,7 @@
             <li><a href="#arsip">Arsip</a></li>
             <li><a href="#kontak">Kontak</a></li>
             <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav"><i class="fas fa-lock"></i> Admin</a></li>
+            
         </ul>
         <div class="nav-actions">
             <button class="nav-icon-btn" onclick="openGlobalSearch()" title="Pencarian (Ctrl+K)"><i class="fas fa-search"></i></button>
@@ -52,13 +53,6 @@
     HERO
     ============================================================ -->
     <section id="home" class="hero">
-        <!-- Tambahan: animated background orbs -->
-        <div class="hero-bg-animated">
-            <div class="hero-orb orb-1"></div>
-            <div class="hero-orb orb-2"></div>
-            <div class="hero-orb orb-3"></div>
-            <div class="hero-grid-pattern"></div>
-        </div>
         <div class="hero-content">
             <div class="hero-badge"><i class="fas fa-flag"></i> Berdiri 19 Maret 2023</div>
             <h1>Portal Kearsipan Digital</h1>
@@ -290,18 +284,16 @@
             </div>
         </div>
     </section>
-
-    <!-- PENGUMUMAN -->
-    <section class="pengumuman-section reveal">
-        <div class="container">
-            <h2 class="section-title">📢 <span class="highlight">Pengumuman</span> Terbaru</h2>
-            <p class="section-subtitle">Informasi penting dari Mapatek Abhipraya</p>
-            <div class="pengumuman-grid" id="pengumumanGrid">
-                <div class="loading-spinner"></div>
-            </div>
+<!-- PENGUMUMAN -->
+<section class="pengumuman-section reveal">
+    <div class="container">
+        <h2 class="section-title">📢 <span class="highlight">Pengumuman</span> Terbaru</h2>
+        <p class="section-subtitle">Informasi penting dari Mapatek Abhipraya</p>
+        <div class="pengumuman-grid" id="pengumumanGrid">
+            <div class="loading-spinner"></div>
         </div>
-    </section>
-
+    </div>
+</section>
     <!-- ============================================================
     BERITA
     ============================================================ -->
@@ -405,6 +397,7 @@
                 <div class="kontak-card"><i class="fas fa-map-marker-alt"></i><h3>Lokasi Basecamp</h3><p>Sekretariat Mapatek Abhipraya<br>Universitas Sarjanawiyata Tamansiswa, Yogyakarta</p><a href="https://maps.app.goo.gl/aWpAXADTecgmY1EG9" target="_blank">Lihat di Maps</a></div>
             </div>
         </div>
+        
     </section>
 
     <!-- ============================================================
@@ -438,56 +431,54 @@
             </div>
         </div>
     </div>
+<!-- SIDEBAR TOGGLE BUTTON -->
+<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Toggle Sidebar">
+    <i class="fas fa-bars"></i>
+</button>
 
-    <!-- SIDEBAR TOGGLE BUTTON -->
-    <button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Toggle Sidebar">
-        <i class="fas fa-bars"></i>
-    </button>
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-    <!-- SIDEBAR OVERLAY -->
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="sidebar-brand">
-                <i class="fas fa-graduation-cap"></i>
-                <h3>Portal UST</h3>
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <div class="sidebar-brand">
+            <i class="fas fa-graduation-cap"></i>
+            <h3>Portal UST</h3>
+        </div>
+        <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close Sidebar">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+    
+    <div class="sidebar-content">
+        <a href="https://sipedar.ustjogja.ac.id/" target="_blank" class="sidebar-link">
+            <div class="sidebar-link-icon">
+                <i class="fas fa-clipboard-list"></i>
             </div>
-            <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close Sidebar">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-
-        <div class="sidebar-content">
-            <a href="https://sipedar.ustjogja.ac.id/" target="_blank" class="sidebar-link">
-                <div class="sidebar-link-icon">
-                    <i class="fas fa-clipboard-list"></i>
-                </div>
-                <div class="sidebar-link-text">
-                    <span class="sidebar-link-title">Sipedar UST</span>
-                    <span class="sidebar-link-desc">Sistem Informasi Akademik</span>
-                </div>
-                <i class="fas fa-external-link-alt sidebar-link-arrow"></i>
-            </a>
-
-            <a href="https://portal.ustjogja.ac.id/" target="_blank" class="sidebar-link">
-                <div class="sidebar-link-icon">
-                    <i class="fas fa-graduation-cap"></i>
-                </div>
-                <div class="sidebar-link-text">
-                    <span class="sidebar-link-title">Portal Akademik UST</span>
-                    <span class="sidebar-link-desc">Portal Mahasiswa & Dosen</span>
-                </div>
-                <i class="fas fa-external-link-alt sidebar-link-arrow"></i>
-            </a>
-        </div>
-
-        <div class="sidebar-footer">
-            <p>Universitas Sarjanawiyata Tamansiswa</p>
-        </div>
-    </aside>
-
+            <div class="sidebar-link-text">
+                <span class="sidebar-link-title">Sipedar UST</span>
+                <span class="sidebar-link-desc">Sistem Informasi Akademik</span>
+            </div>
+            <i class="fas fa-external-link-alt sidebar-link-arrow"></i>
+        </a>
+        
+        <a href="https://portal.ustjogja.ac.id/" target="_blank" class="sidebar-link">
+            <div class="sidebar-link-icon">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="sidebar-link-text">
+                <span class="sidebar-link-title">Portal Akademik UST</span>
+                <span class="sidebar-link-desc">Portal Mahasiswa & Dosen</span>
+            </div>
+            <i class="fas fa-external-link-alt sidebar-link-arrow"></i>
+        </a>
+    </div>
+    
+    <div class="sidebar-footer">
+        <p>Universitas Sarjanawiyata Tamansiswa</p>
+    </div>
+</aside>
     <!-- ============================================================
     BACK TO TOP
     ============================================================ -->
@@ -520,6 +511,7 @@
             </div>
         </div>
     </div>
+
 
     <!-- ============================================================
     SCRIPTS
