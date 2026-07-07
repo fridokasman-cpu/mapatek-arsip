@@ -76,14 +76,14 @@ const testimoniData = [
 
 // -------------------- LEADERBOARD --------------------
 const leaderboardData = [
-    { name: "Coil", angkatan: "PancaTompak", peaks: 15, points: 4500, photo: "images/leaderboard/coil.jpg" },
-    { name: "Lamen", angkatan: "TapakKaki", peaks: 12, points: 3600, photo: "images/leaderboard/lamen.jpg" },
-    { name: "Ringin", angkatan: "TedakDaivat", peaks: 10, points: 3000, photo: "images/leaderboard/siti-aisyah.jpg" },
-    { name: "Sanpas", angkatan: "TapakKaki", peaks: 8, points: 2400, photo: "images/leaderboard/budi-santoso.jpg" },
-    { name: "Ranga", angkatan: "LitaniAram", peaks: 7, points: 2100, photo: "images/leaderboard/machmud-lathif.jpg" },
-    { name: "Lowo", angkatan: "LitaniAram", peaks: 6, points: 1800, photo: "images/leaderboard/dewi-lestari.jpg" },
-    { name: "Mauna", angkatan: "TedakDaivat", peaks: 5, points: 1500, photo: "images/leaderboard/rangga-wijaya.jpg" },
-    { name: "Lamase", angkatan: "LitaniAram", peaks: 4, points: 1200, photo: "images/leaderboard/putri-robet.jpg" }
+    { name: "Coil", angkatan: "Panca Tompak", peaks: 15, points: 4500, photo: "images/leaderboard/coil.jpg" },
+    { name: "Lamen", angkatan: "Tapak Kaki", peaks: 12, points: 3600, photo: "images/leaderboard/lamen.jpg" },
+    { name: "Ringin", angkatan: "Tedak Daivat", peaks: 10, points: 3000, photo: "images/leaderboard/siti-aisyah.jpg" },
+    { name: "Sanpas", angkatan: "Tapak Kaki", peaks: 8, points: 2400, photo: "images/leaderboard/budi-santoso.jpg" },
+    { name: "Ranga", angkatan: "Litani Aram", peaks: 7, points: 2100, photo: "images/leaderboard/machmud-lathif.jpg" },
+    { name: "Lowo", angkatan: "Litani Aram", peaks: 6, points: 1800, photo: "images/leaderboard/dewi-lestari.jpg" },
+    { name: "Mauna", angkatan: "Tedak Daivat", peaks: 5, points: 1500, photo: "images/leaderboard/rangga-wijaya.jpg" },
+    { name: "Lamase", angkatan: "Tedak Daivat", peaks: 4, points: 1200, photo: "images/leaderboard/putri-robet.jpg" }
 ];
 
 // -------------------- POLLING --------------------
