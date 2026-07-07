@@ -240,3 +240,25 @@ window.fixViewport = fixViewport;
 })();
 
 console.log('✅ Mapatek Portal — Main initialized successfully!');
+// ==================== SIDEBAR TOGGLE ====================
+function toggleSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+    const toggleBtn = document.getElementById('sidebarToggle');
+    
+    sidebar.classList.toggle('active');
+    overlay.classList.toggle('active');
+    
+    // Ubah icon toggle
+    const icon = toggleBtn.querySelector('i');
+    if (sidebar.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+    } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+    }
+}
+
+// Export ke global scope
+window.toggleSidebar = toggleSidebar;
