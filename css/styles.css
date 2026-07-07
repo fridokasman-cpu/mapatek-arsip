@@ -384,6 +384,9 @@ button {
 /* ============================================================
    HERO
    ============================================================ */
+/* ============================================================
+   HERO — BACKGROUND PAS
+   ============================================================ */
 .hero {
     position: relative;
     min-height: 100vh;
@@ -391,60 +394,58 @@ button {
     align-items: center;
     justify-content: center;
     padding: 8rem 5% 5rem;
-    background: var(--gradient-hero), url('images/background.jpg');
+
+    /* Background image dengan ukuran pas */
+    background-image: url('images/background.jpg');
     background-size: cover;
-    background-position: center 35%;
+    background-position: center 40%; /* Fokus ke bagian tengah agak ke atas */
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-attachment: fixed; /* Efek parallax (opsional) */
+
+    /* Warna dasar jika gambar gagal dimuat */
+    background-color: #0a2b25;
+
     color: var(--white);
     text-align: center;
     isolation: isolate;
 }
 
+/* Overlay gelap agar teks terbaca */
 .hero::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at 30% 50%, rgba(27, 67, 50, 0.35) 0%, rgba(45, 106, 79, 0.3) 100%);
+    background: rgba(10, 43, 37, 0.55); /* Warna solid lebih konsisten */
     z-index: 1;
 }
 
+/* Konten di atas overlay */
 .hero-content {
     position: relative;
     z-index: 2;
-    max-width: 800px;
+    max-width: 820px;
     margin: 0 auto;
 }
 
-.hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: rgba(255, 255, 255, 0.10);
-    backdrop-filter: blur(10px);
-    padding: 0.45rem 1.2rem;
-    border-radius: var(--radius-full);
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    margin-bottom: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: rgba(255, 255, 255, 0.9);
-}
-.hero-badge i {
-    color: var(--accent-light);
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+    .hero {
+        background-attachment: scroll; /* Matikan parallax di mobile */
+        background-position: center 35%;
+        min-height: 90vh;
+        padding: 6rem 1.5rem 4rem;
+    }
 }
 
-.hero h1 {
-    font-size: clamp(2.4rem, 7vw, 4rem);
-    font-weight: 900;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    margin-bottom: 1.25rem;
-    background: linear-gradient(135deg, var(--white) 0%, var(--accent-light) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+@media (max-width: 480px) {
+    .hero {
+        background-position: center 30%;
+        min-height: 80vh;
+        padding: 5rem 1rem 3rem;
+    }
+    .hero h1 {
+        font-size: 1.8rem;
+    }
 }
 
 .hero p {
