@@ -1,5 +1,5 @@
 // ================================================================
-// CHATBOT — Asisten Virtual MAPATEK dengan Knowledge Base Lengkap
+// CHATBOT — Asisten Virtual MAPATEK Super Pintar
 // ================================================================
 
 /**
@@ -9,7 +9,7 @@ function toggleChatbot() {
     const container = document.getElementById('chatbotContainer');
     container.classList.toggle('active');
     if (container.classList.contains('active')) {
-        document.getElementById('chatInput').focus();
+        setTimeout(() => document.getElementById('chatInput').focus(), 300);
     }
 }
 
@@ -59,36 +59,60 @@ function escapeHtml(text) {
 
 /**
  * ================================================================
- * KNOWLEDGE BASE — Sistem respons cerdas yang sangat lengkap
+ * KNOWLEDGE BASE — Sistem respons cerdas SUPER LENGKAP
  * ================================================================
  */
 function getIntelligentResponse(message) {
     const msg = message.toLowerCase().trim();
 
-    // ==================== GREETINGS ====================
-    if (/(halo|hai|hello|hi|hey|selamat (pagi|siang|sore|malam)|assalamualaikum|hy|hallo|helo|pagi|siang|sore|malam)/i.test(msg)) {
-        return `👋 Halo! Saya Asisten MAPATEK yang siap membantu.
-
-🏔️ Saya bisa menjawab pertanyaan tentang:
-• MAPATEK & Sejarah Organisasi
-• Pendaftaran Anggota & DIKSAR
-• Pendakian Gunung & Persiapan
-• Rock Climbing & Teknik Panjat
-• Navigasi, Survival & P3K
-• Konservasi & Leave No Trace
-• UST Yogyakarta & Tamansiswa
-• Kegiatan & Agenda Terbaru
-
-Apa yang ingin Anda tanyakan hari ini?`;
+    // ==================== VARIASI SAPAAN & GREETINGS ====================
+    if (/(halo|hai|hello|hi|hey|selamat (pagi|siang|sore|malam)|assalamualaikum|hy|hallo|helo|pagi|siang|sore|malam|apa kabar|kabar|gimana kabar|how are you|good morning|good afternoon|good evening)/i.test(msg)) {
+        return getRandomResponse([
+            "👋 Halo! Senang bertemu dengan Anda. Saya Asisten MAPATEK Abhipraya. Ada yang bisa saya bantu?",
+            "🌲 Hai! Selamat datang di MAPATEK. Saya siap menjawab pertanyaan seputar pecinta alam, pendakian, atau organisasi kami.",
+            "🏔️ Halo! Apa yang ingin Anda ketahui tentang MAPATEK? Saya siap membantu.",
+            "😊 Hai! Kabar baik? Silakan tanyakan apa saja tentang MAPATEK, gunung, atau UST."
+        ]);
     }
 
     // ==================== TERIMA KASIH ====================
-    if (/(terima kasih|makasih|thanks|thank you|terimakasih|thx|tq|ty)/i.test(msg)) {
-        return '😊 Sama-sama! Senang bisa membantu. Jangan ragu bertanya lagi ya. Tetap semangat berkegiatan dan selalu utamakan keselamatan di alam! 🏔️';
+    if (/(terima kasih|makasih|thanks|thank you|terimakasih|thx|tq|ty|thank you very much|thanks a lot|maturnuwun|matur nuwun)/i.test(msg)) {
+        return getRandomResponse([
+            "😊 Sama-sama! Senang bisa membantu. Jangan ragu bertanya lagi ya.",
+            "🙏 Terima kasih kembali! Selalu semangat berpetualang! 🏔️",
+            "👍 Siap membantu kapan saja. Tetap jaga alam dan keselamatan!",
+            "😄 Dengan senang hati! Hubungi saya lagi jika ada yang ingin ditanyakan."
+        ]);
     }
 
-    // ==================== MAPATEK PROFIL ====================
-    if (/(apa itu mapatek|mapatek abhipraya|mapatek itu|pengertian mapatek|mapatek adalah|tentang mapatek|info mapatek|mapatek organisasi|mapatek singkatan|mapatek kepanjangan|jelaskan mapatek)/i.test(msg)) {
+    // ==================== PERTANYAAN DENGAN KATA TANYA ====================
+    // Deteksi kata tanya untuk memberikan respons lebih spesifik
+    const hasApa = /\b(apa|apakah|apasih)\b/i.test(msg);
+    const hasSiapa = /\b(siapa|siapakah|siapa itu|siapa yang)\b/i.test(msg);
+    const hasKapan = /\b(kapan|kapan sih|kapan ya|bilamana)\b/i.test(msg);
+    const hasDimana = /\b(dimana|di mana|kemana|ke mana|dimanakah|di manakah)\b/i.test(msg);
+    const hasBagaimana = /\b(bagaimana|gimana|gimana cara|bagaimana cara|cara|bagaimana sih)\b/i.test(msg);
+    const hasKenapa = /\b(kenapa|mengapa|kenapakah|kenapa sih)\b/i.test(msg);
+
+    // ==================== TOPIK: VISI & MISI ====================
+    if (/(visi|misi|visi misi|tujuan|organisasi|mapatek tujuan|cita-cita mapatek|apa tujuan|apa visi|apa misi|visi dan misi|misi dan visi|tujuan mapatek)/i.test(msg) || (hasApa && /(visi|misi|tujuan|organisasi)/i.test(msg))) {
+        return `🎯 <strong>VISI & MISI MAPATEK ABHIPRAYA</strong>
+
+<strong>🌟 VISI:</strong>
+"Menjadi organisasi mahasiswa pecinta alam yang unggul, profesional, berkarakter, berjiwa konservasi, dan berlandaskan nilai-nilai Tamansiswa."
+
+<strong>📌 MISI:</strong>
+1. Mengembangkan sumber daya manusia yang berkualitas di bidang kepencintaalaman
+2. Meningkatkan keterampilan teknis anggota (navigasi, survival, panjat tebing)
+3. Melestarikan lingkungan melalui aksi konservasi nyata
+4. Mempererat solidaritas dan kekeluargaan antar anggota
+5. Menjalin kerjasama dengan organisasi pecinta alam lainnya
+6. Mengabdikan kegiatan melalui dokumentasi dan publikasi ilmiah
+7. Menanamkan nilai-nilai kepemimpinan, kemandirian, dan cinta tanah air`;
+    }
+
+    // ==================== TOPIK: PROFIL MAPATEK ====================
+    if (/(apa itu mapatek|mapatek abhipraya|mapatek itu|pengertian mapatek|mapatek adalah|tentang mapatek|info mapatek|mapatek organisasi|mapatek singkatan|mapatek kepanjangan|jelaskan mapatek|mapatek itu apa|mapatek apaan)/i.test(msg) || (hasApa && /(mapatek|organisasi ini)/i.test(msg))) {
         return `🌲 <strong>MAPATEK ABHIPRAYA</strong>
 
 📌 <strong>Makna Nama:</strong>
@@ -108,28 +132,10 @@ Apa yang ingin Anda tanyakan hari ini?`;
 🌟 Visi: Menjadi organisasi pecinta alam yang unggul, profesional, dan berkarakter.`;
     }
 
-    // ==================== SEJARAH ====================
-    if (/(sejarah mapatek|sejarah berdirinya|kapan mapatek berdiri|tanggal berdiri|awal mula mapatek|mapatek didirikan|pendiri mapatek|siapa pendiri|founder mapatek)/i.test(msg)) {
-        return `📜 <strong>SEJARAH MAPATEK ABHIPRAYA</strong>
-
-🗓️ <strong>Tanggal Berdiri:</strong> 19 Maret 2023
-📍 <strong>Tempat:</strong> UST Yogyakarta
-
-👥 <strong>Pendiri (Angkatan PancaTompak):</strong>
-Awalnya 5 orang mahasiswa pecinta alam.
-
-🌟 <strong>Perjalanan Angkatan:</strong>
-• <strong>PancaTompak (2023)</strong> — Angkatan Pendiri
-• <strong>TapakKaki (2024)</strong> — Angkatan Pengukir Jejak
-• <strong>TedakDaivat (2025)</strong> — Angkatan Penakluk Puncak
-• <strong>LitaniAram (2026)</strong> — Angkatan Pelita Alam
-
-🏆 Hingga kini, MAPATEK telah melaksanakan puluhan ekspedisi, kegiatan konservasi, dan melahirkan kader-kader pecinta alam yang tangguh!`;
-    }
-
-    // ==================== ANGKATAN ====================
-    if (/(angkatan|pancatompak|tapakkaki|tedakdaivat|litaniaram|ada berapa angkatan|daftar angkatan|angkatan pendiri|angkatan 2023|angkatan 2024|angkatan 2025|angkatan 2026)/i.test(msg)) {
-        return `🌟 <strong>ANGKATAN MAPATEK ABHIPRAYA</strong>
+    // ==================== TOPIK: SEJARAH & ANGKATAN ====================
+    if (/(sejarah|sejarah mapatek|sejarah berdirinya|kapan mapatek berdiri|tanggal berdiri|awal mula|mapatek didirikan|pendiri|siapa pendiri|founder|angkatan|pancatompak|tapakkaki|tedakdaivat|litaniaram|ada berapa angkatan|daftar angkatan)/i.test(msg) || (hasKapan && /(berdiri|didirikan|dibentuk)/i.test(msg)) || (hasSiapa && /(pendiri|pencetus|pembentuk|yang mendirikan)/i.test(msg))) {
+        if (/(angkatan|pancatompak|tapakkaki|tedakdaivat|litaniaram|ada berapa angkatan|daftar angkatan|nama angkatan)/i.test(msg)) {
+            return `🌟 <strong>ANGKATAN MAPATEK ABHIPRAYA</strong>
 
 🥇 <strong>PANCATOMPAK (2023)</strong> — Angkatan Pendiri
 "Lima Puncak Harapan" — 5 orang pemberani.
@@ -143,11 +149,28 @@ Awalnya 5 orang mahasiswa pecinta alam.
 🏅 <strong>LITANIARAM (2026)</strong> — Angkatan Pelita Alam
 "Pelita bagi Alam"
 
-📌 Setiap angkatan memiliki ciri khas, motto, dan kontribusi unik bagi perkembangan MAPATEK! 🏔️`;
+📌 Setiap angkatan memiliki ciri khas, motto, dan kontribusi unik.`;
+        } else {
+            return `📜 <strong>SEJARAH MAPATEK ABHIPRAYA</strong>
+
+🗓️ <strong>Tanggal Berdiri:</strong> 19 Maret 2023
+📍 <strong>Tempat:</strong> UST Yogyakarta
+
+👥 <strong>Pendiri (Angkatan PancaTompak):</strong>
+Awalnya 5 orang mahasiswa pecinta alam.
+
+🌟 <strong>Perjalanan Angkatan:</strong>
+• <strong>PancaTompak (2023)</strong> — Angkatan Pendiri
+• <strong>TapakKaki (2024)</strong> — Angkatan Pengukir Jejak
+• <strong>TedakDaivat (2025)</strong> — Angkatan Penakluk Puncak
+• <strong>LitaniAram (2026)</strong> — Angkatan Pelita Alam
+
+🏆 Hingga kini, MAPATEK telah melaksanakan puluhan ekspedisi dan kegiatan konservasi.`;
+        }
     }
 
-    // ==================== STRUKTUR PENGURUS ====================
-    if (/(struktur|pengurus|kepengurusan|ketua mapatek|sekretaris|bendahara|koordinator|pengurus inti|siapa ketua|nama ketua|pengurus periode)/i.test(msg)) {
+    // ==================== TOPIK: STRUKTUR PENGURUS ====================
+    if (/(struktur|pengurus|kepengurusan|ketua|ketua mapatek|sekretaris|bendahara|koordinator|pengurus inti|siapa ketua|nama ketua|pengurus periode|ketua umum|pengurus mapatek|ada siapa aja)/i.test(msg) || (hasSiapa && /(ketua|sekretaris|bendahara|pengurus|koordinator)/i.test(msg))) {
         return `👥 <strong>STRUKTUR PENGURUS MAPATEK</strong>
 Periode 2025-2026
 
@@ -170,12 +193,12 @@ Periode 2025-2026
 📞 Kontak Admin: 0822-1442-8371 (Fridolinus)`;
     }
 
-    // ==================== PENDAFTARAN ====================
-    if (/(pendaftaran|daftar|bergabung|join|masuk mapatek|rekrutmen|oprec|open recruitment|calon anggota|ingin gabung|form pendaftaran|syarat pendaftaran)/i.test(msg)) {
+    // ==================== TOPIK: PENDAFTARAN ====================
+    if (/(pendaftaran|daftar|bergabung|join|masuk mapatek|rekrutmen|oprec|open recruitment|calon anggota|ingin gabung|form pendaftaran|syarat pendaftaran|cara daftar|mendaftar|gabung mapatek|daftar anggota)/i.test(msg) || (hasBagaimana && /(daftar|bergabung|join|masuk)/i.test(msg))) {
         return `📝 <strong>PENDAFTARAN ANGGOTA MAPATEK</strong>
 
 📌 <strong>CARA MENDAFTAR:</strong>
-1. Cek bagian <strong>Pendaftaran</strong> di website ini
+1. Cek bagian <strong>Pendaftaran</strong> di website ini (status real-time)
 2. Hubungi WhatsApp Admin: <strong>0822-1442-8371</strong>
 3. DM Instagram: <strong>@mapatek_abhipraya</strong>
 
@@ -183,7 +206,7 @@ Periode 2025-2026
 • Mahasiswa aktif UST Yogyakarta
 • Komitmen tinggi terhadap alam & konservasi
 • Bersedia mengikuti DIKSAR
-• Sehat jasmani & rohani
+• Sehat jasmani & rohani (surat keterangan sehat)
 • Mengisi formulir online & membayar biaya pendaftaran
 • Lulus wawancara seleksi
 
@@ -192,11 +215,11 @@ Periode 2025-2026
 • Semester Genap: Februari - Maret
 
 💰 <strong>BIAYA:</strong>
-Rp 300.000 - Rp 500.000 (termasuk akomodasi DIKSAR, perlengkapan, & merchandise)`;
+Rp 300.000 - Rp 500.000 (termasuk akomodasi DIKSAR, perlengkapan, & merchandise MAPATEK)`;
     }
 
-    // ==================== DIKSAR ====================
-    if (/(diksar|pendidikan dasar|latihan dasar|diklat|paldik|pendidikan dan latihan|apa itu diksar|materi diksar|pelaksanaan diksar)/i.test(msg)) {
+    // ==================== TOPIK: DIKSAR ====================
+    if (/(diksar|pendidikan dasar|latihan dasar|diklat|paldik|pendidikan dan latihan|apa itu diksar|materi diksar|pelaksanaan diksar|dikdar|diklat dasar|pendidikan dan latihan dasar)/i.test(msg) || (hasApa && /(diksar|pendidikan dasar|latihan dasar)/i.test(msg))) {
         return `🎓 <strong>DIKSAR (Pendidikan Dasar) MAPATEK</strong>
 
 📌 <strong>APA ITU DIKSAR?</strong>
@@ -223,9 +246,9 @@ Kegiatan wajib bagi calon anggota selama <strong>3 hari 2 malam</strong> di alam
 Setelah lulus, peserta resmi dikukuhkan sebagai anggota MAPATEK!`;
     }
 
-    // ==================== GUNUNG & PENDAKIAN ====================
-    if (/(gunung|pendakian|naik gunung|mendaki|gunung apa|rekomendasi gunung|gunung untuk pemula|gunung tertinggi|puncak|seven summit|gunung populer)/i.test(msg)) {
-        if (/(tertinggi|puncak tertinggi|seven summit|tujuh puncak)/i.test(msg)) {
+    // ==================== TOPIK: GUNUNG & PENDAKIAN ====================
+    if (/(gunung|pendakian|naik gunung|mendaki|gunung apa|rekomendasi gunung|gunung untuk pemula|gunung tertinggi|puncak|seven summit|gunung populer|gunung terbaik|jalan pendakian|track pendakian)/i.test(msg) || (hasApa && /(gunung|pendakian|puncak)/i.test(msg)) || (hasDimana && /(gunung|pendakian|jalur)/i.test(msg))) {
+        if (/(tertinggi|puncak tertinggi|seven summit|tujuh puncak|puncak tertinggi indonesia|gunung paling tinggi)/i.test(msg)) {
             return `🏔️ <strong>GUNUNG TERTINGGI DI INDONESIA</strong>
 
 1. <strong>PUNCAK JAYA</strong> — 4.884 mdpl (Papua)
@@ -240,7 +263,7 @@ Setelah lulus, peserta resmi dikukuhkan sebagai anggota MAPATEK!`;
 Puncak Jaya, Kerinci, Rinjani, Semeru, Latimojong, Bukit Raya, Agung.`;
         }
 
-        if (/(rekomendasi|pemula|ramah pemula|untuk pemula|gunung pemula|gunung mudah)/i.test(msg)) {
+        if (/(rekomendasi|pemula|ramah pemula|untuk pemula|gunung pemula|gunung mudah|gunung ringan|pemula banget)/i.test(msg)) {
             return `⛰️ <strong>REKOMENDASI GUNUNG UNTUK PEMULA (JAWA):</strong>
 
 🥇 <strong>GUNUNG PRAU (Dieng)</strong> — 2.565 mdpl
@@ -262,6 +285,21 @@ Puncak Jaya, Kerinci, Rinjani, Semeru, Latimojong, Bukit Raya, Agung.`;
 📌 Tips: Bawa perlengkapan lengkap, jangan sendiri, cek cuaca!`;
         }
 
+        // Deteksi gunung spesifik yang disebut
+        const gunungSpesifik = ['merapi', 'merbabu', 'prau', 'sindoro', 'sumbing', 'rinjani', 'semeru', 'kerinci', 'lawu', 'argo', 'guntur', 'galunggung', 'papandayan', 'ciremai', 'salak', 'gede', 'pangrango', 'bromo', 'ijen', 'tambora', 'batur', 'agung'];
+        for (const gunung of gunungSpesifik) {
+            if (msg.includes(gunung)) {
+                return `🏔️ <strong>GUNUNG ${gunung.toUpperCase()}</strong>
+
+Informasi tentang Gunung ${gunung.charAt(0).toUpperCase() + gunung.slice(1)} dapat Anda cek di:
+• Website resmi Taman Nasional
+• Aplikasi pendakian (e-ticketing)
+• Atau hubungi admin MAPATEK untuk jalur pendakian, izin, dan kondisi terkini.
+
+📌 Tips: Selalu cek cuaca dan bawa perlengkapan 10 Essentials.`;
+            }
+        }
+
         return `🏔️ <strong>INFO PENDAKIAN GUNUNG</strong>
 
 📌 Persiapan fisik minimal 2 minggu sebelum pendakian.
@@ -276,9 +314,9 @@ Merapi, Merbabu, Prau, Sindoro, Sumbing, Rinjani, Semeru.
 💡 Butuh rekomendasi gunung pemula? Tanyakan "rekomendasi gunung pemula"!`;
     }
 
-    // ==================== PERSIAPAN PENDAKIAN ====================
-    if (/(persiapan pendakian|tips pendakian|syarat pendakian|persiapan sebelum naik|perlengkapan wajib|yang harus disiapkan|10 essentials|essential gear|packing carrier|cara packing)/i.test(msg)) {
-        if (/(10 essentials|perlengkapan wajib|essential gear|peralatan wajib|barang yang harus dibawa)/i.test(msg)) {
+    // ==================== TOPIK: PERSIAPAN & PERLENGKAPAN ====================
+    if (/(persiapan|tips|syarat|perlengkapan|10 essentials|essential gear|packing carrier|cara packing|barang bawaan|peralatan|perlengkapan pendakian|bawa apa aja)/i.test(msg) || (hasBagaimana && /(persiapan|packing|mengemas)/i.test(msg))) {
+        if (/(10 essentials|perlengkapan wajib|essential gear|barang yang harus dibawa|wajib dibawa|wajib bawa)/i.test(msg)) {
             return `🎒 <strong>10 ESSENTIALS (Perlengkapan Wajib Pendakian)</strong>
 
 1. <strong>NAVIGASI</strong> 🧭 — Peta, kompas, GPS, whistle
@@ -295,7 +333,7 @@ Merapi, Merbabu, Prau, Sindoro, Sumbing, Rinjani, Semeru.
 ⚠️ Untuk pendakian >1 hari: tambahkan sleeping bag, matras, tenda!`;
         }
 
-        if (/(packing carrier|cara packing|mengemas carrier|menata carrier|packing tas|teknik packing)/i.test(msg)) {
+        if (/(packing carrier|cara packing|mengemas carrier|menata carrier|packing tas|teknik packing|susun barang)/i.test(msg)) {
             return `🎒 <strong>CARA PACKING CARRIER YANG BENAR</strong>
 
 📌 <strong>ATURAN DASAR:</strong>
@@ -341,8 +379,8 @@ Merapi, Merbabu, Prau, Sindoro, Sumbing, Rinjani, Semeru.
 "Puncak bukan segalanya, keselamatan adalah nomor satu!"`;
     }
 
-    // ==================== NAVIGASI ====================
-    if (/(navigasi|kompas|peta|orientasi|azimuth|back bearing|resection|baca peta|teknik navigasi|cara menggunakan kompas)/i.test(msg)) {
+    // ==================== TOPIK: NAVIGASI ====================
+    if (/(navigasi|kompas|peta|orientasi|azimuth|back bearing|resection|baca peta|teknik navigasi|cara menggunakan kompas|kartografi|koordinat)/i.test(msg) || (hasBagaimana && /(navigasi|kompas|peta)/i.test(msg))) {
         return `🧭 <strong>TEKNIK NAVIGASI DASAR</strong>
 
 📌 <strong>1. ORIENTASI PETA</strong>
@@ -365,9 +403,9 @@ Kompas tidak berfungsi optimal di dekat besi/logam, kabel listrik tegangan tingg
 📌 Tips: Selalu kalibrasi kompas sebelum digunakan!`;
     }
 
-    // ==================== SURVIVAL ====================
-    if (/(survival|bertahan hidup|selamat di alam|survival mapala|tips survival|survival dasar|survival 3a|shelter|membuat api|menjernihkan air|air bersih)/i.test(msg)) {
-        if (/(membuat api|api|fire starter|ferro rod|bow drill|korek)/i.test(msg)) {
+    // ==================== TOPIK: SURVIVAL ====================
+    if (/(survival|bertahan hidup|selamat di alam|survival mapala|tips survival|survival dasar|survival 3a|shelter|membuat api|menjernihkan air|air bersih|bertahan di hutan|hidup di alam|survival kit)/i.test(msg) || (hasBagaimana && /(survival|bertahan|api|shelter|air)/i.test(msg))) {
+        if (/(membuat api|api|fire starter|ferro rod|bow drill|korek|menyalakan api|bikin api)/i.test(msg)) {
             return `🔥 <strong>CARA MEMBUAT API DI ALAM LIAR</strong>
 
 📌 <strong>BAHAN BAKAR (3 LEVEL):</strong>
@@ -394,7 +432,7 @@ Kompas tidak berfungsi optimal di dekat besi/logam, kabel listrik tegangan tingg
 💡 Selalu bawa ferro rod dan korek api anti air sebagai CADANGAN!`;
         }
 
-        if (/(shelter|tempat berlindung|tenda darurat|berteduh|perlindungan dari hujan)/i.test(msg)) {
+        if (/(shelter|tempat berlindung|tenda darurat|berteduh|perlindungan dari hujan|membuat shelter)/i.test(msg)) {
             return `🏕️ <strong>JENIS SHELTER DARURAT:</strong>
 
 <strong>1. LEAN TO (Satu Sisi)</strong>
@@ -416,7 +454,7 @@ Gua kecil, bawah pohon rindang (beringin), celah batu besar.
 • Tanah relatif datar & kering`;
         }
 
-        if (/(menjernihkan air|memurnikan air|filter air|air minum|sterilisasi air|water purification)/i.test(msg)) {
+        if (/(menjernihkan air|memurnikan air|filter air|air minum|sterilisasi air|water purification|air bersih|filter darurat)/i.test(msg)) {
             return `💧 <strong>METODE MEMURNIKAN AIR DI ALAM</strong>
 
 <strong>1. MENDIDIHKAN (Paling Aman 99.9%)</strong>
@@ -458,9 +496,9 @@ Botol dipotong → lapisan: batu kerikil → pasir → arang → kain.
 • Cermin/HP: pantulkan ke arah pencari`;
     }
 
-    // ==================== P3K & KESEHATAN ====================
-    if (/(p3k|pertolongan pertama|obat|luka|hipotermia|kedinginan|gigitan ular|patah tulang|cpr|jantung|resusitasi)/i.test(msg)) {
-        if (/(hipotermia|kedinginan|suhu tubuh turun|menggigil)/i.test(msg)) {
+    // ==================== TOPIK: P3K & KESEHATAN ====================
+    if (/(p3k|pertolongan pertama|obat|luka|hipotermia|kedinginan|gigitan ular|patah tulang|cpr|jantung|resusitasi|kecelakaan|cedera|demam|sakit|diare|mual|pusing)/i.test(msg) || (hasBagaimana && /(mengatasi|menangani|mengobati)/i.test(msg) && /(hipotermia|luka|ular|patah|cpr|sakit)/i.test(msg))) {
+        if (/(hipotermia|kedinginan|suhu tubuh turun|menggigil|kedinginan parah)/i.test(msg)) {
             return `❄️ <strong>PENANGANAN HIPOTERMIA</strong>
 
 📌 <strong>GEJALA:</strong>
@@ -472,16 +510,14 @@ Botol dipotong → lapisan: batu kerikil → pasir → arang → kain.
 🆘 <strong>TINDAKAN:</strong>
 1️⃣ Cari shelter dari angin & hujan
 2️⃣ Ganti pakaian basah dengan KERING
-3️⃣ Beri minuman HANGAT (air teh manis, susu)
-   🚫 JANGAN beri alkohol atau kafein!
+3️⃣ Beri minuman HANGAT (air teh manis, susu) — JANGAN alkohol!
 4️⃣ Hangatkan area INTI tubuh: leher, ketiak, selangkangan
-   🚫 JANGAN langsung hangatkan tangan/kaki (bisa afterdrop)
 5️⃣ Gunakan sleeping bag, emergency blanket, body contact
 6️⃣ Jika tidak sadar, posisikan miring (recovery position)
 7️⃣ Segera evakuasi ke bawah untuk pertolongan medis`;
         }
 
-        if (/(gigitan ular|ular berbisa|digigit ular|ular kobra|ular weling)/i.test(msg)) {
+        if (/(gigitan ular|ular berbisa|digigit ular|ular kobra|ular weling|ular hijau|ular tanah|ular sendok)/i.test(msg)) {
             return `🐍 <strong>PENANGANAN GIGITAN ULAR</strong>
 
 📌 <strong>GEJALA:</strong>
@@ -508,7 +544,7 @@ Botol dipotong → lapisan: batu kerikil → pasir → arang → kain.
 ✗ Mengoleskan es langsung ke luka`;
         }
 
-        if (/(patah tulang|fraktur|tulang patah|bidai|patah kaki|patah tangan)/i.test(msg)) {
+        if (/(patah tulang|fraktur|tulang patah|bidai|patah kaki|patah tangan|patah lengan|patah tulang belakang)/i.test(msg)) {
             return `🦴 <strong>PENANGANAN FRAKTUR (PATAH TULANG)</strong>
 
 📌 <strong>GEJALA:</strong>
@@ -534,7 +570,7 @@ Botol dipotong → lapisan: batu kerikil → pasir → arang → kain.
 • Carrier frame: Untuk tulang punggung`;
         }
 
-        if (/(cpr|henti jantung|resusitasi|napas buatan|kompresi dada|cardiac arrest)/i.test(msg)) {
+        if (/(cpr|henti jantung|resusitasi|napas buatan|kompresi dada|cardiac arrest|jantung berhenti)/i.test(msg)) {
             return `❤️ <strong>CPR (Cardiopulmonary Resuscitation)</strong>
 
 📌 <strong>LANGKAH (30:2):</strong>
@@ -595,8 +631,8 @@ Botol dipotong → lapisan: batu kerikil → pasir → arang → kain.
 ⚠️ Selalu bawa P3K saat pendakian!`;
     }
 
-    // ==================== ROCK CLIMBING ====================
-    if (/(rock climbing|panjat tebing|climbing|pemanjatan|tebing alam|wall climbing|harness|carabiner|simpul|anchor|prusik|figure eight)/i.test(msg)) {
+    // ==================== TOPIK: ROCK CLIMBING ====================
+    if (/(rock climbing|panjat tebing|climbing|pemanjatan|tebing alam|wall climbing|harness|carabiner|simpul|anchor|prusik|figure eight|panjat|tebing|belay|rappelling|abseiling)/i.test(msg) || (hasApa && /(rock climbing|panjat tebing|climbing)/i.test(msg)) || (hasBagaimana && /(panjat|climbing)/i.test(msg))) {
         if (/(harness|sabuk pengaman|selempang panjat)/i.test(msg)) {
             return `🪢 <strong>HARNESS (SABUK PENGAMAN PANJAT)</strong>
 
@@ -634,7 +670,7 @@ Menghubungkan tubuh pemanjat dengan sistem tali pengaman.
 Carabiner harus memiliki sertifikasi UIAA/CE minimal 20kN!`;
         }
 
-        if (/(simpul|figure eight|prusik|knot|simpul pengaman)/i.test(msg)) {
+        if (/(simpul|figure eight|prusik|knot|simpul pengaman|simpul mati|simpul hidup)/i.test(msg)) {
             if (/(figure eight|angka delapan|simpul figure|simpul harness)/i.test(msg)) {
                 return `🪢 <strong>SIMPUL FIGURE EIGHT FOLLOW THROUGH</strong>
 
@@ -745,9 +781,9 @@ Anchor adalah sistem yang menyatukan nyawa pemanjat. JANGAN PERNAH kompromi!`;
 • Jangan panik saat jatuh`;
     }
 
-    // ==================== LEAVE NO TRACE ====================
-    if (/(leave no trace|lnt|etika pecinta alam|prinsip lnt|tidak meninggalkan jejak|konservasi|sampah|sampah gunung|bersih sampah|menjaga alam|pelestarian)/i.test(msg)) {
-        if (/(sampah|sampah gunung|bersih sampah|bawa turun|pengelolaan sampah)/i.test(msg)) {
+    // ==================== TOPIK: LEAVE NO TRACE & KONSERVASI ====================
+    if (/(leave no trace|lnt|etika pecinta alam|prinsip lnt|tidak meninggalkan jejak|konservasi|sampah|sampah gunung|bersih sampah|menjaga alam|pelestarian|lingkungan|hijau|reboisasi|penghijauan|baksos|bakti sosial)/i.test(msg) || (hasApa && /(lnt|konservasi|leave no trace)/i.test(msg))) {
+        if (/(sampah|sampah gunung|bersih sampah|bawa turun|pengelolaan sampah|buang sampah)/i.test(msg)) {
             return `🗑️ <strong>PENGELOLAAN SAMPAH SAAT PENDAKIAN</strong>
 
 📌 <strong>PRINSIP UTAMA:</strong>
@@ -796,9 +832,9 @@ Jaga ketenangan, beri jalan, sapa & ramah.
 "Take only pictures, leave only footprints, kill only time"`;
     }
 
-    // ==================== UST & TAMANSISWA ====================
-    if (/(ust|universitas sarjanawiyata|ust yogyakarta|kampus ust|tamansiswa|ki hajar|bapak pendidikan|ki hadjar|tut wuri handayani)/i.test(msg)) {
-        if (/(ki hajar|bapak pendidikan|ki hadjar|tut wuri handayani|ing ngarsa sung tuladha)/i.test(msg)) {
+    // ==================== TOPIK: UST & TAMANSISWA ====================
+    if (/(ust|universitas sarjanawiyata|ust yogyakarta|kampus ust|tamansiswa|ki hajar|bapak pendidikan|ki hadjar|tut wuri handayani|ing ngarsa sung tuladha|perguruan tamansiswa|pendidikan tamansiswa)/i.test(msg) || (hasApa && /(ust|tamansiswa|ki hajar)/i.test(msg)) || (hasSiapa && /(ki hajar|pendiri ust)/i.test(msg))) {
+        if (/(ki hajar|bapak pendidikan|ki hadjar|tut wuri handayani|ing ngarsa sung tuladha|ki hajar dewantara)/i.test(msg)) {
             return `📚 <strong>KI HAJAR DEWANTARA</strong>
 
 📌 <strong>IDENTITAS:</strong>
@@ -847,8 +883,8 @@ Pahlawan Nasional (1959), Menteri Pendidikan pertama Indonesia.`;
 "Menjadi universitas unggul & berdaya saing berbasis kearifan lokal Tamansiswa tahun 2030"`;
     }
 
-    // ==================== KEGIATAN & JADWAL ====================
-    if (/(kegiatan|jadwal|latihan|event|acara|info kegiatan|latihan rutin|jadwal latihan|agenda|kegiatan mapatek)/i.test(msg)) {
+    // ==================== TOPIK: KEGIATAN & JADWAL ====================
+    if (/(kegiatan|jadwal|latihan|event|acara|info kegiatan|latihan rutin|jadwal latihan|agenda|kegiatan mapatek|kegiatan apa|aktivitas|program|agenda mapatek|rencana kegiatan)/i.test(msg) || (hasKapan && /(kegiatan|latihan|event|acara)/i.test(msg))) {
         return `📅 <strong>KEGIATAN & JADWAL MAPATEK</strong>
 
 📌 <strong>KEGIATAN RUTIN:</strong>
@@ -873,8 +909,8 @@ Pahlawan Nasional (1959), Menteri Pendidikan pertama Indonesia.`;
 Cek Instagram @mapatek_abhipraya atau bagian Kalender di website!`;
     }
 
-    // ==================== KONTAK ====================
-    if (/(kontak|hubungi|wa|instagram|email|telepon|basecamp|lokasi|sekretariat|nomor telepon)/i.test(msg)) {
+    // ==================== TOPIK: KONTAK ====================
+    if (/(kontak|hubungi|wa|instagram|email|telepon|basecamp|lokasi|sekretariat|nomor telepon|alamat|sosmed|media sosial|contact|telegram|line|whatsapp)/i.test(msg) || (hasBagaimana && /(kontak|hubungi|wa|instagram|email)/i.test(msg)) || (hasDimana && /(basecamp|sekretariat|kantor|markas)/i.test(msg))) {
         return `📞 <strong>KONTAK MAPATEK ABHIPRAYA</strong>
 
 📌 <strong>MEDIA SOSIAL:</strong>
@@ -894,42 +930,142 @@ Cek Instagram @mapatek_abhipraya atau bagian Kalender di website!`;
 Hubungi Ketua Umum (085-952-824-898) atau Sekretaris Jenderal (0815-2272-3325).`;
     }
 
-    // ==================== DEFAULT / FALLBACK ====================
+    // ==================== TOPIK: CUACA ====================
+    if (/(cuaca|hujan|panas|dingin|berawan|cerah|suhu|temperatur|prakiraan cuaca|info cuaca|cuaca gunung|angkasa|mendung|petir)/i.test(msg)) {
+        return `🌤️ <strong>INFO CUACA GUNUNG</strong>
+
+Untuk informasi cuaca terkini, Anda bisa cek:
+• Website BMKG (www.bmkg.go.id)
+• Aplikasi cuaca (Windy, Weather.com, AccuWeather)
+• Atau lihat bagian "Info Cuaca" di website kami yang menampilkan data real-time dari OpenWeatherMap.
+
+📌 Tips: Cuaca di gunung bisa berubah cepat. Selalu bawa jaket dan raincoat!`;
+    }
+
+    // ==================== TOPIK: DESTINASI / TEMPAT WISATA ====================
+    if (/(destinasi|tempat wisata|rekomendasi tempat|liburan|pantai|air terjun|pemandian|wisata alam|objek wisata|tempat seru|tempat keren)/i.test(msg)) {
+        return `🏞️ <strong>REKOMENDASI DESTINASI ALAM</strong>
+
+Beberapa destinasi favorit MAPATEK:
+1. Gunung Prau (Dieng) — Sunrise terbaik
+2. Pantai Baros — Konservasi & bersih pantai
+3. Air Terjun Kedung Kayang — Eksplorasi
+4. Tebing Gamping — Rock climbing
+5. Gunung Merbabu — Sabana luas
+6. Desa Pentingsari — Edukasi & konservasi
+
+📌 Untuk rekomendasi lebih detail, hubungi admin atau cek agenda kami.`;
+    }
+
+    // ==================== TOPIK: TENTANG DIRI SAYA (CHATBOT) ====================
+    if (/(siapa kamu|kamu siapa|apa kamu|kamu itu apa|siapa anda|anda siapa|perkenalan|kenalan|halo siapa|kenalin dong|chatbot apa|bot apa|ini bot apa)/i.test(msg)) {
+        return `🤖 <strong>Halo! Saya Asisten Virtual MAPATEK Abhipraya.</strong>
+
+Saya adalah chatbot cerdas yang dibuat untuk membantu Anda mendapatkan informasi tentang:
+
+✅ Organisasi MAPATEK (sejarah, visi misi, struktur)
+✅ Pendaftaran anggota & DIKSAR
+✅ Pendakian gunung & persiapan
+✅ Rock climbing & teknik panjat
+✅ Survival & P3K di alam
+✅ Konservasi & Leave No Trace
+✅ UST Yogyakarta & Tamansiswa
+✅ Kegiatan & agenda terbaru
+
+💡 Saya siap membantu 24/7! Cukup ketik pertanyaan Anda.`;
+    }
+
+    // ==================== TOPIK: TENTANG USER ====================
+    if (/(kamu tau aku|tau aku|kenal aku|aku siapa|siapa saya|tahu saya|anda tahu saya|apakah kamu tahu saya)/i.test(msg)) {
+        return `😊 Maaf, saya tidak memiliki data tentang Anda karena saya tidak menyimpan informasi pribadi. Tapi saya senang bisa membantu Anda hari ini! Ada yang bisa saya bantu?`;
+    }
+
+    // ==================== MENANGANI PERTANYAAN DENGAN "KENAPA" ====================
+    if (hasKenapa) {
+        if (/(kenapa|mengapa) (harus|perlu|wajib|sebaiknya)/i.test(msg)) {
+            return `🤔 Pertanyaan bagus! 
+
+Untuk menjawab "kenapa", jawabannya biasanya terkait dengan keamanan, efektivitas, atau nilai-nilai organisasi. 
+
+Bisa Anda spesifikkan pertanyaannya? Misalnya:
+• Kenapa harus mengikuti DIKSAR?
+• Kenapa harus bawa 10 Essentials?
+• Kenapa MAPATEK didirikan?
+
+Saya akan jelaskan dengan detail! 😊`;
+        }
+        return `🤔 Hmm, pertanyaan "kenapa" yang bagus! 
+
+Jika Anda bertanya tentang aturan atau prosedur, biasanya alasannya adalah untuk keselamatan dan kenyamanan bersama. 
+
+Coba tanyakan lebih spesifik, misalnya:
+• "Kenapa harus bawa sampah turun?"
+• "Kenapa DIKSAR wajib diikuti?"
+• "Kenapa MAPATEK didirikan?"
+
+Saya akan jawab dengan lengkap!`;
+    }
+
+    // ==================== PERTANYAAN UMUM LAINNYA ====================
+    // Jika pesan mengandung "tolong" atau "bantu"
+    if (/(tolong|bantu|help|pls|please)/i.test(msg)) {
+        return `🙏 Tentu! Saya siap membantu. 
+
+Coba tanyakan salah satu topik ini:
+• "Apa itu MAPATEK?"
+• "Cara daftar anggota"
+• "Rekomendasi gunung pemula"
+• "10 Essentials pendakian"
+• "Kontak MAPATEK"
+
+Atau tanyakan langsung apa yang Anda ingin ketahui! 😊`;
+    }
+
+    // Jika pesan mengandung "makasih" atau terima kasih sudah ditangani di awal
+
+    // ==================== DEFAULT / FALLBACK (RAMAH & INFORMATIF) ====================
     return `🌿 <strong>PERTANYAAN ANDA SANGAT BAGUS!</strong>
 
-Maaf, saya belum memiliki jawaban spesifik untuk pertanyaan tersebut.
+Maaf, saya belum memiliki jawaban spesifik untuk pertanyaan tersebut. Namun, saya bisa membantu dengan topik-topik berikut:
 
 📌 <strong>COBA TANYAKAN TENTANG:</strong>
 
-🏔️ MAPATEK & ORGANISASI
+🏔️ <strong>MAPATEK & ORGANISASI</strong>
 • Sejarah, Visi Misi, Struktur, Angkatan
 • Pendaftaran & DIKSAR
 
-⛰️ PENDAKIAN GUNUNG
+⛰️ <strong>PENDAKIAN GUNUNG</strong>
 • Persiapan pendakian & 10 Essentials
 • Teknik packing carrier
 • Rekomendasi gunung pemula
 
-🧗 ROCK CLIMBING
+🧗 <strong>ROCK CLIMBING</strong>
 • Harness, Carabiner, Simpul
 • Anchor SERENE
 
-🔥 SURVIVAL & P3K
+🔥 <strong>SURVIVAL & P3K</strong>
 • Membuat api, shelter, menjernihkan air
 • Hipotermia, gigitan ular, patah tulang, CPR
 
-🌱 KONSERVASI
+🌱 <strong>KONSERVASI</strong>
 • Leave No Trace (LNT)
 
-🏫 UST & TAMANSISWA
+🏫 <strong>UST & TAMANSISWA</strong>
 • Informasi kampus, Ki Hajar Dewantara
 
-📢 INFO KEGIATAN
+📢 <strong>INFO KEGIATAN</strong>
 • Jadwal, kontak, basecamp
 
 📞 Atau hubungi admin di <strong>0822-1442-8371</strong> untuk info lebih lanjut!
 
-Terima kasih sudah bertanya! 🙏`;
+Terima kasih sudah bertanya! 😊`;
+}
+
+// ================================================================
+// FUNGSI PEMBANTU: Random Response untuk variasi
+// ================================================================
+function getRandomResponse(responses) {
+    return responses[Math.floor(Math.random() * responses.length)];
 }
 
 // ================================================================
@@ -939,6 +1075,7 @@ window.toggleChatbot = toggleChatbot;
 window.sendMessage = sendMessage;
 window.escapeHtml = escapeHtml;
 window.getIntelligentResponse = getIntelligentResponse;
+window.getRandomResponse = getRandomResponse;
 
 // ================================================================
 // CLOSE CHATBOT SAAT KLIK DI LUAR
