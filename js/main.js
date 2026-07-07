@@ -29,22 +29,26 @@ function checkReveal() {
 window.addEventListener('scroll', checkReveal);
 checkReveal();
 
-// ==================== FILTER ARSIP ====================
 function filterArsip() {
     const input = document.getElementById('searchInput').value.toLowerCase();
-    document.querySelectorAll('.arsip-item').forEach(item => {
-        item.style.display = item.innerText.toLowerCase().includes(input) ? 'flex' : 'none';
+    const items = document.querySelectorAll('.arsip-item');
+    let visibleCount = 0;
+    
+    items.forEach(item => {
+        const text = item.innerText.toLowerCase();
+        const match = text.includes(input);
+        item.style.display = match ? 'flex' : 'none';
+        if (match) visibleCount++;
     });
+    
+    // Auto scroll ke arsip jika mengetik
+    if (input.length >= 2) {
+        const arsipSection = document.getElementById('arsip');
+        if (arsipSection) {
+            arsipSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
 }
-
-function filterKategori(kategori, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    document.querySelectorAll('.arsip-item').forEach(item => {
-        item.style.display = (kategori === 'all' || item.dataset.kategori === kategori) ? 'flex' : 'none';
-    });
-}
-
 // ==================== STATUS PENDAFTARAN ====================
 fetch('status.json?t=' + Date.now())
     .then(res => res.json())
