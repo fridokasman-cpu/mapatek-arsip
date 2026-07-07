@@ -1,0 +1,219 @@
+// ==================== DATA AGENDA ====================
+const agendas = [
+    { day: "15", month: "JUN", title: "Pendakian Gunung Prau", location: "Dieng, Jawa Tengah", desc: "Ekspedisi rutin anggota dan Latihan Dasar", status: "upcoming" },
+    { day: "22", month: "JUN", title: "Latihan Rock Climbing", location: "Tebing Gamping", desc: "Teknik dasar panjat tebing dan belaying", status: "upcoming" },
+    { day: "05", month: "JUL", title: "Bakti Sosial & Konservasi", location: "Desa Wisata Pentingsari", desc: "Bersih-bersih sungai dan edukasi lingkungan", status: "upcoming" }
+];
+
+// ==================== DATA GALERI ====================
+const galeriImages = [
+    { src: "images/galeri/ekspedisi_rinjani.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
+    { src: "images/galeri/diksar.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
+    { src: "images/galeri/rock_climbing.jpg", caption: "Pendidikan Rock Climbing Angkatan Tedak Daivat" },
+    { src: "images/galeri/baksos.jpg", caption: "Bakti Sosial Bersih Pantai Baros" },
+    { src: "images/galeri/navigasi.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
+    { src: "images/galeri/pendidikanrc.jpg", caption: "Pendidikan Rock Climbing Angkatan Litani Aram" },
+    { src: "images/galeri/konservasi.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
+    { src: "images/galeri/latihanascend.jpg", caption: "Latihan Ascending" },
+    { src: "images/galeri/diksarlitaniaram.jpg", caption: "Diksar Angkatan Litani Aram" },
+    { src: "images/galeri/keluargabesar.jpg", caption: "Wisuda Angkatan Pendiri" },
+];
+
+// ==================== DATA TESTIMONI ====================
+const testimoniData = [
+    {
+        name: "Ndolo",
+        angkatan: "Angkatan 2 Tedak Daivat (2025)",
+        photo: "images/testimoni/ndolo.jpg",
+        quote: "Mapatek bukan sekadar organisasi, tapi keluarga kedua. Di sini saya belajar arti kebersamaan, kepemimpinan, dan cinta alam yang sesungguhnya."
+    },
+    {
+        name: "Ringin",
+        angkatan: "Angkatan 2 TedakDaivat (2025)",
+        photo: "images/testimoni/ringin.jpg",
+        quote: "Pengalaman Diksar yang luar biasa! Meskipun berat, tapi itulah yang membentuk mental saya. Terima kasih Mapatek atas semua ilmunya."
+    },
+    {
+        name: "Coil",
+        angkatan: "Angkatan Pendiri PancaTompak (2023)",
+        photo: "images/testimoni/coil.jpg",
+        quote: "Sebagai angkatan pendiri, melihat Mapatek berkembang seperti ini adalah kebanggaan tersendiri. Semoga terus jaya dan bermanfaat!"
+    },
+    {
+        name: "Lamen",
+        angkatan: "Angkatan 1 Tapak Kaki (2024)",
+        photo: "images/testimoni/lamen.jpg",
+        quote: "Baru bergabung tapi sudah merasa seperti di rumah sendiri. Kakak-kakak senior sangat welcoming dan ilmu yang didapat sangat berharga."
+    },
+    {
+        name: "Sam",
+        angkatan: "Angkatan 2 Tedak Daivat (2025)",
+        photo: "images/testimoni/sam.jpg",
+        quote: "Ekspedisi bersama Mapatek adalah pengalaman tak terlupakan. Puncak gunung bukan tujuan utama, tapi proses perjalanannya yang paling berkesan."
+    }
+];
+
+// ==================== DATA LEADERBOARD ====================
+const leaderboardData = [
+    { name: "Coil", angkatan: "PancaTompak", peaks: 15, points: 4500, photo: "images/leaderboard/coil.jpg" },
+    { name: "Lamen", angkatan: "TapakKaki", peaks: 12, points: 3600, photo: "images/leaderboard/lamen.jpg" },
+    { name: "Ringin", angkatan: "TedakDaivat", peaks: 10, points: 3000, photo: "images/leaderboard/siti-aisyah.jpg" },
+    { name: "Sanpas", angkatan: "TapakKaki", peaks: 8, points: 2400, photo: "images/leaderboard/budi-santoso.jpg" },
+    { name: "Ranga", angkatan: "LitaniAram", peaks: 7, points: 2100, photo: "images/leaderboard/machmud-lathif.jpg" },
+    { name: "Lowo", angkatan: "LitaniAram", peaks: 6, points: 1800, photo: "images/leaderboard/dewi-lestari.jpg" },
+    { name: "Mauna", angkatan: "TedakDaivat", peaks: 5, points: 1500, photo: "images/leaderboard/rangga-wijaya.jpg" },
+    { name: "Lamase", angkatan: "LitaniAram", peaks: 4, points: 1200, photo: "images/leaderboard/putri-robet.jpg" }
+];
+
+// ==================== DATA POLLING ====================
+const pollingData = [
+    { id: 1, text: "🏔️ Gunung Semeru (3.676 mdpl)", votes: 45 },
+    { id: 2, text: "⛰️ Gunung Rinjani (3.726 mdpl)", votes: 38 },
+    { id: 3, text: "🗻 Gunung Merbabu (3.145 mdpl)", votes: 29 },
+    { id: 4, text: "🌋 Gunung Bromo (2.329 mdpl)", votes: 22 },
+    { id: 5, text: "️ Gunung Prau (2.590 mdpl)", votes: 18 }
+];
+
+// ==================== API KEY & GUNUNG LIST ====================
+const API_KEY = '41cdf78032a3fc2031fcdc09192f0f19';
+
+const gunungList = [
+    { name: "Gunung Merapi", lat: -7.5435, lon: 110.4451, loc: "Yogyakarta" },
+    { name: "Gunung Merbabu", lat: -7.4517, lon: 110.4328, loc: "Jawa Tengah" },
+    { name: "Gunung Sindoro", lat: -7.3089, lon: 109.9056, loc: "Jawa Tengah" },
+    { name: "Gunung Slamet", lat: -7.2500, lon: 109.2083, loc: "Jawa Tengah" },
+    { name: "Gunung Semeru", lat: -8.1083, lon: 112.9222, loc: "Jawa Timur" },
+    { name: "Gunung Rinjani", lat: -8.4200, lon: 116.4700, loc: "NTB" }
+];
+
+// ==================== DATA LOKASI PETA ====================
+const petaLocations = [
+    { name: "Basecamp Mapatek Abhipraya", lat: -7.8005941, lng: 110.3878006, type: "basecamp", desc: "🏛️ Sekretariat di UST Yogyakarta<br>Fakultas Teknik - Universitas Sarjanawiyata Tamansiswa" },
+    { name: "Gunung Sumbing", lat: -7.3408, lng: 110.0703, type: "gunung", desc: "⛰️ Puncak 3.371 mdpl<br>Wonosobo, Jawa Tengah" },
+    { name: "Gunung Sindoro", lat: -7.3056, lng: 110.0028, type: "gunung", desc: "⛰️ Puncak 3.153 mdpl<br>Wonosobo, Jawa Tengah" },
+    { name: "Gunung Merbabu", lat: -7.4500, lng: 110.4333, type: "gunung", desc: "️ Puncak 3.145 mdpl<br>Boyolali/Magelang, Jawa Tengah" },
+    { name: "Gunung Prau", lat: -7.1458, lng: 109.9208, type: "gunung", desc: "⛰️ Puncak 2.590 mdpl<br>Dieng Plateau, Jawa Tengah" },
+    { name: "Gunung Lawu", lat: -7.6250, lng: 111.1917, type: "gunung", desc: "⛰️ Puncak 3.265 mdpl<br>Perbatasan Jawa Tengah & Jawa Timur" },
+    { name: "Gunung Rinjani", lat: -8.4250, lng: 116.4583, type: "gunung", desc: "⛰️ Puncak 3.726 mdpl<br>Lombok, Nusa Tenggara Barat" },
+    { name: "Gunung Semeru", lat: -8.1083, lng: 112.9217, type: "gunung", desc: "⛰️ Puncak 3.676 mdpl<br>Gunung tertinggi di Pulau Jawa" },
+    { name: "Gunung Kerinci", lat: -1.6972, lng: 101.2639, type: "gunung", desc: "⛰️ Puncak 3.805 mdpl<br>Gunung tertinggi di Sumatera" },
+    { name: "Gunung Raung", lat: -8.1250, lng: 114.0417, type: "gunung", desc: "⛰️ Puncak 3.332 mdpl<br>Perbatasan Jawa Timur & Bali" },
+    { name: "Gunung Slamet", lat: -7.2458, lng: 109.2083, type: "gunung", desc: "️ Puncak 3.428 mdpl<br>Gunung tertinggi di Jawa Tengah" },
+    { name: "Lokasi Konservasi 1", lat: -7.7956, lng: 110.3692, type: "konservasi", desc: "🌱 Kegiatan konservasi lingkungan<br>Mapatek Abhipraya" },
+    { name: "Lokasi Konservasi 2", lat: -7.8500, lng: 110.4200, type: "konservasi", desc: " Program pelestarian alam<br>Bersih-bersih & penanaman pohon" },
+    { name: "Lokasi Konservasi 3", lat: -7.7800, lng: 110.4000, type: "konservasi", desc: "🌳 Aksi konservasi & edukasi<br>Lingkungan Yogyakarta" }
+];
+
+// ==================== DATA BERITA ====================
+const beritaData = [
+    { category: "Pengumuman", title: "Pendaftaran Diksar XV Resmi Dibuka!", excerpt: "Mapatek Abhipraya membuka pendaftaran Diksar XV untuk angkatan baru. Segera daftarkan dirimu sebelum kuota penuh!", date: "5 Juni 2026", image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600" },
+    { category: "Ekspedisi", title: "Ekspedisi Gunung Prau Berhasil Ditaklukkan", excerpt: "Tim ekspedisi Mapatek berhasil mencapai puncak Gunung Prau (2.590 mdpl) dengan aman dan lancar. Selamat!", date: "28 Mei 2026", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600" },
+    { category: "Konservasi", title: "Bakti Sosial Bersih Pantai Baros", excerpt: "Lebih dari 30 anggota berpartisipasi dalam aksi bersih-bersih Pantai Baros. Berhasil mengumpulkan 50kg sampah!", date: "20 Mei 2026", image: "https://images.unsplash.com/photo-1618477461853-cf6ed80f1d6e?w=600" },
+    { category: "Pelatihan", title: "Latihan Rock Climbing Angkatan LitaniAram", excerpt: "Angkatan LitaniAram mengikuti pelatihan panjat tebing dengan materi dasar belaying dan teknik ascending.", date: "15 Mei 2026", image: "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=600" },
+    { category: "Organisasi", title: "Musyawarah Besar Mapatek 2026", excerpt: "Musyawarah besar tahunan telah dilaksanakan untuk evaluasi kinerja dan pemilihan pengurus periode berikutnya.", date: "10 Mei 2026", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600" },
+    { category: "Prestasi", title: "Juara 1 Lomba Mapala Tingkat DIY", excerpt: "Mapatek Abhipraya meraih juara 1 dalam kompetisi pecinta alam tingkat DIY. Prestasi membanggakan!", date: "5 Mei 2026", image: "https://images.unsplash.com/photo-1569103-place-holder?w=600" }
+];
+
+// ==================== DATA KALENDER ====================
+const kalenderEvents = [
+    { date: "2026-06-08", title: "Latihan Navigasi", type: "latihan" },
+    { date: "2026-06-15", title: "Ekspedisi Prau", type: "ekspedisi" },
+    { date: "2026-06-22", title: "Rock Climbing", type: "latihan" },
+    { date: "2026-06-28", title: "Rapat Pengurus", type: "latihan" },
+    { date: "2026-07-05", title: "Bakti Sosial", type: "konservasi" },
+    { date: "2026-07-12", title: "Diksar XV Hari 1", type: "diksar" },
+    { date: "2026-07-13", title: "Diksar XV Hari 2", type: "diksar" },
+    { date: "2026-07-14", title: "Diksar XV Hari 3", type: "diksar" },
+    { date: "2026-07-20", title: "Pendakian Merbabu", type: "ekspedisi" },
+    { date: "2026-06-06", title: "Ulang Tahun Mapatek", type: "latihan" }
+];
+
+// ==================== DATA FAQ ====================
+const faqData = [
+    { q: "Apa itu Mapatek Abhipraya?", a: "Mapatek Abhipraya adalah organisasi mahasiswa pencinta alam yang berdiri pada 19 Maret 2023 di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta. Kami bergerak di bidang konservasi lingkungan, pendidikan alam bebas, kegiatan petualangan, dan kemanusiaan." },
+    { q: "Bagaimana cara bergabung dengan Mapatek?", a: "Untuk bergabung, kamu harus mahasiswa aktif UST dan mengikuti rangkaian Diksar (Pendidikan Dasar) yang biasanya dibuka 2x setahun. Cek status pendaftaran di website ini atau hubungi admin via WhatsApp di 0822-1442-8371." },
+    { q: "Apa saja kegiatan rutin Mapatek?", a: "Kegiatan rutin kami meliputi: Latihan rutin (navigasi, rock climbing, survival), ekspedisi pendakian gunung, bakti sosial & konservasi lingkungan, pendidikan dasar (Diksar), dan berbagai pelatihan skill kealaman lainnya." },
+    { q: "Apakah ada biaya untuk bergabung?", a: "Terdapat biaya pendaftaran dan biaya Diksar yang bervariasi tergantung kebutuhan kegiatan. Biaya sudah termasuk akomodasi, konsumsi, perlengkapan, dan merchandise Mapatek. Informasi detail akan diberikan saat pendaftaran dibuka." },
+    { q: "Apa syarat mengikuti Diksar?", a: "Syarat utama: (1) Mahasiswa aktif UST, (2) Sehat jasmani dan rohani, (3) Bersedia mengikuti seluruh rangkaian Diksar, (4) Mengisi formulir pendaftaran, (5) Lolos wawancara seleksi, dan (6) Membayar biaya pendaftaran." },
+    { q: "Dimana lokasi basecamp Mapatek?", a: "Basecamp/sekretariat Mapatek Abhipraya berada di lingkungan Universitas Sarjanawiyata Tamansiswa (UST), Jl. Batikan UH III/1043, Tuntungan, Umbulharjo, Yogyakarta. Buka Senin-Jumat 15.00-18.00 WIB." },
+    { q: "Apakah perempuan boleh bergabung?", a: "Tentu saja! Mapatek Abhipraya terbuka untuk semua mahasiswa UST tanpa membedakan gender. Banyak anggota perempuan kami yang aktif dan berprestasi di berbagai kegiatan." },
+    { q: "Bagaimana jika saya pemula dan belum punya pengalaman?", a: "Tidak masalah! Diksar kami dirancang untuk semua level, dari pemula hingga berpengalaman. Kamu akan diajarkan semua skill dasar dari nol oleh senior yang sudah berpengalaman." }
+];
+
+// ==================== DATA QUIZ ====================
+const quizQuestions = [
+    {
+        q: "Apa yang paling kamu cari dari kegiatan pendakian?",
+        options: [
+            { text: "Tantangan fisik dan adrenalin", type: "petualang" },
+            { text: "Ketenangan dan meditasi di alam", type: "kontemplatif" },
+            { text: "Menjaga kelestarian alam", type: "konservasionis" },
+            { text: "Bertemu dan belajar dari orang baru", type: "sosial" }
+        ]
+    },
+    {
+        q: "Saat berkemah, apa yang paling kamu nikmati?",
+        options: [
+            { text: "Api unggun dan cerita petualangan", type: "sosial" },
+            { text: "Menatap bintang di malam hari", type: "kontemplatif" },
+            { text: "Memasak bersama di alam terbuka", type: "petualang" },
+            { text: "Mengamati flora dan fauna sekitar", type: "konservasionis" }
+        ]
+    },
+    {
+        q: "Perlengkapan mana yang paling penting menurutmu?",
+        options: [
+            { text: "Peta dan kompas untuk navigasi", type: "petualang" },
+            { text: "Kantong sampah untuk bawa turun sampah", type: "konservasionis" },
+            { text: "Kamera untuk dokumentasi", type: "sosial" },
+            { text: "Buku catatan untuk jurnal perjalanan", type: "kontemplatif" }
+        ]
+    },
+    {
+        q: "Jika bertemu sampah di jalur pendakian, kamu akan?",
+        options: [
+            { text: "Pungut dan bawa turun, meski bukan sampahku", type: "konservasionis" },
+            { text: "Laporkan ke pengelola gunung", type: "sosial" },
+            { text: "Terus mendaki, fokus ke tujuan", type: "petualang" },
+            { text: "Dokumentasikan untuk edukasi", type: "kontemplatif" }
+        ]
+    },
+    {
+        q: "Apa motivasi utamamu mengikuti kegiatan alam?",
+        options: [
+            { text: "Menaklukkan puncak-puncak baru", type: "petualang" },
+            { text: "Melestarikan alam untuk generasi depan", type: "konservasionis" },
+            { text: "Membangun relasi dan persaudaraan", type: "sosial" },
+            { text: "Menemukan jati diri di alam", type: "kontemplatif" }
+        ]
+    }
+];
+
+const quizResults = {
+    petualang: { icon: "️", type: "The Adventurer - Si Petualang Sejati", desc: "Kamu adalah tipe pendaki yang selalu mencari tantangan dan adrenalin! Puncak-puncak tinggi dan jalur ekstrem adalah playground-mu. Kamu berani mengambil risiko dan selalu ingin mencoba hal baru. Semangat petualangmu menginspirasi orang di sekitarmu!" },
+    konservasionis: { icon: "🌿", type: "The Guardian - Penjaga Alam", desc: "Kamu adalah tipe pendaki yang sangat peduli terhadap kelestarian alam! Bagimu, gunung bukan hanya tempat untuk ditaklukkan, tapi ekosistem yang harus dilindungi. Prinsip Leave No Trace adalah pedoman hidupmu. Kamu adalah pahlawan bagi alam!" },
+    kontemplatif: { icon: "🌌", type: "The Philosopher - Sang Perenung", desc: "Kamu adalah tipe pendaki yang mencari makna dan kedamaian di alam! Setiap langkah pendakian adalah meditasi bagimu. Kamu suka mengamati keindahan alam, merenung di puncak, dan menulis jurnal perjalanan. Alam adalah guru terbesarmu!" },
+    sosial: { icon: "", type: "The Connector - Penghubung Hati", desc: "Kamu adalah tipe pendaki yang paling menikmati kebersamaan! Bagimu, siapa yang mendaki lebih penting daripada ke mana mendaki. Kamu selalu ceria, mudah bergaul, dan menjadi lem yang menyatukan tim. Energi positipmu menular ke semua orang!" }
+};
+
+// ==================== DATA SEARCH GLOBAL ====================
+const searchData = [
+    { title: "Tentang Mapatek Abhipraya", category: "Informasi", icon: "fa-info-circle", section: "#tentang" },
+    { title: "Struktur Pengurus", category: "Informasi", icon: "fa-users", section: "#pengurus" },
+    { title: "Agenda Kegiatan", category: "Kegiatan", icon: "fa-calendar", section: "#agenda" },
+    { title: "Galeri Foto", category: "Media", icon: "fa-images", section: "#galeri" },
+    { title: "Quiz Kepribadian Pendaki", category: "Interaktif", icon: "fa-question-circle", section: "#quiz" },
+    { title: "Berita & Pengumuman", category: "Informasi", icon: "fa-newspaper", section: "#berita" },
+    { title: "Pendaftaran Anggota", category: "Pendaftaran", icon: "fa-user-plus", section: "#pendaftaran" },
+    { title: "Arsip Dokumen", category: "Dokumen", icon: "fa-folder", section: "#arsip" },
+    { title: "Kontak Kami", category: "Kontak", icon: "fa-phone", section: "#kontak" },
+    { title: "Laporan Ekspedisi Gunung Rinjani", category: "Arsip", icon: "fa-file-pdf", section: "#arsip" },
+    { title: "AD/ART Mapatek", category: "Arsip", icon: "fa-file-pdf", section: "#arsip" },
+    { title: "WhatsApp Admin", category: "Kontak", icon: "fa-whatsapp", section: "#kontak" },
+    { title: "Instagram Mapatek", category: "Kontak", icon: "fa-instagram", section: "#kontak" },
+    { title: "FAQ Pertanyaan Umum", category: "Informasi", icon: "fa-question", section: ".faq-section" },
+    { title: "Leaderboard Pendakian", category: "Interaktif", icon: "fa-trophy", section: ".leaderboard-section" },
+    { title: "Info Cuaca Gunung", category: "Informasi", icon: "fa-cloud-sun", section: ".cuaca-section" },
+    { title: "Peta Lokasi Kegiatan", category: "Informasi", icon: "fa-map", section: ".peta-section" },
+    { title: "Kalender Kegiatan", category: "Kegiatan", icon: "fa-calendar-alt", section: ".kalender-section" }
+];
