@@ -1864,25 +1864,42 @@ const gunungList = [
 
 async function loadCuacaRealtime() {
     const grid = document.getElementById('cuacaGrid');
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;"><div class="loading-spinner"></div><p>Memuat data cuaca...</p></div>';
+    
+    // Tampilkan loading
+    grid.innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;padding:3rem;">
+            <div class="loading-spinner"></div>
+            <p style="margin-top:1rem;color:var(--gray-600);">🔄 Memuat data cuaca real-time...</p>
+            <small>API Key: ${API_KEY.substring(0, 8)}...</small>
+        </div>
+    `;
     
     try {
+        console.log('🌤️ Fetching weather data...');
+        console.log('API Key:', API_KEY);
+        
         const cuacaPromises = gunungList.map(async (gunung) => {
             const url = `https://api.openweathermap.org/data/2.5/weather?lat=${gunung.lat}&lon=${gunung.lon}&appid=${API_KEY}&units=metric&lang=id`;
             
+            console.log(`Fetching ${gunung.name}: ${url}`);
+            
             const response = await fetch(url);
-            if (!response.ok) throw new Error('Failed to fetch');
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error(`Error ${gunung.name}:`, errorData);
+                throw new Error(`HTTP ${response.status}: ${errorData.message}`);
+            }
             
             const data = await response.json();
+            console.log(`${gunung.name} data:`, data);
             
             const temp = Math.round(data.main.temp);
             const humidity = data.main.humidity;
-            const wind = data.wind.speed;
-            const visibility = Math.round(data.visibility / 1000); // m to km
+            const wind = Math.round(data.wind.speed * 3.6); // m/s to km/h
+            const visibility = Math.round(data.visibility / 1000);
             const desc = data.weather[0].description;
             const iconCode = data.weather[0].icon;
-            
-            // Convert icon code ke emoji
             const icon = getOpenWeatherIcon(iconCode);
             
             // Tentukan status
@@ -1890,8 +1907,11 @@ async function loadCuacaRealtime() {
             if (data.weather[0].main === 'Rain' || data.weather[0].main === 'Thunderstorm') {
                 status = 'waspada';
             }
-            if (wind > 15 || temp < 5) {
+            if (wind > 30 || temp < 5) {
                 status = 'waspada';
+            }
+            if (wind > 50 || data.weather[0].main === 'Thunderstorm') {
+                status = 'bahaya';
             }
             
             return {
@@ -1901,14 +1921,16 @@ async function loadCuacaRealtime() {
                 desc: desc.charAt(0).toUpperCase() + desc.slice(1),
                 icon: icon,
                 humidity: humidity,
-                wind: Math.round(wind * 3.6), // m/s to km/h
+                wind: wind,
                 visibility: visibility,
                 status: status
             };
         });
         
         const cuacaData = await Promise.all(cuacaPromises);
+        console.log('✅ All weather data loaded:', cuacaData);
         
+        // Render ke HTML
         grid.innerHTML = cuacaData.map(c => `
             <div class="cuaca-card">
                 <div class="cuaca-card-header">
@@ -1932,8 +1954,26 @@ async function loadCuacaRealtime() {
         `).join('');
         
     } catch (error) {
-        console.error('Error fetching weather:', error);
-        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-600);"><i class="fas fa-exclamation-triangle" style="font-size:2rem;margin-bottom:1rem;display:block;"></i><p>Gagal memuat data cuaca. Periksa API Key atau koneksi internet.</p></div>';
+        console.error('❌ Error fetching weather:', error);
+        grid.innerHTML = `
+            <div style="grid-column:1/-1;text-align:center;padding:3rem;">
+                <i class="fas fa-exclamation-triangle" style="font-size:3rem;color:#ef4444;margin-bottom:1rem;"></i>
+                <h3 style="color:var(--primary);margin-bottom:0.5rem;">Gagal Memuat Data Cuaca</h3>
+                <p style="color:var(--gray-600);margin-bottom:1rem;">${error.message}</p>
+                <button onclick="loadCuacaRealtime()" style="background:var(--gradient);color:white;border:none;padding:0.75rem 2rem;border-radius:40px;cursor:pointer;font-weight:600;">
+                    <i class="fas fa-redo"></i> Coba Lagi
+                </button>
+                <div style="margin-top:2rem;text-align:left;max-width:600px;margin-left:auto;margin-right:auto;background:var(--gray-100);padding:1.5rem;border-radius:var(--radius-md);">
+                    <h4 style="margin-bottom:0.5rem;">Kemungkinan Penyebab:</h4>
+                    <ul style="color:var(--gray-600);line-height:1.8;">
+                        <li>⏳ API key belum aktif (tunggu 10-60 menit)</li>
+                        <li>🌐 Koneksi internet terganggu</li>
+                        <li>🔑 API key tidak valid</li>
+                        <li>📊 Limit API tercapai (1000 calls/hari)</li>
+                    </ul>
+                </div>
+            </div>
+        `;
     }
 }
 
