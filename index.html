@@ -422,49 +422,54 @@
             </div>
         </div>
     </div>
+<!-- SIDEBAR TOGGLE BUTTON -->
+<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()" aria-label="Toggle Sidebar">
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- SIDEBAR OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
 <!-- SIDEBAR -->
-<div class="sidebar" id="sidebar">
+<aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
-        <h3>📚 Portal UST</h3>
-        <button class="sidebar-close" onclick="toggleSidebar()">
+        <div class="sidebar-brand">
+            <i class="fas fa-graduation-cap"></i>
+            <h3>Portal UST</h3>
+        </div>
+        <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close Sidebar">
             <i class="fas fa-times"></i>
         </button>
     </div>
+    
     <div class="sidebar-content">
         <a href="https://sipedar.ustjogja.ac.id/" target="_blank" class="sidebar-link">
-            <div class="sidebar-icon">
+            <div class="sidebar-link-icon">
                 <i class="fas fa-clipboard-list"></i>
             </div>
-            <div class="sidebar-info">
-                <span class="sidebar-title">Sipedar UST</span>
-                <span class="sidebar-desc">Sistem Informasi Akademik</span>
+            <div class="sidebar-link-text">
+                <span class="sidebar-link-title">Sipedar UST</span>
+                <span class="sidebar-link-desc">Sistem Informasi Akademik</span>
             </div>
-            <i class="fas fa-external-link-alt"></i>
+            <i class="fas fa-external-link-alt sidebar-link-arrow"></i>
         </a>
         
         <a href="https://portal.ustjogja.ac.id/" target="_blank" class="sidebar-link">
-            <div class="sidebar-icon">
+            <div class="sidebar-link-icon">
                 <i class="fas fa-graduation-cap"></i>
             </div>
-            <div class="sidebar-info">
-                <span class="sidebar-title">Portal Akademik UST</span>
-                <span class="sidebar-desc">Portal Mahasiswa & Dosen</span>
+            <div class="sidebar-link-text">
+                <span class="sidebar-link-title">Portal Akademik UST</span>
+                <span class="sidebar-link-desc">Portal Mahasiswa & Dosen</span>
             </div>
-            <i class="fas fa-external-link-alt"></i>
+            <i class="fas fa-external-link-alt sidebar-link-arrow"></i>
         </a>
     </div>
+    
     <div class="sidebar-footer">
         <p>Universitas Sarjanawiyata Tamansiswa</p>
     </div>
-</div>
-
-<!-- OVERLAY -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-
-<!-- TOGGLE BUTTON -->
-<button class="sidebar-toggle" id="sidebarToggle" onclick="toggleSidebar()">
-    <i class="fas fa-bars"></i>
-</button>
+</aside>
     <!-- ============================================================
     BACK TO TOP
     ============================================================ -->

@@ -240,25 +240,30 @@ window.fixViewport = fixViewport;
 })();
 
 console.log('✅ Mapatek Portal — Main initialized successfully!');
-// ==================== SIDEBAR TOGGLE ====================
+// ============================================================
+// SIDEBAR TOGGLE
+// ============================================================
+
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
-    const toggleBtn = document.getElementById('sidebarToggle');
     
     sidebar.classList.toggle('active');
     overlay.classList.toggle('active');
     
-    // Ubah icon toggle
-    const icon = toggleBtn.querySelector('i');
-    if (sidebar.classList.contains('active')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-times');
-    } else {
-        icon.classList.remove('fa-times');
-        icon.classList.add('fa-bars');
-    }
+    // Toggle body scroll
+    document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
 }
 
-// Export ke global scope
+// Tutup sidebar dengan tombol ESC
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const sidebar = document.getElementById('sidebar');
+        if (sidebar.classList.contains('active')) {
+            toggleSidebar();
+        }
+    }
+});
+
+// Ekspos ke global
 window.toggleSidebar = toggleSidebar;
