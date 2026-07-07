@@ -28,6 +28,23 @@
             <img src="images/logo.png" alt="Logo Mapatek" class="logo-icon" onerror="this.src='https://via.placeholder.com/40x40?text=M'">
             <span>Mapatek Abhipraya</span>
         </div>
+    </ul>
+    <div class="nav-actions">
+        <!-- Logo UST -->
+        <a href="https://ustjogja.ac.id" target="_blank" class="nav-icon-btn" title="Website UST">
+            <img src="images/logo-ust.png" alt="UST" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.src='https://ustjogja.ac.id/wp-content/uploads/2020/07/logo-ust.png'">
+        </a>
+        <button class="nav-icon-btn" onclick="openGlobalSearch()" title="Pencarian (Ctrl+K)">
+            <i class="fas fa-search"></i>
+        </button>
+        <button class="nav-icon-btn dark-mode-toggle" onclick="toggleDarkMode()" title="Mode Gelap/Terang">
+            <i class="fas fa-moon"></i>
+        </button>
+        <div class="hamburger" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+    </div>
+</nav>
         <ul class="nav-links" id="navLinks">
             <li><a href="#home">Beranda</a></li>
             <li><a href="#tentang">Tentang</a></li>
@@ -445,7 +462,16 @@
         <p>🏔️ Mapatek Abhipraya © 2023 — 2026. All Rights Reserved.</p>
         <p style="font-size:0.7rem; margin-top:0.25rem;">Sistem Kearsipan Internal | Dibuat dengan ❤️ untuk keluarga besar Mapatek</p>
     </footer>
-
+<footer>
+    <div class="footer-ust-badge">
+        <img src="images/logo-ust.png" alt="Logo UST" class="footer-ust-logo" onerror="this.src='https://ustjogja.ac.id/wp-content/uploads/2020/07/logo-ust.png'">
+        <div class="footer-ust-info">
+            <span class="footer-ust-title">Universitas Sarjanawiyata Tamansiswa</span>
+            <span class="footer-ust-subtitle">Organisasi Mahasiswa Resmi</span>
+        </div>
+    </div>
+    <!-- ... footer content ... -->
+</footer>
     <!-- ============================================================
     SEARCH GLOBAL OVERLAY
     ============================================================ -->
