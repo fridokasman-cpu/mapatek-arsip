@@ -127,12 +127,7 @@ const petaLocations = [
 
 // -------------------- BERITA --------------------
 const beritaData = [
-    { category: "Pengumuman", title: "Pendaftaran Diksar XV Resmi Dibuka!", excerpt: "Mapatek Abhipraya membuka pendaftaran Diksar XV untuk angkatan baru. Segera daftarkan dirimu sebelum kuota penuh!", date: "5 Juni 2026", image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600" },
-    { category: "Ekspedisi", title: "Ekspedisi Gunung Prau Berhasil Ditaklukkan", excerpt: "Tim ekspedisi Mapatek berhasil mencapai puncak Gunung Prau (2.590 mdpl) dengan aman dan lancar. Selamat!", date: "28 Mei 2026", image: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600" },
-    { category: "Konservasi", title: "Bakti Sosial Bersih Pantai Baros", excerpt: "Lebih dari 30 anggota berpartisipasi dalam aksi bersih-bersih Pantai Baros. Berhasil mengumpulkan 50kg sampah!", date: "20 Mei 2026", image: "https://images.unsplash.com/photo-1618477461853-cf6ed80f1d6e?w=600" },
-    { category: "Pelatihan", title: "Latihan Rock Climbing Angkatan LitaniAram", excerpt: "Angkatan LitaniAram mengikuti pelatihan panjat tebing dengan materi dasar belaying dan teknik ascending.", date: "15 Mei 2026", image: "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=600" },
-    { category: "Organisasi", title: "Musyawarah Besar Mapatek 2026", excerpt: "Musyawarah besar tahunan telah dilaksanakan untuk evaluasi kinerja dan pemilihan pengurus periode berikutnya.", date: "10 Mei 2026", image: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600" },
-    { category: "Prestasi", title: "Juara 1 Lomba Mapala Tingkat DIY", excerpt: "Mapatek Abhipraya meraih juara 1 dalam kompetisi pecinta alam tingkat DIY. Prestasi membanggakan!", date: "5 Mei 2026", image: "https://images.unsplash.com/photo-1569103-place-holder?w=600" }
+    { category: "Pengumuman", title: "Berita Terbaru!", excerpt: "Berita Seputar UST", date: "5 Juni 2026", image: "https://images." },
 ];
 
 // -------------------- KALENDER EVENT --------------------
