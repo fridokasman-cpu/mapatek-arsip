@@ -1,54 +1,14 @@
 {
     "pengumuman": [
         {
-            "id": 1,
-            "judul": "Pendaftaran Diksar XV Resmi Dibuka!",
-            "tanggal": "5 Juni 2026",
-            "kategori": "Pendaftaran",
-            "deskripsi": "Mapatek Abhipraya membuka pendaftaran Diksar XV untuk angkatan baru. Segera daftarkan dirimu sebelum kuota penuh!",
-            "link": "https://ustjogja.ac.id/id/berita/",
-            "status": "aktif",
-            "prioritas": "tinggi"
-        },
-        {
-            "id": 2,
-            "judul": "Jadwal Latihan Rutin Semester Ganjil 2026",
-            "tanggal": "1 September 2026",
-            "kategori": "Jadwal",
-            "deskripsi": "Latihan rutin dilaksanakan setiap Sabtu pukul 15.00-17.00 WIB di Basecamp Mapatek.",
-            "link": "https://ustjogja.ac.id/id/berita/",
-            "status": "aktif",
-            "prioritas": "sedang"
-        },
-        {
-            "id": 3,
-            "judul": "Ekspedisi Gunung Prau - Pendaftaran Peserta",
-            "tanggal": "10 Juni 2026",
-            "kategori": "Ekspedisi",
-            "deskripsi": "Pendaftaran peserta ekspedisi Gunung Prau dibuka hingga 12 Juni 2026. Kuota terbatas 20 orang.",
-            "link": "https://ustjogja.ac.id/id/berita/",
-            "status": "aktif",
-            "prioritas": "tinggi"
-        },
-        {
-            "id": 4,
-            "judul": "Rapat Koordinasi Pengurus Periode 2026-2027",
+            "id": 6,
+            "judul": "Pengumuman Baru Anda",
             "tanggal": "15 Juli 2026",
-            "kategori": "Rapat",
-            "deskripsi": "Seluruh pengurus inti wajib hadir dalam rapat koordinasi di Sekretariat Mapatek.",
+            "kategori": "Penting",
+            "deskripsi": "Deskripsi pengumuman...",
             "link": "https://ustjogja.ac.id/id/berita/",
             "status": "aktif",
-            "prioritas": "sedang"
-        },
-        {
-            "id": 5,
-            "judul": "Bakti Sosial Konservasi Pantai Parangtritis",
-            "tanggal": "20 Juli 2026",
-            "kategori": "Kegiatan",
-            "deskripsi": "Aksi bersih pantai dan penanaman mangrove bersama warga lokal.",
-            "link": "https://ustjogja.ac.id/id/berita/",
-            "status": "aktif",
-            "prioritas": "rendah"
+            "prioritas": "tinggi"
         }
     ]
 }
