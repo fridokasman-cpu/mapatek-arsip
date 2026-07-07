@@ -1,4 +1,8 @@
-// ==================== FUNGSI UTAMA ====================
+// ================================================================
+// MAIN — Inisialisasi & Event Controller
+// ================================================================
+
+// ==================== NAVBAR TOGGLE ====================
 function toggleMenu() {
     document.getElementById('navLinks').classList.toggle('active');
 }
@@ -13,6 +17,7 @@ window.addEventListener('scroll', () => {
 
 // ==================== REVEAL ANIMATION ====================
 const revealElements = document.querySelectorAll('.reveal');
+
 function checkReveal() {
     const windowHeight = window.innerHeight;
     revealElements.forEach(el => {
@@ -20,6 +25,7 @@ function checkReveal() {
         if (rect.top < windowHeight - 100) el.classList.add('active');
     });
 }
+
 window.addEventListener('scroll', checkReveal);
 checkReveal();
 
@@ -45,22 +51,53 @@ fetch('status.json?t=' + Date.now())
     .then(data => {
         const container = document.getElementById('statusContainer');
         if (data.status === 'buka') {
-            container.innerHTML = `<div class="status-box status-buka"><div class="status-icon"><i class="fas fa-door-open"></i></div><h2 style="color:#065f46; font-size:1.75rem;">PENDAFTARAN DIBUKA! 🎉</h2><div class="info-periode"><i class="fas fa-calendar-alt"></i> ${data.periode}</div><p style="margin-top:1rem;">Ayo bergabung bersama keluarga besar Mapatek Abhipraya!<br>Isi formulir pendaftaran dengan klik tombol di bawah ini.</p><a href="${data.link_form}" target="_blank" class="btn-daftar"><i class="fas fa-pen-to-square"></i> DAFTAR SEKARANG</a></div>`;
+            container.innerHTML = `
+                <div class="status-box status-buka">
+                    <div class="status-icon"><i class="fas fa-door-open"></i></div>
+                    <h2 style="color:#065f46; font-size:1.75rem;">PENDAFTARAN DIBUKA! 🎉</h2>
+                    <div class="info-periode"><i class="fas fa-calendar-alt"></i> ${data.periode}</div>
+                    <p style="margin-top:1rem;">Ayo bergabung bersama keluarga besar Mapatek Abhipraya!<br>Isi formulir pendaftaran dengan klik tombol di bawah ini.</p>
+                    <a href="${data.link_form}" target="_blank" class="btn-daftar"><i class="fas fa-pen-to-square"></i> DAFTAR SEKARANG</a>
+                </div>
+            `;
         } else {
-            container.innerHTML = `<div class="status-box status-tutup"><div class="status-icon"><i class="fas fa-door-closed"></i></div><h2 style="color:#991b1b; font-size:1.75rem;">PENDAFTARAN DITUTUP</h2><p>${data.info_lanjutan}</p><div class="info-periode"><i class="fas fa-info-circle"></i> ${data.periode}</div><p style="margin-top:1rem;">Follow Instagram kami untuk info terbaru:<br><a href="https://instagram.com/mapatek_abhipraya" target="_blank" style="color:#e1306c;">@mapatek_abhipraya</a></p></div>`;
+            container.innerHTML = `
+                <div class="status-box status-tutup">
+                    <div class="status-icon"><i class="fas fa-door-closed"></i></div>
+                    <h2 style="color:#991b1b; font-size:1.75rem;">PENDAFTARAN DITUTUP</h2>
+                    <p>${data.info_lanjutan}</p>
+                    <div class="info-periode"><i class="fas fa-info-circle"></i> ${data.periode}</div>
+                    <p style="margin-top:1rem;">Follow Instagram kami untuk info terbaru:<br><a href="https://instagram.com/mapatek_abhipraya" target="_blank" style="color:#e1306c;">@mapatek_abhipraya</a></p>
+                </div>
+            `;
         }
     })
     .catch(() => {
-        document.getElementById('statusContainer').innerHTML = `<div class="status-box status-tutup"><div class="status-icon"><i class="fas fa-info-circle"></i></div><h2 style="color:#991b1b;">INFORMASI PENDAFTARAN</h2><p>Untuk informasi pendaftaran anggota baru, hubungi admin kami.</p><div style="margin-top:1.5rem;"><a href="https://wa.me/6282214428371" target="_blank" class="btn-daftar" style="background:#25D366;"><i class="fab fa-whatsapp"></i> Chat Admin</a></div></div>`;
+        document.getElementById('statusContainer').innerHTML = `
+            <div class="status-box status-tutup">
+                <div class="status-icon"><i class="fas fa-info-circle"></i></div>
+                <h2 style="color:#991b1b;">INFORMASI PENDAFTARAN</h2>
+                <p>Untuk informasi pendaftaran anggota baru, hubungi admin kami.</p>
+                <div style="margin-top:1.5rem;">
+                    <a href="https://wa.me/6282214428371" target="_blank" class="btn-daftar" style="background:#25D366;">
+                        <i class="fab fa-whatsapp"></i> Chat Admin
+                    </a>
+                </div>
+            </div>
+        `;
     });
 
 // ==================== KEYBOARD SHORTCUTS ====================
 document.addEventListener('keydown', (e) => {
+    // Ctrl+K atau Cmd+K untuk membuka pencarian global
     if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
         e.preventDefault();
-        openGlobalSearch();
+        if (typeof openGlobalSearch === 'function') openGlobalSearch();
     }
-    if (e.key === 'Escape') closeGlobalSearch();
+    // ESC untuk menutup pencarian global
+    if (e.key === 'Escape') {
+        if (typeof closeGlobalSearch === 'function') closeGlobalSearch();
+    }
 });
 
 // ==================== SCROLL EVENTS ====================
@@ -73,34 +110,66 @@ window.addEventListener('scroll', () => {
 // ==================== INIT DARK MODE ====================
 if (localStorage.getItem('darkMode') === 'true') {
     document.body.classList.add('dark-mode');
-    document.querySelector('.dark-mode-toggle i').classList.remove('fa-moon');
-    document.querySelector('.dark-mode-toggle i').classList.add('fa-sun');
+    const icon = document.querySelector('.dark-mode-toggle i');
+    if (icon) {
+        icon.classList.remove('fa-moon');
+        icon.classList.add('fa-sun');
+    }
 }
 
 // ==================== LOAD ALL FEATURES ====================
 window.addEventListener('load', () => {
-    loadAgenda();
-    loadGaleri();
-    loadTestimoni();
-    loadLeaderboard();
-    loadPolling();
-    loadCuacaRealtime();
-    loadBerita();
-    loadKalender();
-    loadFAQ();
-    loadQuizQuestion();
-    setTimeout(loadPeta, 500);
+    // Load semua konten
+    if (typeof loadAgenda === 'function') loadAgenda();
+    if (typeof loadGaleri === 'function') loadGaleri();
+    if (typeof loadTestimoni === 'function') loadTestimoni();
+    if (typeof loadLeaderboard === 'function') loadLeaderboard();
+    if (typeof loadPolling === 'function') loadPolling();
+    if (typeof loadCuacaRealtime === 'function') loadCuacaRealtime();
+    if (typeof loadBerita === 'function') loadBerita();
+    if (typeof loadKalender === 'function') loadKalender();
+    if (typeof loadFAQ === 'function') loadFAQ();
+    if (typeof loadQuizQuestion === 'function') loadQuizQuestion();
     
-    animateCounter(document.getElementById('memberCount'), 50);
-    animateCounter(document.getElementById('expeditionCount'), 12);
-    animateCounter(document.getElementById('trainingCount'), 8);
-    animateCounter(document.getElementById('documentCount'), 25);
+    // Load peta dengan delay (pastikan DOM sudah siap)
+    if (typeof loadPeta === 'function') {
+        setTimeout(loadPeta, 500);
+    }
     
-    setInterval(nextTestimoni, 6000);
-    setInterval(updateCountdown, 1000);
-    setInterval(loadCuacaRealtime, 1800000);
+    // Animasi counter
+    if (typeof animateCounter === 'function') {
+        const memberEl = document.getElementById('memberCount');
+        const expeditionEl = document.getElementById('expeditionCount');
+        const trainingEl = document.getElementById('trainingCount');
+        const documentEl = document.getElementById('documentCount');
+        if (memberEl) animateCounter(memberEl, 50);
+        if (expeditionEl) animateCounter(expeditionEl, 12);
+        if (trainingEl) animateCounter(trainingEl, 8);
+        if (documentEl) animateCounter(documentEl, 25);
+    }
     
-    showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
+    // Auto-slide testimoni setiap 6 detik
+    if (typeof nextTestimoni === 'function') {
+        setInterval(nextTestimoni, 6000);
+    }
+    
+    // Update countdown setiap detik
+    if (typeof updateCountdown === 'function') {
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    }
+    
+    // Refresh cuaca setiap 30 menit
+    if (typeof loadCuacaRealtime === 'function') {
+        setInterval(loadCuacaRealtime, 1800000);
+    }
+    
+    // Toast sambutan
+    if (typeof showToast === 'function') {
+        setTimeout(() => {
+            showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
+        }, 800);
+    }
 });
 
 // ==================== FIX VIEWPORT MOBILE ====================
@@ -109,37 +178,43 @@ document.addEventListener('gesturestart', function (e) {
 });
 
 function fixViewport() {
-    if (window.innerWidth < 480) {
-        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5');
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport && window.innerWidth < 480) {
+        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5');
     }
 }
 
 window.addEventListener('load', fixViewport);
 window.addEventListener('resize', fixViewport);
 
-// ==================== EKSPOSE FUNGSI KE GLOBAL ====================
+// ================================================================
+// EKSPOSE FUNGSI KE GLOBAL (agar bisa dipanggil dari HTML onclick)
+// ================================================================
 window.toggleMenu = toggleMenu;
-window.toggleDarkMode = toggleDarkMode;
-window.toggleChatbot = toggleChatbot;
-window.sendMessage = sendMessage;
-window.openGlobalSearch = openGlobalSearch;
-window.closeGlobalSearch = closeGlobalSearch;
-window.performGlobalSearch = performGlobalSearch;
-window.navigateTo = navigateTo;
 window.filterArsip = filterArsip;
 window.filterKategori = filterKategori;
-window.scrollToTop = scrollToTop;
-window.openModal = openModal;
-window.closeModal = closeModal;
-window.nextTestimoni = nextTestimoni;
-window.prevTestimoni = prevTestimoni;
-window.goToTestimoni = goToTestimoni;
-window.votePolling = votePolling;
-window.loadCuacaRealtime = loadCuacaRealtime;
-window.changeMonth = changeMonth;
-window.filterKalender = filterKalender;
-window.toggleFAQ = toggleFAQ;
-window.answerQuiz = answerQuiz;
-window.restartQuiz = restartQuiz;
-window.copyToClipboard = copyToClipboard;
-window.showToast = showToast;
+window.fixViewport = fixViewport;
+
+// Fungsi dari features.js (diekpose ulang untuk memastikan tersedia)
+// Catatan: semua fungsi di features.js sudah diekspose di file tersebut,
+// tapi kita pastikan kembali untuk menghindari error jika pemanggilan tidak berurutan.
+(function ensureFunctionsExposed() {
+    const functionsToExpose = [
+        'toggleDarkMode', 'scrollToTop', 'showToast', 'openModal', 'closeModal',
+        'nextTestimoni', 'prevTestimoni', 'goToTestimoni', 'votePolling',
+        'loadCuacaRealtime', 'changeMonth', 'filterKalender', 'toggleFAQ',
+        'answerQuiz', 'restartQuiz', 'copyToClipboard',
+        'openGlobalSearch', 'closeGlobalSearch', 'performGlobalSearch', 'navigateTo',
+        'updateCountdown', 'loadTestimoni', 'loadLeaderboard', 'loadPolling',
+        'loadBerita', 'loadKalender', 'loadFAQ', 'loadQuizQuestion',
+        'loadAgenda', 'loadGaleri', 'animateCounter', 'loadPeta'
+    ];
+    
+    functionsToExpose.forEach(fnName => {
+        if (typeof window[fnName] === 'undefined' && typeof eval(fnName) === 'function') {
+            window[fnName] = eval(fnName);
+        }
+    });
+})();
+
+console.log('✅ Mapatek Portal — Main initialized successfully!');

@@ -1,3 +1,7 @@
+// ================================================================
+// FEATURES — Semua fungsi utama untuk fitur interaktif
+// ================================================================
+
 // ==================== COUNTDOWN TIMER ====================
 const targetDate = new Date('2026-06-15T08:00:00').getTime();
 
@@ -78,7 +82,7 @@ function loadPolling() {
     const container = document.getElementById('pollingOptions');
     const totalVotes = pollingData.reduce((sum, p) => sum + p.votes, 0);
     container.innerHTML = pollingData.map(p => {
-        const percent = ((p.votes / totalVotes) * 100).toFixed(1);
+        const percent = totalVotes > 0 ? ((p.votes / totalVotes) * 100).toFixed(1) : 0;
         return `
             <div class="polling-option ${hasVoted ? 'voted' : ''}" data-id="${p.id}" onclick="votePolling(${p.id})">
                 <div class="polling-bar" style="width:${hasVoted ? percent : 0}%"></div>
@@ -106,8 +110,8 @@ function votePolling(id) {
 // ==================== CUACA REALTIME ====================
 function getOpenWeatherIcon(code) {
     const icons = {
-        '01d': '☀️', '01n': '',
-        '02d': '', '02n': '☁️',
+        '01d': '☀️', '01n': '🌙',
+        '02d': '⛅', '02n': '☁️',
         '03d': '☁️', '03n': '☁️',
         '04d': '☁️', '04n': '☁️',
         '09d': '🌧️', '09n': '🌧️',
@@ -270,8 +274,8 @@ function loadPeta() {
     
     const overlayMaps = {
         "🏠 Basecamp": basecampLayer,
-        "⛰️ Gunung (10)": gunungLayer,
-        "🌳 Konservasi (3)": konservasiLayer
+        "⛰️ Gunung": gunungLayer,
+        "🌳 Konservasi": konservasiLayer
     };
     
     L.control.layers(null, overlayMaps, { collapsed: false }).addTo(petaMap);
@@ -436,6 +440,12 @@ function openGlobalSearch() {
 function closeGlobalSearch() {
     document.getElementById('searchGlobalOverlay').classList.remove('active');
     document.getElementById('globalSearchInput').value = '';
+    document.getElementById('globalSearchResults').innerHTML = `
+        <div style="padding:2rem;text-align:center;color:var(--gray-500);">
+            <i class="fas fa-search" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
+            Ketik untuk mencari di seluruh website...
+        </div>
+    `;
 }
 
 function performGlobalSearch() {
@@ -523,7 +533,8 @@ function showToast(message) {
     const toast = document.getElementById('toast');
     toast.textContent = message;
     toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
 function openModal(src) {
@@ -533,3 +544,39 @@ function openModal(src) {
 }
 
 function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
+
+// ==================== EXPOSE FUNCTIONS TO GLOBAL ====================
+// Semua fungsi yang dipanggil dari HTML (onclick, dll) harus tersedia di window.
+window.updateCountdown = updateCountdown;
+window.loadTestimoni = loadTestimoni;
+window.updateTestimoni = updateTestimoni;
+window.nextTestimoni = nextTestimoni;
+window.prevTestimoni = prevTestimoni;
+window.goToTestimoni = goToTestimoni;
+window.loadLeaderboard = loadLeaderboard;
+window.loadPolling = loadPolling;
+window.votePolling = votePolling;
+window.loadCuacaRealtime = loadCuacaRealtime;
+window.loadPeta = loadPeta;
+window.loadBerita = loadBerita;
+window.loadKalender = loadKalender;
+window.changeMonth = changeMonth;
+window.filterKalender = filterKalender;
+window.loadFAQ = loadFAQ;
+window.toggleFAQ = toggleFAQ;
+window.loadQuizQuestion = loadQuizQuestion;
+window.answerQuiz = answerQuiz;
+window.restartQuiz = restartQuiz;
+window.copyToClipboard = copyToClipboard;
+window.openGlobalSearch = openGlobalSearch;
+window.closeGlobalSearch = closeGlobalSearch;
+window.performGlobalSearch = performGlobalSearch;
+window.navigateTo = navigateTo;
+window.loadAgenda = loadAgenda;
+window.loadGaleri = loadGaleri;
+window.animateCounter = animateCounter;
+window.toggleDarkMode = toggleDarkMode;
+window.scrollToTop = scrollToTop;
+window.showToast = showToast;
+window.openModal = openModal;
+window.closeModal = closeModal;
