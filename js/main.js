@@ -346,6 +346,10 @@ window.addEventListener('load', () => {
             showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
         }, 800);
     }
+    if (typeof loadPengumuman === 'function') {
+    loadPengumuman();
+    setInterval(loadPengumuman, 600000); // refresh tiap 10 menit
+}
 });
 
 // ==================== FIX VIEWPORT MOBILE ====================
