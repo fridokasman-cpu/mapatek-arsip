@@ -644,28 +644,6 @@ function openModal(src) {
 }
 
 function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
-// === LOAD AGENDA DARI JSON (OPSIONAL) ===
-async function loadAgendaFromJSON() {
-    try {
-        const response = await fetch('agenda.json?t=' + Date.now());
-        const data = await response.json();
-        
-        if (data.agendas && Array.isArray(data.agendas)) {
-            agendas.length = 0; // Kosongkan array
-            agendas.push(...data.agendas);
-            
-            // Reload agenda grid
-            loadAgenda();
-            
-            // Update countdown dengan data baru
-            updateCountdown();
-            
-            console.log('✅ Agenda updated from JSON');
-        }
-    } catch (error) {
-        console.log('ℹ️ Using default agenda data (no agenda.json found)');
-    }
-}
 // ==================== EXPOSE FUNCTIONS TO GLOBAL ====================
 // Ekspos semua fungsi yang dipanggil dari HTML (onclick, onchange, dll)
 // Hanya fungsi yang didefinisikan di file ini yang diekspos.

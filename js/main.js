@@ -299,21 +299,15 @@ if (localStorage.getItem('darkMode') === 'true') {
     }
 }
 window.addEventListener('load', () => {
-    // ... kode lain yang sudah ada
-
-    // LOAD AGENDA DARI JSON (TAMBAHKAN INI!)
+    // ===== MUAT AGENDA DARI JSON TERLEBIH DAHULU =====
     if (typeof loadAgendaFromJSON === 'function') {
         loadAgendaFromJSON();
     } else {
-        // Fallback jika fungsi tidak ada, panggil loadAgenda biasa
+        // Fallback jika fungsi tidak ada
         if (typeof loadAgenda === 'function') loadAgenda();
     }
 
-    // ... kode lain (galeri, testimoni, dll)
-});
-// ==================== LOAD ALL FEATURES ====================
-window.addEventListener('load', () => {
-    if (typeof loadAgenda === 'function') loadAgenda();
+    // ===== LOAD FITUR LAINNYA =====
     if (typeof loadGaleri === 'function') loadGaleri();
     if (typeof loadTestimoni === 'function') loadTestimoni();
     if (typeof loadLeaderboard === 'function') loadLeaderboard();
@@ -333,8 +327,6 @@ window.addEventListener('load', () => {
         const expeditionEl = document.getElementById('expeditionCount');
         const trainingEl = document.getElementById('trainingCount');
         const documentEl = document.getElementById('documentCount');
-        
-        //Data Jumlah Anggota Mapatek//
         if (memberEl) animateCounter(memberEl, 49);
         if (expeditionEl) animateCounter(expeditionEl, 12);
         if (trainingEl) animateCounter(trainingEl, 8);
@@ -352,6 +344,10 @@ window.addEventListener('load', () => {
     
     if (typeof loadCuacaRealtime === 'function') {
         setInterval(loadCuacaRealtime, 1800000);
+    }
+    
+    if (typeof loadPengumuman === 'function') {
+        loadPengumuman();
         setInterval(loadPengumuman, 600000);
     }
 
@@ -360,10 +356,6 @@ window.addEventListener('load', () => {
             showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
         }, 800);
     }
-    if (typeof loadPengumuman === 'function') {
-    loadPengumuman();
-    setInterval(loadPengumuman, 600000); // refresh tiap 10 menit
-}
 });
 // ==================== FIX VIEWPORT MOBILE ====================
 document.addEventListener('gesturestart', function (e) {
