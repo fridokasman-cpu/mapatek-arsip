@@ -43,7 +43,59 @@ function filterArsip() {
         parent.replaceChild(document.createTextNode(el.textContent), el);
         parent.normalize();
     });
+  // === FILTER KATEGORI ARSIP (VERSI ROBUST) ===
+function filterKategori(kategori, btn) {
+    // 1. Reset semua tombol - hapus class active
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     
+    // 2. Tambah class active ke tombol yang diklik
+    if (btn) {
+        btn.classList.add('active');
+    }
+    
+    // 3. Filter item arsip
+    const items = document.querySelectorAll('.arsip-item');
+    let visibleCount = 0;
+    
+    items.forEach(item => {
+        const itemKategori = item.getAttribute('data-kategori');
+        
+        if (kategori === 'all' || itemKategori === kategori) {
+            item.style.display = 'flex';
+            visibleCount++;
+        } else {
+            item.style.display = 'none';
+        }
+    });
+    
+    // 4. Debug log (bisa dilihat di Console F12)
+    console.log(`📁 Filter: "${kategori}" | Tampil: ${visibleCount} file`);
+    
+    // 5. Tampilkan pesan jika tidak ada hasil
+    let noResultMsg = document.querySelector('.no-result-msg');
+    if (visibleCount === 0 && kategori !== 'all') {
+        if (!noResultMsg) {
+            noResultMsg = document.createElement('div');
+            noResultMsg.className = 'no-result-msg';
+            noResultMsg.style.cssText = `
+                text-align: center;
+                padding: 2rem;
+                color: var(--gray-500);
+                grid-column: 1 / -1;
+                background: var(--gray-50);
+                border-radius: var(--radius-md);
+                margin-top: 1rem;
+            `;
+            document.getElementById('arsipList').appendChild(noResultMsg);
+        }
+        noResultMsg.innerHTML = `
+            <i class="fas fa-folder-open" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
+            <p>Belum ada dokumen untuk kategori "${kategori}"</p>
+        `;
+    } else if (noResultMsg) {
+        noResultMsg.remove();
+    }
+}
     // Filter items
     arsipItems.forEach(item => {
         const text = item.innerText.toLowerCase();
