@@ -298,6 +298,19 @@ if (localStorage.getItem('darkMode') === 'true') {
         icon.classList.add('fa-sun');
     }
 }
+window.addEventListener('load', () => {
+    // ... kode lain yang sudah ada
+
+    // LOAD AGENDA DARI JSON (TAMBAHKAN INI!)
+    if (typeof loadAgendaFromJSON === 'function') {
+        loadAgendaFromJSON();
+    } else {
+        // Fallback jika fungsi tidak ada, panggil loadAgenda biasa
+        if (typeof loadAgenda === 'function') loadAgenda();
+    }
+
+    // ... kode lain (galeri, testimoni, dll)
+});
 // ==================== LOAD ALL FEATURES ====================
 window.addEventListener('load', () => {
     if (typeof loadAgenda === 'function') loadAgenda();

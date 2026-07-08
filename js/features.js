@@ -564,21 +564,35 @@ function navigateTo(section) {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
 }
 
-// ==================== AGENDA & GALERI ====================
-function loadAgenda() {
-    const container = document.getElementById('agendaGrid');
-    if (!container) return;
-    container.innerHTML = agendas.map(a => `
-        <div class="agenda-card">
-            <div class="agenda-date"><div class="day">${a.day}</div><div class="month">${a.month}</div></div>
-            <div class="agenda-content">
-                <h3 class="agenda-title">${a.title}</h3>
-                <div class="agenda-location"><i class="fas fa-map-marker-alt"></i> ${a.location}</div>
-                <p class="agenda-desc">${a.desc}</p>
-                <span class="agenda-status status-${a.status}">${a.status === 'upcoming' ? '📅 Akan Datang' : a.status === 'ongoing' ? '🔴 Berlangsung' : '✅ Selesai'}</span>
-            </div>
-        </div>
-    `).join('');
+// === LOAD AGENDA DARI JSON ===
+async function loadAgendaFromJSON() {
+    try {
+        const response = await fetch('agenda.json?t=' + Date.now());
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const data = await response.json();
+        
+        if (data.agendas && Array.isArray(data.agendas) && data.agendas.length > 0) {
+            // Kosongkan array agendas (global) dan isi dengan data baru
+            if (window.agendas) {
+                window.agendas.splice(0, window.agendas.length, ...data.agendas);
+            } else {
+                // Fallback jika agendas tidak ada di window
+                agendas = data.agendas;
+            }
+            
+            // Render ulang agenda
+            loadAgenda();
+            
+            // Update countdown karena event berubah
+            updateCountdown();
+            
+            console.log('✅ Agenda updated from JSON:', data.agendas.length, 'events');
+        } else {
+            console.warn('⚠️ agenda.json tidak memiliki data agendas yang valid');
+        }
+    } catch (error) {
+        console.log('ℹ️ Gagal memuat agenda.json, menggunakan data default:', error.message);
+    }
 }
 
 function loadGaleri() {
@@ -653,7 +667,8 @@ async function loadAgendaFromJSON() {
     }
 }
 // ==================== EXPOSE FUNCTIONS TO GLOBAL ====================
-// Semua fungsi yang dipanggil dari HTML (onclick, dll) harus tersedia di window.
+// Ekspos semua fungsi yang dipanggil dari HTML (onclick, onchange, dll)
+// Hanya fungsi yang didefinisikan di file ini yang diekspos.
 window.updateCountdown = updateCountdown;
 window.loadTestimoni = loadTestimoni;
 window.updateTestimoni = updateTestimoni;
@@ -669,6 +684,7 @@ window.loadBerita = loadBerita;
 window.loadKalender = loadKalender;
 window.changeMonth = changeMonth;
 window.filterKalender = filterKalender;
+window.refreshKalender = refreshKalender;
 window.loadFAQ = loadFAQ;
 window.toggleFAQ = toggleFAQ;
 window.loadQuizQuestion = loadQuizQuestion;
@@ -687,31 +703,9 @@ window.scrollToTop = scrollToTop;
 window.showToast = showToast;
 window.openModal = openModal;
 window.closeModal = closeModal;
+window.loadAgendaFromJSON = loadAgendaFromJSON;
 window.filterKategori = filterKategori;
 window.filterArsip = filterArsip;
-// Ekspos fungsi ke global scope
-window.filterKategori = filterKategori;
-window.filterArsip = filterArsip;
-window.toggleMenu = toggleMenu;
-window.toggleDarkMode = toggleDarkMode;
-window.toggleChatbot = toggleChatbot;
-window.sendMessage = sendMessage;
-window.openGlobalSearch = openGlobalSearch;
-window.closeGlobalSearch = closeGlobalSearch;
-window.performGlobalSearch = performGlobalSearch;
-window.navigateTo = navigateTo;
-window.scrollToTop = scrollToTop;
-window.openModal = openModal;
-window.closeModal = closeModal;
-window.nextTestimoni = nextTestimoni;
-window.prevTestimoni = prevTestimoni;
-window.goToTestimoni = goToTestimoni;
-window.votePolling = votePolling;
-window.loadCuacaRealtime = loadCuacaRealtime;
-window.changeMonth = changeMonth;
-window.filterKalender = filterKalender;
-window.toggleFAQ = toggleFAQ;
-window.answerQuiz = answerQuiz;
-window.restartQuiz = restartQuiz;
-window.copyToClipboard = copyToClipboard;
-window.showToast = showToast;
+window.loadKalenderData = loadKalenderData;
+
+console.log('✅ features.js functions exposed to global scope');
