@@ -298,10 +298,6 @@ if (localStorage.getItem('darkMode') === 'true') {
         icon.classList.add('fa-sun');
     }
 }
-// Setelah fungsi lain dipanggil
-if (typeof refreshKalender === 'function') {
-    refreshKalender();
-}
 // ==================== LOAD ALL FEATURES ====================
 window.addEventListener('load', () => {
     if (typeof loadAgenda === 'function') loadAgenda();
