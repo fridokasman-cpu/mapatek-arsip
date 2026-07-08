@@ -298,7 +298,14 @@ if (localStorage.getItem('darkMode') === 'true') {
         icon.classList.add('fa-sun');
     }
 }
+window.addEventListener('load', function() {
+    // ===== MUAT AGENDA LANGSUNG DARI DATA.JS =====
+    if (typeof loadAgenda === 'function') {
+        loadAgenda();
+    }
 
+    // ... fitur lain (galeri, testimoni, dll)
+});
 // ==================== LOAD ALL FEATURES ====================
 window.addEventListener('load', () => {
     if (typeof loadAgenda === 'function') loadAgenda();
@@ -431,23 +438,14 @@ async function loadPengumuman() {
     }
 }
 
-// ==================== LOAD AGENDA DARI JSON (OPSIONAL) ====================
-async function loadAgendaFromJSON() {
-    try {
-        const response = await fetch('agenda.json?t=' + Date.now());
-        const data = await response.json();
-        
-        if (data.agendas && Array.isArray(data.agendas)) {
-            agendas.length = 0;
-            agendas.push(...data.agendas);
-            loadAgenda();
-            updateCountdown();
-            console.log('✅ Agenda updated from JSON');
-        }
-    } catch (error) {
-        console.log('ℹ️ Using default agenda data (no agenda.json found)');
+window.addEventListener('load', function() {
+    // ===== MUAT AGENDA LANGSUNG DARI DATA.JS =====
+    if (typeof loadAgenda === 'function') {
+        loadAgenda();
     }
-}
+
+    // ... fitur lain (galeri, testimoni, dll)
+});
 
 // ==================== EKSPOSE FUNGSI KE GLOBAL ====================
 window.toggleMenu = toggleMenu;
