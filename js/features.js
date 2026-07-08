@@ -749,7 +749,4 @@ window.answerQuiz = answerQuiz;
 window.restartQuiz = restartQuiz;
 window.copyToClipboard = copyToClipboard;
 window.showToast = showToast;
-window.refreshKalender = refreshKalender;
-window.loadKalender = loadKalender;
-window.changeMonth = changeMonth;
-window.filterKalender = filterKalender;
+

@@ -253,4 +253,3 @@ window.showToast = showToast;
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.loadAgendaFromJSON = loadAgendaFromJSON;
-})();
