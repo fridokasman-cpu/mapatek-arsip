@@ -517,25 +517,6 @@
     SCRIPTS
     ============================================================ -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
-        // Ekspos fungsi ke window object
-window.filterKategori = filterKategori;
-window.filterArsip = filterArsip;
-window.toggleMenu = toggleMenu;
-window.toggleDarkMode = toggleDarkMode;
-window.toggleChatbot = toggleChatbot;
-window.sendMessage = sendMessage;
-// Fix viewport untuk mobile
-function fixViewport() {
-    if (window.innerWidth < 480) {
-        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5');
-    }
-}
-window.addEventListener('load', fixViewport);
-window.addEventListener('resize', fixViewport);
-</script>
-</body>
-</html>
-// ... dan fungsi lainnya yang dipanggil dari HTML
     </script>
 
     <!-- JAVASCRIPT FILES (URUTAN PENTING!) -->
@@ -543,6 +524,6 @@ window.addEventListener('resize', fixViewport);
     <script src="js/features.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
-    
+
 </body>
 </html>
