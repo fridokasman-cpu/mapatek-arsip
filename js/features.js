@@ -6,6 +6,7 @@
 let currentEvent = null;
 
 function getNextEvent() {
+    // Pastikan agendas tersedia
     if (typeof agendas === 'undefined' || !agendas || agendas.length === 0) {
         return null;
     }
@@ -26,9 +27,9 @@ function updateCountdown() {
     const secondsEl = document.getElementById('cd-seconds');
     const eventNameEl = document.getElementById('countdownEventName');
     if (!daysEl || !hoursEl || !minutesEl || !secondsEl || !eventNameEl) {
+        console.warn('⚠️ Elemen countdown tidak ditemukan');
         return;
     }
-
     const event = getNextEvent();
     if (!event) {
         daysEl.textContent = '00';
@@ -38,12 +39,10 @@ function updateCountdown() {
         eventNameEl.textContent = '📅 Belum ada event terjadwal';
         return;
     }
-
     const eventDate = new Date(event.date + 'T08:00:00');
     const now = new Date();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-
     if (eventDate.toDateString() === today.toDateString()) {
         daysEl.textContent = '00';
         hoursEl.textContent = '00';
@@ -52,7 +51,6 @@ function updateCountdown() {
         eventNameEl.textContent = `🎉 Hari Ini: ${event.title}`;
         return;
     }
-
     const distance = eventDate - now;
     if (distance < 0) {
         daysEl.textContent = '00';
@@ -62,23 +60,19 @@ function updateCountdown() {
         eventNameEl.textContent = `✅ ${event.title} - Selesai!`;
         return;
     }
-
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
     daysEl.textContent = String(days).padStart(2, '0');
     hoursEl.textContent = String(hours).padStart(2, '0');
     minutesEl.textContent = String(minutes).padStart(2, '0');
     secondsEl.textContent = String(seconds).padStart(2, '0');
-
     const eventDateFormatted = new Date(event.date).toLocaleDateString('id-ID', {
         day: 'numeric',
         month: 'long',
         year: 'numeric'
     });
-
     eventNameEl.innerHTML = `
         <span style="font-size: 0.9rem; opacity: 0.8;">Event Berikutnya:</span><br>
         <strong>${event.title}</strong>
@@ -88,9 +82,9 @@ function updateCountdown() {
     `;
 }
 
-// Jalankan countdown
+// Jalankan countdown setiap detik
 setInterval(updateCountdown, 1000);
-updateCountdown();
+updateCountdown(); // panggil sekali saat load
 
 // ==================== TESTIMONI ====================
 let currentTestimoni = 0;
@@ -98,40 +92,30 @@ let currentTestimoni = 0;
 function loadTestimoni() {
     const track = document.getElementById('testimoniTrack');
     const dots = document.getElementById('testimoniDots');
-    if (!track || !dots) return;
-
-    if (typeof testimoniData === 'undefined' || !testimoniData || testimoniData.length === 0) {
-        track.innerHTML = `
-            <div style="text-align:center;padding:2rem;color:var(--gray-500);">
-                <i class="fas fa-info-circle" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                Belum ada testimoni
-            </div>
-        `;
-        dots.innerHTML = '';
+    if (!track || !dots) {
+        console.warn('⚠️ Elemen testimoni tidak ditemukan');
         return;
     }
-
+    if (typeof testimoniData === 'undefined' || !testimoniData || testimoniData.length === 0) {
+        track.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--gray-500);">Belum ada testimoni</div>`;
+        return;
+    }
     track.innerHTML = testimoniData.map(t => `
         <div class="testimoni-card">
-            <img src="${t.photo}" alt="${t.name}" class="testimoni-photo" onerror="this.src='https://via.placeholder.com/100?text=User'">
+            <img src="${t.photo}" alt="${t.name}" class="testimoni-photo" onerror="this.src='https://via.placeholder.com/100'">
             <div class="testimoni-quote">${t.quote}</div>
             <div class="testimoni-name">${t.name}</div>
             <div class="testimoni-angkatan">${t.angkatan}</div>
         </div>
     `).join('');
-
-    dots.innerHTML = testimoniData.map((_, i) => `
-        <div class="testimoni-dot ${i === 0 ? 'active' : ''}" onclick="goToTestimoni(${i})"></div>
-    `).join('');
+    dots.innerHTML = testimoniData.map((_, i) => `<div class="testimoni-dot ${i === 0 ? 'active' : ''}" onclick="goToTestimoni(${i})"></div>`).join('');
 }
 
 function updateTestimoni() {
     const track = document.getElementById('testimoniTrack');
     if (!track) return;
     track.style.transform = `translateX(-${currentTestimoni * 100}%)`;
-    document.querySelectorAll('.testimoni-dot').forEach((d, i) => {
-        d.classList.toggle('active', i === currentTestimoni);
-    });
+    document.querySelectorAll('.testimoni-dot').forEach((d, i) => d.classList.toggle('active', i === currentTestimoni));
 }
 
 function nextTestimoni() {
@@ -152,18 +136,14 @@ function goToTestimoni(i) {
 // ==================== LEADERBOARD ====================
 function loadLeaderboard() {
     const body = document.getElementById('leaderboardBody');
-    if (!body) return;
-
-    if (typeof leaderboardData === 'undefined' || !leaderboardData || leaderboardData.length === 0) {
-        body.innerHTML = `
-            <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">
-                <i class="fas fa-trophy" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                Belum ada data leaderboard
-            </div>
-        `;
+    if (!body) {
+        console.warn('⚠️ Elemen #leaderboardBody tidak ditemukan');
         return;
     }
-
+    if (typeof leaderboardData === 'undefined' || !leaderboardData || leaderboardData.length === 0) {
+        body.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">Belum ada data leaderboard</div>`;
+        return;
+    }
     body.innerHTML = leaderboardData.map((u, i) => {
         const rank = i + 1;
         let rankClass = '', medal = rank;
@@ -174,7 +154,7 @@ function loadLeaderboard() {
             <div class="leaderboard-row ${rankClass}">
                 <div class="leaderboard-rank">${medal}</div>
                 <div class="leaderboard-user">
-                    <img src="${u.photo}" class="leaderboard-avatar" onerror="this.src='https://via.placeholder.com/40?text=User'">
+                    <img src="${u.photo}" class="leaderboard-avatar" onerror="this.src='https://via.placeholder.com/40'">
                     <div>
                         <div class="leaderboard-name">${u.name}</div>
                         <div class="leaderboard-badge">${u.angkatan}</div>
@@ -192,24 +172,22 @@ let hasVoted = localStorage.getItem('hasVotedPolling') === 'true';
 
 function loadPolling() {
     const container = document.getElementById('pollingOptions');
-    if (!container) return;
-
-    if (typeof pollingData === 'undefined' || !pollingData || pollingData.length === 0) {
-        container.innerHTML = `
-            <div style="text-align:center;padding:2rem;color:var(--gray-500);">
-                <i class="fas fa-info-circle" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                Belum ada data polling
-            </div>
-        `;
+    const totalEl = document.getElementById('pollingTotal');
+    if (!container || !totalEl) {
+        console.warn('⚠️ Elemen polling tidak ditemukan');
         return;
     }
-
+    if (typeof pollingData === 'undefined' || !pollingData || pollingData.length === 0) {
+        container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--gray-500);">Belum ada data polling</div>`;
+        totalEl.textContent = 'Total 0 suara';
+        return;
+    }
     const totalVotes = pollingData.reduce((sum, p) => sum + p.votes, 0);
     container.innerHTML = pollingData.map(p => {
         const percent = totalVotes > 0 ? ((p.votes / totalVotes) * 100).toFixed(1) : 0;
         return `
             <div class="polling-option ${hasVoted ? 'voted' : ''}" data-id="${p.id}" onclick="votePolling(${p.id})">
-                <div class="polling-bar" style="width:${hasVoted ? percent : 0}%;transition:width 0.8s ease;"></div>
+                <div class="polling-bar" style="width:${hasVoted ? percent : 0}%"></div>
                 <div class="polling-option-content">
                     <div class="polling-option-text">${p.text}</div>
                     <div class="polling-option-percent">${hasVoted ? percent + '%' : ''} ${hasVoted ? '(' + p.votes + ' suara)' : ''}</div>
@@ -217,9 +195,7 @@ function loadPolling() {
             </div>
         `;
     }).join('');
-
-    const totalEl = document.getElementById('pollingTotal');
-    if (totalEl) totalEl.textContent = `Total ${totalVotes} suara`;
+    totalEl.textContent = `Total ${totalVotes} suara`;
 }
 
 function votePolling(id) {
@@ -254,57 +230,48 @@ function getOpenWeatherIcon(code) {
 
 async function loadCuacaRealtime() {
     const grid = document.getElementById('cuacaGrid');
-    if (!grid) return;
-
-    if (typeof gunungList === 'undefined' || !gunungList || gunungList.length === 0) {
-        grid.innerHTML = `
-            <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">
-                <i class="fas fa-exclamation-triangle" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                Data gunung belum dikonfigurasi
-            </div>
-        `;
+    if (!grid) {
+        console.warn('⚠️ Elemen #cuacaGrid tidak ditemukan');
         return;
     }
-
+    if (typeof gunungList === 'undefined' || !gunungList || gunungList.length === 0) {
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">Data gunung belum dikonfigurasi</div>`;
+        return;
+    }
     grid.innerHTML = `
         <div style="grid-column:1/-1;text-align:center;padding:3rem;">
             <div class="loading-spinner"></div>
             <p style="margin-top:1rem;color:var(--gray-600);">🔄 Memuat data cuaca real-time...</p>
         </div>
     `;
-
     try {
         const cuacaPromises = gunungList.map(async (gunung) => {
             const url = `https://api.openweathermap.org/data/2.5/weather?lat=${gunung.lat}&lon=${gunung.lon}&appid=${API_KEY}&units=metric&lang=id`;
             const response = await fetch(url);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             const data = await response.json();
-
             const temp = Math.round(data.main.temp);
             const humidity = data.main.humidity;
             const wind = Math.round(data.wind.speed * 3.6);
             const visibility = Math.round(data.visibility / 1000);
             const desc = data.weather[0].description;
             const icon = getOpenWeatherIcon(data.weather[0].icon);
-
             let status = 'aman';
             if (data.weather[0].main === 'Rain' || data.weather[0].main === 'Thunderstorm') status = 'waspada';
             if (wind > 30 || temp < 5) status = 'waspada';
             if (wind > 50 || data.weather[0].main === 'Thunderstorm') status = 'bahaya';
-
             return {
                 name: gunung.name,
                 loc: gunung.loc || 'Indonesia',
-                temp: temp,
+                temp,
                 desc: desc.charAt(0).toUpperCase() + desc.slice(1),
-                icon: icon,
-                humidity: humidity,
-                wind: wind,
-                visibility: visibility,
-                status: status
+                icon,
+                humidity,
+                wind,
+                visibility,
+                status
             };
         });
-
         const cuacaData = await Promise.all(cuacaPromises);
         grid.innerHTML = cuacaData.map(c => `
             <div class="cuaca-card">
@@ -332,7 +299,7 @@ async function loadCuacaRealtime() {
         grid.innerHTML = `
             <div style="grid-column:1/-1;text-align:center;padding:2rem;">
                 <i class="fas fa-exclamation-triangle" style="font-size:3rem;color:#ef4444;margin-bottom:1rem;display:block;"></i>
-                <h3 style="margin-bottom:0.5rem;">Gagal Memuat Data Cuaca</h3>
+                <h3>Gagal Memuat Data Cuaca</h3>
                 <p style="color:var(--gray-600);margin-bottom:1rem;">${error.message}</p>
                 <button onclick="loadCuacaRealtime()" style="background:var(--gradient);color:white;border:none;padding:0.75rem 2rem;border-radius:40px;cursor:pointer;font-weight:600;">
                     <i class="fas fa-redo"></i> Coba Lagi
@@ -347,24 +314,25 @@ let petaMap;
 
 function loadPeta() {
     const mapContainer = document.getElementById('petaMap');
-    if (!mapContainer) return;
-    if (typeof petaLocations === 'undefined' || !petaLocations || petaLocations.length === 0) {
-        mapContainer.innerHTML = `
-            <div style="text-align:center;padding:2rem;color:var(--gray-500);">
-                <i class="fas fa-map" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                Data peta belum tersedia
-            </div>
-        `;
+    if (!mapContainer) {
+        console.warn('⚠️ Elemen #petaMap tidak ditemukan');
         return;
     }
-
+    if (typeof petaLocations === 'undefined' || !petaLocations || petaLocations.length === 0) {
+        mapContainer.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--gray-500);">Data peta belum tersedia</div>`;
+        return;
+    }
+    // Pastikan Leaflet sudah dimuat
+    if (typeof L === 'undefined') {
+        console.error('❌ Leaflet library belum dimuat!');
+        mapContainer.innerHTML = `<div style="text-align:center;padding:2rem;color:red;">Leaflet tidak ditemukan, periksa koneksi internet</div>`;
+        return;
+    }
     petaMap = L.map('petaMap').setView([-7.5, 110.4], 6);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap'
     }).addTo(petaMap);
-
     const colors = { basecamp: '#dc2626', gunung: '#2563eb', konservasi: '#16a34a', latihan: '#9333ea' };
-
     petaLocations.forEach(loc => {
         const icon = L.divIcon({
             className: 'custom-marker',
@@ -376,12 +344,7 @@ function loadPeta() {
         });
         L.marker([loc.lat, loc.lng], { icon })
             .addTo(petaMap)
-            .bindPopup(`
-                <div style="min-width:200px;">
-                    <b style="font-size:1.1rem;color:var(--primary);">${loc.name}</b><br>
-                    <span style="color:#666;font-size:0.9rem;">${loc.desc}</span>
-                </div>
-            `);
+            .bindPopup(`<div style="min-width:200px;"><b style="font-size:1.1rem;">${loc.name}</b><br><span style="color:#666;">${loc.desc}</span></div>`);
     });
 }
 
@@ -389,17 +352,10 @@ function loadPeta() {
 function loadBerita() {
     const grid = document.getElementById('beritaGrid');
     if (!grid) return;
-
     if (typeof beritaData === 'undefined' || !beritaData || beritaData.length === 0) {
-        grid.innerHTML = `
-            <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">
-                <i class="fas fa-newspaper" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                Belum ada berita
-            </div>
-        `;
+        grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">Belum ada berita</div>`;
         return;
     }
-
     grid.innerHTML = beritaData.map(b => `
         <a href="https://ustjogja.ac.id/id/berita/" target="_blank" class="berita-card">
             <img src="${b.image}" class="berita-image" onerror="this.src='https://via.placeholder.com/600x400?text=Mapatek'">
@@ -419,7 +375,8 @@ function loadBerita() {
 // ==================== KALENDER ====================
 let kalenderDate = new Date();
 let kalenderFilter = 'all';
-let kalenderEvents = [];
+// Gunakan kalenderEvents dari data.js, atau fallback ke default
+let kalenderEvents = window.kalenderEvents || [];
 
 async function loadKalenderData() {
     try {
@@ -433,31 +390,12 @@ async function loadKalenderData() {
         }
         throw new Error('Format JSON tidak sesuai');
     } catch (error) {
-        console.warn('⚠️ Gagal memuat kalender.json, menggunakan data default:', error);
-        // Fallback ke data default dari data.js (jika ada)
-        if (typeof kalenderEventsDefault !== 'undefined' && kalenderEventsDefault.length) {
-            kalenderEvents = kalenderEventsDefault;
-        } else if (typeof kalenderEvents !== 'undefined' && kalenderEvents.length) {
-            // Jika variabel kalenderEvents sudah terisi dari data.js, gunakan itu
-            // (tapi kita sudah mendeklarasikan ulang di atas, jadi hati-hati)
-            // Solusi: ambil dari window jika ada
-            if (window.kalenderEventsDefault) {
-                kalenderEvents = window.kalenderEventsDefault;
-            } else {
-                // Data default hardcode
-                kalenderEvents = [
-                    { date: "2026-06-08", title: "Latihan Navigasi", type: "latihan" },
-                    { date: "2026-06-15", title: "Ekspedisi Prau", type: "ekspedisi" },
-                    { date: "2026-06-22", title: "Rock Climbing", type: "latihan" },
-                    { date: "2026-06-28", title: "Rapat Pengurus", type: "latihan" },
-                    { date: "2026-07-05", title: "Bakti Sosial", type: "konservasi" },
-                    { date: "2026-07-12", title: "Diksar XV Hari 1", type: "diksar" },
-                    { date: "2026-07-13", title: "Diksar XV Hari 2", type: "diksar" },
-                    { date: "2026-07-14", title: "Diksar XV Hari 3", type: "diksar" },
-                    { date: "2026-07-20", title: "Pendakian Merbabu", type: "ekspedisi" },
-                    { date: "2026-06-06", title: "Ulang Tahun Mapatek", type: "latihan" }
-                ];
-            }
+        console.warn('⚠️ Gagal memuat kalender.json, menggunakan data default');
+        // Fallback ke data dari data.js
+        if (window.kalenderEvents && window.kalenderEvents.length > 0) {
+            kalenderEvents = window.kalenderEvents;
+        } else {
+            kalenderEvents = []; // kosong
         }
         return false;
     }
@@ -465,38 +403,34 @@ async function loadKalenderData() {
 
 function loadKalender() {
     const grid = document.getElementById('kalenderGrid');
-    if (!grid) return;
-
+    const title = document.getElementById('kalenderTitle');
+    if (!grid || !title) {
+        console.warn('⚠️ Elemen kalender tidak ditemukan');
+        return;
+    }
     const year = kalenderDate.getFullYear();
     const month = kalenderDate.getMonth();
     const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-    const titleEl = document.getElementById('kalenderTitle');
-    if (titleEl) titleEl.textContent = `${monthNames[month]} ${year}`;
-
+    title.textContent = `${monthNames[month]} ${year}`;
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     const daysInPrevMonth = new Date(year, month, 0).getDate();
     const today = new Date();
-
     let html = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'].map(d => `<div class="kalender-day-name">${d}</div>`).join('');
-
     for (let i = 0; i < firstDay; i++) {
         html += `<div class="kalender-day other-month"><div class="kalender-day-number">${daysInPrevMonth - firstDay + i + 1}</div></div>`;
     }
-
     for (let d = 1; d <= daysInMonth; d++) {
         const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
         const isToday = today.getDate() === d && today.getMonth() === month && today.getFullYear() === year;
-        const dayEvents = kalenderEvents.filter(e => e.date === dateStr && (kalenderFilter === 'all' || e.type === kalenderFilter));
+        const dayEvents = (kalenderEvents || []).filter(e => e.date === dateStr && (kalenderFilter === 'all' || e.type === kalenderFilter));
         html += `<div class="kalender-day ${isToday ? 'today' : ''}"><div class="kalender-day-number">${d}</div>${dayEvents.map(e => `<div class="kalender-event ${e.type}" title="${e.title}">${e.title}</div>`).join('')}</div>`;
     }
-
     const totalCells = firstDay + daysInMonth;
     const remaining = (7 - (totalCells % 7)) % 7;
     for (let i = 1; i <= remaining; i++) {
         html += `<div class="kalender-day other-month"><div class="kalender-day-number">${i}</div></div>`;
     }
-
     grid.innerHTML = html;
 }
 
@@ -521,12 +455,10 @@ function filterKalender(type, btn) {
 function loadFAQ() {
     const container = document.getElementById('faqContainer');
     if (!container) return;
-
     if (typeof faqData === 'undefined' || !faqData || faqData.length === 0) {
-        container.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--gray-500);">Belum ada FAQ</div>';
+        container.innerHTML = `<div style="text-align:center;padding:2rem;color:var(--gray-500);">Belum ada FAQ</div>`;
         return;
     }
-
     container.innerHTML = faqData.map((f, i) => `
         <div class="faq-item" onclick="toggleFAQ(${i})">
             <div class="faq-question">
@@ -555,23 +487,12 @@ function loadQuizQuestion() {
         return;
     }
     const q = quizQuestions[currentQuiz];
-    if (!q) {
-        showQuizResult();
-        return;
-    }
-
-    const counterEl = document.getElementById('quizCounter');
-    const questionEl = document.getElementById('quizQuestion');
-    const progressEl = document.getElementById('quizProgressBar');
-    const optionsEl = document.getElementById('quizOptions');
-    if (!counterEl || !questionEl || !progressEl || !optionsEl) return;
-
-    counterEl.textContent = `Pertanyaan ${currentQuiz + 1} dari ${quizQuestions.length}`;
-    questionEl.textContent = q.q;
-    progressEl.style.width = `${((currentQuiz) / quizQuestions.length) * 100}%`;
-
+    if (!q) { showQuizResult(); return; }
+    document.getElementById('quizCounter').textContent = `Pertanyaan ${currentQuiz + 1} dari ${quizQuestions.length}`;
+    document.getElementById('quizQuestion').textContent = q.q;
+    document.getElementById('quizProgressBar').style.width = `${((currentQuiz) / quizQuestions.length) * 100}%`;
     const letters = ['A', 'B', 'C', 'D'];
-    optionsEl.innerHTML = q.options.map((o, i) => `
+    document.getElementById('quizOptions').innerHTML = q.options.map((o, i) => `
         <div class="quiz-option" onclick="answerQuiz('${o.type}')">
             <div class="quiz-option-letter">${letters[i]}</div>
             <div>${o.text}</div>
@@ -591,42 +512,28 @@ function answerQuiz(type) {
 
 function showQuizResult() {
     if (typeof quizResults === 'undefined' || !quizResults) return;
-
     const counts = {};
     quizAnswers.forEach(a => counts[a] = (counts[a] || 0) + 1);
     const result = Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
     const r = quizResults[result];
     if (!r) return;
-
-    const contentEl = document.getElementById('quizContent');
-    const resultEl = document.getElementById('quizResult');
-    const iconEl = document.getElementById('quizResultIcon');
-    const typeEl = document.getElementById('quizResultType');
-    const descEl = document.getElementById('quizResultDesc');
-    const progressEl = document.getElementById('quizProgressBar');
-    const shareWA = document.getElementById('shareWA');
-    const shareTW = document.getElementById('shareTW');
-
-    if (contentEl) contentEl.style.display = 'none';
-    if (resultEl) resultEl.style.display = 'block';
-    if (iconEl) iconEl.textContent = r.icon;
-    if (typeEl) typeEl.textContent = r.type;
-    if (descEl) descEl.textContent = r.desc;
-    if (progressEl) progressEl.style.width = '100%';
-
+    document.getElementById('quizContent').style.display = 'none';
+    document.getElementById('quizResult').style.display = 'block';
+    document.getElementById('quizResultIcon').textContent = r.icon;
+    document.getElementById('quizResultType').textContent = r.type;
+    document.getElementById('quizResultDesc').textContent = r.desc;
+    document.getElementById('quizProgressBar').style.width = '100%';
     const shareText = `🎯 Hasil Quiz Kepribadian Pendaki: ${r.type} ${r.icon}%0A%0A${r.desc}%0A%0ACoba quiz-nya di Portal Mapatek Abhipraya!`;
-    if (shareWA) shareWA.href = `https://wa.me/?text=${shareText}`;
-    if (shareTW) shareTW.href = `https://twitter.com/intent/tweet?text=${shareText}`;
+    document.getElementById('shareWA').href = `https://wa.me/?text=${shareText}`;
+    document.getElementById('shareTW').href = `https://twitter.com/intent/tweet?text=${shareText}`;
     window.quizShareText = `Hasil Quiz Kepribadian Pendaki: ${r.type} ${r.icon}\n\n${r.desc}\n\nCoba quiz-nya di Portal Mapatek Abhipraya!`;
 }
 
 function restartQuiz() {
     currentQuiz = 0;
     quizAnswers = [];
-    const contentEl = document.getElementById('quizContent');
-    const resultEl = document.getElementById('quizResult');
-    if (contentEl) contentEl.style.display = 'block';
-    if (resultEl) resultEl.style.display = 'none';
+    document.getElementById('quizContent').style.display = 'block';
+    document.getElementById('quizResult').style.display = 'none';
     loadQuizQuestion();
 }
 
@@ -654,12 +561,7 @@ function closeGlobalSearch() {
     if (input) input.value = '';
     const results = document.getElementById('globalSearchResults');
     if (results) {
-        results.innerHTML = `
-            <div style="padding:2rem;text-align:center;color:var(--gray-500);">
-                <i class="fas fa-search" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                Ketik untuk mencari di seluruh website...
-            </div>
-        `;
+        results.innerHTML = `<div style="padding:2rem;text-align:center;color:var(--gray-500);">Ketik untuk mencari di seluruh website...</div>`;
     }
 }
 
@@ -667,28 +569,20 @@ function performGlobalSearch() {
     const input = document.getElementById('globalSearchInput');
     const results = document.getElementById('globalSearchResults');
     if (!input || !results) return;
-
     const query = input.value.toLowerCase().trim();
     if (!query) {
-        results.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--gray-500);"><i class="fas fa-search" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>Ketik untuk mencari...</div>';
+        results.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--gray-500);">Ketik untuk mencari...</div>';
         return;
     }
-
     if (typeof searchData === 'undefined' || !searchData) {
         results.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--gray-500);">Data pencarian tidak tersedia</div>';
         return;
     }
-
-    const filtered = searchData.filter(d => 
-        d.title.toLowerCase().includes(query) || 
-        d.category.toLowerCase().includes(query)
-    );
-
+    const filtered = searchData.filter(d => d.title.toLowerCase().includes(query) || d.category.toLowerCase().includes(query));
     if (filtered.length === 0) {
         results.innerHTML = '<div style="padding:2rem;text-align:center;color:var(--gray-500);">Tidak ada hasil ditemukan</div>';
         return;
     }
-
     results.innerHTML = filtered.map(d => `
         <div class="search-result-item" onclick="navigateTo('${d.section}')">
             <div class="search-result-icon"><i class="fas ${d.icon}"></i></div>
@@ -711,17 +605,10 @@ function navigateTo(section) {
 function loadAgenda() {
     const container = document.getElementById('agendaGrid');
     if (!container) return;
-
     if (typeof agendas === 'undefined' || !agendas || agendas.length === 0) {
-        container.innerHTML = `
-            <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">
-                <i class="fas fa-calendar" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                Belum ada agenda
-            </div>
-        `;
+        container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">Belum ada agenda</div>`;
         return;
     }
-
     container.innerHTML = agendas.map(a => `
         <div class="agenda-card">
             <div class="agenda-date"><div class="day">${a.day}</div><div class="month">${a.month}</div></div>
@@ -738,17 +625,10 @@ function loadAgenda() {
 function loadGaleri() {
     const container = document.getElementById('galeriGrid');
     if (!container) return;
-
     if (typeof galeriImages === 'undefined' || !galeriImages || galeriImages.length === 0) {
-        container.innerHTML = `
-            <div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">
-                <i class="fas fa-images" style="font-size:2rem;margin-bottom:0.5rem;display:block;"></i>
-                Belum ada galeri
-            </div>
-        `;
+        container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">Belum ada galeri</div>`;
         return;
     }
-
     container.innerHTML = galeriImages.map(img => `
         <div class="galeri-item" onclick="openModal('${img.src}')">
             <img src="${img.src}" alt="${img.caption}" onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
@@ -823,7 +703,10 @@ async function loadAgendaFromJSON() {
         if (!response.ok) throw new Error('HTTP ' + response.status);
         const data = await response.json();
         if (data.agendas && Array.isArray(data.agendas) && data.agendas.length > 0) {
-            agendas.splice(0, agendas.length, ...data.agendas);
+            // Update agendas (diasumsikan agendas adalah array global)
+            if (window.agendas) {
+                window.agendas.splice(0, window.agendas.length, ...data.agendas);
+            }
             loadAgenda();
             updateCountdown();
             console.log('✅ Agenda updated from JSON');
@@ -833,7 +716,8 @@ async function loadAgendaFromJSON() {
     }
 }
 
-// ==================== FILTER ARSIP & KATEGORI ====================
+// ==================== FILTER KATEGORI & ARSIP ====================
+// Fungsi untuk filter kategori arsip (dipanggil dari tombol)
 function filterKategori(kategori, btn) {
     // Reset tombol aktif
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -851,6 +735,7 @@ function filterKategori(kategori, btn) {
         }
     });
 
+    // Update info
     const info = document.getElementById('arsipInfo');
     if (info) {
         const label = (kategori === 'all') ? 'Semua' : kategori;
@@ -863,36 +748,23 @@ function filterKategori(kategori, btn) {
         if (!noResultMsg) {
             noResultMsg = document.createElement('div');
             noResultMsg.className = 'no-result-msg';
-            noResultMsg.style.cssText = `
-                text-align: center;
-                padding: 2rem;
-                color: var(--gray-500);
-                grid-column: 1 / -1;
-                background: var(--gray-50);
-                border-radius: var(--radius-md);
-                margin-top: 1rem;
-            `;
-            const list = document.getElementById('arsipList');
-            if (list) list.appendChild(noResultMsg);
+            noResultMsg.style.cssText = `text-align:center;padding:2rem;color:var(--gray-500);grid-column:1/-1;`;
+            document.getElementById('arsipList').appendChild(noResultMsg);
         }
-        noResultMsg.innerHTML = `
-            <i class="fas fa-folder-open" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
-            <p>Belum ada dokumen untuk kategori "${kategori}"</p>
-        `;
+        noResultMsg.innerHTML = `<i class="fas fa-folder-open" style="font-size:2rem;display:block;margin-bottom:0.5rem;"></i><p>Belum ada dokumen untuk kategori "${kategori}"</p>`;
     } else if (noResultMsg) {
         noResultMsg.remove();
     }
-
     console.log(`📁 Filter: "${kategori}" | Tampil: ${visibleCount} file`);
 }
 
+// Fungsi pencarian teks arsip
 function filterArsip() {
     const input = document.getElementById('searchInput');
     if (!input) return;
     const searchValue = input.value.toLowerCase().trim();
     const items = document.querySelectorAll('.arsip-item');
     let visibleCount = 0;
-
     items.forEach(item => {
         const text = item.innerText.toLowerCase();
         if (text.includes(searchValue)) {
@@ -902,14 +774,9 @@ function filterArsip() {
             item.style.display = 'none';
         }
     });
-
     const info = document.getElementById('arsipInfo');
     if (info) {
-        if (searchValue) {
-            info.textContent = `Menampilkan ${visibleCount} hasil untuk "${searchValue}"`;
-        } else {
-            info.textContent = 'Menampilkan semua file';
-        }
+        info.textContent = searchValue ? `Menampilkan ${visibleCount} hasil untuk "${searchValue}"` : 'Menampilkan semua file';
     }
 }
 
@@ -951,3 +818,6 @@ window.loadAgendaFromJSON = loadAgendaFromJSON;
 window.filterKategori = filterKategori;
 window.filterArsip = filterArsip;
 window.refreshKalender = refreshKalender;
+window.loadKalenderData = loadKalenderData;
+
+console.log('✅ features.js loaded successfully!');
