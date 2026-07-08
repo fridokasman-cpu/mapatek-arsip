@@ -1,21 +1,57 @@
 {
     "agendas": [
         {
-            "date": "2026-07-15",
-            "day": "15",
+            "date": "2026-07-18",
+            "day": "18",
             "month": "JUL",
-            "title": "Pendakian Gunung Sumbing",
-            "location": "Dieng, Jawa Tengah",
-            "desc": "Ekspedisi rutin anggota dan Latihan Dasar",
+            "title": "Ekspedisi Gunung Sumbing",
+            "location": "Wonosobo, Jawa Tengah",
+            "desc": "Pendakian puncak 3.371 mdpl via jalur Garung",
             "status": "upcoming"
         },
         {
-            "date": "2026-07-22",
-            "day": "22",
-            "month": "JUL",
-            "title": "Latihan Rock Climbing",
-            "location": "Tebing Gamping",
-            "desc": "Teknik dasar panjat tebing dan belaying",
+            "date": "2026-08-01",
+            "day": "01",
+            "month": "AGS",
+            "title": "Ekspedisi Gunung Merbabu",
+            "location": "Magelang, Jawa Tengah",
+            "desc": "Pendakian puncak 3.145 mdpl via jalur Selo",
+            "status": "upcoming"
+        },
+        {
+            "date": "2026-08-15",
+            "day": "15",
+            "month": "AGS",
+            "title": "Ekspedisi Gunung Rinjani",
+            "location": "Lombok, NTB",
+            "desc": "Pendakian puncak 3.726 mdpl dan danau Segara Anak",
+            "status": "upcoming"
+        },
+        {
+            "date": "2026-09-05",
+            "day": "05",
+            "month": "SEP",
+            "title": "Ekspedisi Gunung Semeru",
+            "location": "Lumajang, Jawa Timur",
+            "desc": "Pendakian puncak 3.676 mdpl (Mahameru) via jalur Ranupane",
+            "status": "upcoming"
+        },
+        {
+            "date": "2026-09-19",
+            "day": "19",
+            "month": "SEP",
+            "title": "Ekspedisi Gunung Lawu",
+            "location": "Karanganyar, Jawa Tengah",
+            "desc": "Pendakian puncak 3.265 mdpl via jalur Cemoro Sewu",
+            "status": "upcoming"
+        },
+        {
+            "date": "2026-10-03",
+            "day": "03",
+            "month": "OKT",
+            "title": "Ekspedisi Gunung Kerinci",
+            "location": "Jambi, Sumatera",
+            "desc": "Pendakian puncak tertinggi di Sumatera (3.805 mdpl)",
             "status": "upcoming"
         }
     ]
