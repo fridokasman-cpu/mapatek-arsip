@@ -351,10 +351,6 @@ window.addEventListener('load', () => {
     setInterval(loadPengumuman, 600000); // refresh tiap 10 menit
 }
 });
-// Setelah fungsi lain dipanggil
-if (typeof refreshKalender === 'function') {
-    refreshKalender();
-}
 // ==================== FIX VIEWPORT MOBILE ====================
 document.addEventListener('gesturestart', function (e) {
     e.preventDefault();
