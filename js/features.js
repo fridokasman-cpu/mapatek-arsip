@@ -687,3 +687,5 @@ window.scrollToTop = scrollToTop;
 window.showToast = showToast;
 window.openModal = openModal;
 window.closeModal = closeModal;
+window.filterKategori = filterKategori;
+window.filterArsip = filterArsip;

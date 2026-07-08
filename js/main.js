@@ -306,12 +306,14 @@ document.addEventListener('gesturestart', function (e) {
     e.preventDefault();
 });
 
+// Fix viewport untuk mobile
 function fixViewport() {
-    const viewport = document.querySelector('meta[name="viewport"]');
-    if (viewport && window.innerWidth < 480) {
-        viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5');
+    if (window.innerWidth < 480) {
+        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=5.0, minimum-scale=0.5');
     }
 }
+window.addEventListener('load', fixViewport);
+window.addEventListener('resize', fixViewport);
 // === PENGUMUMAN (dari JSON) ===
 async function loadPengumuman() {
     const grid = document.getElementById('pengumumanGrid');
@@ -462,3 +464,11 @@ document.addEventListener('keydown', function(e) {
 
 // Ekspos ke global
 window.toggleSidebar = toggleSidebar;
+// Ekspos fungsi ke window object
+window.filterKategori = filterKategori;
+window.filterArsip = filterArsip;
+window.toggleMenu = toggleMenu;
+window.toggleDarkMode = toggleDarkMode;
+window.toggleChatbot = toggleChatbot;
+window.sendMessage = sendMessage;
+// ... dan fungsi lainnya yang dipanggil dari HTML
