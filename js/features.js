@@ -392,9 +392,37 @@ function loadBerita() {
 // ==================== KALENDER ====================
 let kalenderDate = new Date();
 let kalenderFilter = 'all';
+let kalenderEvents = []; // akan diisi dari JSON
 
+// Fungsi untuk memuat data dari JSON
+async function loadKalenderData() {
+    try {
+        const response = await fetch('kalender.json?t=' + Date.now());
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        const data = await response.json();
+        if (data.events && Array.isArray(data.events)) {
+            kalenderEvents = data.events;
+            console.log('✅ Kalender loaded from JSON:', kalenderEvents.length, 'events');
+            return true;
+        }
+        throw new Error('Format JSON tidak sesuai');
+    } catch (error) {
+        console.warn('⚠️ Gagal memuat kalender.json, menggunakan data default:', error);
+        // Fallback ke data default (dari data.js)
+        if (typeof kalenderEventsDefault !== 'undefined') {
+            kalenderEvents = kalenderEventsDefault;
+        } else {
+            kalenderEvents = []; // kosong
+        }
+        return false;
+    }
+}
+
+// Fungsi render kalender (tetap sama, hanya menggunakan kalenderEvents)
 function loadKalender() {
     const grid = document.getElementById('kalenderGrid');
+    if (!grid) return;
+    
     const year = kalenderDate.getFullYear();
     const month = kalenderDate.getMonth();
     const monthNames = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
@@ -427,6 +455,13 @@ function loadKalender() {
     grid.innerHTML = html;
 }
 
+// Fungsi untuk refresh kalender (panggil setelah data dimuat)
+async function refreshKalender() {
+    await loadKalenderData();
+    loadKalender();
+}
+
+// Fungsi navigasi bulan (tetap)
 function changeMonth(delta) {
     kalenderDate.setMonth(kalenderDate.getMonth() + delta);
     loadKalender();
@@ -715,3 +750,7 @@ window.answerQuiz = answerQuiz;
 window.restartQuiz = restartQuiz;
 window.copyToClipboard = copyToClipboard;
 window.showToast = showToast;
+window.refreshKalender = refreshKalender;
+window.loadKalender = loadKalender;
+window.changeMonth = changeMonth;
+window.filterKalender = filterKalender;

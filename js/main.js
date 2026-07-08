@@ -298,7 +298,10 @@ if (localStorage.getItem('darkMode') === 'true') {
         icon.classList.add('fa-sun');
     }
 }
-
+// Setelah fungsi lain dipanggil
+if (typeof refreshKalender === 'function') {
+    refreshKalender();
+}
 // ==================== LOAD ALL FEATURES ====================
 window.addEventListener('load', () => {
     if (typeof loadAgenda === 'function') loadAgenda();
@@ -321,7 +324,9 @@ window.addEventListener('load', () => {
         const expeditionEl = document.getElementById('expeditionCount');
         const trainingEl = document.getElementById('trainingCount');
         const documentEl = document.getElementById('documentCount');
-        if (memberEl) animateCounter(memberEl, 50);
+        
+        //Data Jumlah Anggota Mapatek//
+        if (memberEl) animateCounter(memberEl, 49);
         if (expeditionEl) animateCounter(expeditionEl, 12);
         if (trainingEl) animateCounter(trainingEl, 8);
         if (documentEl) animateCounter(documentEl, 25);
