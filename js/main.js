@@ -299,11 +299,10 @@ if (localStorage.getItem('darkMode') === 'true') {
     }
 }
 window.addEventListener('load', function() {
-    // ===== MUAT AGENDA LANGSUNG DARI DATA.JS =====
+    // ===== AGENDA DARI DATA.JS (LANGSUNG) =====
     if (typeof loadAgenda === 'function') {
         loadAgenda();
     }
-
     // ... fitur lain (galeri, testimoni, dll)
 });
 // ==================== LOAD ALL FEATURES ====================
