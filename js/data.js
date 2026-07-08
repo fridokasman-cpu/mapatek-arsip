@@ -137,11 +137,10 @@ const kalenderEvents = [
     { date: "2026-06-22", title: "Rock Climbing", type: "latihan" },
     { date: "2026-06-28", title: "Rapat Pengurus", type: "latihan" },
     { date: "2026-07-05", title: "Bakti Sosial", type: "konservasi" },
-    { date: "2026-07-12", title: "Diksar XV Hari 1", type: "diksar" },
-    { date: "2026-07-13", title: "Diksar XV Hari 2", type: "diksar" },
-    { date: "2026-07-14", title: "Diksar XV Hari 3", type: "diksar" },
+    { date: "2026-07-11", title: "Ekspedisi Gunung Rinjani", type: "ekspedisi" },
+    { date: "2026-07-24", title: "Latihan Survival", type: "latihan" },
     { date: "2026-07-20", title: "Pendakian Merbabu", type: "ekspedisi" },
-    { date: "2026-06-06", title: "Ulang Tahun Mapatek", type: "latihan" }
+    { date: "2026-19-03", title: "Ulang Tahun Mapatek", type: "latihan" }
 ];
 
 // -------------------- FAQ --------------------
