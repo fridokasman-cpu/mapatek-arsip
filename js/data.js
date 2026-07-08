@@ -6,49 +6,94 @@
 // Data Agenda dengan tanggal lengkap
 const agendas = [
     { 
-        date: "2026-07-15",  // Format: YYYY-MM-DD
-        day: "15", 
-        month: "JUL", 
-        title: "Pendakian Gunung Prau", 
-        location: "Dieng, Jawa Tengah", 
-        desc: "Ekspedisi rutin anggota dan Latihan Dasar", 
-        status: "upcoming" 
+        date: "2026-07-18",
+        day: "18",
+        month: "JUL",
+        title: "Pendakian Gunung Sumbing",
+        location: "Wonosobo, Jawa Tengah",
+        desc: "Ekspedisi puncak 3.371 mdpl via jalur Garung",
+        status: "upcoming"
     },
     { 
-        date: "2026-07-22", 
-        day: "22", 
-        month: "JUL", 
-        title: "Latihan Rock Climbing", 
-        location: "Tebing Gamping", 
-        desc: "Teknik dasar panjat tebing dan belaying", 
-        status: "upcoming" 
+        date: "2026-07-25",
+        day: "25",
+        month: "JUL",
+        title: "Rock Climbing Tebing Gamping",
+        location: "Gamping, Yogyakarta",
+        desc: "Latihan panjat tebing alam dengan rute baru",
+        status: "upcoming"
     },
     { 
-        date: "2026-08-05", 
-        day: "05", 
-        month: "AGS", 
-        title: "Bakti Sosial & Konservasi", 
-        location: "Desa Wisata Pentingsari", 
-        desc: "Bersih-bersih sungai dan edukasi lingkungan", 
-        status: "upcoming" 
+        date: "2026-08-01",
+        day: "01",
+        month: "AGS",
+        title: "Rafting Sungai Elo",
+        location: "Magelang, Jawa Tengah",
+        desc: "Arung jeram kelas II-III sepanjang 12 km",
+        status: "upcoming"
     },
     { 
-        date: "2026-08-15", 
-        day: "15", 
-        month: "AGS", 
-        title: "Diksar XV Angkatan Baru", 
-        location: "Kaki Gunung Merapi", 
-        desc: "Pendidikan Dasar Kepencintaalaman 3 hari 2 malam", 
-        status: "upcoming" 
+        date: "2026-08-08",
+        day: "08",
+        month: "AGS",
+        title: "Pendakian Gunung Merbabu",
+        location: "Boyolali, Jawa Tengah",
+        desc: "Pendakian puncak 3.145 mdpl via jalur Selo",
+        status: "upcoming"
     },
     { 
-        date: "2026-09-10", 
-        day: "10", 
-        month: "SEP", 
-        title: "Ekspedisi Gunung Merbabu", 
-        location: "Magelang, Jawa Tengah", 
-        desc: "Pendakian puncak 3.145 mdpl", 
-        status: "upcoming" 
+        date: "2026-08-15",
+        day: "15",
+        month: "AGS",
+        title: "Rock Climbing Gunung Kidul",
+        location: "Gunung Kidul, Yogyakarta",
+        desc: "Panjat tebing karst di pantai selatan",
+        status: "upcoming"
+    },
+    { 
+        date: "2026-08-22",
+        day: "22",
+        month: "AGS",
+        title: "Rafting Sungai Progo",
+        location: "Kulon Progo, Yogyakarta",
+        desc: "Arung jeram kelas III dengan pemandangan alam",
+        status: "upcoming"
+    },
+    { 
+        date: "2026-08-29",
+        day: "29",
+        month: "AGS",
+        title: "Pendakian Gunung Rinjani",
+        location: "Lombok, NTB",
+        desc: "Ekspedisi puncak 3.726 mdpl & Danau Segara Anak",
+        status: "upcoming"
+    },
+    { 
+        date: "2026-09-05",
+        day: "05",
+        month: "SEP",
+        title: "Rock Climbing Parangtritis",
+        location: "Bantul, Yogyakarta",
+        desc: "Panjat tebing tebing pasir dan karst",
+        status: "upcoming"
+    },
+    { 
+        date: "2026-09-12",
+        day: "12",
+        month: "SEP",
+        title: "Rafting Sungai Citumang",
+        location: "Ciamis, Jawa Barat",
+        desc: "Arung jeram kelas II dengan air jernih",
+        status: "upcoming"
+    },
+    { 
+        date: "2026-09-19",
+        day: "19",
+        month: "SEP",
+        title: "Pendakian Gunung Semeru",
+        location: "Lumajang, Jawa Timur",
+        desc: "Pendakian puncak Mahameru (3.676 mdpl) via Ranupane",
+        status: "upcoming"
     }
 ];
 // -------------------- GALERI --------------------
