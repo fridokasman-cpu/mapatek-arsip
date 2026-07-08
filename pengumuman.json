@@ -1,6 +1,56 @@
 {
     "pengumuman": [
         {
+            "id": 1,
+            "judul": "🚀 Pendaftaran Anggota Baru 2026/2027 Dibuka!",
+            "tanggal": "20 Juli 2026",
+            "kategori": "Penting",
+            "deskripsi": "Mapatek Abhipraya membuka pendaftaran untuk angkatan baru. Syarat dan ketentuan dapat dilihat di menu pendaftaran. Kuota terbatas!",
+            "link": "https://instagram.com/mapatek_abhipraya",
+            "status": "aktif",
+            "prioritas": "tinggi"
+        },
+        {
+            "id": 2,
+            "judul": "📅 Jadwal Diksar IV (Pendidikan Dasar) Resmi Dirilis",
+            "tanggal": "15 Agustus 2026",
+            "kategori": "Kegiatan",
+            "deskripsi": "Pendidikan Dasar (Diksar) angkatan IV akan dilaksanakan pada 5-10 September 2026 di Basecamp. Seluruh calon anggota wajib hadir.",
+            "link": "https://ustjogja.ac.id/id/berita/",
+            "status": "aktif",
+            "prioritas": "sedang"
+        },
+        {
+            "id": 3,
+            "judul": "📢 Perubahan Lokasi Basecamp Sementara",
+            "tanggal": "5 Juli 2026",
+            "kategori": "Informasi",
+            "deskripsi": "Dikarenakan adanya renovasi, sekretariat/basecamp sementara dipindahkan ke Gedung Fakultas Keguruan lantai 2. Mohon maklum.",
+            "link": "https://maps.app.goo.gl/aWpAXADTecgmY1EG9",
+            "status": "nonaktif",
+            "prioritas": "sedang"
+        },
+        {
+            "id": 4,
+            "judul": "💰 Pengumpulan Laporan Keuangan Periode Jan - Jun 2026",
+            "tanggal": "1 Agustus 2026",
+            "kategori": "Administrasi",
+            "deskripsi": "Seluruh bendahara kegiatan dimohon untuk mengumpulkan laporan keuangan maksimal tanggal 10 Agustus 2026 kepada bendahara umum.",
+            "link": "https://drive.google.com/drive/folders/1-6jqrxYpj3Z_uN2QSFhfMSKZWTNb1Wig",
+            "status": "aktif",
+            "prioritas": "rendah"
+        },
+        {
+            "id": 5,
+            "judul": "🌿 Aksi Konservasi: Bersih-bersih Pantai Baros",
+            "tanggal": "25 Juni 2026",
+            "kategori": "Kegiatan",
+            "deskripsi": "Terima kasih kepada seluruh relawan yang telah berpartisipasi dalam aksi bersih-bersih Pantai Baros. Total 50 kg sampah berhasil dikumpulkan!",
+            "link": "https://instagram.com/mapatek_abhipraya",
+            "status": "nonaktif",
+            "prioritas": "rendah"
+        },
+        {
             "id": 6,
             "judul": "Pengumuman Baru Anda",
             "tanggal": "15 Juli 2026",
