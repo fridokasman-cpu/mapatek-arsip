@@ -53,6 +53,17 @@
             "location": "Jambi, Sumatera",
             "desc": "Pendakian puncak tertinggi di Sumatera (3.805 mdpl)",
             "status": "upcoming"
+        },
+        {
+            "date": "2026-10-03",
+            "day": "03",
+            "month": "OKT",
+            "title": "Ekspedisi Gunung Kerinci",
+            "location": "Jambi, Sumatera",
+            "desc": "Pendakian puncak tertinggi di Sumatera (3.805 mdpl)",
+            "status": "upcoming"
         }
     ]
+    
+    
 }
