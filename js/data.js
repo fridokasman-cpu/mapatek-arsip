@@ -107,7 +107,12 @@ const galeriImages = [
     { src: "images/galeri/konservasi.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
     { src: "images/galeri/latihanascend.jpg", caption: "Latihan Ascending" },
     { src: "images/galeri/diksarlitaniaram.jpg", caption: "Diksar Angkatan Litani Aram" },
-    { src: "images/galeri/keluargabesar.jpg", caption: "Wisuda Angkatan Pendiri" }
+    { src: "images/galeri/keluargabesar.jpg", caption: "Wisuda Angkatan Pendiri" },
+    { src: "images/galeri/Impk.jpg", caption: "Dikjut Gunung Hutan Angkatan Litani Aram" },
+    { src: "images/galeri/Impk2.jpg", caption: "Dikjut Gunung Hutan Angkatan Litani Aram" },
+    { src: "images/galeri/LatihanRC.jpg", caption: "Latihan RC" }
+
+
 ];
 
 // -------------------- TESTIMONI --------------------
