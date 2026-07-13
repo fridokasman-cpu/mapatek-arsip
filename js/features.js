@@ -703,7 +703,7 @@ window.openModal = openModal;
 window.closeModal = closeModal;
 window.loadAgendaFromJSON = loadAgendaFromJSON;
 //window.filterKategori = filterKategori;
-window.filterArsip = filterArsip;
+//window.filterArsip = filterArsip;
 window.loadKalenderData = loadKalenderData;
 
 console.log('✅ features.js functions exposed to global scope');
