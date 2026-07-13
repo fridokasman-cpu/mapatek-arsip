@@ -172,38 +172,52 @@ function removeTypingIndicator(typingId) {
  * (misalnya Google Gemini punya struktur request/response berbeda).
  */
 async function fetchAIResponse(message) {
-    const response = await fetch(GEMINI_API_ENDPOINT, { // <-- PASTIKAN INI MENGUNAKAN GEMINI_API_ENDPOINT
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            contents: [{
-                parts: [{
-                    text: SYSTEM_PROMPT + "\n\nUser question: " + message
-                }]
-            }],
-            generationConfig: {
-                maxOutputTokens: 500,
-                temperature: 0.7
-            }
-        })
-    });
+    try {
+        // Gabungkan prompt sistem dan pesan user dengan aman
+        const fullPrompt = `${SYSTEM_PROMPT}\n\nPertanyaan User: ${message}`;
+        
+        const response = await fetch(GEMINI_API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{
+                        text: fullPrompt
+                    }]
+                }],
+                generationConfig: {
+                    maxOutputTokens: 500,
+                    temperature: 0.7
+                }
+            })
+        });
 
-    if (!response.ok) {
-        throw new Error(`API error: ${response.status} ${response.statusText}`);
+        if (!response.ok) {
+            // Ambil detail error dari Gemini agar kita tahu kenapa 400
+            const errorData = await response.json().catch(() => ({}));
+            console.error("Detail Error dari Gemini API:", errorData);
+            throw new Error(`API error: ${response.status} ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        
+        // Ambil teks dari struktur respons Gemini
+        const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (!aiText) {
+            throw new Error('Respons dari AI kosong atau tidak valid');
+        }
+
+        // Ganti newline menjadi <br> untuk tampilan HTML
+        return aiText.replace(/\n/g, '<br>');
+        
+    } catch (error) {
+        console.error("Gagal memanggil API AI:", error);
+        throw error; // Lempar error agar ditangkap oleh fungsi sendMessage
     }
-
-    const data = await response.json();
-    const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-
-    if (!aiText) {
-        throw new Error('Format respons API tidak sesuai atau kosong');
-    }
-
-    return aiText.replace(/\n/g, '<br>');
 }
-
 /**
  * ================================================================
  * KNOWLEDGE BASE — Sistem respons cerdas SUPER LENGKAP (LOKAL)
