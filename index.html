@@ -524,6 +524,18 @@
     <script src="js/features.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
-
+<!-- Letakkan ini di bagian paling bawah, sebelum </body> -->
+<script src="https://kit.fontawesome.com/YOUR_KIT_CODE.js" crossorigin="anonymous"></script> <!-- Untuk ikon -->
+<script>
+    // --- TEMPELKAN SELURUH KODE JAVASCRIPT CHATBOT DI SINI ---
+    // (Termasuk konfigurasi API_KEY Gemini yang sudah kita bahas sebelumnya)
+    
+    // Tambahkan fungsi helper ini agar bisa kirim pakai tombol Enter
+    function handleEnter(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    }
+</script>
 </body>
 </html>
