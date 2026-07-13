@@ -96,6 +96,7 @@ const agendas = [
         status: "upcoming"
     }
 ];
+
 // -------------------- GALERI --------------------
 const galeriImages = [
     { src: "images/galeri/ekspedisi_rinjani.jpg", caption: "Pelantikan Angkatan Tedak Daivat" },
@@ -111,8 +112,6 @@ const galeriImages = [
     { src: "images/galeri/Impk.jpg", caption: "Dikjut Gunung Hutan Angkatan Litani Aram" },
     { src: "images/galeri/Impk2.jpg", caption: "Dikjut Gunung Hutan Angkatan Litani Aram" },
     { src: "images/galeri/LatihanRC.jpg", caption: "Latihan RC" }
-
-
 ];
 
 // -------------------- TESTIMONI --------------------
@@ -177,7 +176,7 @@ const petaLocations = [
 
 // -------------------- BERITA --------------------
 const beritaData = [
-    { category: "Pengumuman", title: "Berita Terbaru!", excerpt: "Berita Seputar UST", date: "5 Juni 2026", image: "https://images." },
+    { category: "Pengumuman", title: "Berita Terbaru!", excerpt: "Berita Seputar UST", date: "5 Juni 2026", image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=600&h=400&fit=crop" },
 ];
 
 // -------------------- KALENDER EVENT --------------------
@@ -190,7 +189,7 @@ const kalenderEvents = [
     { date: "2026-07-11", title: "Ekspedisi Gunung Rinjani", type: "ekspedisi" },
     { date: "2026-07-24", title: "Latihan Survival", type: "latihan" },
     { date: "2026-07-20", title: "Pendakian Merbabu", type: "ekspedisi" },
-    { date: "2026-19-03", title: "Ulang Tahun Mapatek", type: "latihan" }
+    { date: "2026-03-19", title: "Ulang Tahun Mapatek", type: "latihan" }
 ];
 
 // -------------------- FAQ --------------------
@@ -244,7 +243,6 @@ const searchData = [
 ];
 
 // Ekspor variabel ke global (untuk digunakan di file lain)
-// Karena tidak menggunakan module, kita attach ke window agar bisa diakses
 (function() {
     window.agendas = agendas;
     window.galeriImages = galeriImages;
@@ -260,6 +258,5 @@ const searchData = [
     window.quizQuestions = quizQuestions;
     window.quizResults = quizResults;
     window.searchData = searchData;
-     //window.statsData = statsData; // TAMBAHKAN INI
-       var statsData = {}; // Menambahkan variabel kosong agar tidak error
-})
+    window.statsData = {}; // <-- FIX: Ekspor langsung tanpa var di dalam
+})();

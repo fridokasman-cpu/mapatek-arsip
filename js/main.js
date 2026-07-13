@@ -38,14 +38,12 @@ function filterArsip() {
     let visibleCount = 0;
     let firstVisibleItem = null;
     
-    // Highlight reset
     document.querySelectorAll('.search-highlight').forEach(el => {
         const parent = el.parentNode;
         parent.replaceChild(document.createTextNode(el.textContent), el);
         parent.normalize();
     });
 
-    // Filter items
     arsipItems.forEach(item => {
         const text = item.innerText.toLowerCase();
         const match = text.includes(searchValue);
@@ -56,8 +54,6 @@ function filterArsip() {
             if (!firstVisibleItem) {
                 firstVisibleItem = item;
             }
-            
-            // Highlight matching text
             if (searchValue.length > 0) {
                 highlightText(item, searchValue);
             }
@@ -66,37 +62,21 @@ function filterArsip() {
         }
     });
     
-    // Auto-scroll ke arsip section jika ada input
     if (searchValue.length > 0) {
-        // Scroll ke section arsip
-        arsipSection.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-        });
-        
-        // Highlight item pertama setelah scroll selesai
+        arsipSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         setTimeout(() => {
             if (firstVisibleItem) {
-                firstVisibleItem.scrollIntoView({ 
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-                
-                // Tambahkan efek highlight sementara
+                firstVisibleItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 firstVisibleItem.style.transition = 'all 0.3s';
                 firstVisibleItem.style.boxShadow = '0 0 0 3px var(--accent), 0 8px 32px rgba(52, 165, 120, 0.3)';
-                
                 setTimeout(() => {
                     firstVisibleItem.style.boxShadow = '';
                 }, 2000);
             }
         }, 500);
         
-        // Tampilkan pesan jika tidak ada hasil
         const existingMessage = document.querySelector('.search-no-results');
-        if (existingMessage) {
-            existingMessage.remove();
-        }
+        if (existingMessage) existingMessage.remove();
         
         if (visibleCount === 0) {
             const message = document.createElement('div');
@@ -112,40 +92,22 @@ function filterArsip() {
                 <h3 style="margin-bottom: 0.5rem;">Tidak ada hasil ditemukan</h3>
                 <p>Coba kata kunci lain seperti "Rinjani", "2024", atau "Laporan"</p>
             `;
-            
             const arsipList = document.getElementById('arsipList');
-            if (arsipList) {
-                arsipList.appendChild(message);
-            }
+            if (arsipList) arsipList.appendChild(message);
         }
     } else {
-        // Reset jika input kosong
-        arsipItems.forEach(item => {
-            item.style.display = 'flex';
-        });
+        arsipItems.forEach(item => item.style.display = 'flex');
     }
 }
 
-// Fungsi untuk highlight teks yang cocok
 function highlightText(element, searchTerm) {
     if (!searchTerm) return;
-    
-    const walker = document.createTreeWalker(
-        element,
-        NodeFilter.SHOW_TEXT,
-        null,
-        false
-    );
-    
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT, null, false);
     const nodes = [];
-    while (walker.nextNode()) {
-        nodes.push(walker.currentNode);
-    }
-    
+    while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach(node => {
         const text = node.textContent.toLowerCase();
         const index = text.indexOf(searchTerm);
-        
         if (index !== -1) {
             const span = document.createElement('span');
             span.className = 'search-highlight';
@@ -156,31 +118,24 @@ function highlightText(element, searchTerm) {
                 font-weight: 600;
                 color: var(--primary);
             `;
-            
             const before = node.textContent.substring(0, index);
             const match = node.textContent.substring(index, index + searchTerm.length);
             const after = node.textContent.substring(index + searchTerm.length);
-            
             const fragment = document.createDocumentFragment();
             if (before) fragment.appendChild(document.createTextNode(before));
-            
             span.textContent = match;
             fragment.appendChild(span);
-            
             if (after) fragment.appendChild(document.createTextNode(after));
-            
             node.parentNode.replaceChild(fragment, node);
         }
     });
 }
 
-// ==================== FILTER KATEGORI ARSIP (DIPERBAIKI) ====================
+// ==================== FILTER KATEGORI ARSIP ====================
 function filterKategori(kategori, btn) {
-    // 1. Reset tombol aktif
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
 
-    // 2. Filter item arsip
     const items = document.querySelectorAll('.arsip-item');
     let visibleCount = 0;
 
@@ -194,14 +149,12 @@ function filterKategori(kategori, btn) {
         }
     });
 
-    // 3. Tampilkan pesan jumlah (gunakan elemen #arsipInfo)
     const info = document.getElementById('arsipInfo');
     if (info) {
         const label = (kategori === 'all') ? 'Semua' : kategori;
         info.textContent = `Menampilkan ${visibleCount} file untuk kategori: ${label}`;
     }
 
-    // 4. Pesan jika tidak ada hasil (opsional)
     let noResultMsg = document.querySelector('.no-result-msg');
     if (visibleCount === 0 && kategori !== 'all') {
         if (!noResultMsg) {
@@ -298,13 +251,7 @@ if (localStorage.getItem('darkMode') === 'true') {
         icon.classList.add('fa-sun');
     }
 }
-window.addEventListener('load', function() {
-    // ===== AGENDA DARI DATA.JS (LANGSUNG) =====
-    if (typeof loadAgenda === 'function') {
-        loadAgenda();
-    }
-    // ... fitur lain (galeri, testimoni, dll)
-});
+
 // ==================== LOAD ALL FEATURES ====================
 window.addEventListener('load', () => {
     if (typeof loadAgenda === 'function') loadAgenda();
@@ -317,48 +264,41 @@ window.addEventListener('load', () => {
     if (typeof loadKalender === 'function') loadKalender();
     if (typeof loadFAQ === 'function') loadFAQ();
     if (typeof loadQuizQuestion === 'function') loadQuizQuestion();
-    
     if (typeof loadPeta === 'function') {
         setTimeout(loadPeta, 500);
     }
-    
     if (typeof animateCounter === 'function') {
         const memberEl = document.getElementById('memberCount');
         const expeditionEl = document.getElementById('expeditionCount');
         const trainingEl = document.getElementById('trainingCount');
         const documentEl = document.getElementById('documentCount');
-        
-        //Data Jumlah Anggota Mapatek//
         if (memberEl) animateCounter(memberEl, 49);
         if (expeditionEl) animateCounter(expeditionEl, 12);
         if (trainingEl) animateCounter(trainingEl, 8);
         if (documentEl) animateCounter(documentEl, 25);
     }
-    
     if (typeof nextTestimoni === 'function') {
         setInterval(nextTestimoni, 6000);
     }
-    
     if (typeof updateCountdown === 'function') {
         updateCountdown();
         setInterval(updateCountdown, 1000);
     }
-    
     if (typeof loadCuacaRealtime === 'function') {
         setInterval(loadCuacaRealtime, 1800000);
         setInterval(loadPengumuman, 600000);
     }
-
     if (typeof showToast === 'function') {
         setTimeout(() => {
             showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
         }, 800);
     }
     if (typeof loadPengumuman === 'function') {
-    loadPengumuman();
-    setInterval(loadPengumuman, 600000); // refresh tiap 10 menit
-}
+        loadPengumuman();
+        setInterval(loadPengumuman, 600000);
+    }
 });
+
 // ==================== FIX VIEWPORT MOBILE ====================
 document.addEventListener('gesturestart', function (e) {
     e.preventDefault();
@@ -372,7 +312,7 @@ function fixViewport() {
 window.addEventListener('load', fixViewport);
 window.addEventListener('resize', fixViewport);
 
-// ==================== PENGUMUMAN (dari JSON) ====================
+// ==================== PENGUMUMAN ====================
 async function loadPengumuman() {
     const grid = document.getElementById('pengumumanGrid');
     if (!grid) return;
@@ -380,15 +320,11 @@ async function loadPengumuman() {
     try {
         const response = await fetch('pengumuman.json?t=' + Date.now());
         if (!response.ok) throw new Error('Gagal memuat pengumuman');
-        
         const data = await response.json();
-        
         if (!data.pengumuman || !Array.isArray(data.pengumuman)) {
             throw new Error('Format JSON tidak valid');
         }
-        
         const pengumumanAktif = data.pengumuman.filter(p => p.status === 'aktif');
-        
         if (pengumumanAktif.length === 0) {
             grid.innerHTML = `
                 <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--gray-500);">
@@ -398,12 +334,10 @@ async function loadPengumuman() {
             `;
             return;
         }
-        
         const prioritasOrder = { tinggi: 1, sedang: 2, rendah: 3 };
         pengumumanAktif.sort((a, b) => {
             return (prioritasOrder[a.prioritas] || 3) - (prioritasOrder[b.prioritas] || 3);
         });
-        
         grid.innerHTML = pengumumanAktif.map(p => `
             <a href="${p.link || 'https://ustjogja.ac.id/id/berita/'}" target="_blank" class="pengumuman-card prioritas-${p.prioritas || 'sedang'}">
                 <div class="pengumuman-header">
@@ -422,7 +356,6 @@ async function loadPengumuman() {
                 </div>
             </a>
         `).join('');
-        
     } catch (error) {
         console.error('Error loading pengumuman:', error);
         grid.innerHTML = `
@@ -437,53 +370,12 @@ async function loadPengumuman() {
     }
 }
 
-window.addEventListener('load', function() {
-    // ===== MUAT AGENDA LANGSUNG DARI DATA.JS =====
-    if (typeof loadAgenda === 'function') {
-        loadAgenda();
-    }
-
-    // ... fitur lain (galeri, testimoni, dll)
-});
-
-// ==================== EKSPOSE FUNGSI KE GLOBAL ====================
-window.toggleMenu = toggleMenu;
-window.filterArsip = filterArsip;
-window.filterKategori = filterKategori;
-window.fixViewport = fixViewport;
-window.loadPengumuman = loadPengumuman;
-window.loadAgendaFromJSON = loadAgendaFromJSON;
-
-// Fungsi dari features.js diekspose ulang untuk memastikan tersedia
-(function ensureFunctionsExposed() {
-    const functionsToExpose = [
-        'toggleDarkMode', 'scrollToTop', 'showToast', 'openModal', 'closeModal',
-        'nextTestimoni', 'prevTestimoni', 'goToTestimoni', 'votePolling',
-        'loadCuacaRealtime', 'changeMonth', 'filterKalender', 'toggleFAQ',
-        'answerQuiz', 'restartQuiz', 'copyToClipboard',
-        'openGlobalSearch', 'closeGlobalSearch', 'performGlobalSearch', 'navigateTo',
-        'updateCountdown', 'loadTestimoni', 'loadLeaderboard', 'loadPolling',
-        'loadBerita', 'loadKalender', 'loadFAQ', 'loadQuizQuestion',
-        'loadAgenda', 'loadGaleri', 'animateCounter', 'loadPeta'
-    ];
-    
-    functionsToExpose.forEach(fnName => {
-        if (typeof window[fnName] === 'undefined' && typeof eval(fnName) === 'function') {
-            window[fnName] = eval(fnName);
-        }
-    });
-})();
-
-console.log('✅ Mapatek Portal — Main initialized successfully!');
-
 // ==================== SIDEBAR TOGGLE ====================
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const overlay = document.getElementById('sidebarOverlay');
-    
     sidebar.classList.toggle('active');
     overlay.classList.toggle('active');
-    
     document.body.style.overflow = sidebar.classList.contains('active') ? 'hidden' : '';
 }
 
@@ -496,10 +388,16 @@ document.addEventListener('keydown', function(e) {
     }
 });
 
+// ==================== EKSPOSE FUNGSI KE GLOBAL ====================
+window.toggleMenu = toggleMenu;
+window.filterArsip = filterArsip;
+window.filterKategori = filterKategori;
+window.fixViewport = fixViewport;
+window.loadPengumuman = loadPengumuman;
+window.loadAgendaFromJSON = loadAgendaFromJSON;
 window.toggleSidebar = toggleSidebar;
 
-// Ekspos tambahan untuk fungsi dari features.js (jika ada yang belum)
-window.toggleChatbot = toggleChatbot;
-window.sendMessage = sendMessage;
-window.escapeHtml = escapeHtml;
-window.getIntelligentResponse = getIntelligentResponse;
+// ==================== TIDAK ADA EKSPOR DUPLIKAT CHATBOT ====================
+// Fungsi chatbot sudah diekspor di chatbot.js, tidak perlu di sini.
+
+console.log('✅ Mapatek Portal — Main initialized successfully!');

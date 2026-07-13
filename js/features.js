@@ -3,30 +3,19 @@
 // ================================================================
 
 // ==================== COUNTDOWN TIMER ====================
-// === COUNTDOWN OTOMATIS DARI AGENDA ===
 let currentEvent = null;
 
-// Fungsi untuk mencari event terdekat yang belum lewat
 function getNextEvent() {
     const now = new Date();
-    now.setHours(0, 0, 0, 0); // Reset ke awal hari
-    
-    // Filter event yang tanggalnya >= hari ini
+    now.setHours(0, 0, 0, 0);
     const upcomingEvents = agendas.filter(event => {
         const eventDate = new Date(event.date);
         return eventDate >= now;
     });
-    
-    // Sort berdasarkan tanggal terdekat
-    upcomingEvents.sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
-    });
-    
-    // Return event pertama (terdekat)
+    upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
     return upcomingEvents.length > 0 ? upcomingEvents[0] : null;
 }
 
-// Fungsi update countdown
 function updateCountdown() {
     const event = getNextEvent();
     const daysEl = document.getElementById('cd-days');
@@ -36,7 +25,6 @@ function updateCountdown() {
     const eventNameEl = document.getElementById('countdownEventName');
     
     if (!event) {
-        // Tidak ada event terjadwal
         daysEl.textContent = '00';
         hoursEl.textContent = '00';
         minutesEl.textContent = '00';
@@ -45,14 +33,12 @@ function updateCountdown() {
         return;
     }
     
-    // Cek apakah event hari ini
     const eventDate = new Date(event.date + 'T08:00:00');
     const now = new Date();
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
     if (eventDate.toDateString() === today.toDateString()) {
-        // Event hari ini
         daysEl.textContent = '00';
         hoursEl.textContent = '00';
         minutesEl.textContent = '00';
@@ -61,11 +47,8 @@ function updateCountdown() {
         return;
     }
     
-    // Hitung selisih waktu
     const distance = eventDate - now;
-    
     if (distance < 0) {
-        // Event sudah lewat
         daysEl.textContent = '00';
         hoursEl.textContent = '00';
         minutesEl.textContent = '00';
@@ -74,7 +57,6 @@ function updateCountdown() {
         return;
     }
     
-    // Update display
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
@@ -85,7 +67,6 @@ function updateCountdown() {
     minutesEl.textContent = String(minutes).padStart(2, '0');
     secondsEl.textContent = String(seconds).padStart(2, '0');
     
-    // Update nama event dengan info lokasi
     const eventDateFormatted = new Date(event.date).toLocaleDateString('id-ID', {
         day: 'numeric',
         month: 'long',
@@ -101,9 +82,9 @@ function updateCountdown() {
     `;
 }
 
-// Jalankan countdown
 setInterval(updateCountdown, 1000);
-updateCountdown(); // Panggil langsung saat load
+updateCountdown();
+
 // ==================== TESTIMONI ====================
 let currentTestimoni = 0;
 
@@ -366,7 +347,7 @@ function loadPeta() {
     konservasiLayer.addTo(petaMap);
 }
 
-// === BERITA (Semua mengarah ke UST) ===
+// === BERITA ===
 function loadBerita() {
     const grid = document.getElementById('beritaGrid');
     if (!grid) return;
@@ -564,15 +545,13 @@ function navigateTo(section) {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
 }
 
-// ==================== AGENDA (LOAD DARI DATA.JS) ====================
-// Fungsi ini akan merender agenda dari variabel agendas (dari data.js)
+// ==================== AGENDA ====================
 function loadAgenda() {
     const container = document.getElementById('agendaGrid');
     if (!container) {
         console.warn('⚠️ Elemen #agendaGrid tidak ditemukan');
         return;
     }
-    // Gunakan window.agendas jika ada, atau agendas langsung
     const data = window.agendas || agendas;
     if (!data || data.length === 0) {
         container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:2rem;color:var(--gray-500);">Belum ada agenda</div>`;
@@ -591,7 +570,6 @@ function loadAgenda() {
     `).join('');
     console.log('✅ Agenda loaded from data.js,', data.length, 'items');
 }
-
 
 function loadGaleri() {
     const container = document.getElementById('galeriGrid');
@@ -642,31 +620,24 @@ function openModal(src) {
 }
 
 function closeModal() { document.getElementById('imageModal').classList.remove('active'); }
-// === LOAD AGENDA DARI JSON (OPSIONAL) ===
+
 async function loadAgendaFromJSON() {
     try {
         const response = await fetch('agenda.json?t=' + Date.now());
         const data = await response.json();
-        
         if (data.agendas && Array.isArray(data.agendas)) {
-            agendas.length = 0; // Kosongkan array
+            agendas.length = 0;
             agendas.push(...data.agendas);
-            
-            // Reload agenda grid
             loadAgenda();
-            
-            // Update countdown dengan data baru
             updateCountdown();
-            
             console.log('✅ Agenda updated from JSON');
         }
     } catch (error) {
         console.log('ℹ️ Using default agenda data (no agenda.json found)');
     }
 }
+
 // ==================== EXPOSE FUNCTIONS TO GLOBAL ====================
-// Ekspos semua fungsi yang dipanggil dari HTML (onclick, onchange, dll)
-// Hanya fungsi yang didefinisikan di file ini yang diekspos.
 window.updateCountdown = updateCountdown;
 window.loadTestimoni = loadTestimoni;
 window.updateTestimoni = updateTestimoni;
@@ -682,7 +653,7 @@ window.loadBerita = loadBerita;
 window.loadKalender = loadKalender;
 window.changeMonth = changeMonth;
 window.filterKalender = filterKalender;
-//window.refreshKalender = refreshKalender;// refreshKalender(); // Dinonaktifkan sementara karena fungsi belum ada
+// window.refreshKalender = refreshKalender; // <-- DIKOMMENTARI
 window.loadFAQ = loadFAQ;
 window.toggleFAQ = toggleFAQ;
 window.loadQuizQuestion = loadQuizQuestion;
@@ -702,8 +673,6 @@ window.showToast = showToast;
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.loadAgendaFromJSON = loadAgendaFromJSON;
-//window.filterKategori = filterKategori;
-//window.filterArsip = filterArsip;
-//window.loadKalenderData = loadKalenderData;
+// window.filterKategori = filterKategori; // <-- DIKOMMENTARI
 
 console.log('✅ features.js functions exposed to global scope');

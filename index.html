@@ -10,12 +10,14 @@
 
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome CDN (sudah benar) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Leaflet CSS (Peta) -->
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-    <!-- CSS Eksternal (sudah sesuai dengan desain modern) -->
+    <!-- CSS Eksternal -->
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -489,11 +491,13 @@
     ============================================================ -->
     <div id="toast" class="toast"></div>
 
-    <!-- ============================================================
+  <!-- ============================================================
     CHATBOT
     ============================================================ -->
     <div class="chatbot-widget">
-        <button class="chatbot-toggle" onclick="toggleChatbot()" aria-label="Buka chatbot"><i class="fas fa-comment-dots"></i></button>
+        <button class="chatbot-toggle" onclick="toggleChatbot()" aria-label="Buka chatbot">
+            <i class="fas fa-comment-dots"></i>
+        </button>
         <div class="chatbot-container" id="chatbotContainer">
             <div class="chatbot-header">
                 <h3><i class="fas fa-robot"></i> Asisten Mapatek AI</h3>
@@ -506,37 +510,27 @@
                 </div>
             </div>
             <div class="chatbot-input">
+                <!-- Menggunakan onkeypress langsung (tidak perlu handleEnter) -->
                 <input type="text" id="chatInput" placeholder="Tanyakan sesuatu…" onkeypress="if(event.key==='Enter') sendMessage()">
                 <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
             </div>
         </div>
     </div>
 
-
     <!-- ============================================================
     SCRIPTS
     ============================================================ -->
-   <!-- BENAR: Menggunakan tag link untuk file CSS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    </script>
-
     <!-- JAVASCRIPT FILES (URUTAN PENTING!) -->
     <script src="js/data.js"></script>
     <script src="js/features.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
-<!-- Letakkan ini di bagian paling bawah, sebelum </body> -->
-<script>
-    // --- TEMPELKAN SELURUH KODE JAVASCRIPT CHATBOT DI SINI ---
-    // (Termasuk konfigurasi API_KEY Gemini yang sudah kita bahas sebelumnya)
-    
-    // Tambahkan fungsi helper ini agar bisa kirim pakai tombol Enter
-    function handleEnter(event) {
-        if (event.key === 'Enter') {
-            sendMessage();
-        }
-    }
-</script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- ============================================================
+    TIDAK ADA SCRIPT handleEnter DI SINI (tidak perlu)
+    ============================================================ -->
 </body>
 </html>
