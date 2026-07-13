@@ -168,7 +168,7 @@ function removeTypingIndicator(typingId) {
  * (misalnya Google Gemini punya struktur request/response berbeda).
  */
 async function fetchAIResponse(message) {
-    const response = await fetch(API_ENDPOINT, {
+    const response = await fetch(GEMINI_API_ENDPOINT, { // <-- PASTIKAN INI MENGUNAKAN GEMINI_API_ENDPOINT
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -197,7 +197,6 @@ async function fetchAIResponse(message) {
         throw new Error('Format respons API tidak sesuai atau kosong');
     }
 
-    // Ganti newline menjadi <br> untuk tampilan HTML
     return aiText.replace(/\n/g, '<br>');
 }
 
