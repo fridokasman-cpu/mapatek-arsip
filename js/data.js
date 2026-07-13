@@ -261,5 +261,5 @@ const searchData = [
     window.quizResults = quizResults;
     window.searchData = searchData;
      //window.statsData = statsData; // TAMBAHKAN INI
-     let statsData = {}; // Menambahkan variabel kosong agar tidak error
+       var statsData = {}; // Menambahkan variabel kosong agar tidak error
 })
