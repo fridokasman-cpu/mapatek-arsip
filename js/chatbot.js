@@ -7,7 +7,7 @@
 // ================================================================
 // Gunakan nama variabel yang UNIK agar tidak bentrok dengan API_KEY cuaca
 const GEMINI_API_KEY = "AIzaSyC1YOTI61Wc7hdceu-r-ukDTMROjq7a1TM"; 
-const GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + GEMINI_API_KEY;
+const GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=" + GEMINI_API_KEY;
 
 // Persona sistem untuk menjaga gaya bahasa chatbot tetap konsisten
 const SYSTEM_PROMPT = `Kamu adalah Asisten Virtual MAPATEK Abhipraya, sebuah organisasi mahasiswa pecinta alam di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta.
