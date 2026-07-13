@@ -1,6 +1,37 @@
 // ================================================================
-// CHATBOT — Asisten Virtual MAPATEK Super Pintar
+// CHATBOT — Asisten Virtual MAPATEK Super Pintar (HYBRID: LOKAL + AI)
 // ================================================================
+//
+// ⚙️  KONFIGURASI API AI — WAJIB DIISI SEBELUM DIGUNAKAN
+// ----------------------------------------------------------------
+// Ganti nilai di bawah ini dengan API Key dan Endpoint AI Anda
+// (OpenAI, Google Gemini, atau provider lain yang kompatibel).
+//
+//   const API_KEY      = "MASUKKAN_API_KEY_ANDA_DI_SINI";
+//   const API_ENDPOINT = "https://api.openai.com/v1/chat/completions";
+//
+// Contoh untuk Google Gemini:
+//   const API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY;
+//
+// ⚠️ PERINGATAN KEAMANAN:
+// Menaruh API_KEY langsung di JavaScript sisi client (front-end) akan
+// membuat key tersebut terlihat oleh siapa saja yang membuka DevTools
+// browser. Untuk produksi, SANGAT DISARANKAN agar permintaan ke API AI
+// ini diteruskan lewat backend/proxy server milik Anda sendiri (misalnya
+// Node.js/Express, Cloudflare Worker, dsb) sehingga API_KEY tidak
+// pernah terekspos ke publik. Contoh di bawah ini memanggil API secara
+// langsung dari client HANYA untuk tujuan demonstrasi/prototyping.
+// ----------------------------------------------------------------
+
+// Menjadi ini:
+const API_KEY = "AIzaSyC1YOTI61Wc7hdceu-r-ukDTMROjq7a1TM";
+const API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + API_KEY;
+// Persona sistem untuk menjaga gaya bahasa chatbot tetap konsisten
+const SYSTEM_PROMPT = `Kamu adalah Asisten Virtual MAPATEK Abhipraya, sebuah organisasi mahasiswa pecinta alam di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta.
+Gaya bahasamu: ramah, profesional, suka menolong, dan sedikit bernuansa cinta alam (boleh menyisipkan istilah/analogi alam & petualangan secukupnya, jangan berlebihan).
+Kamu bisa menjawab pertanyaan umum apa saja (sains, sejarah, matematika, teknologi, dll) dengan jelas dan ringkas.
+Format jawabanmu boleh menggunakan HTML sederhana seperti <strong>, <ul>, <li>, <br> agar rapi saat ditampilkan di jendela chat, tapi JANGAN gunakan tag <script> atau atribut event (onclick, onerror, dsb).
+Jika relevan, kamu boleh mengarahkan pengguna untuk bertanya lebih lanjut seputar MAPATEK, pendakian, atau alam terbuka.`;
 
 /**
  * Toggle tampilan chatbot
@@ -14,16 +45,25 @@ function toggleChatbot() {
 }
 
 /**
- * Kirim pesan user ke chatbot
+ * Escape HTML untuk keamanan (dipakai untuk pesan USER)
  */
-function sendMessage() {
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+/**
+ * Kirim pesan user ke chatbot (ASYNC — mendukung fallback ke AI)
+ */
+async function sendMessage() {
     const input = document.getElementById('chatInput');
     const message = input.value.trim();
     if (!message) return;
 
     const messagesContainer = document.getElementById('chatMessages');
 
-    // Tampilkan pesan user
+    // Tampilkan pesan user (selalu di-escape untuk mencegah XSS)
     const userDiv = document.createElement('div');
     userDiv.className = 'message user';
     userDiv.innerHTML = `
@@ -34,33 +74,141 @@ function sendMessage() {
     input.value = '';
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-    // Proses balasan bot (delay untuk efek natural)
-    setTimeout(() => {
-        const response = getIntelligentResponse(message);
-        const botDiv = document.createElement('div');
-        botDiv.className = 'message bot';
-        botDiv.innerHTML = `
-            <div class="message-avatar"><i class="fas fa-robot" style="font-size:0.7rem;"></i></div>
-            <div class="message-content">${response}</div>
-        `;
-        messagesContainer.appendChild(botDiv);
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-    }, 400 + Math.random() * 300);
+    // 1) Cek dulu apakah ada jawaban LOKAL (instan, sesuai branding MAPATEK)
+    const localResponse = getIntelligentResponse(message);
+
+    if (localResponse !== null) {
+        // Ada jawaban lokal yang cocok -> tampilkan dengan delay natural
+        await delay(400 + Math.random() * 300);
+        appendBotMessage(messagesContainer, localResponse);
+        return;
+    }
+
+    // 2) Tidak ada jawaban lokal yang cocok -> tampilkan indikator "sedang mengetik"
+    const typingId = showTypingIndicator(messagesContainer);
+
+    try {
+        // 3) Panggil AI eksternal sebagai fallback
+        const aiResponse = await fetchAIResponse(message);
+        removeTypingIndicator(typingId);
+        appendBotMessage(messagesContainer, aiResponse);
+    } catch (error) {
+        // 4) Jika API gagal (key salah, kuota habis, error jaringan, dll)
+        console.error('Gagal memanggil API AI:', error);
+        removeTypingIndicator(typingId);
+        appendBotMessage(
+            messagesContainer,
+            'Maaf, koneksi ke otak AI saya sedang terganggu. Silakan coba lagi nanti, atau hubungi admin MAPATEK di 0822-1442-8371.'
+        );
+    }
 }
 
 /**
- * Escape HTML untuk keamanan
+ * Helper: delay berbasis Promise (untuk efek balasan natural)
  */
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * Helper: tampilkan bubble jawaban bot ke dalam chat
+ * (Catatan keamanan: konten `response` di sini HANYA berasal dari
+ * getIntelligentResponse() [hardcoded oleh developer] atau dari
+ * fetchAIResponse() [sudah diinstruksikan lewat systemPrompt agar
+ * aman]. Jangan pernah memasukkan input user mentah ke sini tanpa
+ * escapeHtml, karena innerHTML akan merender tag HTML apa adanya.)
+ */
+function appendBotMessage(messagesContainer, response) {
+    const botDiv = document.createElement('div');
+    botDiv.className = 'message bot';
+    botDiv.innerHTML = `
+        <div class="message-avatar"><i class="fas fa-robot" style="font-size:0.7rem;"></i></div>
+        <div class="message-content">${response}</div>
+    `;
+    messagesContainer.appendChild(botDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+/**
+ * Helper: tampilkan indikator "Sedang mengetik..." saat menunggu AI
+ * Mengembalikan id elemen agar bisa dihapus lagi nanti.
+ */
+function showTypingIndicator(messagesContainer) {
+    const typingDiv = document.createElement('div');
+    const typingId = 'typing-' + Date.now();
+    typingDiv.id = typingId;
+    typingDiv.className = 'message bot typing-indicator';
+    typingDiv.innerHTML = `
+        <div class="message-avatar"><i class="fas fa-robot" style="font-size:0.7rem;"></i></div>
+        <div class="message-content">
+            <span class="typing-dots">
+                <em>Sedang mengetik<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></em>
+            </span>
+        </div>
+    `;
+    messagesContainer.appendChild(typingDiv);
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    return typingId;
+}
+
+/**
+ * Helper: hapus indikator "Sedang mengetik..."
+ */
+function removeTypingIndicator(typingId) {
+    const el = document.getElementById(typingId);
+    if (el) el.remove();
 }
 
 /**
  * ================================================================
- * KNOWLEDGE BASE — Sistem respons cerdas SUPER LENGKAP
+ * FALLBACK AI — Dipanggil HANYA jika tidak ada jawaban lokal yang cocok
  * ================================================================
+ * Contoh implementasi menggunakan format OpenAI Chat Completions.
+ * Sesuaikan `body` di bawah jika Anda menggunakan provider lain
+ * (misalnya Google Gemini punya struktur request/response berbeda).
+ */
+async function fetchAIResponse(message) {
+    const response = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            contents: [{
+                parts: [{
+                    text: SYSTEM_PROMPT + "\n\nUser question: " + message
+                }]
+            }],
+            generationConfig: {
+                maxOutputTokens: 500,
+                temperature: 0.7
+            }
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error(`API error: ${response.status} ${response.statusText}`);
+    }
+
+    const data = await response.json();
+    const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+
+    if (!aiText) {
+        throw new Error('Format respons API tidak sesuai atau kosong');
+    }
+
+    // Ganti newline menjadi <br> untuk tampilan HTML
+    return aiText.replace(/\n/g, '<br>');
+}
+
+/**
+ * ================================================================
+ * KNOWLEDGE BASE — Sistem respons cerdas SUPER LENGKAP (LOKAL)
+ * ================================================================
+ * PENTING: Fungsi ini SEKARANG mengembalikan `null` jika tidak ada
+ * satupun aturan lokal yang cocok, sebagai sinyal bagi sendMessage()
+ * untuk melanjutkan ke fetchAIResponse() (fallback AI). Semua logika
+ * pencocokan regex yang sudah ada TETAP DIPERTAHANKAN sepenuhnya.
  */
 function getIntelligentResponse(message) {
     const msg = message.toLowerCase().trim();
@@ -973,6 +1121,8 @@ Saya adalah chatbot cerdas yang dibuat untuk membantu Anda mendapatkan informasi
 ✅ UST Yogyakarta & Tamansiswa
 ✅ Kegiatan & agenda terbaru
 
+Saya juga bisa menjawab pertanyaan umum lainnya (sains, sejarah, teknologi, dll) berkat bantuan AI. 😊
+
 💡 Saya siap membantu 24/7! Cukup ketik pertanyaan Anda.`;
     }
 
@@ -982,6 +1132,10 @@ Saya adalah chatbot cerdas yang dibuat untuk membantu Anda mendapatkan informasi
     }
 
     // ==================== MENANGANI PERTANYAAN DENGAN "KENAPA" ====================
+    // Catatan: blok ini tetap dipertahankan sebagai jawaban lokal generik untuk
+    // pertanyaan "kenapa" yang masih ambigu. Jika kelak Anda ingin pertanyaan
+    // "kenapa" yang ambigu langsung dilempar ke AI, cukup ganti isi blok ini
+    // menjadi `return null;`.
     if (hasKenapa) {
         if (/(kenapa|mengapa) (harus|perlu|wajib|sebaiknya)/i.test(msg)) {
             return `🤔 Pertanyaan bagus! 
@@ -1019,47 +1173,13 @@ Coba tanyakan salah satu topik ini:
 • "10 Essentials pendakian"
 • "Kontak MAPATEK"
 
-Atau tanyakan langsung apa yang Anda ingin ketahui! 😊`;
+Atau tanyakan langsung apa yang Anda ingin ketahui, saya juga bisa bantu pertanyaan umum lainnya! 😊`;
     }
 
-    // Jika pesan mengandung "makasih" atau terima kasih sudah ditangani di awal
-
-    // ==================== DEFAULT / FALLBACK (RAMAH & INFORMATIF) ====================
-    return `🌿 <strong>PERTANYAAN ANDA SANGAT BAGUS!</strong>
-
-Maaf, saya belum memiliki jawaban spesifik untuk pertanyaan tersebut. Namun, saya bisa membantu dengan topik-topik berikut:
-
-📌 <strong>COBA TANYAKAN TENTANG:</strong>
-
-🏔️ <strong>MAPATEK & ORGANISASI</strong>
-• Sejarah, Visi Misi, Struktur, Angkatan
-• Pendaftaran & DIKSAR
-
-⛰️ <strong>PENDAKIAN GUNUNG</strong>
-• Persiapan pendakian & 10 Essentials
-• Teknik packing carrier
-• Rekomendasi gunung pemula
-
-🧗 <strong>ROCK CLIMBING</strong>
-• Harness, Carabiner, Simpul
-• Anchor SERENE
-
-🔥 <strong>SURVIVAL & P3K</strong>
-• Membuat api, shelter, menjernihkan air
-• Hipotermia, gigitan ular, patah tulang, CPR
-
-🌱 <strong>KONSERVASI</strong>
-• Leave No Trace (LNT)
-
-🏫 <strong>UST & TAMANSISWA</strong>
-• Informasi kampus, Ki Hajar Dewantara
-
-📢 <strong>INFO KEGIATAN</strong>
-• Jadwal, kontak, basecamp
-
-📞 Atau hubungi admin di <strong>0822-1442-8371</strong> untuk info lebih lanjut!
-
-Terima kasih sudah bertanya! 😊`;
+    // ==================== FALLBACK KE AI ====================
+    // Tidak ada aturan lokal yang cocok -> kembalikan null.
+    // sendMessage() akan menangkap ini dan memanggil fetchAIResponse().
+    return null;
 }
 
 // ================================================================
@@ -1077,13 +1197,10 @@ window.sendMessage = sendMessage;
 window.escapeHtml = escapeHtml;
 window.getIntelligentResponse = getIntelligentResponse;
 window.getRandomResponse = getRandomResponse;
+window.fetchAIResponse = fetchAIResponse;
 window.filterKategori = filterKategori;
 window.filterArsip = filterArsip;
 window.toggleMenu = toggleMenu;
-window.toggleChatbot = toggleChatbot;
-window.sendMessage = sendMessage;
-window.escapeHtml = escapeHtml;
-window.getIntelligentResponse = getIntelligentResponse;
 
 window.updateCountdown = updateCountdown;
 window.loadTestimoni = loadTestimoni;
@@ -1119,6 +1236,7 @@ window.showToast = showToast;
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.loadAgendaFromJSON = loadAgendaFromJSON;
+
 // ================================================================
 // CLOSE CHATBOT SAAT KLIK DI LUAR
 // ================================================================
@@ -1129,3 +1247,19 @@ document.addEventListener('click', function(event) {
         container.classList.remove('active');
     }
 });
+
+// ================================================================
+// (OPSIONAL) CSS UNTUK TYPING INDICATOR
+// ================================================================
+// Tambahkan CSS berikut ke file stylesheet Anda agar animasi titik
+// "Sedang mengetik..." terlihat lebih hidup:
+//
+// .typing-dots .dot {
+//     animation: blinkDot 1.4s infinite both;
+// }
+// .typing-dots .dot:nth-child(2) { animation-delay: 0.2s; }
+// .typing-dots .dot:nth-child(3) { animation-delay: 0.4s; }
+// @keyframes blinkDot {
+//     0%, 80%, 100% { opacity: 0; }
+//     40% { opacity: 1; }
+// }
