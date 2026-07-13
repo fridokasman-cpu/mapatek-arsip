@@ -1,0 +1,37 @@
+# ============================================================
+# .gitignore untuk Portal Mapatek Abhipraya
+# ============================================================
+
+# --- File konfigurasi yang berisi rahasia ---
+js/config.js
+js/api-key.js
+config.js
+*.secret.js
+*.secret.json
+.env
+.env.local
+
+# --- File sementara dan log ---
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# --- Folder build / cache ---
+node_modules/
+dist/
+build/
+.cache/
+.vscode/
+.idea/
+
+# --- File backup ---
+*.bak
+*.backup
+*~
+
+# --- File spesifik proyek (jika ada) ---
+agenda.json
+pengumuman.json
+status.json
