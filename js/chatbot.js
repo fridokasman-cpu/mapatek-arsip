@@ -173,49 +173,37 @@ function removeTypingIndicator(typingId) {
  */
 async function fetchAIResponse(message) {
     try {
-        // Gabungkan prompt sistem dan pesan user dengan aman
-        const fullPrompt = `${SYSTEM_PROMPT}\n\nPertanyaan User: ${message}`;
-        
-        const response = await fetch(GEMINI_API_ENDPOINT, {
+        // Ganti ke gemini-pro yang lebih toleran untuk permintaan teks
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`;
+
+        // Bersihkan karakter yang bisa merusak JSON
+        const cleanMessage = message.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+
+        const response = await fetch(url, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 contents: [{
-                    parts: [{
-                        text: fullPrompt
-                    }]
-                }],
-                generationConfig: {
-                    maxOutputTokens: 500,
-                    temperature: 0.7
-                }
+                    parts: [{ text: SYSTEM_PROMPT + "\n\nPertanyaan User: " + cleanMessage }]
+                }]
             })
         });
 
-        if (!response.ok) {
-            // Ambil detail error dari Gemini agar kita tahu kenapa 400
-            const errorData = await response.json().catch(() => ({}));
-            console.error("Detail Error dari Gemini API:", errorData);
-            throw new Error(`API error: ${response.status} ${response.statusText}`);
-        }
-
         const data = await response.json();
-        
-        // Ambil teks dari struktur respons Gemini
-        const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
 
-        if (!aiText) {
-            throw new Error('Respons dari AI kosong atau tidak valid');
+        // INI KUNCINYA: Jika gagal, cetak detail errornya dengan rapi
+        if (!response.ok) {
+            console.error("🚨 DETAIL ERROR GEMINI 400:", JSON.stringify(data, null, 2));
+            throw new Error(`API Error: ${response.status}`);
         }
 
-        // Ganti newline menjadi <br> untuk tampilan HTML
+        const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (!aiText) throw new Error("Respons kosong");
+
         return aiText.replace(/\n/g, '<br>');
-        
     } catch (error) {
-        console.error("Gagal memanggil API AI:", error);
-        throw error; // Lempar error agar ditangkap oleh fungsi sendMessage
+        console.error("Gagal AI:", error);
+        return "Maaf, koneksi ke otak AI saya sedang terganggu. Silakan coba lagi nanti, atau hubungi admin MAPATEK di 0822-1442-8371.";
     }
 }
 /**
@@ -1215,7 +1203,7 @@ window.escapeHtml = escapeHtml;
 window.getIntelligentResponse = getIntelligentResponse;
 window.getRandomResponse = getRandomResponse;
 window.fetchAIResponse = fetchAIResponse;
-window.filterKategori = filterKategori;
+// window.filterKategori = filterKategori; // Dihapus
 window.filterArsip = filterArsip;
 window.toggleMenu = toggleMenu;
 

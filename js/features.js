@@ -702,7 +702,7 @@ window.showToast = showToast;
 window.openModal = openModal;
 window.closeModal = closeModal;
 window.loadAgendaFromJSON = loadAgendaFromJSON;
-window.filterKategori = filterKategori;
+//window.filterKategori = filterKategori;
 window.filterArsip = filterArsip;
 window.loadKalenderData = loadKalenderData;
 
