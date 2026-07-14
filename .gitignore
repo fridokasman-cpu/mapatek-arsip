@@ -4,34 +4,61 @@
 
 # --- File konfigurasi yang berisi rahasia ---
 js/config.js
-js/api-key.js
 config.js
 *.secret.js
 *.secret.json
 .env
 .env.local
+.env.*.local
 
 # --- File sementara dan log ---
 *.log
 *.tmp
 *.temp
+*.cache
 .DS_Store
 Thumbs.db
+desktop.ini
 
-# --- Folder build / cache ---
+# --- Folder build / cache / dependencies ---
 node_modules/
 dist/
 build/
 .cache/
 .vscode/
 .idea/
+*.swp
+*.swo
 
 # --- File backup ---
 *.bak
 *.backup
 *~
 
-# --- File spesifik proyek (jika ada) ---
+# --- File spesifik proyek (opsional) ---
 agenda.json
 pengumuman.json
 status.json
+
+# --- File upload dan media (jika tidak ingin di-commit) ---
+uploads/
+images/temp/
+
+# --- File dari sistem operasi ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- File dari editor / IDE ---
+.vscode/
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+
+# --- File dari package manager ---
+package-lock.json
+yarn.lock
+composer.lock

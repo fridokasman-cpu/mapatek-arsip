@@ -146,30 +146,44 @@ function removeTypingIndicator(typingId) {
  */
 async function fetchAIResponse(message) {
     try {
-        // Bersihkan karakter yang bisa merusak JSON
-        const cleanMessage = message.replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+        const model = "llama3-8b-8192"; // Bisa ganti ke "mixtral-8x7b-32768" jika mau
+        const url = "https://api.groq.com/openai/v1/chat/completions";
 
-        const response = await fetch(GEMINI_API_ENDPOINT, {
+        const response = await fetch(url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Authorization': `Bearer ${window.GROQ_API_KEY}`,
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
-                contents: [{
-                    parts: [{ text: SYSTEM_PROMPT + "\n\nPertanyaan User: " + cleanMessage }]
-                }],
-                generationConfig: { maxOutputTokens: 500, temperature: 0.7 }
+                model: model,
+                messages: [
+                    {
+                        role: "system",
+                        content: "Kamu adalah Asisten Virtual MAPATEK Abhipraya. Ramah, profesional, suka menolong, dan bernuansa cinta alam. Jawab dengan jelas dan ringkas."
+                    },
+                    {
+                        role: "user",
+                        content: message
+                    }
+                ],
+                temperature: 0.7,
+                max_tokens: 500
             })
         });
 
-        const data = await response.json();
-
-        // Jika gagal, cetak detail errornya dengan rapi
         if (!response.ok) {
-            console.error("🚨 DETAIL ERROR GEMINI:", JSON.stringify(data, null, 2));
+            const errorData = await response.json();
+            console.error("🚨 Detail Error Groq:", errorData);
             throw new Error(`API Error: ${response.status}`);
         }
 
-        const aiText = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-        if (!aiText) throw new Error("Respons kosong");
+        const data = await response.json();
+        const aiText = data?.choices?.[0]?.message?.content;
+
+        if (!aiText) {
+            throw new Error("Respons AI kosong");
+        }
 
         return aiText.replace(/\n/g, '<br>');
     } catch (error) {
@@ -177,7 +191,6 @@ async function fetchAIResponse(message) {
         return "Maaf, koneksi ke otak AI saya sedang terganggu. Silakan coba lagi nanti, atau hubungi admin MAPATEK di 0822-1442-8371.";
     }
 }
-
 /**
  * ================================================================
  * KNOWLEDGE BASE — Sistem respons cerdas SUPER LENGKAP (LOKAL)
