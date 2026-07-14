@@ -581,7 +581,39 @@ function loadGaleri() {
         </div>
     `).join('');
 }
+// Background slideshow untuk section pendaftaran
+function initPendaftaranSlideshow() {
+    const section = document.querySelector('.pendaftaran-section');
+    if (!section) return;
 
+    const images = [
+        'images/galeri/ekspedisi_rinjani.jpg',
+        'images/galeri/diksar.jpg',
+        'images/galeri/rock_climbing.jpg',
+        'images/galeri/baksos.jpg',
+        'images/galeri/pendidikanrc.jpg'
+    ];
+
+    let currentIndex = 0;
+
+    function changeBackground() {
+        currentIndex = (currentIndex + 1) % images.length;
+        section.style.backgroundImage = `url('${images[currentIndex]}')`;
+        section.style.transition = 'background-image 1.5s ease-in-out';
+    }
+
+    // Set gambar pertama
+    section.style.backgroundImage = `url('${images[0]}')`;
+    section.style.backgroundSize = 'cover';
+    section.style.backgroundPosition = 'center';
+    section.style.backgroundAttachment = 'fixed';
+
+    // Ganti setiap 6 detik
+    setInterval(changeBackground, 6000);
+}
+
+// Panggil saat halaman selesai dimuat
+document.addEventListener('DOMContentLoaded', initPendaftaranSlideshow);
 // ==================== UTILITY FUNCTIONS ====================
 function animateCounter(element, target) {
     let current = 0;
