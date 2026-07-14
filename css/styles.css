@@ -4117,3 +4117,110 @@ body.dark-mode .leaflet-tile {
         font-size: 1rem;
     }
 }
+/* ============================================================
+   FLOATING MAP BUTTON — NEON GLOW (PETA DARURAT)
+   ============================================================ */
+.floating-map-btn {
+    position: fixed;
+    bottom: 160px;
+    right: 20px;
+    z-index: 9999;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* NEON GLOW STYLE */
+.floating-map-btn.neon-glow {
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(10px);
+    border: 2px solid #0ea5e9;
+    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3), inset 0 0 20px rgba(14, 165, 233, 0.1);
+    animation: neon-pulse 2s infinite;
+}
+
+@keyframes neon-pulse {
+    0%, 100% { box-shadow: 0 0 20px rgba(14, 165, 233, 0.3); }
+    50% { box-shadow: 0 0 50px rgba(14, 165, 233, 0.7), 0 0 80px rgba(14, 165, 233, 0.2); }
+}
+
+.floating-map-btn.neon-glow i {
+    font-size: 26px;
+    color: #0ea5e9;
+    text-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
+    transition: transform 0.3s ease;
+}
+
+.floating-map-btn.neon-glow .btn-label {
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #0ea5e9;
+    text-shadow: 0 0 10px rgba(14, 165, 233, 0.3);
+    margin-top: 2px;
+}
+
+.floating-map-btn.neon-glow .pulse-ring {
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width: calc(100% + 8px);
+    height: calc(100% + 8px);
+    border-radius: 50%;
+    border: 2px solid rgba(14, 165, 233, 0.25);
+    animation: ring-pulse 2.5s infinite;
+}
+
+@keyframes ring-pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+.floating-map-btn.neon-glow:hover {
+    transform: scale(1.12) translateY(-4px);
+}
+
+.floating-map-btn.neon-glow:hover i {
+    transform: rotate(15deg);
+}
+
+/* BADGE "PENTING" */
+.floating-map-btn.neon-glow .badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #ef4444;
+    color: white;
+    font-size: 8px;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 10px;
+    border: 2px solid white;
+    box-shadow: 0 2px 10px rgba(239, 68, 68, 0.5);
+    animation: blink-badge 1.5s infinite;
+}
+
+@keyframes blink-badge {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .floating-map-btn.neon-glow {
+        bottom: 145px;
+        right: 15px;
+        width: 58px;
+        height: 58px;
+    }
+    .floating-map-btn.neon-glow i { font-size: 22px; }
+    .floating-map-btn.neon-glow .btn-label { font-size: 7px; }
+}

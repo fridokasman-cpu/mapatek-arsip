@@ -42,7 +42,11 @@
             <li><a href="#arsip">Arsip</a></li>
             <li><a href="#kontak">Kontak</a></li>
             <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav"><i class="fas fa-lock"></i> Admin</a></li>
-            
+            <li class="nav-emergency">
+    <a href="peta-pendakian.html" style="background: #0ea5e9; color: white; padding: 8px 18px; border-radius: 40px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+        <i class="fas fa-map"></i> PETA
+    </a>
+</li>
         </ul>
         <div class="nav-actions">
             <button class="nav-icon-btn" onclick="openGlobalSearch()" title="Pencarian (Ctrl+K)"><i class="fas fa-search"></i></button>
@@ -531,6 +535,14 @@
     </div>
 
 </script>
+<!-- ============================================================
+    FLOATING ACTION BUTTON — PETA PENDAKIAN (DARURAT)
+    ============================================================ -->
+<a href="peta-pendakian.html" class="floating-map-btn neon-glow" id="floatingMapBtn" title="Buka Peta Pendakian">
+    <div class="pulse-ring"></div>
+    <i class="fas fa-map"></i>
+    <span class="btn-label">PETA</span>
+</a>
     <!-- ============================================================
     SCRIPTS
     ============================================================ -->
@@ -541,6 +553,7 @@
      <script src="js/config.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/peta.js"></script>
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
