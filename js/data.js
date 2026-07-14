@@ -36,8 +36,8 @@ const agendas = [
         date: "2026-08-08",
         day: "08",
         month: "AGS",
-        title: "Pendakian Gunung Merbabu",
-        location: "Boyolali, Jawa Tengah",
+        title: "Pendakian Gunung Lawu",
+        location: "Solo, Jawa Tengah",
         desc: "Pendakian puncak 3.145 mdpl via jalur Selo",
         status: "upcoming"
     },
