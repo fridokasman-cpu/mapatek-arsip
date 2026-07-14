@@ -581,48 +581,109 @@ function loadGaleri() {
         </div>
     `).join('');
 }
-// Background slideshow untuk section pendaftaran
+// ================================================================
+// SLIDESHOW BACKGROUND — Pendaftaran Section
+// ================================================================
+
 function initPendaftaranSlideshow() {
     const section = document.querySelector('.pendaftaran-section');
     if (!section) return;
 
+    // Daftar gambar dari folder galeri (sesuaikan dengan file yang ada)
     const images = [
         'images/galeri/ekspedisi_rinjani.jpg',
         'images/galeri/diksar.jpg',
         'images/galeri/rock_climbing.jpg',
         'images/galeri/baksos.jpg',
-        'images/galeri/pendidikanrc.jpg'
+        'images/galeri/pendidikanrc.jpg',
+        'images/galeri/latihanascend.jpg',
+        'images/galeri/keluargabesar.jpg'
     ];
 
     let currentIndex = 0;
+    let intervalId = null;
+    const indicatorsContainer = document.getElementById('slideshowIndicators');
 
-    function changeBackground() {
-        currentIndex = (currentIndex + 1) % images.length;
+    // Buat indikator titik-titik
+    if (indicatorsContainer) {
+        indicatorsContainer.innerHTML = images.map((_, i) => 
+            `<div class="dot ${i === 0 ? 'active' : ''}" data-index="${i}"></div>`
+        ).join('');
+
+        // Event klik pada indikator
+        indicatorsContainer.querySelectorAll('.dot').forEach(dot => {
+            dot.addEventListener('click', function() {
+                const index = parseInt(this.dataset.index);
+                goToSlide(index);
+            });
+        });
+    }
+
+    // Fungsi untuk pindah ke slide tertentu
+    function goToSlide(index) {
+        if (index < 0 || index >= images.length) return;
+        currentIndex = index;
+
+        // Ubah background section
         section.style.backgroundImage = `url('${images[currentIndex]}')`;
-        section.style.transition = 'background-image 1.5s ease-in-out';
+        section.style.backgroundSize = 'cover';
+        section.style.backgroundPosition = 'center';
+        section.style.backgroundAttachment = 'fixed'; // efek parallax
+
+        // Update indikator aktif
+        if (indicatorsContainer) {
+            indicatorsContainer.querySelectorAll('.dot').forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentIndex);
+            });
+        }
+
+        // Reset timer agar tidak langsung berganti setelah klik manual
+        resetTimer();
+    }
+
+    // Fungsi untuk slide berikutnya
+    function nextSlide() {
+        const next = (currentIndex + 1) % images.length;
+        goToSlide(next);
+    }
+
+    // Reset timer interval
+    function resetTimer() {
+        if (intervalId) {
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+        intervalId = setInterval(nextSlide, 5000); // ganti setiap 5 detik
     }
 
     // Set gambar pertama
-    section.style.backgroundImage = `url('${images[0]}')`;
-    section.style.backgroundSize = 'cover';
-    section.style.backgroundPosition = 'center';
-    section.style.backgroundAttachment = 'fixed';
+    goToSlide(0);
 
-    // Ganti setiap 6 detik
-    setInterval(changeBackground, 6000);
+    // Mulai timer
+    resetTimer();
+
+    // Hentikan slideshow saat mouse hover (agar user bisa membaca dengan nyaman)
+    section.addEventListener('mouseenter', () => {
+        if (intervalId) {
+            clearInterval(intervalId);
+            intervalId = null;
+        }
+    });
+
+    section.addEventListener('mouseleave', () => {
+        if (!intervalId) {
+            intervalId = setInterval(nextSlide, 5000);
+        }
+    });
+
+    console.log('✅ Pendaftaran slideshow initialized');
 }
 
-// Panggil saat halaman selesai dimuat
-document.addEventListener('DOMContentLoaded', initPendaftaranSlideshow);
-// ==================== UTILITY FUNCTIONS ====================
-function animateCounter(element, target) {
-    let current = 0;
-    const increment = target / 50;
-    const timer = setInterval(() => {
-        current += increment;
-        if (current >= target) { element.textContent = target; clearInterval(timer); }
-        else { element.textContent = Math.floor(current); }
-    }, 30);
+// Jalankan saat halaman selesai dimuat
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPendaftaranSlideshow);
+} else {
+    initPendaftaranSlideshow();
 }
 
 function toggleDarkMode() {
