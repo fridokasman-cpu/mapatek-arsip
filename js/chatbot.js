@@ -123,13 +123,13 @@ function removeTypingIndicator(typingId) {
  */
 async function fetchAIResponse(message) {
     try {
-          const model = "mixtral-8x7b-32768";
+        const model = "mixtral-8x7b-32768";
         const url = "https://api.groq.com/openai/v1/chat/completions";
 
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${window.GROQ_API_KEY}`,
+                'Authorization': `Bearer ${window.GROQ_API_KEY}`, // <-- HAPUS tanda bintang
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
