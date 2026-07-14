@@ -597,7 +597,10 @@ function initPendaftaranSlideshow() {
         'images/galeri/baksos.jpg',
         'images/galeri/pendidikanrc.jpg',
         'images/galeri/latihanascend.jpg',
-        'images/galeri/keluargabesar.jpg'
+        'images/galeri/keluargabesar.jpg',
+        'images/galeri/Impk.jpg',
+        'images/galeri/Impk2.jpg'
+        
     ];
 
     let currentIndex = 0;
