@@ -4,7 +4,7 @@
 // ================================================================
 
 // Ganti dengan token Anda dari dashboard Fonnte
-$token = "y3RvWAAWnKhpPwx6qWBjYGFE3";
+$token = "guMsUPd1Db6Di6BJY8Ep";
 
 // Ambil data dari request
 $target = $_POST['target'] ?? ''; // Bisa ID Grup atau nomor HP
