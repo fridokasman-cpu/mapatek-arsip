@@ -369,33 +369,7 @@ async function loadPengumuman() {
         `;
     }
 }
-// ================================================================
-// KIRIM PESAN WHATSAPP VIA PIPEDREAM (CORS-SAFE)
-// ================================================================
 
-function kirimPesanWA(target, message) {
-    const webhookUrl = "https://eocmog5ckqgkagc.m.pipedream.net";
-
-    fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ target, message })
-    })
-    .then(res => res.text()) // Baca sebagai teks biasa
-    .then(text => {
-        console.log("📩 Respon:", text);
-        // Jika respon mengandung "Success", anggap berhasil
-        if (text.includes("Success")) {
-            showToast("✅ Pesan WhatsApp berhasil dikirim!");
-        } else {
-            showToast("❌ Gagal mengirim: " + text.substring(0, 100));
-        }
-    })
-    .catch(err => {
-        console.error("❌ Error:", err);
-        showToast("❌ Error: " + err.message);
-    });
-}
 // ==================== SIDEBAR TOGGLE ====================
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');

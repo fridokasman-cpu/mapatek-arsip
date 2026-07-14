@@ -530,53 +530,6 @@
         </div>
     </div>
 
-    <div style="max-width:500px; margin:2rem auto; padding:2rem; background:white; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.1);">
-    <h3><i class="fab fa-whatsapp" style="color:#25D366;"></i> Kirim Pengumuman</h3>
-    
-    <div style="margin-bottom:1rem;">
-        <label style="font-weight:600;">Kirim ke:</label>
-        <select id="waTargetSelect" style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px;">
-            <option value="grup">📢 Grup WhatsApp</option>
-            <option value="admin">👤 Admin (Pribadi)</option>
-        </select>
-    </div>
-    
-    <div style="margin-bottom:1rem;">
-        <label style="font-weight:600;">Pesan:</label>
-        <textarea id="waMessageInput" rows="4" placeholder="Tulis pengumuman..." style="width:100%; padding:0.75rem; border:1px solid #ddd; border-radius:8px;"></textarea>
-    </div>
-    
-    <button onclick="submitPengumuman()" style="background:#25D366; color:white; border:none; padding:0.75rem 2rem; border-radius:40px; cursor:pointer; font-weight:600; width:100%;">
-        <i class="fab fa-whatsapp"></i> Kirim
-    </button>
-    
-    <div id="waStatus" style="margin-top:1rem; text-align:center;"></div>
-</div>
-
-<script>
-function submitPengumuman() {
-    const targetType = document.getElementById('waTargetSelect').value;
-    const pesan = document.getElementById('waMessageInput').value.trim();
-    const status = document.getElementById('waStatus');
-    
-    if (!pesan) {
-        status.innerHTML = '⚠️ Masukkan pesan!';
-        status.style.color = '#e74c3c';
-        return;
-    }
-    
-    let target = '';
-    if (targetType === 'grup') {
-        target = 'DUccwgqYT0pEVgapGgPPV4'; // ID grup
-    } else {
-        target = '6282214428371'; // Nomor admin
-    }
-    
-    status.innerHTML = '🔄 Mengirim...';
-    status.style.color = '#f39c12';
-    
-    kirimPesanWA(target, pesan);
-}
 </script>
     <!-- ============================================================
     SCRIPTS
@@ -588,7 +541,6 @@ function submitPengumuman() {
      <script src="js/config.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
-<script src="js/send_whatsapp.js"></script>
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
