@@ -381,31 +381,19 @@ function kirimPesanWA(target, message) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ target, message })
     })
-    .then(res => {
-        // Coba baca sebagai text dulu
-        return res.text().then(text => {
-            try {
-                // Coba parse JSON
-                const json = JSON.parse(text);
-                return { ok: res.ok, data: json };
-            } catch (e) {
-                // Jika gagal, anggap teks biasa sebagai respons sukses
-                return { ok: res.ok, data: { message: text || "OK" } };
-            }
-        });
-    })
-    .then(result => {
-        if (result.ok) {
-            console.log("✅ Respon:", result.data);
+    .then(res => res.text()) // Baca sebagai teks biasa
+    .then(text => {
+        console.log("📩 Respon:", text);
+        // Jika respon mengandung "Success", anggap berhasil
+        if (text.includes("Success")) {
             showToast("✅ Pesan WhatsApp berhasil dikirim!");
         } else {
-            console.error("❌ Gagal:", result.data);
-            showToast("❌ Gagal mengirim: " + (result.data.message || "Error"));
+            showToast("❌ Gagal mengirim: " + text.substring(0, 100));
         }
     })
     .catch(err => {
         console.error("❌ Error:", err);
-        showToast("❌ Gagal mengirim: " + err.message);
+        showToast("❌ Error: " + err.message);
     });
 }
 // ==================== SIDEBAR TOGGLE ====================
