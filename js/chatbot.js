@@ -3,18 +3,8 @@
 // ================================================================
 
 // ================================================================
-// KONFIGURASI CHATBOT AI (GEMINI)
-// ================================================================
-// Gunakan nama variabel yang UNIK agar tidak bentrok dengan API_KEY cuaca
-// ================================================================
-// KONFIGURASI CHATBOT AI (GEMINI)
-// ================================================================
-// Ambil API Key dari file config.js (tidak di-commit)
-// ================================================================
-// KONFIGURASI CHATBOT AI (GEMINI) — Ambil dari config.js
-// ================================================================
-const GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + window.GEMINI_API_KEY;
 // Persona sistem untuk menjaga gaya bahasa chatbot tetap konsisten
+// ================================================================
 const SYSTEM_PROMPT = `Kamu adalah Asisten Virtual MAPATEK Abhipraya, sebuah organisasi mahasiswa pecinta alam di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta.
 Gaya bahasamu: ramah, profesional, suka menolong, dan sedikit bernuansa cinta alam (boleh menyisipkan istilah/analogi alam & petualangan secukupnya, jangan berlebihan).
 Kamu bisa menjawab pertanyaan umum apa saja (sains, sejarah, matematika, teknologi, dll) dengan jelas dan ringkas.
@@ -68,7 +58,6 @@ async function sendMessage() {
     const localResponse = getIntelligentResponse(message);
 
     if (localResponse !== null) {
-        // Ada jawaban lokal yang cocok -> tampilkan dengan delay natural
         await delay(400 + Math.random() * 300);
         appendBotMessage(messagesContainer, localResponse);
         return;
@@ -78,12 +67,10 @@ async function sendMessage() {
     const typingId = showTypingIndicator(messagesContainer);
 
     try {
-        // 3) Panggil AI eksternal sebagai fallback
         const aiResponse = await fetchAIResponse(message);
         removeTypingIndicator(typingId);
         appendBotMessage(messagesContainer, aiResponse);
     } catch (error) {
-        // 4) Jika API gagal (key salah, kuota habis, error jaringan, dll)
         console.error('Gagal memanggil API AI:', error);
         removeTypingIndicator(typingId);
         appendBotMessage(
@@ -93,16 +80,10 @@ async function sendMessage() {
     }
 }
 
-/**
- * Helper: delay berbasis Promise (untuk efek balasan natural)
- */
 function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-/**
- * Helper: tampilkan bubble jawaban bot ke dalam chat
- */
 function appendBotMessage(messagesContainer, response) {
     const botDiv = document.createElement('div');
     botDiv.className = 'message bot';
@@ -114,9 +95,6 @@ function appendBotMessage(messagesContainer, response) {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
 }
 
-/**
- * Helper: tampilkan indikator "Sedang mengetik..." saat menunggu AI
- */
 function showTypingIndicator(messagesContainer) {
     const typingDiv = document.createElement('div');
     const typingId = 'typing-' + Date.now();
@@ -135,20 +113,17 @@ function showTypingIndicator(messagesContainer) {
     return typingId;
 }
 
-/**
- * Helper: hapus indikator "Sedang mengetik..."
- */
 function removeTypingIndicator(typingId) {
     const el = document.getElementById(typingId);
     if (el) el.remove();
 }
 
 /**
- * FALLBACK AI — Dipanggil HANYA jika tidak ada jawaban lokal yang cocok
+ * FALLBACK AI — Menggunakan Groq Cloud (GRATIS, SUPER CEPAT)
  */
 async function fetchAIResponse(message) {
     try {
-       const model = "mixtral-8x7b-32768";
+          const model = "mixtral-8x7b-32768";
         const url = "https://api.groq.com/openai/v1/chat/completions";
 
         const response = await fetch(url, {
@@ -193,107 +168,55 @@ async function fetchAIResponse(message) {
         return "Maaf, koneksi ke otak AI saya sedang terganggu. Silakan coba lagi nanti, atau hubungi admin MAPATEK di 0822-1442-8371.";
     }
 }
+
 /**
  * ================================================================
- * KNOWLEDGE BASE — Sistem respons cerdas SUPER LENGKAP (LOKAL)
- * ================================================================
- * PENTING: Fungsi ini mengembalikan `null` jika tidak ada aturan lokal yang cocok.
- * (Semua logika pencocokan regex yang sudah ada TETAP DIPERTAHANKAN sepenuhnya.
- *  Saya hanya menyertakan beberapa bagian sebagai contoh — panjangnya ribuan baris,
- *  jadi saya singkat di sini dengan asumsi kode lengkap Anda sudah ada.)
+ * KNOWLEDGE BASE LOKAL (hanya contoh, silakan tambahkan sendiri)
  * ================================================================
  */
 function getIntelligentResponse(message) {
     const msg = message.toLowerCase().trim();
 
-    // ==================== VARIASI SAPAAN & GREETINGS ====================
-    if (/(halo|hai|hello|hi|hey|selamat (pagi|siang|sore|malam)|assalamualaikum|hy|hallo|helo|pagi|siang|sore|malam|apa kabar|kabar|gimana kabar|how are you|good morning|good afternoon|good evening)/i.test(msg)) {
+    if (/(halo|hai|hello|hi|hey)/i.test(msg)) {
         return getRandomResponse([
             "👋 Halo! Senang bertemu dengan Anda. Saya Asisten MAPATEK Abhipraya. Ada yang bisa saya bantu?",
             "🌲 Hai! Selamat datang di MAPATEK. Saya siap menjawab pertanyaan seputar pecinta alam, pendakian, atau organisasi kami.",
-            "🏔️ Halo! Apa yang ingin Anda ketahui tentang MAPATEK? Saya siap membantu.",
-            "😊 Hai! Kabar baik? Silakan tanyakan apa saja tentang MAPATEK, gunung, atau UST."
+            "🏔️ Halo! Apa yang ingin Anda ketahui tentang MAPATEK? Saya siap membantu."
         ]);
     }
 
-    // ==================== TERIMA KASIH ====================
-    if (/(terima kasih|makasih|thanks|thank you|terimakasih|thx|tq|ty|thank you very much|thanks a lot|maturnuwun|matur nuwun)/i.test(msg)) {
+    if (/(terima kasih|makasih|thanks)/i.test(msg)) {
         return getRandomResponse([
-            "😊 Sama-sama! Senang bisa membantu. Jangan ragu bertanya lagi ya.",
+            "😊 Sama-sama! Senang bisa membantu.",
             "🙏 Terima kasih kembali! Selalu semangat berpetualang! 🏔️",
-            "👍 Siap membantu kapan saja. Tetap jaga alam dan keselamatan!",
-            "😄 Dengan senang hati! Hubungi saya lagi jika ada yang ingin ditanyakan."
+            "👍 Siap membantu kapan saja."
         ]);
     }
 
-    // ==================== PERMINTAAN BAHASA INGGRIS ====================
-    if (/(bahasa inggris|english|speak english|can you speak english)/i.test(msg)) {
+    if (/(bahasa inggris|english|speak english)/i.test(msg)) {
         return "Sure! I can speak English. 🌍 As the MAPATEK Abhipraya Virtual Assistant, I can help you with information about our organization, hiking, survival, rock climbing, and UST Yogyakarta. What would you like to know? 🏔️";
     }
 
-    // ==================== PERTANYAAN DENGAN KATA TANYA ====================
-    const hasApa = /\b(apa|apakah|apasih)\b/i.test(msg);
-    const hasSiapa = /\b(siapa|siapakah|siapa itu|siapa yang)\b/i.test(msg);
-    const hasKapan = /\b(kapan|kapan sih|kapan ya|bilamana)\b/i.test(msg);
-    const hasDimana = /\b(dimana|di mana|kemana|ke mana|dimanakah|di manakah)\b/i.test(msg);
-    const hasBagaimana = /\b(bagaimana|gimana|gimana cara|bagaimana cara|cara|bagaimana sih)\b/i.test(msg);
-    const hasKenapa = /\b(kenapa|mengapa|kenapakah|kenapa sih)\b/i.test(msg);
-
-    // ==================== TOPIK: VISI & MISI ====================
-    if (/(visi|misi|visi misi|tujuan|organisasi|mapatek tujuan|cita-cita mapatek|apa tujuan|apa visi|apa misi|visi dan misi|misi dan visi|tujuan mapatek)/i.test(msg) || (hasApa && /(visi|misi|tujuan|organisasi)/i.test(msg))) {
-        return `🎯 <strong>VISI & MISI MAPATEK ABHIPRAYA</strong>
-
-<strong>🌟 VISI:</strong>
-"Menjadi organisasi mahasiswa pecinta alam yang unggul, profesional, berkarakter, berjiwa konservasi, dan berlandaskan nilai-nilai Tamansiswa."
-
-<strong>📌 MISI:</strong>
-1. Mengembangkan sumber daya manusia yang berkualitas di bidang kepencintaalaman
-2. Meningkatkan keterampilan teknis anggota (navigasi, survival, panjat tebing)
-3. Melestarikan lingkungan melalui aksi konservasi nyata
-4. Mempererat solidaritas dan kekeluargaan antar anggota
-5. Menjalin kerjasama dengan organisasi pecinta alam lainnya
-6. Mengabdikan kegiatan melalui dokumentasi dan publikasi ilmiah
-7. Menanamkan nilai-nilai kepemimpinan, kemandirian, dan cinta tanah air`;
+    if (/(visi|misi)/i.test(msg)) {
+        return `🎯 <strong>VISI & MISI MAPATEK ABHIPRAYA</strong>\n\n<strong>🌟 VISI:</strong>\n"Menjadi organisasi mahasiswa pecinta alam yang unggul, profesional, berkarakter, berjiwa konservasi, dan berlandaskan nilai-nilai Tamansiswa."\n\n<strong>📌 MISI:</strong>\n1. Mengembangkan SDM berkualitas\n2. Meningkatkan keterampilan teknis\n3. Melestarikan lingkungan\n4. Mempererat solidaritas\n5. Menjalin kerjasama\n6. Mengabdikan kegiatan\n7. Menanamkan kepemimpinan`;
     }
 
-    // ==================== TOPIK: PROFIL MAPATEK ====================
-    if (/(apa itu mapatek|mapatek abhipraya|mapatek itu|pengertian mapatek|mapatek adalah|tentang mapatek|info mapatek|mapatek organisasi|mapatek singkatan|mapatek kepanjangan|jelaskan mapatek|mapatek itu apa|mapatek apaan)/i.test(msg) || (hasApa && /(mapatek|organisasi ini)/i.test(msg))) {
-        return `🌲 <strong>MAPATEK ABHIPRAYA</strong>
-
-📌 <strong>Makna Nama:</strong>
-• MAPATEK = Mahasiswa Pencinta Alam Teknik
-• ABHIPRAYA = Harapan / Cita-cita (Sanskerta)
-
-📅 <strong>Berdiri:</strong> 19 Maret 2023 di UST Yogyakarta
-
-🏔️ <strong>Bidang Kegiatan:</strong>
-• Ekspedisi Pendakian Gunung
-• Rock Climbing & Panjat Tebing
-• Konservasi Lingkungan
-• Pendidikan & Latihan Dasar (DIKSAR)
-• Bakti Sosial & Penanaman Pohon
-• Penelitian & Dokumentasi Alam
-
-🌟 Visi: Menjadi organisasi pecinta alam yang unggul, profesional, dan berkarakter.`;
+    if (/(mapatek|apa itu mapatek)/i.test(msg)) {
+        return `🌲 <strong>MAPATEK ABHIPRAYA</strong>\n\n📌 MAPATEK = Mahasiswa Pencinta Alam Teknik\n📌 ABHIPRAYA = Harapan / Cita-cita (Sanskerta)\n📅 Berdiri: 19 Maret 2023 di UST Yogyakarta\n\n🏔️ Bidang Kegiatan: Ekspedisi, Rock Climbing, Konservasi, DIKSAR, Bakti Sosial`;
     }
 
-    // ==================== SISANYA (ribuan baris) ====================
-    // ... (semua logika regex lain tetap sama seperti kode asli Anda) ...
+    // Tambahkan lebih banyak logika lokal sesuai kebutuhan...
 
-    // ==================== FALLBACK KE AI ====================
-    // Tidak ada aturan lokal yang cocok -> kembalikan null.
+    // FALLBACK KE AI
     return null;
 }
 
-// ================================================================
-// FUNGSI PEMBANTU: Random Response untuk variasi
-// ================================================================
 function getRandomResponse(responses) {
     return responses[Math.floor(Math.random() * responses.length)];
 }
 
 // ================================================================
-// EKSPOSE FUNGSI KE GLOBAL (HANYA YANG DIPERLUKAN)
+// EKSPOSE FUNGSI KE GLOBAL
 // ================================================================
 window.toggleChatbot = toggleChatbot;
 window.sendMessage = sendMessage;
@@ -301,7 +224,6 @@ window.escapeHtml = escapeHtml;
 window.getIntelligentResponse = getIntelligentResponse;
 window.getRandomResponse = getRandomResponse;
 window.fetchAIResponse = fetchAIResponse;
-// (Semua fungsi lain yang tidak terkait chatbot TIDAK diekspor di sini)
 
 // ================================================================
 // CLOSE CHATBOT SAAT KLIK DI LUAR
