@@ -381,31 +381,35 @@ function kirimPesanWA(target, message) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ target, message })
     })
-    .then(res => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-    })
-    .then(data => {
-        console.log("✅ Respon:", data);
-        showToast("✅ Pesan WhatsApp berhasil dikirim!");
+    .then(response => {
+        // Cek apakah response memiliki konten
+        const contentType = response.headers.get("content-type");
+        if (response.ok) {
+            // Jika response OK, coba parse JSON jika ada
+            if (contentType && contentType.includes("application/json")) {
+                return response.json().then(data => {
+                    console.log("✅ Respon:", data);
+                    showToast("✅ Pesan WhatsApp berhasil dikirim!");
+                });
+            } else {
+                // Jika response bukan JSON (misalnya kosong atau teks), tetap anggap sukses
+                console.log("✅ Pesan terkirim (response non-JSON)");
+                showToast("✅ Pesan WhatsApp berhasil dikirim!");
+                return null;
+            }
+        } else {
+            // Jika response error
+            return response.text().then(text => {
+                console.error("❌ Error response:", text);
+                showToast("❌ Gagal mengirim: HTTP " + response.status);
+                throw new Error(`HTTP ${response.status}: ${text}`);
+            });
+        }
     })
     .catch(err => {
         console.error("❌ Error:", err);
         showToast("❌ Gagal mengirim: " + err.message);
     });
-}
-
-// Fungsi cepat untuk kirim pengumuman ke grup
-function kirimPengumuman(pesan) {
-    // Ganti dengan ID grup WhatsApp dari dashboard Fonnte
-    const groupId = "DUccwgqYT0pEVgapGgPPV4"; // ID grup dari link invite
-    kirimPesanWA(groupId, pesan);
-}
-
-// Fungsi kirim ke admin (pribadi)
-function kirimKeAdmin(pesan) {
-    const adminPhone = "6282214428371"; // Nomor admin
-    kirimPesanWA(adminPhone, pesan);
 }
 // ==================== SIDEBAR TOGGLE ====================
 function toggleSidebar() {
