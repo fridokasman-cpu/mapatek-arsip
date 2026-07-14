@@ -369,7 +369,48 @@ async function loadPengumuman() {
         `;
     }
 }
+// ================================================================
+// KIRIM PESAN KE GRUP WHATSAPP
+// ================================================================
 
+function kirimKeGrup() {
+    const message = document.getElementById('waMessage').value.trim();
+    const status = document.getElementById('waStatus');
+
+    if (!message) {
+        status.innerHTML = '⚠️ Masukkan isi pesan!';
+        status.style.color = '#e74c3c';
+        return;
+    }
+
+    status.innerHTML = '🔄 Mengirim pesan...';
+    status.style.color = '#f39c12';
+
+    // Kirim ke server PHP (target akan diisi otomatis di PHP)
+    fetch('send_whatsapp.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'message=' + encodeURIComponent(message)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'true' || data.status === 'success') {
+            status.innerHTML = '✅ Pesan berhasil dikirim ke grup!';
+            status.style.color = '#27ae60';
+            document.getElementById('waMessage').value = '';
+        } else {
+            status.innerHTML = '❌ Gagal mengirim: ' + (data.reason || 'Error tidak diketahui');
+            status.style.color = '#e74c3c';
+        }
+    })
+    .catch(error => {
+        status.innerHTML = '❌ Error: ' + error.message;
+        status.style.color = '#e74c3c';
+        console.error('Error:', error);
+    });
+}
 // ==================== SIDEBAR TOGGLE ====================
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
