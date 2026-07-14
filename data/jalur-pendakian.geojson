@@ -1,0 +1,65 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gunung Merbabu - Jalur Selo",
+        "difficulty": "Sedang",
+        "duration": "8-10 jam",
+        "elevation": "3.145 mdpl"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [110.4328, -7.4517],
+          [110.4350, -7.4550],
+          [110.4380, -7.4600],
+          [110.4400, -7.4650],
+          [110.4420, -7.4700],
+          [110.4450, -7.4750],
+          [110.4480, -7.4800],
+          [110.4500, -7.4850]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gunung Prau - Jalur Dieng",
+        "difficulty": "Mudah",
+        "duration": "3-4 jam",
+        "elevation": "2.590 mdpl"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [109.9208, -7.1458],
+          [109.9220, -7.1480],
+          [109.9250, -7.1500],
+          [109.9280, -7.1520],
+          [109.9300, -7.1550]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Gunung Sindoro - Jalur Sigedang",
+        "difficulty": "Sedang",
+        "duration": "6-8 jam",
+        "elevation": "3.136 mdpl"
+      },
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [110.0028, -7.3089],
+          [110.0050, -7.3120],
+          [110.0080, -7.3160],
+          [110.0100, -7.3200],
+          [110.0120, -7.3240]
+        ]
+      }
+    }
+  ]
+}

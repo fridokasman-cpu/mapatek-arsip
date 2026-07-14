@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🗺️ Peta Pendakian MAPATEK</title>
+    
+    <!-- CSS Eksternal -->
+    <link rel="stylesheet" href="css/peta.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/2.0.0/Control.FullScreen.css" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+
+    <!-- ============================================================
+    MAP
+    ============================================================ -->
+    <div id="map"></div>
+
+    <!-- ============================================================
+    HEADER
+    ============================================================ -->
+    <div class="map-header">
+        <h1><i class="fas fa-mountain"></i> Peta Pendakian MAPATEK</h1>
+        <div style="display:flex; gap:8px; pointer-events:auto;">
+            <button onclick="toggleFullscreen()" class="header-btn" title="Layar penuh (F)">
+                <i class="fas fa-expand"></i>
+            </button>
+            <button onclick="window.location.href='index.html'" class="header-btn" title="Kembali ke Beranda">
+                <i class="fas fa-home"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    GPS STATUS
+    ============================================================ -->
+    <div class="gps-status" id="gpsStatus">
+        <span class="dot off" id="gpsDot"></span>
+        <span class="label" id="gpsText">Menunggu GPS...</span>
+        <div class="accuracy" id="gpsAccuracy"></div>
+    </div>
+
+    <!-- ============================================================
+    STATS PANEL
+    ============================================================ -->
+    <div class="stats-panel" id="statsPanel">
+        <div class="stat-item"><span class="stat-label">📍 Titik</span><span class="stat-value" id="statPoints">0</span></div>
+        <div class="stat-item"><span class="stat-label">📏 Jarak</span><span class="stat-value" id="statDistance">0 m</span></div>
+        <div class="stat-item"><span class="stat-label">⏱️ Waktu</span><span class="stat-value" id="statTime">00:00</span></div>
+        <div class="stat-item"><span class="stat-label">🚀 Kecepatan</span><span class="stat-value" id="statSpeed">0 km/j</span></div>
+    </div>
+
+    <!-- ============================================================
+    BOTTOM CONTROLS
+    ============================================================ -->
+    <div class="map-controls">
+        <button class="btn-gps" onclick="locateMe()" title="Lokasi saya (G)">
+            <i class="fas fa-location-arrow"></i> <span>GPS</span>
+        </button>
+        <button class="btn-track" id="btnTrack" onclick="toggleTracking()" title="Rekam jejak (R)">
+            <i class="fas fa-route"></i> <span id="trackText">Rekam</span>
+        </button>
+        <button class="btn-compass" onclick="resetNorth()" title="Reset arah (N)">
+            <i class="fas fa-compass"></i> <span>Utara</span>
+        </button>
+        <button class="btn-save" onclick="saveTrack()" title="Simpan jejak (S)">
+            <i class="fas fa-save"></i> <span>Simpan</span>
+        </button>
+        <button class="btn-export" onclick="showExportModal()" title="Export (E)">
+            <i class="fas fa-download"></i> <span>Export</span>
+        </button>
+        <button class="btn-draw" onclick="toggleDraw()" title="Gambar jalur (D)">
+            <i class="fas fa-pen"></i> <span>Gambar</span>
+        </button>
+        <button class="btn-clear" onclick="clearTrack()" title="Hapus (C)">
+            <i class="fas fa-trash"></i> <span>Hapus</span>
+        </button>
+    </div>
+
+    <!-- ============================================================
+    TOAST
+    ============================================================ -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ============================================================
+    MODAL EXPORT
+    ============================================================ -->
+    <div class="modal-overlay" id="exportModal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeExportModal()">&times;</button>
+            <h2><i class="fas fa-download"></i> Export Jejak</h2>
+            <p style="margin-bottom:16px;">Pilih format file untuk mengekspor jejak perjalanan Anda.</p>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+                <button onclick="exportTrack('geojson')" class="modal-btn" style="background:#8b5cf6;">
+                    <i class="fas fa-globe"></i> GeoJSON
+                </button>
+                <button onclick="exportTrack('gpx')" class="modal-btn" style="background:#10b981;">
+                    <i class="fas fa-map"></i> GPX
+                </button>
+                <button onclick="exportTrack('kml')" class="modal-btn" style="background:#f59e0b;color:#1a1a2e;">
+                    <i class="fas fa-map-pin"></i> KML
+                </button>
+                <button onclick="exportTrack('csv')" class="modal-btn" style="background:#06b6d4;">
+                    <i class="fas fa-table"></i> CSV
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    SCRIPTS
+    ============================================================ -->
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.fullscreen/2.0.0/Control.FullScreen.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-compass/1.2.4/leaflet.compass.min.js"></script>
+
+    <!-- Peta JS (Fungsi utama) -->
+    <script src="js/peta.js"></script>
+</body>
+</html>

@@ -1,0 +1,348 @@
+/* ================================================================
+   FILE: css/peta.css
+   DESKRIPSI: Gaya khusus untuk halaman peta pendakian MAPATEK
+   ================================================================ */
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #0f0f1a;
+    color: #e0e0e0;
+    overflow: hidden;
+    height: 100vh;
+}
+
+/* ============================================================
+   MAP
+   ============================================================ */
+#map {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.map-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 15px 20px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: none;
+}
+.map-header h1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    pointer-events: none;
+}
+.map-header h1 i { color: #10b981; margin-right: 8px; }
+
+.header-btn {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    pointer-events: auto;
+    transition: all 0.3s ease;
+}
+.header-btn:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+}
+
+/* ============================================================
+   GPS STATUS
+   ============================================================ */
+.gps-status {
+    position: absolute;
+    top: 70px;
+    right: 15px;
+    z-index: 1000;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-size: 12px;
+    color: #ccc;
+    min-width: 160px;
+    display: none;
+    pointer-events: none;
+}
+.gps-status.active { display: block; }
+.gps-status .dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+.gps-status .dot.on { background: #10b981; animation: pulse-dot 1.5s infinite; }
+.gps-status .dot.off { background: #ef4444; }
+.gps-status .label { vertical-align: middle; }
+.gps-status .accuracy { font-size: 10px; color: #888; margin-top: 4px; }
+
+@keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+/* ============================================================
+   STATS PANEL
+   ============================================================ */
+.stats-panel {
+    position: absolute;
+    top: 70px;
+    left: 15px;
+    z-index: 1000;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 12px;
+    color: #ccc;
+    min-width: 140px;
+    display: none;
+}
+.stats-panel.active { display: block; }
+.stats-panel .stat-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 3px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.stats-panel .stat-item:last-child { border-bottom: none; }
+.stats-panel .stat-value { color: #10b981; font-weight: 600; }
+.stats-panel .stat-label { color: #888; font-size: 11px; }
+
+/* ============================================================
+   BOTTOM CONTROLS
+   ============================================================ */
+.map-controls {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 10px 16px;
+    border-radius: 16px;
+    max-width: 95%;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+}
+
+.map-controls button {
+    padding: 8px 14px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+    background: rgba(255,255,255,0.08);
+    color: #ccc;
+}
+
+.map-controls button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
+.map-controls button:active { transform: scale(0.95); }
+
+.btn-gps { background: #0ea5e9; color: white; }
+.btn-gps:hover { background: #0284c7; }
+
+.btn-track { background: #10b981; color: white; }
+.btn-track:hover { background: #059669; }
+.btn-track.active { background: #ef4444; animation: pulse-btn 1.5s infinite; }
+
+@keyframes pulse-btn {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+    50% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+}
+
+.btn-save { background: #8b5cf6; color: white; }
+.btn-save:hover { background: #7c3aed; }
+
+.btn-export { background: #f59e0b; color: #1a1a2e; }
+.btn-export:hover { background: #d97706; }
+
+.btn-clear { background: #6b7280; color: white; }
+.btn-clear:hover { background: #4b5563; }
+
+.btn-compass { background: #06b6d4; color: white; }
+.btn-compass:hover { background: #0891b2; }
+
+.btn-draw { background: #ec4899; color: white; }
+.btn-draw:hover { background: #db2777; }
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.toast {
+    position: fixed;
+    bottom: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background: rgba(0,0,0,0.92);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-size: 13px;
+    opacity: 0;
+    transition: all 0.4s ease;
+    pointer-events: none;
+    text-align: center;
+    max-width: 90%;
+}
+.toast.show { opacity: 1; bottom: 100px; }
+.toast.success { border-left: 4px solid #10b981; }
+.toast.error { border-left: 4px solid #ef4444; }
+.toast.warning { border-left: 4px solid #f59e0b; }
+
+/* ============================================================
+   MODAL
+   ============================================================ */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(8px);
+    z-index: 9998;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.modal-overlay.active { display: flex; }
+.modal-content {
+    background: #1a1a2e;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+.modal-content h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: white;
+}
+.modal-content p {
+    color: #aaa;
+    line-height: 1.6;
+    font-size: 14px;
+}
+.modal-content .close-btn {
+    float: right;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 24px;
+    cursor: pointer;
+}
+.modal-content .close-btn:hover { color: white; }
+
+.modal-btn {
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+.modal-btn:hover { transform: scale(1.02); opacity: 0.9; }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+    .map-header h1 { font-size: 13px; }
+    .map-header h1 i { font-size: 14px; }
+    .gps-status {
+        top: 60px;
+        right: 10px;
+        padding: 8px 12px;
+        font-size: 11px;
+        min-width: 120px;
+    }
+    .stats-panel {
+        top: 60px;
+        left: 10px;
+        padding: 8px 12px;
+        font-size: 11px;
+        min-width: 100px;
+    }
+    .map-controls {
+        bottom: 15px;
+        padding: 8px 12px;
+        gap: 5px;
+    }
+    .map-controls button {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+    .map-controls button i { font-size: 12px; }
+    .toast {
+        bottom: 75px;
+        font-size: 12px;
+        padding: 10px 18px;
+    }
+    .toast.show { bottom: 80px; }
+}
+
+@media (max-width: 480px) {
+    .map-controls button span { display: none; }
+    .map-controls button { padding: 8px 12px; }
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #1a1a2e; }
+::-webkit-scrollbar-thumb { background: #10b981; border-radius: 4px; }
+
+/* ============================================================
+   DRAW TOOL CUSTOM
+   ============================================================ */
+.leaflet-draw-toolbar a { background-color: rgba(0,0,0,0.8) !important; }
+.leaflet-draw-toolbar a:hover { background-color: #10b981 !important; }
