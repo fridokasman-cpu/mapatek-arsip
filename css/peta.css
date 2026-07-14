@@ -6,8 +6,13 @@
 /* ============================================================
    RESET & BASE
    ============================================================ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: #0f0f1a;
     color: #e0e0e0;
@@ -34,35 +39,41 @@ body {
     left: 0;
     right: 0;
     z-index: 1000;
-    padding: 15px 20px;
-    background: linear-gradient(180deg, rgba(0,0,0,0.85) 0%, transparent 100%);
+    padding: 12px 16px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
     display: flex;
     justify-content: space-between;
     align-items: center;
     pointer-events: none;
 }
+
 .map-header h1 {
     font-size: 16px;
     font-weight: 700;
-    color: white;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.5);
+    color: #fff;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
     pointer-events: none;
 }
-.map-header h1 i { color: #10b981; margin-right: 8px; }
+
+.map-header h1 i {
+    color: #10b981;
+    margin-right: 8px;
+}
 
 .header-btn {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.15);
-    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #fff;
     padding: 6px 12px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
     pointer-events: auto;
-    transition: all 0.3s ease;
+    transition: all 0.2s;
 }
+
 .header-btn:hover {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255, 255, 255, 0.25);
     transform: scale(1.05);
 }
 
@@ -72,20 +83,24 @@ body {
 .gps-status {
     position: absolute;
     top: 70px;
-    right: 15px;
+    right: 12px;
     z-index: 1000;
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 10px 16px;
+    padding: 10px 14px;
     font-size: 12px;
     color: #ccc;
-    min-width: 160px;
+    min-width: 150px;
     display: none;
     pointer-events: none;
 }
-.gps-status.active { display: block; }
+
+.gps-status.active {
+    display: block;
+}
+
 .gps-status .dot {
     display: inline-block;
     width: 10px;
@@ -94,14 +109,36 @@ body {
     margin-right: 8px;
     vertical-align: middle;
 }
-.gps-status .dot.on { background: #10b981; animation: pulse-dot 1.5s infinite; }
-.gps-status .dot.off { background: #ef4444; }
-.gps-status .label { vertical-align: middle; }
-.gps-status .accuracy { font-size: 10px; color: #888; margin-top: 4px; }
+
+.gps-status .dot.on {
+    background: #10b981;
+    animation: pulse-dot 1.5s infinite;
+}
+
+.gps-status .dot.off {
+    background: #ef4444;
+}
+
+.gps-status .label {
+    vertical-align: middle;
+}
+
+.gps-status .accuracy {
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+}
 
 @keyframes pulse-dot {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.7); }
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.4;
+        transform: scale(0.7);
+    }
 }
 
 /* ============================================================
@@ -110,99 +147,164 @@ body {
 .stats-panel {
     position: absolute;
     top: 70px;
-    left: 15px;
+    left: 12px;
     z-index: 1000;
-    background: rgba(0,0,0,0.85);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 12px 16px;
+    padding: 10px 14px;
     font-size: 12px;
     color: #ccc;
-    min-width: 140px;
+    min-width: 120px;
     display: none;
 }
-.stats-panel.active { display: block; }
+
+.stats-panel.active {
+    display: block;
+}
+
 .stats-panel .stat-item {
     display: flex;
     justify-content: space-between;
-    padding: 3px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 2px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
-.stats-panel .stat-item:last-child { border-bottom: none; }
-.stats-panel .stat-value { color: #10b981; font-weight: 600; }
-.stats-panel .stat-label { color: #888; font-size: 11px; }
+
+.stats-panel .stat-item:last-child {
+    border-bottom: none;
+}
+
+.stats-panel .stat-value {
+    color: #10b981;
+    font-weight: 600;
+}
+
+.stats-panel .stat-label {
+    color: #888;
+    font-size: 11px;
+}
 
 /* ============================================================
    BOTTOM CONTROLS
    ============================================================ */
 .map-controls {
     position: absolute;
-    bottom: 25px;
+    bottom: 18px;
     left: 50%;
     transform: translateX(-50%);
     z-index: 1000;
     display: flex;
-    gap: 8px;
     flex-wrap: wrap;
     justify-content: center;
-    background: rgba(0,0,0,0.85);
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,0.08);
-    padding: 10px 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 10px 14px;
     border-radius: 16px;
-    max-width: 95%;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    max-width: 96%;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
 }
 
 .map-controls button {
-    padding: 8px 14px;
+    padding: 10px 14px;
     border: none;
     border-radius: 10px;
     font-weight: 600;
-    font-size: 12px;
+    font-size: 13px;
     cursor: pointer;
-    transition: all 0.25s ease;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 6px;
     white-space: nowrap;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
     color: #ccc;
+    transition: all 0.2s;
+    min-height: 44px;
+    min-width: 44px;
+    justify-content: center;
+    touch-action: manipulation;
 }
 
-.map-controls button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+.map-controls button:active {
+    transform: scale(0.94);
 }
-.map-controls button:active { transform: scale(0.95); }
 
-.btn-gps { background: #0ea5e9; color: white; }
-.btn-gps:hover { background: #0284c7; }
+.map-controls button i {
+    font-size: 18px;
+}
 
-.btn-track { background: #10b981; color: white; }
-.btn-track:hover { background: #059669; }
-.btn-track.active { background: #ef4444; animation: pulse-btn 1.5s infinite; }
+/* Individual button styles */
+.btn-gps {
+    background: #0ea5e9;
+    color: #fff;
+}
+.btn-gps:hover {
+    background: #0284c7;
+}
+
+.btn-track {
+    background: #10b981;
+    color: #fff;
+}
+.btn-track:hover {
+    background: #059669;
+}
+.btn-track.active {
+    background: #ef4444;
+    animation: pulse-btn 1.5s infinite;
+}
+
+.btn-compass {
+    background: #06b6d4;
+    color: #fff;
+}
+.btn-compass:hover {
+    background: #0891b2;
+}
+
+.btn-save {
+    background: #8b5cf6;
+    color: #fff;
+}
+.btn-save:hover {
+    background: #7c3aed;
+}
+
+.btn-export {
+    background: #f59e0b;
+    color: #1a1a2e;
+}
+.btn-export:hover {
+    background: #d97706;
+}
+
+.btn-draw {
+    background: #ec4899;
+    color: #fff;
+}
+.btn-draw:hover {
+    background: #db2777;
+}
+
+.btn-clear {
+    background: #6b7280;
+    color: #fff;
+}
+.btn-clear:hover {
+    background: #4b5563;
+}
 
 @keyframes pulse-btn {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-    50% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 12px rgba(239, 68, 68, 0);
+    }
 }
-
-.btn-save { background: #8b5cf6; color: white; }
-.btn-save:hover { background: #7c3aed; }
-
-.btn-export { background: #f59e0b; color: #1a1a2e; }
-.btn-export:hover { background: #d97706; }
-
-.btn-clear { background: #6b7280; color: white; }
-.btn-clear:hover { background: #4b5563; }
-
-.btn-compass { background: #06b6d4; color: white; }
-.btn-compass:hover { background: #0891b2; }
-
-.btn-draw { background: #ec4899; color: white; }
-.btn-draw:hover { background: #db2777; }
 
 /* ============================================================
    TOAST
@@ -213,23 +315,34 @@ body {
     left: 50%;
     transform: translateX(-50%);
     z-index: 9999;
-    background: rgba(0,0,0,0.92);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-    color: white;
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
     padding: 12px 24px;
-    border-radius: 12px;
-    font-size: 13px;
+    border-radius: 14px;
+    font-size: 14px;
     opacity: 0;
     transition: all 0.4s ease;
     pointer-events: none;
     text-align: center;
     max-width: 90%;
 }
-.toast.show { opacity: 1; bottom: 100px; }
-.toast.success { border-left: 4px solid #10b981; }
-.toast.error { border-left: 4px solid #ef4444; }
-.toast.warning { border-left: 4px solid #f59e0b; }
+
+.toast.show {
+    opacity: 1;
+    bottom: 100px;
+}
+
+.toast.success {
+    border-left: 4px solid #10b981;
+}
+.toast.error {
+    border-left: 4px solid #ef4444;
+}
+.toast.warning {
+    border-left: 4px solid #f59e0b;
+}
 
 /* ============================================================
    MODAL
@@ -240,35 +353,42 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(8px);
     z-index: 9998;
     display: none;
     align-items: center;
     justify-content: center;
 }
-.modal-overlay.active { display: flex; }
+
+.modal-overlay.active {
+    display: flex;
+}
+
 .modal-content {
     background: #1a1a2e;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 20px;
     padding: 30px;
-    max-width: 500px;
+    max-width: 400px;
     width: 90%;
     max-height: 80vh;
     overflow-y: auto;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
 }
+
 .modal-content h2 {
     font-size: 18px;
     margin-bottom: 16px;
-    color: white;
+    color: #fff;
 }
+
 .modal-content p {
     color: #aaa;
     line-height: 1.6;
     font-size: 14px;
 }
+
 .modal-content .close-btn {
     float: right;
     background: none;
@@ -277,135 +397,136 @@ body {
     font-size: 24px;
     cursor: pointer;
 }
-.modal-content .close-btn:hover { color: white; }
+
+.modal-content .close-btn:hover {
+    color: #fff;
+}
 
 .modal-btn {
-    padding: 12px;
+    padding: 14px;
     border: none;
-    border-radius: 10px;
-    color: white;
+    border-radius: 12px;
+    color: #fff;
     font-weight: 600;
     cursor: pointer;
-    font-size: 14px;
-    transition: all 0.3s ease;
+    font-size: 15px;
+    width: 100%;
+    transition: all 0.2s;
 }
-.modal-btn:hover { transform: scale(1.02); opacity: 0.9; }
+
+.modal-btn:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+}
 
 /* ============================================================
    RESPONSIVE
    ============================================================ */
 @media (max-width: 768px) {
-    .map-header h1 { font-size: 13px; }
-    .map-header h1 i { font-size: 14px; }
+    .map-header h1 {
+        font-size: 14px;
+    }
+
     .gps-status {
         top: 60px;
-        right: 10px;
-        padding: 8px 12px;
-        font-size: 11px;
-        min-width: 120px;
-    }
-    .stats-panel {
-        top: 60px;
-        left: 10px;
-        padding: 8px 12px;
+        right: 8px;
+        padding: 6px 10px;
         font-size: 11px;
         min-width: 100px;
     }
-    .map-controls {
-        bottom: 15px;
-        padding: 8px 12px;
-        gap: 5px;
-    }
-    .map-controls button {
+
+    .stats-panel {
+        top: 60px;
+        left: 8px;
         padding: 6px 10px;
-        font-size: 10px;
+        font-size: 11px;
+        min-width: 90px;
     }
-    .map-controls button i { font-size: 12px; }
-    .toast {
-        bottom: 75px;
+
+    .map-controls {
+        padding: 10px 12px;
+        gap: 6px;
+        bottom: 12px;
+    }
+
+    .map-controls button {
+        padding: 8px 10px;
         font-size: 12px;
+        min-height: 40px;
+        min-width: 40px;
+    }
+
+    .map-controls button i {
+        font-size: 16px;
+    }
+
+    .toast {
+        bottom: 80px;
+        font-size: 13px;
         padding: 10px 18px;
     }
-    .toast.show { bottom: 80px; }
+
+    .toast.show {
+        bottom: 90px;
+    }
 }
-.map-controls button {
-    padding: 12px 16px !important;
-    font-size: 14px !important;
-    min-height: 48px;
-    min-width: 48px;
-}
-.map-controls button i {
-    font-size: 18px !important;
-}
-.map-controls button span {
-    display: inline !important; /* jangan disembunyikan */
-}
+
 @media (max-width: 480px) {
-    .map-controls button span { display: none; }
-    .map-controls button { padding: 8px 12px; }
-}
     .map-controls button {
-        padding: 10px 12px !important;
-        font-size: 12px !important;
-        min-height: 44px;
+        padding: 6px 8px;
+        font-size: 10px;
+        min-height: 36px;
+        min-width: 36px;
     }
+
     .map-controls button i {
-        font-size: 16px !important;
+        font-size: 14px;
     }
+
+    .map-controls button span {
+        display: none;
+        /* show only icons on very small screens */
+    }
+
     .map-controls {
-        gap: 6px;
-        padding: 8px 10px;
+        gap: 4px;
+        padding: 6px 8px;
+        border-radius: 16px;
     }
+
+    .map-header h1 {
+        font-size: 12px;
+    }
+}
 
 /* ============================================================
    SCROLLBAR
    ============================================================ */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: #1a1a2e; }
-::-webkit-scrollbar-thumb { background: #10b981; border-radius: 4px; }
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #10b981;
+    border-radius: 4px;
+}
 
 /* ============================================================
-   DRAW TOOL CUSTOM
+   DRAW TOOL CUSTOM (overrides for dark theme)
    ============================================================ */
-.leaflet-draw-toolbar a { background-color: rgba(0,0,0,0.8) !important; }
-.leaflet-draw-toolbar a:hover { background-color: #10b981 !important; }
-
-/* Tambahkan di bagian bawah */
-@media (max-width: 768px) {
-    .map-controls button {
-        padding: 12px 14px !important;
-        font-size: 13px !important;
-        min-height: 48px;
-        min-width: 48px;
-        border-radius: 12px !important;
-    }
-    .map-controls button i {
-        font-size: 18px !important;
-    }
-    .map-controls {
-        gap: 6px;
-        padding: 10px 12px;
-        border-radius: 16px;
-        bottom: 15px;
-        max-width: 98%;
-    }
+.leaflet-draw-toolbar a {
+    background-color: rgba(0, 0, 0, 0.8) !important;
 }
-@media (max-width: 480px) {
-    .map-controls button {
-        padding: 8px 10px !important;
-        font-size: 11px !important;
-        min-height: 40px;
-        min-width: 40px;
-    }
-    .map-controls button i {
-        font-size: 14px !important;
-    }
-    .map-controls {
-        gap: 4px;
-        padding: 6px 8px;
-    }
-    /* Sembunyikan teks tombol, hanya ikon */
-    .map-controls button span {
-        display: none !important;
-    }
+
+.leaflet-draw-toolbar a:hover {
+    background-color: #10b981 !important;
+}
+
+.leaflet-control-fullscreen a {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+    color: #fff !important;
 }
