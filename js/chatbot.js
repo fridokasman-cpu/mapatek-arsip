@@ -13,7 +13,14 @@
 // ================================================================
 // KONFIGURASI CHATBOT AI (GEMINI) — Ambil dari config.js
 // ================================================================
-const GEMINI_API_ENDPOINT = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + window.GEMINI_API_KEY;
+// ================================================================
+// CONFIG — API Keys (JANGAN COMMIT FILE INI!)
+// ================================================================
+// File ini akan diabaikan oleh .gitignore
+
+const GROQ_API_KEY = "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";
+
+window.GROQ_API_KEY = GROQ_API_KEY;
 // Persona sistem untuk menjaga gaya bahasa chatbot tetap konsisten
 const SYSTEM_PROMPT = `Kamu adalah Asisten Virtual MAPATEK Abhipraya, sebuah organisasi mahasiswa pecinta alam di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta.
 Gaya bahasamu: ramah, profesional, suka menolong, dan sedikit bernuansa cinta alam (boleh menyisipkan istilah/analogi alam & petualangan secukupnya, jangan berlebihan).
