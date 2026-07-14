@@ -148,7 +148,7 @@ function removeTypingIndicator(typingId) {
  */
 async function fetchAIResponse(message) {
     try {
-        const model = "llama3-8b-8192"; // Bisa ganti ke "mixtral-8x7b-32768" jika mau
+       const model = "mixtral-8x7b-32768";
         const url = "https://api.groq.com/openai/v1/chat/completions";
 
         const response = await fetch(url, {
