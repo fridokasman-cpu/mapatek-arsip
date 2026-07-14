@@ -381,29 +381,26 @@ function kirimPesanWA(target, message) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ target, message })
     })
-    .then(response => {
-        // Cek apakah response memiliki konten
-        const contentType = response.headers.get("content-type");
-        if (response.ok) {
-            // Jika response OK, coba parse JSON jika ada
-            if (contentType && contentType.includes("application/json")) {
-                return response.json().then(data => {
-                    console.log("✅ Respon:", data);
-                    showToast("✅ Pesan WhatsApp berhasil dikirim!");
-                });
-            } else {
-                // Jika response bukan JSON (misalnya kosong atau teks), tetap anggap sukses
-                console.log("✅ Pesan terkirim (response non-JSON)");
-                showToast("✅ Pesan WhatsApp berhasil dikirim!");
-                return null;
+    .then(res => {
+        // Coba baca sebagai text dulu
+        return res.text().then(text => {
+            try {
+                // Coba parse JSON
+                const json = JSON.parse(text);
+                return { ok: res.ok, data: json };
+            } catch (e) {
+                // Jika gagal, anggap teks biasa sebagai respons sukses
+                return { ok: res.ok, data: { message: text || "OK" } };
             }
+        });
+    })
+    .then(result => {
+        if (result.ok) {
+            console.log("✅ Respon:", result.data);
+            showToast("✅ Pesan WhatsApp berhasil dikirim!");
         } else {
-            // Jika response error
-            return response.text().then(text => {
-                console.error("❌ Error response:", text);
-                showToast("❌ Gagal mengirim: HTTP " + response.status);
-                throw new Error(`HTTP ${response.status}: ${text}`);
-            });
+            console.error("❌ Gagal:", result.data);
+            showToast("❌ Gagal mengirim: " + (result.data.message || "Error"));
         }
     })
     .catch(err => {
