@@ -370,46 +370,42 @@ async function loadPengumuman() {
     }
 }
 // ================================================================
-// KIRIM PESAN KE GRUP WHATSAPP
+// KIRIM PESAN WHATSAPP VIA PIPEDREAM (CORS-SAFE)
 // ================================================================
 
-function kirimKeGrup() {
-    const message = document.getElementById('waMessage').value.trim();
-    const status = document.getElementById('waStatus');
+function kirimPesanWA(target, message) {
+    const webhookUrl = "https://eocmog5ckqgkagc.m.pipedream.net";
 
-    if (!message) {
-        status.innerHTML = '⚠️ Masukkan isi pesan!';
-        status.style.color = '#e74c3c';
-        return;
-    }
-
-    status.innerHTML = '🔄 Mengirim pesan...';
-    status.style.color = '#f39c12';
-
-    // Kirim ke server PHP (target akan diisi otomatis di PHP)
-    fetch('send_whatsapp.php', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: 'message=' + encodeURIComponent(message)
+    fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ target, message })
     })
-    .then(response => response.json())
+    .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+    })
     .then(data => {
-        if (data.status === 'true' || data.status === 'success') {
-            status.innerHTML = '✅ Pesan berhasil dikirim ke grup!';
-            status.style.color = '#27ae60';
-            document.getElementById('waMessage').value = '';
-        } else {
-            status.innerHTML = '❌ Gagal mengirim: ' + (data.reason || 'Error tidak diketahui');
-            status.style.color = '#e74c3c';
-        }
+        console.log("✅ Respon:", data);
+        showToast("✅ Pesan WhatsApp berhasil dikirim!");
     })
-    .catch(error => {
-        status.innerHTML = '❌ Error: ' + error.message;
-        status.style.color = '#e74c3c';
-        console.error('Error:', error);
+    .catch(err => {
+        console.error("❌ Error:", err);
+        showToast("❌ Gagal mengirim: " + err.message);
     });
+}
+
+// Fungsi cepat untuk kirim pengumuman ke grup
+function kirimPengumuman(pesan) {
+    // Ganti dengan ID grup WhatsApp dari dashboard Fonnte
+    const groupId = "DUccwgqYT0pEVgapGgPPV4"; // ID grup dari link invite
+    kirimPesanWA(groupId, pesan);
+}
+
+// Fungsi kirim ke admin (pribadi)
+function kirimKeAdmin(pesan) {
+    const adminPhone = "6282214428371"; // Nomor admin
+    kirimPesanWA(adminPhone, pesan);
 }
 // ==================== SIDEBAR TOGGLE ====================
 function toggleSidebar() {
