@@ -21,7 +21,7 @@
             color: #e0e0e0;
             overflow: hidden;
             height: 100vh;
-            touch-action: pan-x pan-y; /* prevent zoom on double-tap */
+            touch-action: pan-x pan-y;
         }
         #map {
             height: 100vh;
@@ -295,7 +295,7 @@
                 min-width: 36px;
             }
             .map-controls button i { font-size: 14px; }
-            .map-controls button span { display: none; }  /* hide text, show only icons on very small */
+            .map-controls button span { display: none; }
             .map-controls {
                 gap: 4px;
                 padding: 6px 8px;
@@ -392,7 +392,7 @@
             // ============================================================
             // 1. INISIALISASI PETA
             // ============================================================
-            var map = L.map('map', {
+            const map = L.map('map', {
                 center: [-7.5, 110.4],
                 zoom: 8,
                 fadeAnimation: true,
@@ -400,17 +400,17 @@
             });
 
             // Base layers
-            var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            const osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap',
                 maxZoom: 19
             }).addTo(map);
 
-            var topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+            const topo = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenTopoMap',
                 maxZoom: 17
             });
 
-            var satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+            const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
                 attribution: '&copy; ESRI',
                 maxZoom: 19
             });
@@ -421,13 +421,17 @@
                 '🛰️ Satelit': satellite
             }).addTo(map);
 
-            // Compass
-            L.control.compass({
-                position: 'topleft',
-                autoRotate: true,
-                showCompass: true,
-                showAngle: true
-            }).addTo(map);
+            // Compass (dengan fallback jika plugin gagal)
+            try {
+                L.control.compass({
+                    position: 'topleft',
+                    autoRotate: true,
+                    showCompass: true,
+                    showAngle: true
+                }).addTo(map);
+            } catch (e) {
+                console.warn('⚠️ Kompas tidak tersedia:', e);
+            }
 
             // Fullscreen control from plugin
             map.addControl(new L.Control.Fullscreen());
@@ -435,34 +439,52 @@
             // ============================================================
             // 2. VARIABEL GLOBAL
             // ============================================================
-            var userMarker = null;
-            var userCircle = null;
-            var trackPoints = [];
-            var trackLine = null;
-            var isTracking = false;
-            var watchId = null;
-            var startTime = null;
-            var totalDistance = 0;
-            var drawnItems = L.featureGroup().addTo(map);
-            var drawControl = null;
-            var savedTracks = [];
+            let userMarker = null;
+            let userCircle = null;
+            let trackPoints = [];
+            let trackLine = null;
+            let isTracking = false;
+            let watchId = null;
+            let startTime = null;
+            let totalDistance = 0;
+            const drawnItems = L.featureGroup().addTo(map);
+            let drawControl = null;
+            let savedTracks = [];
 
             // ============================================================
             // 3. LOAD SAVED TRACKS
             // ============================================================
             try {
-                var data = localStorage.getItem('mapatek_tracks');
+                const data = localStorage.getItem('mapatek_tracks');
                 if (data) savedTracks = JSON.parse(data);
             } catch (e) { /* ignore */ }
 
             // ============================================================
-            // 4. GPS / LOCATE
+            // 4. TOAST NOTIFICATION
+            // ============================================================
+            let toastTimeout;
+
+            function showToast(msg, type) {
+                const el = document.getElementById('toast');
+                if (!el) return;
+                el.textContent = msg;
+                el.className = 'toast';
+                if (type) el.classList.add(type);
+                el.classList.add('show');
+                clearTimeout(toastTimeout);
+                toastTimeout = setTimeout(() => {
+                    el.classList.remove('show');
+                }, 4000);
+            }
+
+            // ============================================================
+            // 5. GPS / LOCATE
             // ============================================================
             window.locateMe = function() {
-                var status = document.getElementById('gpsStatus');
-                var dot = document.getElementById('gpsDot');
-                var text = document.getElementById('gpsText');
-                var acc = document.getElementById('gpsAccuracy');
+                const status = document.getElementById('gpsStatus');
+                const dot = document.getElementById('gpsDot');
+                const text = document.getElementById('gpsText');
+                const acc = document.getElementById('gpsAccuracy');
 
                 status.classList.add('active');
                 dot.className = 'dot off';
@@ -478,9 +500,9 @@
 
                 navigator.geolocation.getCurrentPosition(
                     function(pos) {
-                        var lat = pos.coords.latitude;
-                        var lng = pos.coords.longitude;
-                        var accuracy = pos.coords.accuracy;
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
+                        const accuracy = pos.coords.accuracy;
                         updateUserMarker(lat, lng, accuracy);
                         dot.className = 'dot on';
                         text.textContent = '📍 GPS Aktif';
@@ -524,12 +546,12 @@
             }
 
             // ============================================================
-            // 5. TRACKING
+            // 6. TRACKING
             // ============================================================
             window.toggleTracking = function() {
                 isTracking = !isTracking;
-                var btn = document.getElementById('btnTrack');
-                var text = document.getElementById('trackText');
+                const btn = document.getElementById('btnTrack');
+                const text = document.getElementById('trackText');
                 if (isTracking) {
                     btn.classList.add('active');
                     text.textContent = 'Berhenti';
@@ -558,9 +580,9 @@
 
                 watchId = navigator.geolocation.watchPosition(
                     function(pos) {
-                        var lat = pos.coords.latitude;
-                        var lng = pos.coords.longitude;
-                        var acc = pos.coords.accuracy;
+                        const lat = pos.coords.latitude;
+                        const lng = pos.coords.longitude;
+                        const acc = pos.coords.accuracy;
                         trackPoints.push([lat, lng]);
                         updateUserMarker(lat, lng, acc);
                         updateStats();
@@ -595,34 +617,35 @@
             }
 
             // ============================================================
-            // 6. STATISTICS
+            // 7. STATISTICS
             // ============================================================
             function updateStats() {
                 document.getElementById('statPoints').textContent = trackPoints.length;
-                var dist = 0;
-                for (var i = 1; i < trackPoints.length; i++) {
-                    var p1 = trackPoints[i-1], p2 = trackPoints[i];
+                let dist = 0;
+                for (let i = 1; i < trackPoints.length; i++) {
+                    const p1 = trackPoints[i-1];
+                    const p2 = trackPoints[i];
                     dist += distance(p1[0], p1[1], p2[0], p2[1]);
                 }
                 totalDistance = dist;
                 document.getElementById('statDistance').textContent = formatDistance(dist);
 
-                var elapsed = (Date.now() - startTime) / 1000;
+                const elapsed = (Date.now() - startTime) / 1000;
                 document.getElementById('statTime').textContent = formatTime(elapsed);
                 if (elapsed > 0) {
-                    var speed = (dist / 1000) / (elapsed / 3600);
+                    const speed = (dist / 1000) / (elapsed / 3600);
                     document.getElementById('statSpeed').textContent = speed.toFixed(1) + ' km/j';
                 }
             }
 
             function distance(lat1, lon1, lat2, lon2) {
-                var R = 6371000;
-                var dLat = (lat2 - lat1) * Math.PI / 180;
-                var dLon = (lon2 - lon1) * Math.PI / 180;
-                var a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                const R = 6371000;
+                const dLat = (lat2 - lat1) * Math.PI / 180;
+                const dLon = (lon2 - lon1) * Math.PI / 180;
+                const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
                         Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
                         Math.sin(dLon/2) * Math.sin(dLon/2);
-                var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                 return R * c;
             }
 
@@ -632,22 +655,22 @@
             }
 
             function formatTime(s) {
-                var h = Math.floor(s / 3600);
-                var m = Math.floor((s % 3600) / 60);
-                var sec = Math.floor(s % 60);
+                const h = Math.floor(s / 3600);
+                const m = Math.floor((s % 3600) / 60);
+                const sec = Math.floor(s % 60);
                 if (h > 0) return h + ':' + String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
                 return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
             }
 
             // ============================================================
-            // 7. SAVE TRACK
+            // 8. SAVE TRACK
             // ============================================================
             window.saveTrack = function() {
                 if (trackPoints.length < 2) {
                     showToast('⚠️ Belum ada jejak untuk disimpan!', 'warning');
                     return;
                 }
-                var data = {
+                const data = {
                     id: Date.now(),
                     name: 'Jejak ' + new Date().toLocaleDateString('id-ID'),
                     points: trackPoints.slice(),
@@ -666,7 +689,7 @@
             };
 
             // ============================================================
-            // 8. EXPORT
+            // 9. EXPORT
             // ============================================================
             window.showExportModal = function() {
                 if (trackPoints.length < 2) {
@@ -675,6 +698,7 @@
                 }
                 document.getElementById('exportModal').classList.add('active');
             };
+
             window.closeExportModal = function() {
                 document.getElementById('exportModal').classList.remove('active');
             };
@@ -685,8 +709,8 @@
                     showToast('⚠️ Belum ada jejak!', 'warning');
                     return;
                 }
-                var content, filename, mimeType;
-                var coords = trackPoints.map(function(p) { return [p[1], p[0]]; });
+                let content, filename, mimeType;
+                const coords = trackPoints.map(p => [p[1], p[0]]);
 
                 switch(format) {
                     case 'geojson':
@@ -709,7 +733,7 @@
                         mimeType = 'application/vnd.google-earth.kml+xml';
                         break;
                     case 'csv':
-                        content = 'lat,lng,alt\n' + trackPoints.map(function(p) { return p[0] + ',' + p[1] + ',0'; }).join('\n');
+                        content = 'lat,lng,alt\n' + trackPoints.map(p => p[0] + ',' + p[1] + ',0').join('\n');
                         filename = 'jejak_mapatek.csv';
                         mimeType = 'text/csv';
                         break;
@@ -718,9 +742,9 @@
                         return;
                 }
 
-                var blob = new Blob([content], { type: mimeType });
-                var url = URL.createObjectURL(blob);
-                var a = document.createElement('a');
+                const blob = new Blob([content], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
                 a.href = url;
                 a.download = filename;
                 document.body.appendChild(a);
@@ -731,11 +755,11 @@
             };
 
             function generateGPX(points) {
-                var now = new Date().toISOString();
-                var gpx = '<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="MAPATEK" xmlns="http://www.topografix.com/GPX/1/1">\n';
+                const now = new Date().toISOString();
+                let gpx = '<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="MAPATEK" xmlns="http://www.topografix.com/GPX/1/1">\n';
                 gpx += '  <metadata><time>' + now + '</time><desc>Jejak pendakian MAPATEK</desc></metadata>\n';
                 gpx += '  <trk><name>Jejak MAPATEK</name><trkseg>\n';
-                points.forEach(function(p) {
+                points.forEach(p => {
                     gpx += '      <trkpt lat="' + p[0] + '" lon="' + p[1] + '"><ele>0</ele><time>' + now + '</time></trkpt>\n';
                 });
                 gpx += '    </trkseg></trk>\n</gpx>';
@@ -743,7 +767,7 @@
             }
 
             function generateKML(points) {
-                var coords = points.map(function(p) { return p[1] + ',' + p[0] + ',0'; }).join(' ');
+                const coords = points.map(p => p[1] + ',' + p[0] + ',0').join(' ');
                 return '<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2">\n' +
                        '  <Document><name>Jejak MAPATEK</name>\n' +
                        '    <Placemark><name>Jejak Pendakian</name>\n' +
@@ -753,7 +777,7 @@
             }
 
             // ============================================================
-            // 9. CLEAR TRACK
+            // 10. CLEAR TRACK
             // ============================================================
             window.clearTrack = function() {
                 if (trackPoints.length === 0) {
@@ -771,7 +795,7 @@
             };
 
             // ============================================================
-            // 10. DRAW TOOLS
+            // 11. DRAW TOOLS
             // ============================================================
             window.toggleDraw = function() {
                 if (drawControl) {
@@ -796,13 +820,13 @@
             };
 
             map.on(L.Draw.Event.CREATED, function(e) {
-                var layer = e.layer;
+                const layer = e.layer;
                 drawnItems.addLayer(layer);
                 if (layer instanceof L.Polyline) {
-                    var latlngs = layer.getLatLngs();
-                    trackPoints = latlngs.map(function(ll) { return [ll.lat, ll.lng]; });
+                    const latlngs = layer.getLatLngs();
+                    trackPoints = latlngs.map(ll => [ll.lat, ll.lng]);
                     totalDistance = 0;
-                    for (var i = 1; i < trackPoints.length; i++) {
+                    for (let i = 1; i < trackPoints.length; i++) {
                         totalDistance += distance(trackPoints[i-1][0], trackPoints[i-1][1],
                                                   trackPoints[i][0], trackPoints[i][1]);
                     }
@@ -821,7 +845,7 @@
             });
 
             // ============================================================
-            // 11. COMPASS / NORTH
+            // 12. COMPASS / NORTH
             // ============================================================
             window.resetNorth = function() {
                 map.setView(map.getCenter(), map.getZoom());
@@ -829,7 +853,7 @@
             };
 
             // ============================================================
-            // 12. FULLSCREEN
+            // 13. FULLSCREEN
             // ============================================================
             window.toggleFullscreen = function() {
                 if (!document.fullscreenElement) {
@@ -840,23 +864,6 @@
                     showToast('⛶ Keluar layar penuh', 'warning');
                 }
             };
-
-            // ============================================================
-            // 13. TOAST
-            // ============================================================
-            var toastTimeout;
-            function showToast(msg, type) {
-                var el = document.getElementById('toast');
-                el.textContent = msg;
-                el.className = 'toast';
-                if (type) el.classList.add(type);
-                el.classList.add('show');
-                clearTimeout(toastTimeout);
-                toastTimeout = setTimeout(function() {
-                    el.classList.remove('show');
-                }, 4000);
-            }
-            window.showToast = showToast; // expose
 
             // ============================================================
             // 14. KEYBOARD SHORTCUTS
@@ -879,7 +886,7 @@
             // 15. LOAD SAMPLE ROUTE (Gunung Merbabu)
             // ============================================================
             function loadSampleRoute() {
-                var route = {
+                const route = {
                     "type": "Feature",
                     "properties": { "name": "Jalur Pendakian Gunung Merbabu" },
                     "geometry": {
@@ -904,8 +911,8 @@
             // ============================================================
             if ('serviceWorker' in navigator) {
                 navigator.serviceWorker.register('sw.js')
-                    .then(function() { console.log('✅ SW terdaftar'); })
-                    .catch(function() { console.warn('⚠️ SW gagal'); });
+                    .then(() => console.log('✅ Service Worker terdaftar'))
+                    .catch(err => console.warn('⚠️ Service Worker gagal:', err));
             }
 
             // ============================================================
@@ -917,6 +924,9 @@
                 setTimeout(loadSampleRoute, 500);
                 console.log('✅ Peta siap! Shortcut: G,R,S,E,C,D,N,F');
             });
+
+            // Ekspos showToast ke global (opsional)
+            window.showToast = showToast;
 
         })();
     </script>
