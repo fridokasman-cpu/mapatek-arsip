@@ -267,7 +267,7 @@ window.addEventListener('load', () => {
     if (typeof loadPeta === 'function') {setTimeout(loadPeta, 500);
    if (typeof loadTutorials === 'function') {
     loadTutorials();
-}
+
     }
     if (typeof animateCounter === 'function') {
         const memberEl = document.getElementById('memberCount');
