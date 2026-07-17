@@ -528,90 +528,142 @@
 <!-- ============================================================
     SIDEBAR — PORTAL UST PREMIUM
     ============================================================ -->
+<!-- ============================================================
+     SIDEBAR PORTAL UST MODERN
+============================================================ -->
 <aside class="sidebar" id="sidebar">
-    <!-- Header Sidebar -->
-    <div class="sidebar-header">
-        <div class="sidebar-brand">
-            <i class="fas fa-graduation-cap"></i>
-            <div class="sidebar-brand-text">
-                <span class="brand-title">Portal UST</span>
-                <span class="brand-sub">Universitas Sarjanawiyata Tamansiswa</span>
-            </div>
-        </div>
-        <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close Sidebar">
+
+    <!-- HERO -->
+    <div class="sidebar-hero">
+
+        <button class="sidebar-close" onclick="toggleSidebar()">
             <i class="fas fa-times"></i>
         </button>
+
+        <div class="sidebar-overlay-bg"></div>
+
+        <div class="sidebar-hero-content">
+
+            <img src="images/logo-ust.png" alt="Logo UST" class="sidebar-logo">
+
+            <div class="sidebar-title">
+                <h2>Portal UST</h2>
+                <span>Portal Resmi Universitas Sarjanawiyata Tamansiswa</span>
+            </div>
+
+            <div class="sidebar-welcome">
+                <h3>Selamat Datang</h3>
+                <p>Universitas Sarjanawiyata Tamansiswa</p>
+            </div>
+
+        </div>
     </div>
 
-    <!-- Hero Section Sidebar -->
-    <div class="sidebar-hero">
-        <h2>Selamat datang di</h2>
-        <h3>Portal Resmi</h3>
-        <p>Universitas Sarjanawiyata Tamansiswa</p>
-        <div class="sidebar-hero-divider"></div>
-        <p class="sidebar-motto">"Unggul dalam nilai, luhur dalam budi, mandiri dalam berkarya."</p>
+    <!-- MOTTO -->
+    <div class="sidebar-motto-box">
+        <i class="fas fa-quote-left"></i>
+        <span>
+            Unggul dalam nilai, luhur dalam budi,
+            mandiri dalam berkarya.
+        </span>
     </div>
 
-    <!-- Content Cards -->
+    <!-- MENU CARD -->
     <div class="sidebar-content">
-        <!-- Card 1: Sipedar UST -->
+
+        <!-- SIPEDAR -->
         <div class="sidebar-card">
             <div class="sidebar-card-icon">
                 <i class="fas fa-clipboard-list"></i>
             </div>
+
             <div class="sidebar-card-content">
                 <h4>Sipedar UST</h4>
-                <span class="sidebar-card-badge">Sistem Informasi Akademik</span>
-                <p>Kelola data akademik, jadwal, nilai, dan informasi perkuliahan secara terintegrasi.</p>
-                <a href="https://sipedar.ustjogja.ac.id/" target="_blank" class="sidebar-card-btn">
-                    Akses Sekarang <i class="fas fa-arrow-right"></i>
+                <small>Sistem Informasi Akademik</small>
+
+                <p>
+                    Kelola jadwal, nilai, KRS, KHS,
+                    dan informasi akademik secara terintegrasi.
+                </p>
+
+                <a href="https://sipedar.ustjogja.ac.id/"
+                   target="_blank"
+                   class="sidebar-btn">
+                    Akses Sekarang
+                    <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
+
+            <a href="https://sipedar.ustjogja.ac.id/"
+               target="_blank"
+               class="sidebar-external">
+                <i class="fas fa-up-right-from-square"></i>
+            </a>
         </div>
 
-        <!-- Card 2: Portal Akademik UST -->
+        <!-- PORTAL AKADEMIK -->
         <div class="sidebar-card">
             <div class="sidebar-card-icon">
                 <i class="fas fa-graduation-cap"></i>
             </div>
+
             <div class="sidebar-card-content">
                 <h4>Portal Akademik UST</h4>
-                <span class="sidebar-card-badge">Portal Mahasiswa & Dosen</span>
-                <p>Akses informasi akademik, perkuliahan, dan layanan untuk mahasiswa & dosen.</p>
-                <a href="https://portal.ustjogja.ac.id/" target="_blank" class="sidebar-card-btn">
-                    Akses Sekarang <i class="fas fa-arrow-right"></i>
+                <small>Portal Mahasiswa & Dosen</small>
+
+                <p>
+                    Akses layanan akademik, administrasi,
+                    dan informasi perkuliahan mahasiswa serta dosen.
+                </p>
+
+                <a href="https://portal.ustjogja.ac.id/"
+                   target="_blank"
+                   class="sidebar-btn">
+                    Akses Sekarang
+                    <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
+
+            <a href="https://portal.ustjogja.ac.id/"
+               target="_blank"
+               class="sidebar-external">
+                <i class="fas fa-up-right-from-square"></i>
+            </a>
         </div>
+
     </div>
 
-    <!-- Footer Sidebar -->
-    <div class="sidebar-footer">
-        <div class="sidebar-footer-items">
-            <div class="footer-item">
-                <i class="fas fa-shield-alt"></i>
-                <span>Terpercaya</span>
-                <small>Sistem aman dan terjamin</small>
-            </div>
-            <div class="footer-item">
-                <i class="fas fa-book-open"></i>
-                <span>Akademik</span>
-                <small>Informasi lengkap dan akurat</small>
-            </div>
-            <div class="footer-item">
-                <i class="fas fa-link"></i>
-                <span>Terintegrasi</span>
-                <small>Layanan dalam satu portal</small>
-            </div>
-            <div class="footer-item">
-                <i class="fas fa-headset"></i>
-                <span>Dukungan</span>
-                <small>Bantuan siap setiap saat</small>
-            </div>
+    <!-- FITUR -->
+    <div class="sidebar-features">
+
+        <div class="feature-box">
+            <i class="fas fa-shield-alt"></i>
+            <span>Terpercaya</span>
         </div>
-        <p class="sidebar-footer-tagline">Luhur Budinya, Tinggi Ilmunya</p>
-        <p class="sidebar-footer-copy">© 2026 Universitas Sarjanawiyata Tamansiswa</p>
+
+        <div class="feature-box">
+            <i class="fas fa-book-open"></i>
+            <span>Akademik</span>
+        </div>
+
+        <div class="feature-box">
+            <i class="fas fa-link"></i>
+            <span>Terintegrasi</span>
+        </div>
+
+        <div class="feature-box">
+            <i class="fas fa-headset"></i>
+            <span>Dukungan</span>
+        </div>
+
     </div>
+
+    <!-- FOOTER -->
+    <div class="sidebar-footer">
+        <h4>Universitas Sarjanawiyata Tamansiswa</h4>
+        <p>Luhur Budinya, Tinggi Ilmunya</p>
+    </div>
+
 </aside>
     <!-- ============================================================
     BACK TO TOP
