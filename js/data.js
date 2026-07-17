@@ -248,7 +248,7 @@ const tutorialVideos = [
         title: "Cara Membaca Peta Topografi untuk Pendaki Pemula",
         channel: "Wanadri Official",
         duration: "8:37",
-        youtubeId: "a7cOCs4nfEA", // ID video asli
+        youtubeId: "a7cOCs4nfEA", // ID dari URL: https://youtu.be/a7cOCs4nfEA
         thumbnail: "https://img.youtube.com/vi/a7cOCs4nfEA/mqdefault.jpg",
         category: "Navigasi",
         desc: "Pelajari dasar-dasar membaca peta topografi dan kontur untuk navigasi di gunung."
@@ -258,7 +258,7 @@ const tutorialVideos = [
         title: "Teknik Survival Dasar di Hutan: Membuat Shelter",
         channel: "Umar arf",
         duration: "8:20",
-        youtubeId: "64-4YB8OqcU",
+        youtubeId: "64-4YB8OqcU", // ID dari URL: https://youtu.be/64-4YB8OqcU
         thumbnail: "https://img.youtube.com/vi/64-4YB8OqcU/mqdefault.jpg",
         category: "Survival",
         desc: "Cara membuat shelter darurat dari bahan alami di hutan dengan cepat."
@@ -268,7 +268,7 @@ const tutorialVideos = [
         title: "8 Simpul Wajib untuk Pendaki dan Pemanjat Tebing",
         channel: "warnabamatv",
         duration: "15:45",
-        youtubeId: "6b3DW4nmFvw",
+        youtubeId: "6b3DW4nmFvw", // ID dari URL: https://youtu.be/6b3DW4nmFvw
         thumbnail: "https://img.youtube.com/vi/6b3DW4nmFvw/mqdefault.jpg",
         category: "Teknik",
         desc: "Simpul-simpul dasar yang harus dikuasai oleh setiap pecinta alam."
@@ -278,7 +278,7 @@ const tutorialVideos = [
         title: "P3K di Alam Liar: Mengatasi Hipotermia dan Cedera",
         channel: "PETUALANGAN EIGER",
         duration: "10:15",
-        youtubeId: "aJ8aRGWuZ38",
+        youtubeId: "aJ8aRGWuZ38", // ID dari URL: https://youtu.be/aJ8aRGWuZ38
         thumbnail: "https://img.youtube.com/vi/aJ8aRGWuZ38/mqdefault.jpg",
         category: "Kesehatan",
         desc: "Penanganan pertama pada kecelakaan di gunung dan cara mencegah hipotermia."
@@ -288,7 +288,7 @@ const tutorialVideos = [
         title: "Navigasi Gunung: Cara Menggunakan Kompas & Azimuth",
         channel: "PENGGEMAR NAVIGASI DARAT",
         duration: "18:00",
-        youtubeId: "X_HVm9wIbh4",
+        youtubeId: "X_HVm9wIbh4", // ID dari URL: https://youtu.be/X_HVm9wIbh4
         thumbnail: "https://img.youtube.com/vi/X_HVm9wIbh4/mqdefault.jpg",
         category: "Navigasi",
         desc: "Panduan praktis menggunakan kompas dan teknik azimuth untuk pendakian."
@@ -298,13 +298,14 @@ const tutorialVideos = [
         title: "Packing Carrier yang Benar untuk Pendakian 3 Hari",
         channel: "Mapatek Channel",
         duration: "9:50",
-        youtubeId: "6fCzLsDOrnY",
+        youtubeId: "6fCzLsDOrnY", // ID dari URL: https://youtu.be/6fCzLsDOrnY
         thumbnail: "https://img.youtube.com/vi/6fCzLsDOrnY/mqdefault.jpg",
         category: "Persiapan",
         desc: "Teknik packing carrier agar beban terasa ringan dan aman saat mendaki."
     }
 ];
 
+// Ekspor ke global
 window.tutorialVideos = tutorialVideos;
 // Ekspor variabel ke global (untuk digunakan di file lain)
 (function() {
