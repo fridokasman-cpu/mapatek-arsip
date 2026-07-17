@@ -4419,32 +4419,32 @@ body.dark-mode .leaflet-tile {
 }
 
 /* ============================================================
-   FOOTER — GLASSMORPHISM PREMIUM (Terinspirasi React)
+   FOOTER — GLASSMORPHISM PREMIUM (Responsive)
    ============================================================ */
 
 .glass-footer {
     position: relative;
     overflow: hidden;
     background: #0f172a;
-    padding-top: 40px;
+    padding-top: clamp(30px, 5vw, 60px);
 }
 
-/* ===== Teks Besar di Background ===== */
+/* ===== Teks Besar di Background (lebih kecil di mobile) ===== */
 .footer-stroke-text {
     font-size: clamp(40px, 10vw, 200px);
     font-weight: 700;
     text-align: center;
     color: transparent;
-    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.08);
-    text-stroke: 2px rgba(255, 255, 255, 0.08);
+    -webkit-text-stroke: 2px rgba(255, 255, 255, 0.06);
+    text-stroke: 2px rgba(255, 255, 255, 0.06);
     line-height: 0.9;
     letter-spacing: -0.03em;
     user-select: none;
     pointer-events: none;
-    margin-bottom: -40px;
+    margin-bottom: clamp(-20px, -4vw, -50px);
     position: relative;
     z-index: 0;
-    opacity: 0.6;
+    opacity: 0.4;
 }
 
 /* ===== Panel Utama ===== */
@@ -4452,13 +4452,14 @@ body.dark-mode .leaflet-tile {
     position: relative;
     z-index: 1;
     background: linear-gradient(145deg, #1e293b, #0f172a);
-    border-radius: 30px 30px 0 0;
-    margin: 0 15px;
-    padding: 30px 20px 20px;
-    box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.3);
+    border-radius: clamp(20px, 3vw, 40px) clamp(20px, 3vw, 40px) 0 0;
+    margin: 0 clamp(8px, 2vw, 20px);
+    padding: clamp(20px, 3vw, 40px) clamp(16px, 2.5vw, 30px) clamp(20px, 2.5vw, 30px);
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+/* Efek kaca (glassmorphism) */
 .footer-panel-glass {
     position: absolute;
     inset: 0;
@@ -4475,7 +4476,7 @@ body.dark-mode .leaflet-tile {
     z-index: 2;
     display: flex;
     flex-direction: column;
-    gap: 30px;
+    gap: clamp(24px, 4vw, 40px);
 }
 
 @media (min-width: 768px) {
@@ -4490,47 +4491,47 @@ body.dark-mode .leaflet-tile {
 .footer-left {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    max-width: 100%;
+    gap: clamp(6px, 1vw, 12px);
+    max-width: 300px;
 }
 
 .footer-logo-glass {
     filter: brightness(0) invert(1) opacity(0.9);
-    height: 36px;
+    height: clamp(30px, 4vw, 40px);
     width: auto;
 }
 
 .footer-tagline-glass {
     color: #94a3b8;
-    font-size: 13px;
+    font-size: clamp(11px, 1.2vw, 14px);
     font-weight: 300;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
+    letter-spacing: 0.3px;
+    margin-bottom: 2px;
 }
 
 .footer-social-glass {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: clamp(6px, 1vw, 10px);
 }
 
 .footer-social-glass a {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: clamp(32px, 4vw, 40px);
+    height: clamp(32px, 4vw, 40px);
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.04);
     color: #94a3b8;
-    font-size: 16px;
+    font-size: clamp(14px, 1.6vw, 18px);
     border: 1px solid rgba(255, 255, 255, 0.04);
     transition: all 0.3s ease;
     text-decoration: none;
 }
 
 .footer-social-glass a:hover {
-    transform: translateY(-2px) scale(1.05);
+    transform: translateY(-3px) scale(1.05);
 }
 
 /* Warna hover masing-masing platform */
@@ -4567,7 +4568,7 @@ body.dark-mode .leaflet-tile {
 
 .footer-copy-glass {
     color: #64748b;
-    font-size: 11px;
+    font-size: clamp(10px, 1vw, 12px);
     margin-top: 4px;
 }
 
@@ -4575,19 +4576,19 @@ body.dark-mode .leaflet-tile {
 .footer-links-glass {
     display: flex;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: clamp(16px, 4vw, 40px);
 }
 
 .footer-links-col {
-    min-width: 100px;
-    flex: 1;
+    min-width: clamp(80px, 15vw, 120px);
+    flex: 1 1 auto;
 }
 
 .footer-links-col h4 {
     color: #f1f5f9;
-    font-size: 14px;
+    font-size: clamp(13px, 1.2vw, 16px);
     font-weight: 600;
-    margin-bottom: 10px;
+    margin-bottom: clamp(6px, 0.8vw, 12px);
     letter-spacing: 0.3px;
 }
 
@@ -4597,13 +4598,13 @@ body.dark-mode .leaflet-tile {
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: clamp(4px, 0.5vw, 8px);
 }
 
 .footer-links-col ul li a {
     color: #94a3b8;
     text-decoration: none;
-    font-size: 13px;
+    font-size: clamp(11px, 1vw, 14px);
     transition: color 0.2s;
 }
 
@@ -4612,78 +4613,104 @@ body.dark-mode .leaflet-tile {
 }
 
 /* ============================================================
-   RESPONSIVE
+   RESPONSIVE — Mobile First
    ============================================================ */
-@media (max-width: 600px) {
-    .glass-footer {
-        padding-top: 20px;
-    }
+
+/* Tablet & Mobile sedang */
+@media (max-width: 768px) {
     .footer-panel {
         margin: 0 8px;
-        padding: 20px 16px 16px;
+        padding: 20px 14px 18px;
         border-radius: 16px 16px 0 0;
     }
-    .footer-panel-content {
-        gap: 20px;
-    }
-    .footer-stroke-text {
-        font-size: 32px;
-        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.06);
-        margin-bottom: -20px;
-    }
     .footer-links-glass {
-        flex-direction: column;
         gap: 16px;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
     .footer-links-col {
-        width: 100%;
-        min-width: unset;
+        min-width: 100px;
+        flex: 1 1 40%;
     }
     .footer-left {
-        max-width: 100%;
+        max-width: unset;
         text-align: center;
         align-items: center;
+        width: 100%;
     }
     .footer-social-glass {
         justify-content: center;
     }
-    .footer-social-glass a {
-        width: 34px;
-        height: 34px;
-        font-size: 14px;
-    }
-    .footer-logo-glass {
-        height: 30px;
-    }
-    .footer-tagline-glass {
-        font-size: 12px;
+    .footer-stroke-text {
+        font-size: clamp(30px, 8vw, 60px);
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
+        margin-bottom: -20px;
     }
     .footer-copy-glass {
-        font-size: 10px;
+        text-align: center;
+    }
+}
+
+/* iPhone / HP kecil */
+@media (max-width: 480px) {
+    .footer-panel {
+        margin: 0 4px;
+        padding: 16px 12px 14px;
+        border-radius: 12px 12px 0 0;
+    }
+    .footer-links-glass {
+        gap: 12px;
+        flex-direction: column;
+    }
+    .footer-links-col {
+        min-width: unset;
+        width: 100%;
+        flex: 1 1 100%;
+        text-align: center;
+    }
+    .footer-links-col ul {
+        align-items: center;
     }
     .footer-links-col h4 {
-        font-size: 13px;
+        font-size: 14px;
+        margin-bottom: 4px;
     }
     .footer-links-col ul li a {
         font-size: 12px;
     }
-}
-
-@media (max-width: 400px) {
-    .footer-panel {
-        padding: 16px 12px 12px;
-        margin: 0 4px;
+    .footer-left {
+        gap: 4px;
+    }
+    .footer-tagline-glass {
+        font-size: 11px;
+    }
+    .footer-social-glass a {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    .footer-logo-glass {
+        height: 28px;
     }
     .footer-stroke-text {
         font-size: 24px;
-        margin-bottom: -16px;
+        -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.04);
+        margin-bottom: -12px;
+        opacity: 0.3;
     }
-    .footer-social-glass a {
-        width: 30px;
-        height: 30px;
-        font-size: 12px;
+    .footer-copy-glass {
+        font-size: 9px;
     }
-    .footer-logo-glass {
-        height: 26px;
-    }
+}
+
+/* ============================================================
+   DARK MODE (Sudah sesuai)
+   ============================================================ */
+.dark-mode .footer-panel {
+    background: linear-gradient(145deg, #1a1a2e, #0f0f1a);
+}
+.dark-mode .footer-social-glass a {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.02);
 }
