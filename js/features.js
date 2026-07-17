@@ -7,11 +7,12 @@ let currentEvent = null;
 
 function getNextEvent() {
     const now = new Date();
+    now.setHours(0, 0, 0, 0);
     const upcomingEvents = agendas.filter(event => {
-        const eventDate = new Date(event.date + 'T08:00:00');
+        const eventDate = new Date(event.date);
         return eventDate >= now;
     });
-    upcomingEvents.sort((a, b) => new Date(a.date + 'T08:00:00') - new Date(b.date + 'T08:00:00'));
+    upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
     return upcomingEvents.length > 0 ? upcomingEvents[0] : null;
 }
 
