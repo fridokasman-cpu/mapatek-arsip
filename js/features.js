@@ -808,6 +808,7 @@ function filterTutorial(category, btn) {
 // MODAL VIDEO YOUTUBE
 // ================================================================
 function openTutorialModal(videoId, title) {
+    // Cek apakah modal sudah ada, jika belum buat
     let modal = document.getElementById('tutorialModal');
     if (!modal) {
         modal = document.createElement('div');
@@ -821,7 +822,7 @@ function openTutorialModal(videoId, title) {
                 <button class="close-btn" onclick="closeTutorialModal()">&times;</button>
                 <div class="video-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
                     <iframe id="tutorialIframe" 
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px; border: none;"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;"
                         src="" 
                         frameborder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -836,10 +837,18 @@ function openTutorialModal(videoId, title) {
 
     const iframe = document.getElementById('tutorialIframe');
     const titleEl = document.getElementById('tutorialModalTitle');
-    // Tambahkan &mute=1 agar autoplay diizinkan
-    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&rel=0&controls=1`;
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     titleEl.textContent = title;
     modal.classList.add('active');
+}
+
+function closeTutorialModal() {
+    const modal = document.getElementById('tutorialModal');
+    if (modal) {
+        const iframe = document.getElementById('tutorialIframe');
+        if (iframe) iframe.src = ''; // Hentikan video
+        modal.classList.remove('active');
+    }
 }
 
 // ================================================================
