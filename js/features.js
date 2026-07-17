@@ -732,7 +732,128 @@ async function loadAgendaFromJSON() {
         console.log('ℹ️ Using default agenda data (no agenda.json found)');
     }
 }
+// ================================================================
+// TUTORIAL ALAM — Video YouTube
+// ================================================================
+let tutorialData = [];
+let tutorialFilter = 'all';
 
+function loadTutorials() {
+    const grid = document.getElementById('tutorialGrid');
+    if (!grid) return;
+
+    // Ambil data dari window (atau fallback)
+    tutorialData = window.tutorialVideos || [];
+
+    if (tutorialData.length === 0) {
+        grid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--gray-500);">
+                <i class="fas fa-video" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
+                <p>Belum ada video tutorial tersedia.</p>
+            </div>
+        `;
+        return;
+    }
+
+    renderTutorials();
+}
+
+function renderTutorials() {
+    const grid = document.getElementById('tutorialGrid');
+    if (!grid) return;
+
+    const filtered = tutorialFilter === 'all' 
+        ? tutorialData 
+        : tutorialData.filter(v => v.category === tutorialFilter);
+
+    if (filtered.length === 0) {
+        grid.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: var(--gray-500);">
+                <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 0.5rem; display: block;"></i>
+                Tidak ada video untuk kategori ini.
+            </div>
+        `;
+        return;
+    }
+
+    grid.innerHTML = filtered.map(v => `
+        <div class="tutorial-card" data-category="${v.category}" onclick="openTutorialModal('${v.youtubeId}', '${v.title}')">
+            <div class="tutorial-thumbnail">
+                <img src="${v.thumbnail}" alt="${v.title}" loading="lazy" onerror="this.src='https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg'">
+                <div class="tutorial-play-btn"><i class="fas fa-play"></i></div>
+                <span class="tutorial-duration">${v.duration}</span>
+            </div>
+            <div class="tutorial-info">
+                <h3 class="tutorial-title">${v.title}</h3>
+                <div class="tutorial-meta">
+                    <span class="tutorial-channel"><i class="fas fa-user"></i> ${v.channel}</span>
+                    <span class="tutorial-category">${v.category}</span>
+                </div>
+                <p class="tutorial-desc">${v.desc}</p>
+            </div>
+        </div>
+    `).join('');
+}
+
+function filterTutorial(category, btn) {
+    tutorialFilter = category;
+    document.querySelectorAll('.tut-filter-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    renderTutorials();
+}
+
+// ================================================================
+// MODAL VIDEO YOUTUBE
+// ================================================================
+function openTutorialModal(videoId, title) {
+    // Cek apakah modal sudah ada, jika belum buat
+    let modal = document.getElementById('tutorialModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'tutorialModal';
+        modal.className = 'modal-overlay';
+        modal.onclick = function(e) {
+            if (e.target === this) closeTutorialModal();
+        };
+        modal.innerHTML = `
+            <div class="modal-content" style="max-width: 800px; padding: 20px;">
+                <button class="close-btn" onclick="closeTutorialModal()">&times;</button>
+                <div class="video-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+                    <iframe id="tutorialIframe" 
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;"
+                        src="" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <h3 id="tutorialModalTitle" style="margin-top: 16px; color: white;"></h3>
+            </div>
+        `;
+        document.body.appendChild(modal);
+    }
+
+    const iframe = document.getElementById('tutorialIframe');
+    const titleEl = document.getElementById('tutorialModalTitle');
+    iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+    titleEl.textContent = title;
+    modal.classList.add('active');
+}
+
+function closeTutorialModal() {
+    const modal = document.getElementById('tutorialModal');
+    if (modal) {
+        const iframe = document.getElementById('tutorialIframe');
+        if (iframe) iframe.src = ''; // Hentikan video
+        modal.classList.remove('active');
+    }
+}
+
+// Ekspor fungsi ke global
+window.loadTutorials = loadTutorials;
+window.filterTutorial = filterTutorial;
+window.openTutorialModal = openTutorialModal;
+window.closeTutorialModal = closeTutorialModal;
 // ==================== EXPOSE FUNCTIONS TO GLOBAL ====================
 window.updateCountdown = updateCountdown;
 window.loadTestimoni = loadTestimoni;

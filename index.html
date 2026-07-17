@@ -41,6 +41,7 @@
             <li><a href="#pendaftaran">Pendaftaran</a></li>
             <li><a href="#arsip">Arsip</a></li>
             <li><a href="#kontak">Kontak</a></li>
+            <li><a href="#tutorial">Tutorial</a></li>
             <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav"><i class="fas fa-lock"></i> Admin</a></li>
               <li class="nav-emergency">
     <a href="peta-pendakian.html" style="background: #0ea5e9; color: white; padding: 8px 18px; border-radius: 40px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
@@ -214,6 +215,30 @@
         </div>
     </section>
 
+    <!-- ============================================================
+    TUTORIAL ALAM
+    ============================================================ -->
+    <section id="tutorial" class="tutorial-section reveal">
+        <div class="container">
+            <h2 class="section-title">📺 Tutorial <span class="highlight">Alam</span></h2>
+            <p class="section-subtitle">Video edukasi seputar pendakian, survival, navigasi, dan teknik dasar pecinta alam</p>
+            
+            <!-- Filter Kategori -->
+            <div class="tutorial-filter">
+                <button class="tut-filter-btn active" data-filter="all" onclick="filterTutorial('all', this)">Semua</button>
+                <button class="tut-filter-btn" data-filter="Navigasi" onclick="filterTutorial('Navigasi', this)">Navigasi</button>
+                <button class="tut-filter-btn" data-filter="Survival" onclick="filterTutorial('Survival', this)">Survival</button>
+                <button class="tut-filter-btn" data-filter="Teknik" onclick="filterTutorial('Teknik', this)">Teknik</button>
+                <button class="tut-filter-btn" data-filter="Kesehatan" onclick="filterTutorial('Kesehatan', this)">Kesehatan</button>
+                <button class="tut-filter-btn" data-filter="Persiapan" onclick="filterTutorial('Persiapan', this)">Persiapan</button>
+            </div>
+
+            <!-- Grid Video -->
+            <div class="tutorial-grid" id="tutorialGrid">
+                <div class="loading-spinner"></div>
+            </div>
+        </div>
+    </section>
     <!-- ============================================================
     MODAL GALERI
     ============================================================ -->
