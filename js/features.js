@@ -856,7 +856,6 @@ window.loadTutorials = loadTutorials;
 window.filterTutorial = filterTutorial;
 window.openTutorialModal = openTutorialModal;
 window.closeTutorialModal = closeTutorialModal;
-window.loadAgenda = loadAgenda;
 // ==================== EXPOSE FUNCTIONS TO GLOBAL ====================
 window.updateCountdown = updateCountdown;
 window.loadTestimoni = loadTestimoni;
