@@ -249,7 +249,7 @@ const tutorialVideos = [
         channel: "Wanadri Official",
         duration: "8:37",
         youtubeId: "UCY1iQH2nBExA4uAkYwoEIJg", // ID dari URL: https://youtu.be/a7cOCs4nfEA
-        thumbnail: "https://img.youtube.com/vi/a7cOCs4nfEA/mqdefault.jpg",
+        thumbnail: "https://img.youtube.com/vi/UCY1iQH2nBExA4uAkYwoEIJg/mqdefault.jpg",
         category: "Navigasi",
         desc: "Pelajari dasar-dasar membaca peta topografi dan kontur untuk navigasi di gunung."
     },
