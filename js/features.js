@@ -848,7 +848,17 @@ function closeTutorialModal() {
         modal.classList.remove('active');
     }
 }
+// ================================================================
+// TUTORIAL ALAM — Video YouTube
+// ================================================================
+let tutorialData = [];
+let tutorialFilter = 'all';
 
+function loadTutorials() { ... }
+function renderTutorials() { ... }
+function filterTutorial(category, btn) { ... }
+function openTutorialModal(videoId, title) { ... }
+function closeTutorialModal() { ... }
 // ================================================================
 // EKSPOR FUNGSI KE GLOBAL
 // ================================================================
@@ -856,6 +866,7 @@ window.loadTutorials = loadTutorials;
 window.filterTutorial = filterTutorial;
 window.openTutorialModal = openTutorialModal;
 window.closeTutorialModal = closeTutorialModal;
+window.loadAgenda = loadAgenda;
 // ==================== EXPOSE FUNCTIONS TO GLOBAL ====================
 window.updateCountdown = updateCountdown;
 window.loadTestimoni = loadTestimoni;
