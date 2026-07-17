@@ -265,9 +265,9 @@ window.addEventListener('load', () => {
     if (typeof loadFAQ === 'function') loadFAQ();
     if (typeof loadQuizQuestion === 'function') loadQuizQuestion();
     if (typeof loadPeta === 'function') {setTimeout(loadPeta, 500);
-   if (typeof loadTutorials === 'function') {
+  if (typeof loadTutorials === 'function') {
     loadTutorials();
-
+}
     }
     if (typeof animateCounter === 'function') {
         const memberEl = document.getElementById('memberCount');
