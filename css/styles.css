@@ -190,242 +190,281 @@ button {
    dashed "trail line" underline as the signature detail.
    ========================================================= */
 
-/* --- Variabel & Reset --- */
 :root {
-    --primary-color: #0ea5e9;       /* Biru langit */
-    --primary-hover: #0284c7;       /* Biru lebih gelap untuk hover */
-    --bg-navbar: rgba(255, 255, 255, 0.95); /* Background semi-transparan */
-    --text-color: #1e293b;          /* Warna teks utama (slate gelap) */
-    --text-light: #64748b;          /* Warna teks sekunder */
-    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --transition: all 0.3s ease;
+  --forest-900: #0b2f22;   /* navbar background */
+  --forest-800: #123c2b;   /* hover surface */
+  --forest-700: #1a5c3f;   /* border / divider */
+  --cream:      #f5f3ec;   /* primary text on dark */
+  --cream-dim:  #b9c9bf;   /* secondary text on dark */
+  --sky:        #0ea5e9;   /* single bright accent (PETA / active trail) */
+  --sky-dim:    #0ea5e94d;
+  --amber:      #f2b134;   /* hover accent, trail marker dot */
+
+  --nav-height: 72px;
+  --font-display: 'Poppins', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
 }
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
 
-body {
-    /* Memberikan padding atas agar konten tidak tertutup navbar yang fixed */
-    padding-top: 80px; 
-    background-color: #f8fafc;
-}
+/* ---------- Navbar shell ---------- */
 
-/* --- Navbar Utama --- */
 .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem 5%;
-    background: var(--bg-navbar);
-    backdrop-filter: blur(10px); /* Efek kaca buram */
-    box-shadow: var(--shadow);
-    z-index: 1000;
-    transition: var(--transition);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: var(--nav-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 0 32px;
+  background: var(--forest-900);
+  border-bottom: 1px solid var(--forest-700);
+  font-family: var(--font-body);
 }
 
-/* --- Logo --- */
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--text-color);
-    text-decoration: none;
+/* ---------- Brand / logo ---------- */
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
 .logo-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--primary-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 1px solid var(--forest-700);
 }
 
-/* --- Navigasi Links --- */
+.nav-brand span {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 17px;
+  color: var(--cream);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* ---------- Nav links ---------- */
+
 .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+  justify-content: center;
 }
 
-.nav-links li a {
-    text-decoration: none;
-    color: var(--text-color);
-    font-weight: 500;
-    font-size: 0.95rem;
-    padding: 8px 12px;
-    border-radius: 6px;
-    transition: var(--transition);
-    position: relative;
+.nav-links li {
+  position: relative;
 }
 
-/* Efek Hover Underline yang halus */
-.nav-links li a::after {
-    content: '';
-    position: absolute;
-    bottom: 4px;
-    left: 50%;
-    width: 0;
-    height: 2px;
-    background-color: var(--primary-color);
-    transition: var(--transition);
-    transform: translateX(-50%);
+.nav-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  color: var(--cream-dim);
+  text-decoration: none;
+  font-size: 14.5px;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: color 0.2s ease, background 0.2s ease;
 }
 
-.nav-links li a:hover {
-    color: var(--primary-color);
+.nav-links a:hover {
+  color: var(--cream);
+  background: var(--forest-800);
 }
 
-.nav-links li a:hover::after {
-    width: 60%;
+/* Signature detail: a dashed "trail" that draws in beneath the
+   link on hover/focus, like a path being marked on a map. */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 4px;
+  height: 2px;
+  background-image: linear-gradient(90deg, var(--sky) 60%, transparent 0%);
+  background-size: 8px 2px;
+  background-repeat: repeat-x;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
 }
 
-/* --- Tombol Admin --- */
+.nav-links a:hover::after,
+.nav-links a:focus-visible::after,
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
+.nav-links a.active {
+  color: var(--cream);
+}
+
+/* Small trail-marker dot before the active link */
+.nav-links a.active::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--amber);
+  margin-right: 7px;
+}
+
+/* ---------- Right-side actions ---------- */
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
 .btn-login-nav {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border: 1.5px solid var(--text-light);
-    color: var(--text-color) !important;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border-radius: 40px;
+  border: 1px solid var(--forest-700);
+  color: var(--cream-dim);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
 }
 
 .btn-login-nav:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color) !important;
-    background-color: rgba(14, 165, 233, 0.05);
-}
-
-.btn-login-nav::after {
-    display: none; /* Hilangkan underline untuk tombol */
-}
-
-/* --- Tombol PETA (Highlight/Emergency) --- */
-.nav-emergency a {
-    text-decoration: none;
+  color: var(--cream);
+  border-color: var(--sky);
+  background: var(--forest-800);
 }
 
 .btn-peta {
-    background: linear-gradient(135deg, #0ea5e9, #2563eb);
-    color: white !important;
-    padding: 8px 20px !important;
-    border-radius: 50px;
-    font-weight: 700 !important;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.4);
-    transition: var(--transition);
-}
-
-.btn-peta::after {
-    display: none;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: 40px;
+  background: var(--sky);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13.5px;
+  white-space: nowrap;
+  box-shadow: 0 2px 10px var(--sky-dim);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
 }
 
 .btn-peta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.6);
-    background: linear-gradient(135deg, #0284c7, #1d4ed8);
+  background: #0c8fcb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px var(--sky-dim);
 }
 
-/* Animasi berdenyut pada ikon peta agar menarik perhatian */
-.btn-peta i {
-    animation: pulse 2s infinite;
+/* ---------- Mobile hamburger ---------- */
+
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  width: 26px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--cream);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
-/* --- Hamburger Menu (Mobile) --- */
-.hamburger {
-    display: none;
+.nav-toggle.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-toggle.open span:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 960px) {
+  .nav-links {
+    position: absolute;
+    top: var(--nav-height);
+    left: 0;
+    right: 0;
     flex-direction: column;
-    gap: 5px;
-    cursor: pointer;
-    z-index: 1001;
-}
+    align-items: stretch;
+    gap: 0;
+    background: var(--forest-900);
+    border-bottom: 1px solid var(--forest-700);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
 
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background-color: var(--text-color);
-    border-radius: 2px;
-    transition: var(--transition);
-}
+  .nav-links.open {
+    max-height: 560px;
+  }
 
-/* --- Responsive Design (Tablet & Mobile) --- */
-@media (max-width: 1024px) {
-    .hamburger {
-        display: flex;
-    }
+  .nav-links li {
+    width: 100%;
+  }
 
-    .nav-links {
-        position: fixed;
-        top: 0;
-        right: -100%; /* Sembunyikan di kanan layar */
-        width: 280px;
-        height: 100vh;
-        background-color: white;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 80px 20px 20px;
-        box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-        transition: var(--transition);
-        overflow-y: auto;
-        gap: 10px;
-    }
+  .nav-links a {
+    width: 100%;
+    border-radius: 0;
+    padding: 14px 24px;
+  }
 
-    .nav-links.active {
-        right: 0; /* Tampilkan menu */
-    }
+  .nav-links a::after {
+    left: 24px;
+    right: 24px;
+  }
 
-    .nav-links li {
-        width: 100%;
-    }
+  .nav-actions {
+    display: none;
+  }
 
-    .nav-links li a {
-        display: block;
-        padding: 12px 15px;
-        font-size: 1rem;
-        border-radius: 8px;
-    }
+  .nav-actions.open {
+    display: flex;
+    position: absolute;
+    top: calc(var(--nav-height) + 560px);
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px 24px;
+    background: var(--forest-900);
+    border-bottom: 1px solid var(--forest-700);
+  }
 
-    .nav-links li a:hover {
-        background-color: rgba(14, 165, 233, 0.1);
-    }
-
-    .nav-links li a::after {
-        display: none; /* Ganti underline dengan background hover di mobile */
-    }
-
-    .btn-login-nav, .btn-peta {
-        justify-content: center;
-        margin-top: 10px;
-        width: 100%;
-    }
-
-    /* Animasi Hamburger menjadi tanda X */
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(5px, 6px);
-    }
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(5px, -6px);
-    }
+  .nav-toggle {
+    display: flex;
+  }
 }
 /* ============================================================
    HERO — BACKGROUND PAS DARI BAWAH KE ATAS
