@@ -306,9 +306,10 @@ const tutorialVideos = [
 ];
 
 // Ekspor ke global
-window.tutorialVideos = tutorialVideos;
+
 // Ekspor variabel ke global (untuk digunakan di file lain)
 (function() {
+    window.tutorialVideos = tutorialVideos;
     window.agendas = agendas;
     window.galeriImages = galeriImages;
     window.testimoniData = testimoniData;
