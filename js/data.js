@@ -248,7 +248,7 @@ const tutorialVideos = [
         title: "Cara Membaca Peta Topografi untuk Pendaki Pemula",
         channel: "Wanadri Official",
         duration: "8:37",
-        youtubeId: "a7cOCs4nfEA", // ID dari URL: https://youtu.be/a7cOCs4nfEA
+        youtubeId: "UCY1iQH2nBExA4uAkYwoEIJg", // ID dari URL: https://youtu.be/a7cOCs4nfEA
         thumbnail: "https://img.youtube.com/vi/a7cOCs4nfEA/mqdefault.jpg",
         category: "Navigasi",
         desc: "Pelajari dasar-dasar membaca peta topografi dan kontur untuk navigasi di gunung."
