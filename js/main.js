@@ -264,14 +264,18 @@ window.addEventListener('load', () => {
     if (typeof loadKalender === 'function') loadKalender();
     if (typeof loadFAQ === 'function') loadFAQ();
     if (typeof loadQuizQuestion === 'function') loadQuizQuestion();
+
+    // Peta (dipanggil dengan delay agar map container siap)
     if (typeof loadPeta === 'function') {
         setTimeout(loadPeta, 500);
     }
-   if (typeof loadTutorials === 'function') {
-    loadTutorials();
-   }
-   {
+
+    // Tutorial — DIPANGGIL SELALU
+    if (typeof loadTutorials === 'function') {
+        loadTutorials();
     }
+
+    // Counter animasi
     if (typeof animateCounter === 'function') {
         const memberEl = document.getElementById('memberCount');
         const expeditionEl = document.getElementById('expeditionCount');
@@ -282,28 +286,34 @@ window.addEventListener('load', () => {
         if (trainingEl) animateCounter(trainingEl, 8);
         if (documentEl) animateCounter(documentEl, 25);
     }
+
+    // Testimoni otomatis
     if (typeof nextTestimoni === 'function') {
         setInterval(nextTestimoni, 6000);
     }
+
+    // Countdown
     if (typeof updateCountdown === 'function') {
         updateCountdown();
         setInterval(updateCountdown, 1000);
     }
+
+    // Cuaca & Pengumuman (refresh periodik)
     if (typeof loadCuacaRealtime === 'function') {
         setInterval(loadCuacaRealtime, 1800000);
-        setInterval(loadPengumuman, 600000);
-    }
-    if (typeof showToast === 'function') {
-        setTimeout(() => {
-            showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
-        }, 800);
     }
     if (typeof loadPengumuman === 'function') {
         loadPengumuman();
         setInterval(loadPengumuman, 600000);
     }
-});
 
+    // Toast sambutan
+    if (typeof showToast === 'function') {
+        setTimeout(() => {
+            showToast('✨ Selamat datang di Portal Kearsipan Mapatek Abhipraya!');
+        }, 800);
+    }
+});
 // ==================== FIX VIEWPORT MOBILE ====================
 document.addEventListener('gesturestart', function (e) {
     e.preventDefault();
