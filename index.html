@@ -25,38 +25,35 @@
     <!-- ============================================================
     NAVBAR
     ============================================================ -->
-   <nav class="navbar">
-  <div class="nav-brand">
-    <img src="images/logo.png" alt="Logo Mapatek" class="logo-icon" onerror="this.src='https://via.placeholder.com/40x40?text=M'">
-    <span>Mapatek Abhipraya</span>
-  </div>
- 
-  <ul class="nav-links" id="navLinks">
-    <li><a href="#home" class="active">Beranda</a></li>
-    <li><a href="#tentang">Tentang</a></li>
-    <li><a href="#pengurus">Pengurus</a></li>
-    <li><a href="#agenda">Agenda</a></li>
-    <li><a href="#galeri">Galeri</a></li>
-    <li><a href="#quiz">Quiz</a></li>
-    <li><a href="#berita">Berita</a></li>
-    <li><a href="#pendaftaran">Pendaftaran</a></li>
-    <li><a href="#arsip">Arsip</a></li>
-    <li><a href="#kontak">Kontak</a></li>
-    <li><a href="#tutorial">Tutorial</a></li>
-  </ul>
- 
-  <div class="nav-actions" id="navActions">
-    <a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav">
-      <i class="fas fa-lock"></i> Admin
+    <nav class="navbar" id="navbar">
+        <div class="logo">
+            <img src="images/logo.png" alt="Logo Mapatek" class="logo-icon" onerror="this.src='https://via.placeholder.com/40x40?text=M'">
+            <span>Mapatek Abhipraya</span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home">Beranda</a></li>
+            <li><a href="#tentang">Tentang</a></li>
+            <li><a href="#pengurus">Pengurus</a></li>
+            <li><a href="#agenda">Agenda</a></li>
+            <li><a href="#galeri">Galeri</a></li>
+            <li><a href="#quiz">Quiz</a></li>
+            <li><a href="#berita">Berita</a></li>
+            <li><a href="#pendaftaran">Pendaftaran</a></li>
+            <li><a href="#arsip">Arsip</a></li>
+            <li><a href="#kontak">Kontak</a></li>
+            <li><a href="#tutorial">Tutorial</a></li>
+            <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav"><i class="fas fa-lock"></i> Admin</a></li>
+              <li class="nav-emergency">
+    <a href="peta-pendakian.html" style="background: #0ea5e9; color: white; padding: 8px 18px; border-radius: 40px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
+        <i class="fas fa-map"></i> PETA
     </a>
-    <a href="peta-pendakian.html" class="btn-peta">
-      <i class="fas fa-map"></i> PETA
-    </a>
-  </div>
- 
-  <button class="nav-toggle" id="navToggle" aria-label="Buka menu">
-    <span></span><span></span><span></span>
-  </button>
+</li>
+        </ul>
+        <div class="nav-actions">
+            <button class="nav-icon-btn" onclick="openGlobalSearch()" title="Pencarian (Ctrl+K)"><i class="fas fa-search"></i></button>
+            <button class="nav-icon-btn dark-mode-toggle" onclick="toggleDarkMode()" title="Mode Gelap/Terang"><i class="fas fa-moon"></i></button>
+            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        </div>
     </nav>
 
     <!-- ============================================================
