@@ -270,6 +270,7 @@ window.addEventListener('load', () => {
    if (typeof loadTutorials === 'function') {
     loadTutorials();
    }
+   {
     }
     if (typeof animateCounter === 'function') {
         const memberEl = document.getElementById('memberCount');

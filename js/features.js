@@ -7,12 +7,11 @@ let currentEvent = null;
 
 function getNextEvent() {
     const now = new Date();
-    now.setHours(0, 0, 0, 0);
     const upcomingEvents = agendas.filter(event => {
-        const eventDate = new Date(event.date);
+        const eventDate = new Date(event.date + 'T08:00:00');
         return eventDate >= now;
     });
-    upcomingEvents.sort((a, b) => new Date(a.date) - new Date(b.date));
+    upcomingEvents.sort((a, b) => new Date(a.date + 'T08:00:00') - new Date(b.date + 'T08:00:00'));
     return upcomingEvents.length > 0 ? upcomingEvents[0] : null;
 }
 
@@ -23,7 +22,7 @@ function updateCountdown() {
     const minutesEl = document.getElementById('cd-minutes');
     const secondsEl = document.getElementById('cd-seconds');
     const eventNameEl = document.getElementById('countdownEventName');
-    
+
     if (!event) {
         daysEl.textContent = '00';
         hoursEl.textContent = '00';
@@ -32,22 +31,13 @@ function updateCountdown() {
         eventNameEl.textContent = '📅 Belum ada event terjadwal';
         return;
     }
-    
+
+    // Tanggal event dengan jam 08:00
     const eventDate = new Date(event.date + 'T08:00:00');
     const now = new Date();
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    if (eventDate.toDateString() === today.toDateString()) {
-        daysEl.textContent = '00';
-        hoursEl.textContent = '00';
-        minutesEl.textContent = '00';
-        secondsEl.textContent = '00';
-        eventNameEl.textContent = `🎉 Hari Ini: ${event.title}`;
-        return;
-    }
-    
     const distance = eventDate - now;
+
+    // Jika sudah lewat
     if (distance < 0) {
         daysEl.textContent = '00';
         hoursEl.textContent = '00';
@@ -56,34 +46,46 @@ function updateCountdown() {
         eventNameEl.textContent = `✅ ${event.title} - Selesai!`;
         return;
     }
-    
+
+    // Hitung sisa waktu
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
+
     daysEl.textContent = String(days).padStart(2, '0');
     hoursEl.textContent = String(hours).padStart(2, '0');
     minutesEl.textContent = String(minutes).padStart(2, '0');
     secondsEl.textContent = String(seconds).padStart(2, '0');
-    
+
+    // Tampilkan nama event
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const isToday = eventDate.toDateString() === today.toDateString();
     const eventDateFormatted = new Date(event.date).toLocaleDateString('id-ID', {
         day: 'numeric',
         month: 'long',
         year: 'numeric'
     });
-    
-    eventNameEl.innerHTML = `
-        <span style="font-size: 0.9rem; opacity: 0.8;">Event Berikutnya:</span><br>
-        <strong>${event.title}</strong>
-        <span style="font-size: 0.85rem; display: block; margin-top: 0.5rem;">
-            📅 ${eventDateFormatted} | 📍 ${event.location}
-        </span>
-    `;
-}
 
-setInterval(updateCountdown, 1000);
-updateCountdown();
+    if (isToday) {
+        eventNameEl.innerHTML = `
+            <span style="font-size: 0.9rem; opacity: 0.8;">Event Hari Ini:</span><br>
+            <strong>${event.title}</strong>
+            <span style="font-size: 0.85rem; display: block; margin-top: 0.5rem;">
+                📍 ${event.location}
+            </span>
+        `;
+    } else {
+        eventNameEl.innerHTML = `
+            <span style="font-size: 0.9rem; opacity: 0.8;">Event Berikutnya:</span><br>
+            <strong>${event.title}</strong>
+            <span style="font-size: 0.85rem; display: block; margin-top: 0.5rem;">
+                📅 ${eventDateFormatted} | 📍 ${event.location}
+            </span>
+        `;
+    }
+}
 
 // ==================== TESTIMONI ====================
 let currentTestimoni = 0;
