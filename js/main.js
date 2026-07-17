@@ -7,8 +7,15 @@ function toggleMenu() {
     document.getElementById('navLinks').classList.toggle('active');
 }
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active'));
+// ==================== MOBILE DROPDOWN TOGGLE ====================
+document.querySelectorAll('.nav-links .dropdown > a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        if (window.innerWidth <= 768) {
+            e.preventDefault();
+            const parent = this.closest('.dropdown');
+            parent.classList.toggle('active');
+        }
+    });
 });
 
 window.addEventListener('scroll', () => {

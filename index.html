@@ -31,30 +31,49 @@
             <span>Mapatek Abhipraya</span>
         </div>
         <ul class="nav-links" id="navLinks">
-            <li><a href="#home">Beranda</a></li>
-            <li><a href="#tentang">Tentang</a></li>
-            <li><a href="#pengurus">Pengurus</a></li>
-            <li><a href="#agenda">Agenda</a></li>
-            <li><a href="#galeri">Galeri</a></li>
-            <li><a href="#quiz">Quiz</a></li>
-            <li><a href="#berita">Berita</a></li>
-            <li><a href="#pendaftaran">Pendaftaran</a></li>
-            <li><a href="#arsip">Arsip</a></li>
-            <li><a href="#kontak">Kontak</a></li>
-            <li><a href="#tutorial">Tutorial</a></li>
-            <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav"><i class="fas fa-lock"></i> Admin</a></li>
-              <li class="nav-emergency">
-    <a href="peta-pendakian.html" style="background: #0ea5e9; color: white; padding: 8px 18px; border-radius: 40px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
-        <i class="fas fa-map"></i> PETA
-    </a>
-</li>
-        </ul>
-        <div class="nav-actions">
-            <button class="nav-icon-btn" onclick="openGlobalSearch()" title="Pencarian (Ctrl+K)"><i class="fas fa-search"></i></button>
-            <button class="nav-icon-btn dark-mode-toggle" onclick="toggleDarkMode()" title="Mode Gelap/Terang"><i class="fas fa-moon"></i></button>
-            <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-        </div>
-    </nav>
+        <!-- 1. Beranda & Tentang -->
+        <li><a href="#home">Beranda</a></li>
+        <li><a href="#tentang">Tentang</a></li>
+
+        <!-- 2. Dropdown: Kegiatan -->
+        <li class="dropdown">
+            <a href="#">Kegiatan <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="#agenda"><i class="fas fa-calendar"></i> Agenda</a></li>
+                <li><a href="#galeri"><i class="fas fa-images"></i> Galeri</a></li>
+                <li><a href="#tutorial"><i class="fas fa-video"></i> Tutorial</a></li>
+                <li><a href="#quiz"><i class="fas fa-question-circle"></i> Quiz</a></li>
+            </ul>
+        </li>
+
+        <!-- 3. Dropdown: Informasi -->
+        <li class="dropdown">
+            <a href="#">Informasi <i class="fas fa-chevron-down"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="#pengurus"><i class="fas fa-users"></i> Pengurus</a></li>
+                <li><a href="#berita"><i class="fas fa-newspaper"></i> Berita</a></li>
+                <li><a href="#arsip"><i class="fas fa-folder"></i> Arsip</a></li>
+                <li><a href="#kontak"><i class="fas fa-phone"></i> Kontak</a></li>
+            </ul>
+        </li>
+
+        <!-- 4. Tombol Aksi -->
+        <li><a href="#pendaftaran" class="btn-nav-primary"><i class="fas fa-user-plus"></i> Daftar</a></li>
+        <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-nav-admin"><i class="fas fa-lock"></i> Admin</a></li>
+        <li class="nav-emergency">
+            <a href="peta-pendakian.html" class="btn-nav-map">
+                <i class="fas fa-map"></i> PETA
+            </a>
+        </li>
+    </ul>
+    </li>
+            </ul>
+            <div class="nav-actions">
+                <button class="nav-icon-btn" onclick="openGlobalSearch()" title="Pencarian (Ctrl+K)"><i class="fas fa-search"></i></button>
+                <button class="nav-icon-btn dark-mode-toggle" onclick="toggleDarkMode()" title="Mode Gelap/Terang"><i class="fas fa-moon"></i></button>
+                <div class="hamburger" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            </div>
+        </nav>
 
     <!-- ============================================================
     HERO
