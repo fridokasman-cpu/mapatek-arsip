@@ -25,11 +25,19 @@
     <!-- ============================================================
     NAVBAR
     ============================================================ -->
-    <nav class="navbar" id="navbar">
+   <nav class="navbar" id="navbar">
         <div class="logo">
             <img src="images/logo.png" alt="Logo Mapatek" class="logo-icon" onerror="this.src='https://via.placeholder.com/40x40?text=M'">
             <span>Mapatek Abhipraya</span>
         </div>
+        
+        <!-- Tombol Hamburger untuk Mobile -->
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
         <ul class="nav-links" id="navLinks">
             <li><a href="#home">Beranda</a></li>
             <li><a href="#tentang">Tentang</a></li>
@@ -43,10 +51,14 @@
             <li><a href="#kontak">Kontak</a></li>
             <li><a href="#tutorial">Tutorial</a></li>
             <li><a href="http://localhost/mapatek-arsip/login.php" class="btn-login-nav"><i class="fas fa-lock"></i> Admin</a></li>
-              <li class="nav-emergency">
-    <a href="peta-pendakian.html" style="background: #0ea5e9; color: white; padding: 8px 18px; border-radius: 40px; font-weight: 700; display: flex; align-items: center; gap: 6px;">
-        <i class="fas fa-map"></i> PETA
-    </a>
+            <li class="nav-emergency">
+                <a href="peta-pendakian.html" class="btn-peta">
+                    <i class="fas fa-map"></i> PETA
+                </a>
+            </li>
+        </ul>
+    </nav>
+
 </li>
         </ul>
         <div class="nav-actions">
