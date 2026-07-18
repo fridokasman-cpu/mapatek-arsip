@@ -695,8 +695,6 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
     const icon = document.querySelector('.dark-mode-toggle i');
-    icon.classList.add('icon-swap');
-    setTimeout(() => icon.classList.remove('icon-swap'), 400);
     if (document.body.classList.contains('dark-mode')) { icon.classList.remove('fa-moon'); icon.classList.add('fa-sun'); }
     else { icon.classList.remove('fa-sun'); icon.classList.add('fa-moon'); }
     showToast(document.body.classList.contains('dark-mode') ? '🌙 Mode Gelap Aktif' : '☀️ Mode Terang Aktif');
