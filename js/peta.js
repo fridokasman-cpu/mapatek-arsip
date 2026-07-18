@@ -600,10 +600,18 @@
     });
 
     // ================================================================
-    // 17. LOAD SAMPLE ROUTE (Jalur Contoh)
+    // 17. LOAD JALUR PENDAKIAN (dari data/jalur-pendakian.geojson)
     // ================================================================
+    function popupJalur(props) {
+        let html = '<b>🏔️ ' + (props.name || 'Jalur Pendakian') + '</b>';
+        if (props.difficulty) html += '<br>Kesulitan: ' + props.difficulty;
+        if (props.duration) html += '<br>Durasi: ' + props.duration;
+        if (props.elevation) html += '<br>Elevasi: ' + props.elevation;
+        return html;
+    }
+
     function loadSampleRoute() {
-        const sampleRoute = {
+        const fallbackRoute = {
             "type": "Feature",
             "properties": { "name": "Jalur Pendakian Gunung Merbabu" },
             "geometry": {
@@ -621,17 +629,38 @@
             }
         };
 
-        L.geoJSON(sampleRoute, {
-            style: {
-                color: '#ff7800',
-                weight: 4,
-                opacity: 0.7,
-                dashArray: '8, 6'
-            },
-            onEachFeature: function(feature, layer) {
-                layer.bindPopup('<b>🏔️ ' + feature.properties.name + '</b><br>Jalur pendakian populer');
-            }
-        }).addTo(map);
+        fetch('data/jalur-pendakian.geojson')
+            .then(function(res) {
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                return res.json();
+            })
+            .then(function(data) {
+                L.geoJSON(data, {
+                    style: {
+                        color: '#ff7800',
+                        weight: 4,
+                        opacity: 0.7,
+                        dashArray: '8, 6'
+                    },
+                    onEachFeature: function(feature, layer) {
+                        layer.bindPopup(popupJalur(feature.properties || {}));
+                    }
+                }).addTo(map);
+            })
+            .catch(function(err) {
+                console.warn('⚠️ Gagal memuat data/jalur-pendakian.geojson, pakai rute contoh:', err);
+                L.geoJSON(fallbackRoute, {
+                    style: {
+                        color: '#ff7800',
+                        weight: 4,
+                        opacity: 0.7,
+                        dashArray: '8, 6'
+                    },
+                    onEachFeature: function(feature, layer) {
+                        layer.bindPopup(popupJalur(feature.properties || {}));
+                    }
+                }).addTo(map);
+            });
     }
 
     // ================================================================
