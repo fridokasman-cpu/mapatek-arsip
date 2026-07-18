@@ -813,13 +813,16 @@ function openTutorialModal(videoId, title) {
     if (!modal) {
         modal = document.createElement('div');
         modal.id = 'tutorialModal';
-        modal.className = 'modal-overlay';
+        // PENTING: pakai class "modal" (bukan "modal-overlay") supaya memakai
+        // aturan CSS yang sudah ada di css/styles.css (.modal / .modal.active),
+        // sama seperti modal galeri foto (#imageModal) yang sudah terbukti bekerja.
+        modal.className = 'modal';
         modal.onclick = function(e) {
             if (e.target === this) closeTutorialModal();
         };
         modal.innerHTML = `
-            <div class="modal-content" style="max-width: 800px; padding: 20px;">
-                <button class="close-btn" onclick="closeTutorialModal()">&times;</button>
+            <div class="modal-content" style="max-width: 800px; width: 100%; padding: 20px; background: #1a1a2e;">
+                <button class="modal-close" onclick="closeTutorialModal()">&times;</button>
                 <div class="video-wrapper" style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
                     <iframe id="tutorialIframe" 
                         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 12px;"
@@ -846,7 +849,7 @@ function closeTutorialModal() {
     const modal = document.getElementById('tutorialModal');
     if (modal) {
         const iframe = document.getElementById('tutorialIframe');
-        if (iframe) iframe.src = ''; // Hentikan video
+        if (iframe) iframe.src = ''; // Hentikan video & suara sepenuhnya saat modal ditutup
         modal.classList.remove('active');
     }
 }
