@@ -8,7 +8,7 @@
     <link rel="icon" type="image/png" href="images/logo.png">
 
     <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome CDN (sudah benar) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,6 +20,9 @@
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
 
     <!-- ============================================================
     NAVBAR
@@ -72,6 +75,13 @@
             <span>Scroll</span>
         </div>
     </section>
+
+    <!-- Mountain Silhouette Divider -->
+    <div class="section-divider-mountain" aria-hidden="true">
+        <svg viewBox="0 0 1440 110" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,110 L0,55 L180,15 L340,70 L520,5 L720,60 L900,10 L1100,65 L1260,25 L1440,55 L1440,110 Z"/>
+        </svg>
+    </div>
 
     <!-- ============================================================
     STATS COUNTER
@@ -233,7 +243,9 @@
 
             <!-- Grid Video -->
             <div class="tutorial-grid" id="tutorialGrid">
-                <div class="loading-spinner"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
+                <div class="skeleton-card"></div>
             </div>
         </div>
     </section>
@@ -613,9 +625,6 @@
      <script src="js/config.js"></script>
     <script src="js/chatbot.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/peta.js"></script>
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 </body>
 </html>

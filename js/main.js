@@ -242,6 +242,60 @@ window.addEventListener('scroll', () => {
     else backBtn.classList.remove('show');
 });
 
+// ==================== SCROLL PROGRESS BAR ====================
+(function() {
+    const bar = document.getElementById('scrollProgress');
+    if (!bar) return;
+    let ticking = false;
+    function updateProgress() {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const pct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        bar.style.width = pct + '%';
+        ticking = false;
+    }
+    window.addEventListener('scroll', () => {
+        if (!ticking) {
+            requestAnimationFrame(updateProgress);
+            ticking = true;
+        }
+    });
+    updateProgress();
+})();
+
+// ==================== COUNT-UP ANGKA STATISTIK ====================
+(function() {
+    const statEls = document.querySelectorAll('.stat-number');
+    if (!statEls.length) return;
+
+    function animateCountUp(el) {
+        const target = parseInt(el.textContent.replace(/\D/g, ''), 10) || 0;
+        const duration = 1200;
+        const startTime = performance.now();
+
+        function tick(now) {
+            const progress = Math.min((now - startTime) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+            el.textContent = Math.round(target * eased);
+            if (progress < 1) requestAnimationFrame(tick);
+            else el.textContent = target;
+        }
+        requestAnimationFrame(tick);
+    }
+
+    if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCountUp(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        statEls.forEach(el => observer.observe(el));
+    }
+})();
+
 // ==================== INIT DARK MODE ====================
 if (localStorage.getItem('darkMode') === 'true') {
     document.body.classList.add('dark-mode');
