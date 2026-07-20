@@ -121,20 +121,23 @@ function removeTypingIndicator(typingId) {
 /**
  * FALLBACK AI — Menggunakan Groq Cloud (GRATIS, SUPER CEPAT)
  */
+/**
+ * FALLBACK AI — Aman via serverless proxy (Vercel)
+ */
+/**
+ * FALLBACK AI — Aman via serverless proxy (Vercel)
+ */
 async function fetchAIResponse(message) {
     try {
-        // Gunakan model pengganti yang direkomendasikan
-        const model = "llama-3.3-70b-versatile";
-        const url = "https://api.groq.com/openai/v1/chat/completions";
-
-        const response = await fetch(url, {
+        // Panggil proxy serverless, bukan Groq langsung
+        const response = await fetch('/api/groq-proxy', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${window.GROQ_API_KEY}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                model: model,
+                // Kirim body persis seperti yang diharapkan Groq
+                model: "llama-3.3-70b-versatile",  // atau model lain yang Anda pakai
                 messages: [
                     {
                         role: "system",
@@ -152,8 +155,8 @@ async function fetchAIResponse(message) {
 
         if (!response.ok) {
             const errorData = await response.json();
-            console.error("🚨 Detail Error Groq:", errorData);
-            throw new Error(`API Error: ${response.status}`);
+            console.error("🚨 Error Proxy:", errorData);
+            throw new Error(`Proxy Error: ${response.status}`);
         }
 
         const data = await response.json();
