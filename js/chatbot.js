@@ -137,7 +137,7 @@ async function fetchAIResponse(message) {
             },
             body: JSON.stringify({
                 // Kirim body persis seperti yang diharapkan Groq
-               model: "llama-3.1-70b-versatile",  // ✅ BENAR  // atau model lain yang Anda pakai
+               model: "llama-3.1-8b-instant", // atau model lain yang Anda pakai
                 messages: [
                     {
                         role: "system",
