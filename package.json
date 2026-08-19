@@ -1,10 +1,10 @@
 {
-  "name": "mapatek-arsip",
-  "version": "1.0.0",
-  "engines": {
-    "node": "24.x"
-  },
-  "scripts": {
-    "build": "echo 'No build step required'"
-  }
+    "name": "mapatek-arsip",
+    "version": "1.0.0",
+    "engines": {
+        "node": "24.x"
+    },
+    "scripts": {
+        "build": "echo 'Build completed'"
+    }
 }
