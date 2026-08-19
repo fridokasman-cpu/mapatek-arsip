@@ -1,7 +1,7 @@
 {
     "version": 2,
     "functions": {
-        "api/groq-proxy.js": {            // ✅ BENAR
+        "api/groq-proxy.js": {
             "runtime": "nodejs24.x"
         }
     },
