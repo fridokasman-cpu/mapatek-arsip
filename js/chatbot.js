@@ -137,7 +137,7 @@ async function fetchAIResponse(message) {
             },
             body: JSON.stringify({
                 // Kirim body persis seperti yang diharapkan Groq
-              model: "llama3-70b-8192",  // atau model lain yang Anda pakai
+             model: "openai/gpt-oss-120b",  // atau model lain yang Anda pakai
                 messages: [
                     {
                         role: "system",
