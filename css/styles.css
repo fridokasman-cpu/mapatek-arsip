@@ -1072,75 +1072,74 @@ button {
 }
 
 /* ============================================================
-   GALERI
+   GALERI 3D SWIPER STYLES
    ============================================================ */
-.galeri-section {
-    background: var(--white);
-    padding: 5rem 0;
+.galeriSwiper {
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 60px;
 }
 
-.galeri-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1rem;
+.swiper-slide {
+    background-position: center;
+    background-size: cover;
+    width: 320px;
+    height: 420px;
+    border-radius: 16px;
 }
 
-.galeri-item {
+.galeri-card {
     position: relative;
-    border-radius: var(--radius-md);
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
     overflow: hidden;
-    cursor: pointer;
-    aspect-ratio: 1;
-    background: var(--gray-200);
-    transition: all var(--transition-base);
-}
-.galeri-item:hover {
-    transform: scale(1.02);
-    box-shadow: var(--shadow-lg);
-    z-index: 2;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
 }
 
-.galeri-item img {
+.galeri-card img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform var(--transition-slow);
-}
-.galeri-item:hover img {
-    transform: scale(1.08);
+    display: block;
 }
 
-.galeri-overlay {
+.galeri-caption {
     position: absolute;
     bottom: 0;
     left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-    padding: 1rem 0.75rem 0.75rem;
-    color: var(--white);
-    transform: translateY(100%);
-    transition: transform var(--transition-base);
-}
-.galeri-item:hover .galeri-overlay {
-    transform: translateY(0);
-}
-.galeri-overlay p {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-}
-.galeri-overlay p i {
-    opacity: 0.7;
+    width: 100%;
+    padding: 25px 15px 15px 15px;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+    color: #ffffff;
+    text-align: center;
+    box-sizing: border-box;
 }
 
-@media (max-width:480px) {
-    .galeri-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 0.75rem;
-    }
+.galeri-caption p {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* Navigasi & Paginasi */
+.swiper-button-next,
+.swiper-button-prev {
+    color: #ffb703;
+}
+
+.swiper-pagination-bullet {
+    background: #ffffff;
+    opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+    background: #ffb703;
+    opacity: 1;
+    width: 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
 /* ============================================================
