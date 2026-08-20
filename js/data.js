@@ -113,53 +113,7 @@ const galeriImages = [
     { src: "images/galeri/Impk2.jpg", caption: "Dikjut Gunung Hutan Angkatan Litani Aram" },
     { src: "images/galeri/LatihanRC.jpg", caption: "Latihan RC" }
 ];
-function renderGaleri() {
-    const wrapper = document.getElementById("galeriWrapper");
-    if (!wrapper) return;
 
-    // Render item slide ke HTML
-    wrapper.innerHTML = galeriImages.map(img => `
-        <div class="swiper-slide">
-            <div class="galeri-card">
-                <img src="${img.src}" alt="${img.caption}" loading="lazy" />
-                <div class="galeri-caption">
-                    <p>${img.caption}</p>
-                </div>
-            </div>
-        </div>
-    `).join("");
-
-    // Inisialisasi Efek 3D Coverflow
-    new Swiper(".galeriSwiper", {
-        effect: "coverflow",
-        grabCursor: true,
-        centeredSlides: true,
-        slidesPerView: "auto",
-        loop: true,
-        coverflowEffect: {
-            rotate: 30,
-            stretch: 0,
-            depth: 200,
-            modifier: 1,
-            slideShadows: true,
-        },
-        pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-        },
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        autoplay: {
-            delay: 3500,
-            disableOnInteraction: false,
-        }
-    });
-}
-
-// Jalankan fungsi setelah seluruh dokumen HTML dimuat
-document.addEventListener("DOMContentLoaded", renderGaleri);
 // -------------------- TESTIMONI --------------------
 const testimoniData = [
     { name: "Ndolo", angkatan: "Angkatan 2 Tedak Daivat (2025)", photo: "images/testimoni/ndolo.jpg", quote: "Mapatek bukan sekadar organisasi, tapi keluarga kedua. Di sini saya belajar arti kebersamaan, kepemimpinan, dan cinta alam yang sesungguhnya." },
