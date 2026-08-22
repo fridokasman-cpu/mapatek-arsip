@@ -1,134 +1,20 @@
-// ==================== NAVBAR TOGGLE (FIXED FOR MOBILE) ====================
+// ================================================================
+// CATATAN: Logic navbar (hamburger, dropdown, klik-di-luar, resize,
+// tutup saat scroll) SUDAH DIPINDAH SEPENUHNYA ke navigation-menu.js
+// agar tidak ada listener dobel. Jangan tambahkan logic navbar di sini.
+// ================================================================
 
-// Fungsi toggle untuk mobile - DIPANGGIL DARI HTML
-function toggleMobileMenu() {
-    const navLinks = document.getElementById('navLinks');
-    if (!navLinks) {
-        console.warn('⚠️ navLinks not found');
-        return;
-    }
-    
-    console.log('🍔 Mobile menu toggled');
-    navLinks.classList.toggle('active');
-    
-    // Tutup semua dropdown
-    document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-        drop.classList.remove('active');
-    });
-}
-
-// Fungsi toggleMenu (alias untuk kompatibilitas)
-function toggleMenu() {
-    toggleMobileMenu();
-}
-
-// ==================== INIT NAVBAR ====================
-function initNavbar() {
-    const navLinks = document.getElementById('navLinks');
-    const hamburger = document.querySelector('.hamburger');
-    
-    if (!navLinks) {
-        console.warn('⚠️ navLinks not found');
-        return;
-    }
-
-    console.log('🔄 Navbar initializing...');
-
-    // ============================================================
-    // 1. HAMBURGER - PASTIKAN EVENT LISTENER
-    // ============================================================
-    if (hamburger) {
-        // Hapus event listener lama dengan clone
-        const newHamburger = hamburger.cloneNode(true);
-        hamburger.parentNode.replaceChild(newHamburger, hamburger);
-        
-        // Tambahkan event listener
-        newHamburger.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleMobileMenu();
-        });
-        
-        // Touch event untuk mobile
-        newHamburger.addEventListener('touchstart', function(e) {
-            // Biarkan click handler yang bekerja
-        }, { passive: true });
-        
-        console.log('✅ Hamburger event attached');
-    } else {
-        console.warn('⚠️ Hamburger not found!');
-    }
-
-    // ============================================================
-    // 2. TUTUP MENU SAAT KLIK DI LUAR
-    // ============================================================
-    document.addEventListener('click', function(event) {
-        const isNavbar = event.target.closest('.navbar');
-        const isHamburger = event.target.closest('.hamburger');
-        
-        if (!isNavbar && !isHamburger) {
-            if (navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-            }
-            // Tutup dropdown
-            document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-                drop.classList.remove('active');
-            });
-        }
-    });
-
-    // ============================================================
-    // 3. TUTUP MENU SAAT SCROLL
-    // ============================================================
-    let scrollTimeout;
-    window.addEventListener('scroll', function() {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(function() {
-            if (navLinks.classList.contains('active')) {
-                navLinks.classList.remove('active');
-            }
-        }, 300);
-    }, { passive: true });
-
-    // ============================================================
-    // 4. RESIZE: Reset state
-    // ============================================================
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 992) {
-            navLinks.classList.remove('active');
-            document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-                drop.classList.remove('active');
-            });
-        }
-    });
-
-    // ============================================================
-    // 5. SCROLL: Toggle scrolled class
-    // ============================================================
+// ==================== NAVBAR: EFEK SAAT SCROLL (SATU-SATUNYA DI SINI) ====================
+(function initNavbarScrollEffect() {
     const navbar = document.getElementById('navbar');
+    if (!navbar) return;
+
     window.addEventListener('scroll', function() {
-        if (navbar) {
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-        }
+        navbar.classList.toggle('scrolled', window.scrollY > 50);
     }, { passive: true });
+})();
 
-    console.log('✅ Navbar initialized');
-}
-
-// ============================================================
-// 6. JALANKAN INISIALISASI
-// ============================================================
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initNavbar);
-} else {
-    initNavbar();
-}
-
-// Ekspor fungsi ke global
-window.toggleMenu = toggleMenu;
-window.toggleMobileMenu = toggleMobileMenu;
-
-console.log('✅ main.js loaded - navbar functions ready');
+console.log('✅ main.js loaded (navbar logic dikelola oleh navigation-menu.js)');
 
 // ==================== REVEAL ANIMATION ====================
 const revealElements = document.querySelectorAll('.reveal');
@@ -519,7 +405,8 @@ document.addEventListener('keydown', function(e) {
 });
     
 // ==================== EKSPOSE FUNGSI KE GLOBAL ====================
-window.toggleMenu = toggleMenu;
+// Catatan: toggleMenu / toggleMobileMenu TIDAK diekspor di sini lagi.
+// Keduanya sekarang satu-satunya sumber kebenarannya ada di navigation-menu.js.
 window.filterArsip = filterArsip;
 window.filterKategori = filterKategori;
 window.fixViewport = fixViewport;
