@@ -9,19 +9,19 @@ const slideshowImages = [
     },
     {
         url: 'images/slideshow/hero2.jpg',
-        caption: 'Pendakian Gunung Prau 2024'
+        caption: 'Pelantikan Angkatan Tedak Daivat'
     },
     {
         url: 'images/slideshow/hero3.jpg',
-        caption: 'Konservasi Hutan 2025'
+        caption: 'Pendakian Gunung Lawu 2025'
     },
     {
         url: 'images/slideshow/hero4.jpg',
-        caption: 'Rock Climbing Mapatek'
+        caption: 'Bersih Bersih Pantai Baros'
     },
     {
         url: 'images/slideshow/hero5.jpg',
-        caption: 'Bakti Sosial Mapatek'
+        caption: 'Latihan RC'
     }
 ];
 
