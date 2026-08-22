@@ -5659,3 +5659,334 @@ body.dark-mode .nav-dropdown > a:hover {
     color: white;
     background: rgba(255, 255, 255, 0.04);
 }
+/* ================================================================
+   NAVIGATION DROPDOWN - WIDE DROPDOWN WITH DESCRIPTIONS
+   ================================================================ */
+
+.nav-dropdown {
+    position: relative;
+}
+
+.nav-dropdown > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.nav-dropdown > a:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.nav-dropdown > a i {
+    font-size: 10px;
+    transition: transform 0.3s ease;
+    margin-left: 2px;
+}
+
+.nav-dropdown:hover > a i {
+    transform: rotate(180deg);
+}
+
+/* Wide Dropdown Menu - 2 Column Grid */
+.nav-dropdown-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    background: rgba(10, 43, 37, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 16px;
+    padding: 16px;
+    min-width: 480px;
+    max-width: 560px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+    z-index: 100;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Grid untuk dropdown items - 2 kolom */
+.dropdown-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+}
+
+/* Dropdown Item dengan ikon + judul + deskripsi */
+.dropdown-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    background: transparent;
+    border: 1px solid transparent;
+}
+
+.dropdown-item:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.06);
+    transform: translateX(4px);
+}
+
+.dropdown-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 10px;
+    background: rgba(14, 165, 233, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--accent-light);
+    transition: all 0.25s ease;
+}
+
+.dropdown-item:hover .dropdown-icon {
+    background: rgba(14, 165, 233, 0.2);
+    color: white;
+    transform: scale(1.05);
+}
+
+.dropdown-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.dropdown-title {
+    display: block;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.95);
+    line-height: 1.3;
+    transition: color 0.2s ease;
+}
+
+.dropdown-item:hover .dropdown-title {
+    color: white;
+}
+
+.dropdown-desc {
+    display: block;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.4;
+    margin-top: 2px;
+    transition: color 0.2s ease;
+}
+
+.dropdown-item:hover .dropdown-desc {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ================================================================
+   MOBILE RESPONSIVE
+   ================================================================ */
+
+@media (max-width: 992px) {
+    .nav-dropdown {
+        width: 100%;
+        position: static;
+    }
+
+    .nav-dropdown > a {
+        width: 100%;
+        justify-content: space-between;
+        padding: 10px 12px;
+        border-radius: 8px;
+    }
+
+    .nav-dropdown > a:hover {
+        background: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav-dropdown-menu {
+        position: static;
+        transform: none !important;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 12px;
+        margin: 4px 8px 4px 16px;
+        padding: 8px;
+        box-shadow: none;
+        border: none;
+        backdrop-filter: none;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: none;
+        width: auto;
+        min-width: auto;
+        max-width: none;
+    }
+
+    .dropdown-grid {
+        grid-template-columns: 1fr;
+        gap: 2px;
+    }
+
+    .dropdown-item {
+        padding: 8px 12px;
+        border-radius: 8px;
+        gap: 10px;
+    }
+
+    .dropdown-item:hover {
+        background: rgba(255, 255, 255, 0.04);
+        transform: none;
+        border-color: transparent;
+    }
+
+    .dropdown-icon {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        font-size: 13px;
+    }
+
+    .dropdown-title {
+        font-size: 0.8rem;
+    }
+
+    .dropdown-desc {
+        font-size: 0.7rem;
+    }
+
+    .nav-dropdown.active .nav-dropdown-menu {
+        display: block;
+    }
+
+    .nav-dropdown.active > a i {
+        transform: rotate(180deg);
+    }
+
+    .nav-dropdown-menu {
+        padding: 6px;
+    }
+}
+
+/* ================================================================
+   DARK MODE SUPPORT
+   ================================================================ */
+
+body.dark-mode .nav-dropdown-menu {
+    background: #1e2438;
+    border-color: #2a3150;
+}
+
+body.dark-mode .dropdown-item:hover {
+    background: #2a3150;
+    border-color: #2a3150;
+}
+
+body.dark-mode .dropdown-icon {
+    background: rgba(14, 165, 233, 0.08);
+}
+
+body.dark-mode .dropdown-item:hover .dropdown-icon {
+    background: rgba(14, 165, 233, 0.15);
+}
+
+body.dark-mode .dropdown-title {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+body.dark-mode .dropdown-desc {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+body.dark-mode .dropdown-item:hover .dropdown-desc {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ================================================================
+   RESPONSIVE - Tablet & Small Desktop
+   ================================================================ */
+
+@media (max-width: 1200px) and (min-width: 993px) {
+    .nav-dropdown-menu {
+        min-width: 400px;
+        max-width: 480px;
+        padding: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-dropdown-menu {
+        margin: 2px 4px 2px 8px;
+        padding: 4px;
+    }
+    
+    .dropdown-item {
+        padding: 6px 10px;
+        gap: 8px;
+    }
+    
+    .dropdown-icon {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        font-size: 11px;
+    }
+    
+    .dropdown-title {
+        font-size: 0.75rem;
+    }
+    
+    .dropdown-desc {
+        font-size: 0.65rem;
+    }
+}
+
+/* ================================================================
+   ANIMASI HALUS
+   ================================================================ */
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
+
+.nav-dropdown:hover .nav-dropdown-menu {
+    animation: dropdownFadeIn 0.3s cubic-bezier(0.2, 0, 0, 1) forwards;
+}
+
+@media (max-width: 992px) {
+    @keyframes dropdownFadeInMobile {
+        from {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .nav-dropdown.active .nav-dropdown-menu {
+        animation: dropdownFadeInMobile 0.25s ease forwards;
+    }
+}

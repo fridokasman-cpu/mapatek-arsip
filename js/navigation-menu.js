@@ -1,5 +1,5 @@
 // ================================================================
-// NAVIGATION MENU - 4 Menu Utama dengan Dropdown
+// NAVIGATION MENU - Wide Dropdown dengan Deskripsi
 // ================================================================
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -35,6 +35,16 @@ document.addEventListener('DOMContentLoaded', function() {
             if (!isDropdown) {
                 document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
                     drop.classList.remove('active');
+                });
+            }
+        } else {
+            // Desktop: tutup dropdown saat klik di luar
+            const isDropdown = event.target.closest('.nav-dropdown');
+            if (!isDropdown) {
+                document.querySelectorAll('.nav-dropdown-menu').forEach(menu => {
+                    menu.style.opacity = '0';
+                    menu.style.visibility = 'hidden';
+                    menu.style.transform = 'translateX(-50%) translateY(10px)';
                 });
             }
         }
@@ -91,56 +101,16 @@ document.addEventListener('DOMContentLoaded', function() {
             if (navLinks) {
                 navLinks.classList.remove('active');
             }
+            // Reset dropdown menu style
+            document.querySelectorAll('.nav-dropdown-menu').forEach(menu => {
+                menu.style.opacity = '';
+                menu.style.visibility = '';
+                menu.style.transform = '';
+            });
         }
     });
 
-    // ============================================================
-    // 6. DROPDOWN HOVER UNTUK DESKTOP (Style Telkomsel)
-    // ============================================================
-    const dropdowns = document.querySelectorAll('.nav-dropdown');
-    
-    dropdowns.forEach(dropdown => {
-        // Untuk desktop - hover
-        dropdown.addEventListener('mouseenter', function() {
-            if (window.innerWidth > 992) {
-                const menu = this.querySelector('.nav-dropdown-menu');
-                if (menu) {
-                    menu.style.opacity = '1';
-                    menu.style.visibility = 'visible';
-                    menu.style.transform = 'translateX(-50%) translateY(0)';
-                }
-            }
-        });
-        
-        dropdown.addEventListener('mouseleave', function() {
-            if (window.innerWidth > 992) {
-                const menu = this.querySelector('.nav-dropdown-menu');
-                if (menu) {
-                    menu.style.opacity = '0';
-                    menu.style.visibility = 'hidden';
-                    menu.style.transform = 'translateX(-50%) translateY(10px)';
-                }
-            }
-        });
-    });
-
-    // ============================================================
-    // 7. TUTUP DROPDOWN SAAT KLIK DI LUAR (Desktop)
-    // ============================================================
-    document.addEventListener('click', function(event) {
-        if (window.innerWidth > 992) {
-            const isDropdown = event.target.closest('.nav-dropdown');
-            if (!isDropdown) {
-                document.querySelectorAll('.nav-dropdown-menu').forEach(menu => {
-                    menu.style.opacity = '0';
-                    menu.style.visibility = 'hidden';
-                    menu.style.transform = 'translateX(-50%) translateY(10px)';
-                });
-            }
-        }
-    });
-
-    console.log('✅ Navigation Menu dengan 4 menu utama siap digunakan!');
-    console.log('📱 Desktop: Hover untuk membuka dropdown');
+    console.log('✅ Navigation Menu dengan wide dropdown siap digunakan!');
+    console.log('📱 Desktop: Hover untuk membuka dropdown lebar dengan deskripsi');
     console.log('📱 Mobile: Klik untuk membuka dropdown');
 });
