@@ -6302,6 +6302,8 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
     z-index: 1001;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(255, 255, 255, 0.08);
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .hamburger:hover {
@@ -6309,10 +6311,10 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
 }
 
 .hamburger i {
-    pointer-events: none; /* Pastikan ikon tidak menghalangi click */
+    pointer-events: none;
 }
 
-/* Mobile menu */
+/* Mobile menu - PASTIKAN INI */
 @media (max-width: 992px) {
     .hamburger {
         display: block !important;
@@ -6333,6 +6335,7 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
         max-height: 80vh;
         overflow-y: auto;
         z-index: 1000;
+        width: 100%;
     }
     
     .nav-links.active {
@@ -6348,6 +6351,14 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
         width: 100%;
         border-radius: var(--radius-sm);
         display: block;
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+    
+    .nav-links > li > a:not(.nav-dropdown > a):hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
     }
     
     .nav-dropdown {
@@ -6360,6 +6371,14 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
         justify-content: space-between;
         padding: 0.7rem 1rem;
         border-radius: var(--radius-sm);
+        color: rgba(255, 255, 255, 0.8);
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+    
+    .nav-dropdown > a:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
     }
     
     .nav-dropdown-menu {
@@ -6389,6 +6408,12 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
         margin: 1px 4px;
         font-size: 0.8rem;
         border-radius: 6px;
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .nav-dropdown-menu a:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: white;
     }
     
     .nav-emergency {
@@ -6399,39 +6424,24 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
         justify-content: center !important;
         text-align: center;
         width: 100% !important;
+        display: flex !important;
     }
 }
 
-/* ================================================================
-   DARK MODE - MOBILE
-   ================================================================ */
-
-body.dark-mode .nav-links {
-    background: #121826;
-}
-
-body.dark-mode .hamburger {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255, 255, 255, 0.06);
-}
-
-body.dark-mode .hamburger:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-/* Mobile force fix */
-.is-mobile .hamburger {
-    display: block !important;
-    touch-action: manipulation !important;
-}
-
-.is-mobile .hamburger i {
-    pointer-events: none !important;
-}
-
-.is-mobile .nav-links {
-    display: none !important;
-}
-
-.is-mobile .nav-links.active {
-    display: flex !important;
+/* Mobile force fix untuk touch */
+@media (max-width: 480px) {
+    .hamburger {
+        padding: 0.4rem 0.6rem;
+        font-size: 1.2rem;
+    }
+    
+    .nav-links {
+        padding: 0.75rem 1rem;
+    }
+    
+    .nav-links > li > a:not(.nav-dropdown > a),
+    .nav-dropdown > a {
+        padding: 0.6rem 0.8rem;
+        font-size: 0.85rem;
+    }
 }

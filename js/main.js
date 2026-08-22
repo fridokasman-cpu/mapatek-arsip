@@ -1,104 +1,97 @@
-// ================================================================
-// MAIN — Inisialisasi & Event Controller
-// ================================================================
-
 // ==================== NAVBAR TOGGLE (FIXED FOR MOBILE) ====================
 
-// Pastikan DOM sudah siap
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔄 Navbar init...');
-    initNavbar();
-});
+// Fungsi toggle untuk mobile - DIPANGGIL DARI HTML
+function toggleMobileMenu() {
+    const navLinks = document.getElementById('navLinks');
+    if (!navLinks) {
+        console.warn('⚠️ navLinks not found');
+        return;
+    }
+    
+    console.log('🍔 Mobile menu toggled');
+    navLinks.classList.toggle('active');
+    
+    // Tutup semua dropdown
+    document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+        drop.classList.remove('active');
+    });
+}
 
+// Fungsi toggleMenu (alias untuk kompatibilitas)
+function toggleMenu() {
+    toggleMobileMenu();
+}
+
+// ==================== INIT NAVBAR ====================
 function initNavbar() {
     const navLinks = document.getElementById('navLinks');
     const hamburger = document.querySelector('.hamburger');
-    const navbar = document.getElementById('navbar');
     
-    if (!navLinks || !hamburger) {
-        console.warn('⚠️ Navbar elements not found');
+    if (!navLinks) {
+        console.warn('⚠️ navLinks not found');
         return;
     }
 
-    // ============================================================
-    // 1. HAMBURGER MENU TOGGLE (CLICK)
-    // ============================================================
-    // Hapus event listener lama dengan clone
-    const newHamburger = hamburger.cloneNode(true);
-    hamburger.parentNode.replaceChild(newHamburger, hamburger);
-    
-    newHamburger.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        console.log('🍔 Hamburger clicked');
-        
-        // Toggle menu
-        navLinks.classList.toggle('active');
-        
-        // Tutup semua dropdown
-        document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-            drop.classList.remove('active');
-        });
-        
-        console.log('Menu active:', navLinks.classList.contains('active'));
-    });
+    console.log('🔄 Navbar initializing...');
 
     // ============================================================
-    // 2. TUTUP MENU SAAT KLIK LINK (kecuali dropdown trigger)
+    // 1. HAMBURGER - PASTIKAN EVENT LISTENER
     // ============================================================
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        // Hapus event listener lama
-        const newLink = link.cloneNode(true);
-        link.parentNode.replaceChild(newLink, link);
+    if (hamburger) {
+        // Hapus event listener lama dengan clone
+        const newHamburger = hamburger.cloneNode(true);
+        hamburger.parentNode.replaceChild(newHamburger, hamburger);
         
-        newLink.addEventListener('click', function(e) {
-            // Cek apakah ini dropdown trigger
-            const isDropdownTrigger = this.closest('.nav-dropdown') && 
-                                      !this.closest('.nav-dropdown-menu');
-            
-            // Jika bukan dropdown trigger, tutup menu
-            if (!isDropdownTrigger) {
-                if (window.innerWidth <= 992) {
-                    navLinks.classList.remove('active');
-                    document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-                        drop.classList.remove('active');
-                    });
-                }
-            }
+        // Tambahkan event listener
+        newHamburger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            toggleMobileMenu();
         });
-    });
+        
+        // Touch event untuk mobile
+        newHamburger.addEventListener('touchstart', function(e) {
+            // Biarkan click handler yang bekerja
+        }, { passive: true });
+        
+        console.log('✅ Hamburger event attached');
+    } else {
+        console.warn('⚠️ Hamburger not found!');
+    }
 
     // ============================================================
-    // 3. TUTUP MENU SAAT KLIK DI LUAR
+    // 2. TUTUP MENU SAAT KLIK DI LUAR
     // ============================================================
-    document.addEventListener('click', function(e) {
-        const isNavbar = e.target.closest('.navbar');
-        const isHamburger = e.target.closest('.hamburger');
+    document.addEventListener('click', function(event) {
+        const isNavbar = event.target.closest('.navbar');
+        const isHamburger = event.target.closest('.hamburger');
         
         if (!isNavbar && !isHamburger) {
             if (navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
             }
-            if (window.innerWidth <= 992) {
-                document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-                    drop.classList.remove('active');
-                });
-            }
+            // Tutup dropdown
+            document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                drop.classList.remove('active');
+            });
         }
     });
 
     // ============================================================
-    // 4. SCROLL: Toggle scrolled class
+    // 3. TUTUP MENU SAAT SCROLL
     // ============================================================
+    let scrollTimeout;
     window.addEventListener('scroll', function() {
-        if (navbar) {
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
-        }
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+        }, 300);
     }, { passive: true });
 
     // ============================================================
-    // 5. RESIZE: Reset state
+    // 4. RESIZE: Reset state
     // ============================================================
     window.addEventListener('resize', function() {
         if (window.innerWidth > 992) {
@@ -110,37 +103,32 @@ function initNavbar() {
     });
 
     // ============================================================
-    // 6. KEYBOARD: ESC untuk tutup
+    // 5. SCROLL: Toggle scrolled class
     // ============================================================
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            navLinks.classList.remove('active');
-            document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-                drop.classList.remove('active');
-            });
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+        if (navbar) {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
         }
-    });
+    }, { passive: true });
 
-    console.log('✅ Navbar initialized for mobile');
+    console.log('✅ Navbar initialized');
 }
 
-// Jalankan inisialisasi jika DOM sudah siap
+// ============================================================
+// 6. JALANKAN INISIALISASI
+// ============================================================
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initNavbar);
 } else {
     initNavbar();
 }
 
-// Ekspor fungsi toggleMenu untuk digunakan di HTML
-window.toggleMenu = function() {
-    const navLinks = document.getElementById('navLinks');
-    if (navLinks) {
-        navLinks.classList.toggle('active');
-        document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-            drop.classList.remove('active');
-        });
-    }
-};
+// Ekspor fungsi ke global
+window.toggleMenu = toggleMenu;
+window.toggleMobileMenu = toggleMobileMenu;
+
+console.log('✅ main.js loaded - navbar functions ready');
 
 // ==================== REVEAL ANIMATION ====================
 const revealElements = document.querySelectorAll('.reveal');

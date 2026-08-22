@@ -1,17 +1,14 @@
-// ============================================================
-// 0. FORCE MOBILE DETECTION
-// ============================================================
+// ================================================================
+// NAVIGATION MENU - 4 Menu Utama dengan Dropdown (FIXED)
+// ================================================================
+
 // Deteksi apakah perangkat mobile
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 if (isMobile) {
     console.log('📱 Mobile device detected');
-    // Tambahkan class ke body untuk styling khusus
     document.body.classList.add('is-mobile');
 }
-// ================================================================
-// NAVIGATION MENU - 4 Menu Utama dengan Dropdown (FIXED)
-// ================================================================
 
 // Pastikan DOM sudah siap sebelum menjalankan
 document.addEventListener('DOMContentLoaded', function() {
@@ -42,6 +39,7 @@ function initNavigation() {
             icon.style.pointerEvents = 'none';
         }
         
+        // Event click untuk hamburger
         newHamburger.addEventListener('click', function(e) {
             e.preventDefault();
             e.stopPropagation();
@@ -56,10 +54,15 @@ function initNavigation() {
                 drop.classList.remove('active');
             });
             
+            // Scroll ke atas saat menu dibuka (opsional)
+            if (navLinks.classList.contains('active')) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+            
             console.log('Menu active:', navLinks.classList.contains('active'));
         });
         
-        // Tambahkan touch event untuk mobile
+        // Touch event untuk mobile (pasif)
         newHamburger.addEventListener('touchstart', function(e) {
             // Biarkan click handler yang bekerja
         }, { passive: true });
@@ -117,6 +120,7 @@ function initNavigation() {
         // Cek apakah klik di dalam navbar
         const isNavbar = event.target.closest('.navbar');
         const isHamburger = event.target.closest('.hamburger');
+        const isDropdown = event.target.closest('.nav-dropdown');
         
         // Jika klik di luar navbar dan bukan hamburger
         if (!isNavbar && !isHamburger) {
@@ -132,7 +136,7 @@ function initNavigation() {
     });
 
     // ============================================================
-    // 4. TUTUP MOBILE MENU SAAT KLIK LINK
+    // 4. TUTUP MOBILE MENU SAAT KLIK LINK (kecuali dropdown trigger)
     // ============================================================
     const mobileLinks = document.querySelectorAll('.nav-links a:not([href="#"])');
     
@@ -163,7 +167,23 @@ function initNavigation() {
     });
 
     // ============================================================
-    // 5. RESIZE: Reset state saat layar berubah
+    // 5. TUTUP MENU SAAT SCROLL (Mobile)
+    // ============================================================
+    let scrollTimeout;
+    window.addEventListener('scroll', function() {
+        if (window.innerWidth <= 992 && navLinks.classList.contains('active')) {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(function() {
+                navLinks.classList.remove('active');
+                document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                    drop.classList.remove('active');
+                });
+            }, 300);
+        }
+    }, { passive: true });
+
+    // ============================================================
+    // 6. RESIZE: Reset state saat layar berubah
     // ============================================================
     let resizeTimer;
     window.addEventListener('resize', function() {
@@ -185,12 +205,17 @@ function initNavigation() {
                     menu.style.transform = '';
                     menu.style.display = '';
                 });
+            } else {
+                // Di mobile, pastikan menu tertutup saat resize
+                if (navLinks) {
+                    navLinks.classList.remove('active');
+                }
             }
         }, 200);
     });
 
     // ============================================================
-    // 6. DROPDOWN HOVER UNTUK DESKTOP
+    // 7. DROPDOWN HOVER UNTUK DESKTOP
     // ============================================================
     const dropdowns = document.querySelectorAll('.nav-dropdown');
     
@@ -226,7 +251,7 @@ function initNavigation() {
     });
 
     // ============================================================
-    // 7. KEYBOARD: ESC untuk tutup
+    // 8. KEYBOARD: ESC untuk tutup
     // ============================================================
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
@@ -245,7 +270,7 @@ function initNavigation() {
 }
 
 // ============================================================
-// 8. FALLBACK: Jika DOM sudah siap, jalankan langsung
+// 9. FALLBACK: Jika DOM sudah siap, jalankan langsung
 // ============================================================
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
     // Jika DOM sudah siap, panggil langsung
@@ -257,9 +282,25 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
 }
 
 // ============================================================
-// 9. EKSPOR FUNGSI KE GLOBAL (untuk dipanggil dari HTML)
+// 10. EKSPOR FUNGSI KE GLOBAL (untuk dipanggil dari HTML)
 // ============================================================
 window.toggleMenu = function() {
+    const navLinks = document.getElementById('navLinks');
+    if (navLinks) {
+        const isActive = navLinks.classList.contains('active');
+        if (isActive) {
+            navLinks.classList.remove('active');
+            document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        } else {
+            navLinks.classList.add('active');
+        }
+    }
+};
+
+// Fungsi toggle khusus untuk mobile (dipanggil dari onclick di HTML)
+window.toggleMobileMenu = function() {
     const navLinks = document.getElementById('navLinks');
     if (navLinks) {
         navLinks.classList.toggle('active');
