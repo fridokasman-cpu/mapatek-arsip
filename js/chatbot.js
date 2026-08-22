@@ -239,3 +239,106 @@ document.addEventListener('click', function(event) {
         container.classList.remove('active');
     }
 });
+// ================================================================
+// 🆕 DRAGGABLE CHATBOT - TAMBAHKAN DI SINI (PALING BAWAH)
+// ================================================================
+document.addEventListener('DOMContentLoaded', function() {
+    const widget = document.querySelector('.chatbot-widget');
+    const header = document.querySelector('.chatbot-header');
+    
+    if (!widget || !header) return;
+
+    let isDragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    function startDrag(e) {
+        const container = document.getElementById('chatbotContainer');
+        if (!container || !container.classList.contains('active')) return;
+
+        const touch = e.touches ? e.touches[0] : e;
+        const rect = widget.getBoundingClientRect();
+        
+        isDragging = true;
+        offsetX = touch.clientX - rect.left;
+        offsetY = touch.clientY - rect.top;
+
+        header.style.cursor = 'grabbing';
+
+        document.addEventListener('mousemove', onDrag);
+        document.addEventListener('mouseup', endDrag);
+        document.addEventListener('touchmove', onDrag, { passive: false });
+        document.addEventListener('touchend', endDrag);
+
+        e.preventDefault();
+    }
+
+    function onDrag(e) {
+        if (!isDragging) return;
+
+        const touch = e.touches ? e.touches[0] : e;
+        
+        let newX = touch.clientX - offsetX;
+        let newY = touch.clientY - offsetY;
+
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const widgetWidth = widget.offsetWidth;
+        const widgetHeight = widget.offsetHeight;
+        
+        newX = Math.max(0, Math.min(w - widgetWidth, newX));
+        newY = Math.max(0, Math.min(h - widgetHeight, newY));
+
+        widget.style.left = newX + 'px';
+        widget.style.top = newY + 'px';
+        widget.style.right = 'auto';
+        widget.style.bottom = 'auto';
+
+        e.preventDefault();
+    }
+
+    function endDrag() {
+        isDragging = false;
+        header.style.cursor = 'grab';
+        
+        document.removeEventListener('mousemove', onDrag);
+        document.removeEventListener('mouseup', endDrag);
+        document.removeEventListener('touchmove', onDrag);
+        document.removeEventListener('touchend', endDrag);
+    }
+
+    header.addEventListener('mousedown', startDrag);
+    header.addEventListener('touchstart', startDrag, { passive: false });
+
+    // Inisialisasi posisi awal (kanan bawah)
+    function initPosition() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const toggleBtn = document.querySelector('.chatbot-toggle');
+        if (toggleBtn) {
+            const btnWidth = toggleBtn.offsetWidth || 64;
+            widget.style.left = (w - btnWidth - 30) + 'px';
+            widget.style.top = (h - btnWidth - 30) + 'px';
+            widget.style.right = 'auto';
+            widget.style.bottom = 'auto';
+        }
+    }
+
+    setTimeout(initPosition, 100);
+    
+    window.addEventListener('resize', () => {
+        const rect = widget.getBoundingClientRect();
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        let x = parseInt(widget.style.left) || 0;
+        let y = parseInt(widget.style.top) || 0;
+        
+        if (rect.right > w) x = w - rect.width - 10;
+        if (rect.bottom > h) y = h - rect.height - 10;
+        if (rect.left < 0) x = 10;
+        if (rect.top < 0) y = 10;
+        
+        widget.style.left = x + 'px';
+        widget.style.top = y + 'px';
+    });
+});
