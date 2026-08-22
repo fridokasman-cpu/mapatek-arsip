@@ -5,7 +5,7 @@
 const slideshowImages = [
     {
         url: 'images/slideshow/hero1.jpg',
-        caption: 'Ekspedisi Gunung Rinjani 2023'
+        caption: 'Wisuda Angkatan Pendiri'
     },
     {
         url: 'images/slideshow/hero2.jpg',
