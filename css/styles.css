@@ -6445,3 +6445,36 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
         font-size: 0.85rem;
     }
 }
+
+/* ================================================================
+   FIX FINAL — Perbaikan Konflik Dropdown Menu Mobile
+   (Menimpa semua duplikat aturan .nav-dropdown-menu di atas)
+   ================================================================ */
+@media (max-width: 992px) {
+    .nav-links .nav-dropdown-menu {
+        display: none !important;
+    }
+
+    .nav-links .nav-dropdown.active .nav-dropdown-menu {
+        display: flex !important;
+        flex-direction: column !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        position: static !important;
+        transform: none !important;
+        height: auto !important;
+        max-height: none !important;
+        overflow: visible !important;
+        animation: none !important;
+    }
+
+    .nav-links .nav-dropdown.active .dropdown-grid {
+        display: flex !important;
+        flex-direction: column !important;
+        grid-template-columns: none !important;
+    }
+
+    .nav-links .nav-dropdown.active .dropdown-item {
+        display: flex !important;
+    }
+}
