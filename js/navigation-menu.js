@@ -1,27 +1,48 @@
 // ================================================================
-// NAVIGATION MENU - Wide Dropdown dengan Deskripsi
+// NAVIGATION MENU - 4 Menu Utama dengan Dropdown (FIXED)
 // ================================================================
 
+// Pastikan DOM sudah siap sebelum menjalankan
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔄 Navigation Menu initializing...');
+
     // ============================================================
     // 1. MOBILE DROPDOWN TOGGLE
     // ============================================================
     const dropdownTriggers = document.querySelectorAll('.nav-dropdown > a');
     
+    // Hapus semua event listener lama (jika ada) dengan clone
     dropdownTriggers.forEach(trigger => {
+        // Clone dan replace untuk menghapus event listener lama
+        const newTrigger = trigger.cloneNode(true);
+        trigger.parentNode.replaceChild(newTrigger, trigger);
+    });
+
+    // Ambil ulang triggers setelah clone
+    const freshTriggers = document.querySelectorAll('.nav-dropdown > a');
+    
+    freshTriggers.forEach(trigger => {
         trigger.addEventListener('click', function(e) {
             // Hanya untuk mobile
             if (window.innerWidth <= 992) {
                 e.preventDefault();
+                e.stopPropagation();
                 const parent = this.parentElement;
-                parent.classList.toggle('active');
+                const isActive = parent.classList.contains('active');
                 
-                // Tutup dropdown lain
-                dropdownTriggers.forEach(other => {
-                    if (other !== this) {
-                        other.parentElement.classList.remove('active');
+                // Tutup semua dropdown lain
+                document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                    if (drop !== parent) {
+                        drop.classList.remove('active');
                     }
                 });
+                
+                // Toggle class active
+                if (isActive) {
+                    parent.classList.remove('active');
+                } else {
+                    parent.classList.add('active');
+                }
             }
         });
     });
@@ -30,23 +51,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. TUTUP DROPDOWN SAAT KLIK DI LUAR
     // ============================================================
     document.addEventListener('click', function(event) {
-        if (window.innerWidth <= 992) {
-            const isDropdown = event.target.closest('.nav-dropdown');
-            if (!isDropdown) {
-                document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-                    drop.classList.remove('active');
-                });
-            }
-        } else {
-            // Desktop: tutup dropdown saat klik di luar
-            const isDropdown = event.target.closest('.nav-dropdown');
-            if (!isDropdown) {
-                document.querySelectorAll('.nav-dropdown-menu').forEach(menu => {
-                    menu.style.opacity = '0';
-                    menu.style.visibility = 'hidden';
-                    menu.style.transform = 'translateX(-50%) translateY(10px)';
-                });
-            }
+        const isDropdown = event.target.closest('.nav-dropdown');
+        if (!isDropdown) {
+            document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                drop.classList.remove('active');
+            });
         }
     });
 
@@ -76,7 +85,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // ============================================================
     const hamburger = document.querySelector('.hamburger');
     if (hamburger) {
-        hamburger.addEventListener('click', function(e) {
+        // Clone untuk menghapus event listener lama
+        const newHamburger = hamburger.cloneNode(true);
+        hamburger.parentNode.replaceChild(newHamburger, hamburger);
+        
+        newHamburger.addEventListener('click', function(e) {
             e.stopPropagation();
             if (navLinks) {
                 navLinks.classList.toggle('active');
@@ -101,16 +114,54 @@ document.addEventListener('DOMContentLoaded', function() {
             if (navLinks) {
                 navLinks.classList.remove('active');
             }
-            // Reset dropdown menu style
-            document.querySelectorAll('.nav-dropdown-menu').forEach(menu => {
-                menu.style.opacity = '';
-                menu.style.visibility = '';
-                menu.style.transform = '';
-            });
         }
     });
 
-    console.log('✅ Navigation Menu dengan wide dropdown siap digunakan!');
-    console.log('📱 Desktop: Hover untuk membuka dropdown lebar dengan deskripsi');
-    console.log('📱 Mobile: Klik untuk membuka dropdown');
+    // ============================================================
+    // 6. DROPDOWN HOVER UNTUK DESKTOP
+    // ============================================================
+    const dropdowns = document.querySelectorAll('.nav-dropdown');
+    
+    dropdowns.forEach(dropdown => {
+        // Hapus event listener lama dengan clone
+        const newDropdown = dropdown.cloneNode(true);
+        dropdown.parentNode.replaceChild(newDropdown, dropdown);
+    });
+
+    // Ambil ulang dropdown setelah clone
+    const freshDropdowns = document.querySelectorAll('.nav-dropdown');
+    
+    freshDropdowns.forEach(dropdown => {
+        const menu = dropdown.querySelector('.nav-dropdown-menu');
+        if (!menu) return;
+
+        // Desktop - hover
+        dropdown.addEventListener('mouseenter', function() {
+            if (window.innerWidth > 992) {
+                menu.style.opacity = '1';
+                menu.style.visibility = 'visible';
+                menu.style.transform = 'translateX(-50%) translateY(0)';
+            }
+        });
+        
+        dropdown.addEventListener('mouseleave', function() {
+            if (window.innerWidth > 992) {
+                menu.style.opacity = '0';
+                menu.style.visibility = 'hidden';
+                menu.style.transform = 'translateX(-50%) translateY(10px)';
+            }
+        });
+    });
+
+    console.log('✅ Navigation Menu with 4 menus ready!');
 });
+
+// ============================================================
+// 7. FALLBACK: Jika DOM sudah siap, jalankan langsung
+// ============================================================
+if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    // Jika DOM sudah siap, panggil langsung
+    setTimeout(() => {
+        document.dispatchEvent(new Event('DOMContentLoaded'));
+    }, 100);
+}
