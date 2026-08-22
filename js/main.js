@@ -2,107 +2,145 @@
 // MAIN — Inisialisasi & Event Controller
 // ================================================================
 
-// ==================== NAVBAR TOGGLE ====================
-function toggleMenu() {
+// ==================== NAVBAR TOGGLE (FIXED FOR MOBILE) ====================
+
+// Pastikan DOM sudah siap
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔄 Navbar init...');
+    initNavbar();
+});
+
+function initNavbar() {
     const navLinks = document.getElementById('navLinks');
-    if (!navLinks) return;
+    const hamburger = document.querySelector('.hamburger');
+    const navbar = document.getElementById('navbar');
     
-    // Toggle class active
-    navLinks.classList.toggle('active');
+    if (!navLinks || !hamburger) {
+        console.warn('⚠️ Navbar elements not found');
+        return;
+    }
+
+    // ============================================================
+    // 1. HAMBURGER MENU TOGGLE (CLICK)
+    // ============================================================
+    // Hapus event listener lama dengan clone
+    const newHamburger = hamburger.cloneNode(true);
+    hamburger.parentNode.replaceChild(newHamburger, hamburger);
     
-    // Tutup semua dropdown saat menu dibuka/tutup (mobile)
-    if (window.innerWidth <= 992) {
+    newHamburger.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        console.log('🍔 Hamburger clicked');
+        
+        // Toggle menu
+        navLinks.classList.toggle('active');
+        
+        // Tutup semua dropdown
         document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
             drop.classList.remove('active');
         });
-    }
-}
-
-// Event untuk menutup menu saat link diklik (kecuali dropdown trigger)
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', function(e) {
-        // Cek apakah ini link di dalam dropdown menu (bukan trigger)
-        const isDropdownLink = this.closest('.nav-dropdown-menu');
-        const isDropdownTrigger = this.closest('.nav-dropdown') && !isDropdownLink;
         
-        // Jika bukan dropdown trigger, tutup menu
-        if (!isDropdownTrigger) {
-            const navLinks = document.getElementById('navLinks');
-            if (navLinks) {
+        console.log('Menu active:', navLinks.classList.contains('active'));
+    });
+
+    // ============================================================
+    // 2. TUTUP MENU SAAT KLIK LINK (kecuali dropdown trigger)
+    // ============================================================
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        // Hapus event listener lama
+        const newLink = link.cloneNode(true);
+        link.parentNode.replaceChild(newLink, link);
+        
+        newLink.addEventListener('click', function(e) {
+            // Cek apakah ini dropdown trigger
+            const isDropdownTrigger = this.closest('.nav-dropdown') && 
+                                      !this.closest('.nav-dropdown-menu');
+            
+            // Jika bukan dropdown trigger, tutup menu
+            if (!isDropdownTrigger) {
+                if (window.innerWidth <= 992) {
+                    navLinks.classList.remove('active');
+                    document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                        drop.classList.remove('active');
+                    });
+                }
+            }
+        });
+    });
+
+    // ============================================================
+    // 3. TUTUP MENU SAAT KLIK DI LUAR
+    // ============================================================
+    document.addEventListener('click', function(e) {
+        const isNavbar = e.target.closest('.navbar');
+        const isHamburger = e.target.closest('.hamburger');
+        
+        if (!isNavbar && !isHamburger) {
+            if (navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
+            }
+            if (window.innerWidth <= 992) {
+                document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                    drop.classList.remove('active');
+                });
             }
         }
     });
-});
 
-// Scroll event untuk navbar
-window.addEventListener('scroll', () => {
-    const navbar = document.getElementById('navbar');
-    if (navbar) {
-        navbar.classList.toggle('scrolled', window.scrollY > 50);
-    }
-});
-
-// ==================== TUTUP MENU SAAT KLIK DI LUAR ====================
-document.addEventListener('click', function(event) {
-    const navLinks = document.getElementById('navLinks');
-    const hamburger = document.querySelector('.hamburger');
-    
-    // Cek apakah klik di luar navbar
-    const isNavbar = event.target.closest('.navbar');
-    const isHamburger = event.target.closest('.hamburger');
-    
-    if (!isNavbar && !isHamburger) {
-        if (navLinks && navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
+    // ============================================================
+    // 4. SCROLL: Toggle scrolled class
+    // ============================================================
+    window.addEventListener('scroll', function() {
+        if (navbar) {
+            navbar.classList.toggle('scrolled', window.scrollY > 50);
         }
-        // Tutup dropdown mobile
-        if (window.innerWidth <= 992) {
+    }, { passive: true });
+
+    // ============================================================
+    // 5. RESIZE: Reset state
+    // ============================================================
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 992) {
+            navLinks.classList.remove('active');
             document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
                 drop.classList.remove('active');
             });
         }
-    }
-});
+    });
 
-// ==================== RESIZE: Reset state ====================
-window.addEventListener('resize', function() {
+    // ============================================================
+    // 6. KEYBOARD: ESC untuk tutup
+    // ============================================================
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            navLinks.classList.remove('active');
+            document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+
+    console.log('✅ Navbar initialized for mobile');
+}
+
+// Jalankan inisialisasi jika DOM sudah siap
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNavbar);
+} else {
+    initNavbar();
+}
+
+// Ekspor fungsi toggleMenu untuk digunakan di HTML
+window.toggleMenu = function() {
     const navLinks = document.getElementById('navLinks');
-    
-    if (window.innerWidth > 992) {
-        // Desktop: pastikan menu terlihat
-        if (navLinks) {
-            navLinks.classList.remove('active');
-        }
-        // Reset dropdown menu style
-        document.querySelectorAll('.nav-dropdown-menu').forEach(menu => {
-            menu.style.opacity = '';
-            menu.style.visibility = '';
-            menu.style.transform = '';
-            menu.style.display = '';
-        });
-    } else {
-        // Mobile: pastikan menu tersembunyi
-        if (navLinks) {
-            navLinks.classList.remove('active');
-        }
-    }
-});
-
-// ==================== KEYBOARD: ESC untuk tutup menu ====================
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const navLinks = document.getElementById('navLinks');
-        if (navLinks && navLinks.classList.contains('active')) {
-            navLinks.classList.remove('active');
-        }
+    if (navLinks) {
+        navLinks.classList.toggle('active');
         document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
             drop.classList.remove('active');
         });
     }
-});
-
-console.log('✅ Navbar toggle updated for dropdown compatibility');
+};
 
 // ==================== REVEAL ANIMATION ====================
 const revealElements = document.querySelectorAll('.reveal');

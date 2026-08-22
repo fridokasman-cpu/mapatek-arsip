@@ -5,13 +5,62 @@
 // Pastikan DOM sudah siap sebelum menjalankan
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🔄 Navigation Menu initializing...');
+    initNavigation();
+});
+
+function initNavigation() {
+    const navLinks = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger');
+    
+    if (!navLinks) {
+        console.warn('⚠️ navLinks not found');
+        return;
+    }
 
     // ============================================================
-    // 1. MOBILE DROPDOWN TOGGLE
+    // 1. HAMBURGER MENU TOGGLE (PRIORITAS UTAMA)
+    // ============================================================
+    if (hamburger) {
+        // Hapus semua event listener dengan clone
+        const newHamburger = hamburger.cloneNode(true);
+        hamburger.parentNode.replaceChild(newHamburger, hamburger);
+        
+        // Gunakan pointer-events: none pada ikon agar tidak menghalangi
+        const icon = newHamburger.querySelector('i');
+        if (icon) {
+            icon.style.pointerEvents = 'none';
+        }
+        
+        newHamburger.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            console.log('🍔 Hamburger clicked - toggling menu');
+            
+            // Toggle menu
+            navLinks.classList.toggle('active');
+            
+            // Tutup semua dropdown
+            document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                drop.classList.remove('active');
+            });
+            
+            console.log('Menu active:', navLinks.classList.contains('active'));
+        });
+        
+        // Tambahkan touch event untuk mobile
+        newHamburger.addEventListener('touchstart', function(e) {
+            // Biarkan click handler yang bekerja
+        }, { passive: true });
+    } else {
+        console.warn('⚠️ Hamburger not found!');
+    }
+
+    // ============================================================
+    // 2. MOBILE DROPDOWN TOGGLE
     // ============================================================
     const dropdownTriggers = document.querySelectorAll('.nav-dropdown > a');
     
-    // Hapus semua event listener lama (jika ada) dengan clone
     dropdownTriggers.forEach(trigger => {
         // Clone dan replace untuk menghapus event listener lama
         const newTrigger = trigger.cloneNode(true);
@@ -27,6 +76,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (window.innerWidth <= 992) {
                 e.preventDefault();
                 e.stopPropagation();
+                
                 const parent = this.parentElement;
                 const isActive = parent.classList.contains('active');
                 
@@ -43,16 +93,27 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     parent.classList.add('active');
                 }
+                
+                console.log('Dropdown toggled:', parent.classList.contains('active'));
             }
         });
     });
 
     // ============================================================
-    // 2. TUTUP DROPDOWN SAAT KLIK DI LUAR
+    // 3. TUTUP DROPDOWN SAAT KLIK DI LUAR
     // ============================================================
     document.addEventListener('click', function(event) {
-        const isDropdown = event.target.closest('.nav-dropdown');
-        if (!isDropdown) {
+        // Cek apakah klik di dalam navbar
+        const isNavbar = event.target.closest('.navbar');
+        const isHamburger = event.target.closest('.hamburger');
+        
+        // Jika klik di luar navbar dan bukan hamburger
+        if (!isNavbar && !isHamburger) {
+            // Tutup menu mobile
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+            // Tutup dropdown
             document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
                 drop.classList.remove('active');
             });
@@ -60,61 +121,61 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // ============================================================
-    // 3. TUTUP MOBILE MENU SAAT KLIK LINK
+    // 4. TUTUP MOBILE MENU SAAT KLIK LINK
     // ============================================================
     const mobileLinks = document.querySelectorAll('.nav-links a:not([href="#"])');
-    const navLinks = document.getElementById('navLinks');
     
     mobileLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            if (window.innerWidth <= 992) {
-                // Tutup semua dropdown
-                document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-                    drop.classList.remove('active');
-                });
-                // Tutup menu
-                if (navLinks) {
-                    navLinks.classList.remove('active');
+        // Clone untuk hapus event lama
+        const newLink = link.cloneNode(true);
+        link.parentNode.replaceChild(newLink, link);
+        
+        newLink.addEventListener('click', function(e) {
+            // Cek apakah ini link di dalam dropdown (bukan trigger)
+            const isDropdownMenu = this.closest('.nav-dropdown-menu');
+            const isDropdownTrigger = this.closest('.nav-dropdown') && !isDropdownMenu;
+            
+            // Jika bukan dropdown trigger, tutup menu
+            if (!isDropdownTrigger) {
+                if (window.innerWidth <= 992) {
+                    // Tutup semua dropdown
+                    document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                        drop.classList.remove('active');
+                    });
+                    // Tutup menu
+                    if (navLinks) {
+                        navLinks.classList.remove('active');
+                    }
                 }
             }
         });
     });
 
     // ============================================================
-    // 4. HAMBURGER MENU TOGGLE
+    // 5. RESIZE: Reset state saat layar berubah
     // ============================================================
-    const hamburger = document.querySelector('.hamburger');
-    if (hamburger) {
-        // Clone untuk menghapus event listener lama
-        const newHamburger = hamburger.cloneNode(true);
-        hamburger.parentNode.replaceChild(newHamburger, hamburger);
-        
-        newHamburger.addEventListener('click', function(e) {
-            e.stopPropagation();
-            if (navLinks) {
-                navLinks.classList.toggle('active');
-                // Tutup semua dropdown saat menu dibuka/tutup
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(function() {
+            if (window.innerWidth > 992) {
+                // Hapus class active di mobile
                 document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
                     drop.classList.remove('active');
                 });
+                // Tutup mobile menu
+                if (navLinks) {
+                    navLinks.classList.remove('active');
+                }
+                // Reset dropdown style
+                document.querySelectorAll('.nav-dropdown-menu').forEach(menu => {
+                    menu.style.opacity = '';
+                    menu.style.visibility = '';
+                    menu.style.transform = '';
+                    menu.style.display = '';
+                });
             }
-        });
-    }
-
-    // ============================================================
-    // 5. RESIZE: Reset state saat layar berubah
-    // ============================================================
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 992) {
-            // Hapus class active di mobile
-            document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
-                drop.classList.remove('active');
-            });
-            // Tutup mobile menu
-            if (navLinks) {
-                navLinks.classList.remove('active');
-            }
-        }
+        }, 200);
     });
 
     // ============================================================
@@ -153,15 +214,48 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // ============================================================
+    // 7. KEYBOARD: ESC untuk tutup
+    // ============================================================
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+            }
+            document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+                drop.classList.remove('active');
+            });
+        }
+    });
+
     console.log('✅ Navigation Menu with 4 menus ready!');
-});
+    console.log('📱 Mobile menu: click hamburger to open');
+    console.log('💻 Desktop menu: hover to open dropdown');
+}
 
 // ============================================================
-// 7. FALLBACK: Jika DOM sudah siap, jalankan langsung
+// 8. FALLBACK: Jika DOM sudah siap, jalankan langsung
 // ============================================================
 if (document.readyState === 'complete' || document.readyState === 'interactive') {
     // Jika DOM sudah siap, panggil langsung
-    setTimeout(() => {
-        document.dispatchEvent(new Event('DOMContentLoaded'));
+    setTimeout(function() {
+        if (typeof initNavigation === 'function') {
+            initNavigation();
+        }
     }, 100);
 }
+
+// ============================================================
+// 9. EKSPOR FUNGSI KE GLOBAL (untuk dipanggil dari HTML)
+// ============================================================
+window.toggleMenu = function() {
+    const navLinks = document.getElementById('navLinks');
+    if (navLinks) {
+        navLinks.classList.toggle('active');
+        document.querySelectorAll('.nav-dropdown.active').forEach(drop => {
+            drop.classList.remove('active');
+        });
+    }
+};
+
+console.log('✅ navigation-menu.js loaded');
