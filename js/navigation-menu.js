@@ -1,3 +1,14 @@
+// ============================================================
+// 0. FORCE MOBILE DETECTION
+// ============================================================
+// Deteksi apakah perangkat mobile
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+if (isMobile) {
+    console.log('📱 Mobile device detected');
+    // Tambahkan class ke body untuk styling khusus
+    document.body.classList.add('is-mobile');
+}
 // ================================================================
 // NAVIGATION MENU - 4 Menu Utama dengan Dropdown (FIXED)
 // ================================================================

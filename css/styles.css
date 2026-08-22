@@ -6418,3 +6418,20 @@ body.dark-mode .hamburger {
 body.dark-mode .hamburger:hover {
     background: rgba(255, 255, 255, 0.1);
 }
+/* Mobile force fix */
+.is-mobile .hamburger {
+    display: block !important;
+    touch-action: manipulation !important;
+}
+
+.is-mobile .hamburger i {
+    pointer-events: none !important;
+}
+
+.is-mobile .nav-links {
+    display: none !important;
+}
+
+.is-mobile .nav-links.active {
+    display: flex !important;
+}
