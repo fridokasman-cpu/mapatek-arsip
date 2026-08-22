@@ -21,7 +21,7 @@
 </head>
 <body>
 
-   <!-- ============================================================
+  <!-- ============================================================
     NAVBAR
     ============================================================ -->
 <nav class="navbar" id="navbar">
@@ -30,46 +30,55 @@
         <span>Mapatek Abhipraya</span>
     </div>
     <ul class="nav-links" id="navLinks">
-        <!-- MENU 1: BERANDA -->
-        <li><a href="#home">Beranda</a></li>
-        
-        <!-- MENU 2: TENTANG KAMI (Dropdown) -->
+        <!-- MENU 1: PROFIL -->
         <li class="nav-dropdown">
             <a href="#" onclick="return false;">
-                Tentang Kami <i class="fas fa-chevron-down" style="font-size:10px;margin-left:4px;"></i>
+                Profil <i class="fas fa-chevron-down" style="font-size:10px;margin-left:4px;"></i>
             </a>
             <div class="nav-dropdown-menu">
-                <a href="#tentang">Profil</a>
-                <a href="#pengurus">Pengurus</a>
-                <a href="#berita">Berita</a>
-                <a href="#arsip">Arsip</a>
+                <a href="#tentang"><i class="fas fa-info-circle"></i> Tentang Kami</a>
+                <a href="#pengurus"><i class="fas fa-users"></i> Pengurus</a>
+                <a href="#berita"><i class="fas fa-newspaper"></i> Berita</a>
+                <a href="#arsip"><i class="fas fa-archive"></i> Arsip</a>
             </div>
         </li>
         
-        <!-- MENU 3: KEGIATAN (Dropdown) -->
+        <!-- MENU 2: KEGIATAN -->
         <li class="nav-dropdown">
             <a href="#" onclick="return false;">
                 Kegiatan <i class="fas fa-chevron-down" style="font-size:10px;margin-left:4px;"></i>
             </a>
             <div class="nav-dropdown-menu">
-                <a href="#agenda">Agenda</a>
-                <a href="#galeri">Galeri</a>
-                <a href="#tutorial">Tutorial</a>
-                <a href="#quiz">Quiz</a>
+                <a href="#agenda"><i class="fas fa-calendar-alt"></i> Agenda</a>
+                <a href="#galeri"><i class="fas fa-images"></i> Galeri</a>
+                <a href="#tutorial"><i class="fas fa-video"></i> Tutorial</a>
+                <a href="#quiz"><i class="fas fa-brain"></i> Quiz</a>
             </div>
         </li>
         
-        <!-- MENU 4: LAINNYA (Dropdown) -->
+        <!-- MENU 3: LAYANAN -->
         <li class="nav-dropdown">
             <a href="#" onclick="return false;">
-                Lainnya <i class="fas fa-chevron-down" style="font-size:10px;margin-left:4px;"></i>
+                Layanan <i class="fas fa-chevron-down" style="font-size:10px;margin-left:4px;"></i>
             </a>
             <div class="nav-dropdown-menu">
-                <a href="#pendaftaran">Pendaftaran</a>
-                <a href="#kontak">Kontak</a>
-                <a href="peta-pendakian.html" style="display:flex;align-items:center;gap:6px;">
-                    <i class="fas fa-map"></i> Peta Pendakian
-                </a>
+                <a href="#pendaftaran"><i class="fas fa-user-plus"></i> Pendaftaran</a>
+                <a href="#kontak"><i class="fas fa-phone"></i> Kontak</a>
+                <a href="peta-pendakian.html"><i class="fas fa-map"></i> Peta Pendakian</a>
+                <a href="#" onclick="openGlobalSearch()"><i class="fas fa-search"></i> Cari Dokumen</a>
+            </div>
+        </li>
+        
+        <!-- MENU 4: TENTANG -->
+        <li class="nav-dropdown">
+            <a href="#" onclick="return false;">
+                Tentang <i class="fas fa-chevron-down" style="font-size:10px;margin-left:4px;"></i>
+            </a>
+            <div class="nav-dropdown-menu">
+                <a href="#home"><i class="fas fa-home"></i> Beranda</a>
+                <a href="#faqContainer"><i class="fas fa-question-circle"></i> FAQ</a>
+                <a href="#petaMap"><i class="fas fa-location-dot"></i> Peta Lokasi</a>
+                <a href="#cuacaGrid"><i class="fas fa-cloud-sun"></i> Info Cuaca</a>
             </div>
         </li>
         
