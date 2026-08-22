@@ -5122,3 +5122,104 @@ body.dark-mode .leaflet-tile {
         padding: 4px 12px;
     }
 }
+/* ================================================================
+   NAVIGATION DROPDOWN - Tambahan
+   ================================================================ */
+
+/* Style untuk dropdown trigger */
+.nav-dropdown > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Dropdown menu container */
+.nav-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: rgba(10, 43, 37, 0.97);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 12px;
+    padding: 8px 0;
+    min-width: 200px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.2, 0, 0, 1);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Hover state untuk desktop */
+.nav-dropdown:hover .nav-dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* Mobile responsive */
+@media (max-width: 992px) {
+    .nav-dropdown-menu {
+        position: static;
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: 8px;
+        margin: 4px 0;
+        padding: 4px 0;
+        box-shadow: none;
+        border: none;
+        backdrop-filter: none;
+        transform: none;
+        opacity: 1;
+        visibility: visible;
+        display: none;
+        width: 100%;
+    }
+
+    .nav-dropdown-menu a {
+        padding: 8px 20px !important;
+        margin: 1px 4px !important;
+        font-size: 0.8rem !important;
+        border-radius: 6px;
+    }
+
+    .nav-dropdown-menu a:hover {
+        background: rgba(255, 255, 255, 0.06) !important;
+    }
+
+    .nav-dropdown {
+        width: 100%;
+    }
+
+    .nav-dropdown > a {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .nav-dropdown > a i {
+        transition: transform 0.3s ease;
+    }
+
+    .nav-dropdown.active > a i {
+        transform: rotate(180deg);
+    }
+}
+
+/* Dark mode support */
+body.dark-mode .nav-dropdown-menu {
+    background: #1e2438;
+    border-color: #2a3150;
+}
+
+body.dark-mode .nav-dropdown-menu a {
+    color: #a0aec0 !important;
+}
+
+body.dark-mode .nav-dropdown-menu a:hover {
+    background: #2a3150 !important;
+    color: #e2e8f0 !important;
+}
