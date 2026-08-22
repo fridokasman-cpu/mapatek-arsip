@@ -573,15 +573,132 @@ function loadAgenda() {
     console.log('✅ Agenda loaded from data.js,', data.length, 'items');
 }
 
+// ==================== GALERI ====================
+let currentGaleriFilter = 'all';
+let currentGaleriPage = 1;
+const galeriPerPage = 6;
+
 function loadGaleri() {
     const container = document.getElementById('galeriGrid');
     if (!container) return;
-    container.innerHTML = galeriImages.map(img => `
-        <div class="galeri-item" onclick="openModal('${img.src}')">
-            <img src="${img.src}" alt="${img.caption}" onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
-            <div class="galeri-overlay"><p><i class="fas fa-camera"></i> ${img.caption}</p></div>
+
+    // Tambahkan filter kategori di atas galeri
+    const categories = ['all', ...new Set(galeriImages.map(img => img.category))];
+    const filterHTML = `
+        <div class="galeri-filter" style="grid-column: 1/-1; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 1rem;">
+            ${categories.map(cat => `
+                <button class="galeri-filter-btn ${cat === 'all' ? 'active' : ''}" 
+                        data-filter="${cat}" 
+                        onclick="filterGaleri('${cat}', this)"
+                        style="padding: 6px 18px; border: 2px solid var(--gray-200); border-radius: 30px; background: ${cat === 'all' ? 'var(--secondary)' : 'transparent'}; color: ${cat === 'all' ? 'white' : 'var(--gray-600)'}; cursor: pointer; font-weight: 600; font-size: 0.8rem; transition: all 0.3s;">
+                    ${cat === 'all' ? '📸 Semua' : cat}
+                </button>
+            `).join('')}
+        </div>
+    `;
+
+    // Render galeri
+    renderGaleri(container);
+}
+
+function renderGaleri(container) {
+    // Filter berdasarkan kategori
+    let filtered = currentGaleriFilter === 'all' 
+        ? galeriImages 
+        : galeriImages.filter(img => img.category === currentGaleriFilter);
+
+    // Pagination
+    const totalPages = Math.ceil(filtered.length / galeriPerPage);
+    const start = (currentGaleriPage - 1) * galeriPerPage;
+    const end = start + galeriPerPage;
+    const paginated = filtered.slice(start, end);
+
+    if (paginated.length === 0) {
+        container.innerHTML = `
+            <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: var(--gray-500);">
+                <i class="fas fa-images" style="font-size: 3rem; margin-bottom: 1rem; display: block; opacity: 0.3;"></i>
+                <p>Belum ada foto untuk kategori ini</p>
+            </div>
+        `;
+        return;
+    }
+
+    container.innerHTML = paginated.map((img, index) => `
+        <div class="galeri-item" onclick="openModal('${img.src}')" style="animation: fadeIn 0.5s ease ${index * 0.1}s both;">
+            <img src="${img.src}" alt="${img.caption}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x400?text=No+Image'">
+            <div class="galeri-overlay">
+                <div class="galeri-overlay-content">
+                    <span class="galeri-category">${img.category}</span>
+                    <p class="galeri-caption"><i class="fas fa-camera"></i> ${img.caption}</p>
+                    <div class="galeri-meta">
+                        <span><i class="far fa-calendar"></i> ${img.date}</span>
+                        <span><i class="fas fa-map-marker-alt"></i> ${img.location}</span>
+                    </div>
+                </div>
+            </div>
         </div>
     `).join('');
+
+    // Tambahkan pagination jika total halaman > 1
+    if (totalPages > 1) {
+        const paginationHTML = `
+            <div class="galeri-pagination" style="grid-column: 1/-1; display: flex; justify-content: center; gap: 6px; margin-top: 1.5rem;">
+                <button onclick="changeGaleriPage(${currentGaleriPage - 1})" ${currentGaleriPage === 1 ? 'disabled' : ''} 
+                        style="padding: 8px 14px; border: 1px solid var(--gray-300); border-radius: 8px; background: ${currentGaleriPage === 1 ? 'var(--gray-100)' : 'white'}; color: ${currentGaleriPage === 1 ? 'var(--gray-400)' : 'var(--primary)'}; cursor: ${currentGaleriPage === 1 ? 'not-allowed' : 'pointer'}; transition: all 0.3s;">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                ${Array.from({length: totalPages}, (_, i) => i + 1).map(page => `
+                    <button onclick="changeGaleriPage(${page})" 
+                            style="padding: 8px 14px; border: 1px solid ${page === currentGaleriPage ? 'var(--secondary)' : 'var(--gray-300)'}; border-radius: 8px; background: ${page === currentGaleriPage ? 'var(--secondary)' : 'white'}; color: ${page === currentGaleriPage ? 'white' : 'var(--primary)'}; cursor: pointer; font-weight: ${page === currentGaleriPage ? '700' : '400'}; transition: all 0.3s;">
+                        ${page}
+                    </button>
+                `).join('')}
+                <button onclick="changeGaleriPage(${currentGaleriPage + 1})" ${currentGaleriPage === totalPages ? 'disabled' : ''} 
+                        style="padding: 8px 14px; border: 1px solid var(--gray-300); border-radius: 8px; background: ${currentGaleriPage === totalPages ? 'var(--gray-100)' : 'white'}; color: ${currentGaleriPage === totalPages ? 'var(--gray-400)' : 'var(--primary)'}; cursor: ${currentGaleriPage === totalPages ? 'not-allowed' : 'pointer'}; transition: all 0.3s;">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', paginationHTML);
+    }
+}
+
+function filterGaleri(category, btn) {
+    currentGaleriFilter = category;
+    currentGaleriPage = 1;
+    
+    // Update active button
+    document.querySelectorAll('.galeri-filter-btn').forEach(b => {
+        b.classList.remove('active');
+        b.style.background = 'transparent';
+        b.style.color = 'var(--gray-600)';
+        b.style.borderColor = 'var(--gray-200)';
+    });
+    if (btn) {
+        btn.classList.add('active');
+        btn.style.background = 'var(--secondary)';
+        btn.style.color = 'white';
+        btn.style.borderColor = 'var(--secondary)';
+    }
+    
+    const container = document.getElementById('galeriGrid');
+    if (container) renderGaleri(container);
+}
+
+function changeGaleriPage(page) {
+    const filtered = currentGaleriFilter === 'all' 
+        ? galeriImages 
+        : galeriImages.filter(img => img.category === currentGaleriFilter);
+    const totalPages = Math.ceil(filtered.length / galeriPerPage);
+    
+    if (page < 1 || page > totalPages) return;
+    currentGaleriPage = page;
+    
+    const container = document.getElementById('galeriGrid');
+    if (container) renderGaleri(container);
+    
+    // Scroll ke galeri
+    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 // ================================================================
 // SLIDESHOW BACKGROUND — Pendaftaran Section
