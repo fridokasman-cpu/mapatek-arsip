@@ -29,6 +29,17 @@
                     overflow: hidden;
                 }
 
+                /* PENTING: .navbar sudah membentuk stacking context sendiri
+                   (position:fixed + z-index:1000 di styles.css). Karena itu,
+                   z-index #navLinks di bawah ini HANYA berlaku di dalam
+                   .navbar, dan tidak bisa mengalahkan .mnav-backdrop yang
+                   levelnya di <body>. Naikkan z-index .navbar saat menu aktif
+                   supaya seluruh isinya (termasuk #navLinks) pasti di atas
+                   backdrop dan bisa menerima klik dengan benar. */
+                body.mnav-active .navbar {
+                    z-index: 4000 !important;
+                }
+
                 #navLinks {
                     display: flex !important;
                     position: fixed !important;
