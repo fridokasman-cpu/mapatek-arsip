@@ -31,27 +31,31 @@
 
                 #navLinks {
                     display: flex !important;
-                    position: fixed;
-                    top: 0;
-                    right: 0;
-                    height: 100vh;
-                    width: min(85vw, 340px);
-                    margin: 0;
-                    padding: 4.5rem 0 2rem;
-                    list-style: none;
-                    flex-direction: column;
-                    align-items: stretch;
-                    gap: 0;
-                    background: linear-gradient(180deg, #0b3d2e 0%, #06261c 100%);
-                    overflow-y: auto;
-                    transform: translateX(100%);
-                    transition: transform 0.32s ease;
-                    z-index: 3000;
-                    box-shadow: -10px 0 40px rgba(0,0,0,0.45);
+                    position: fixed !important;
+                    top: 0 !important;
+                    right: 0 !important;
+                    left: auto !important;
+                    bottom: auto !important;
+                    height: 100vh !important;
+                    width: min(85vw, 340px) !important;
+                    max-width: 340px !important;
+                    margin: 0 !important;
+                    padding: 4.5rem 0 2rem !important;
+                    list-style: none !important;
+                    flex-direction: column !important;
+                    align-items: stretch !important;
+                    gap: 0 !important;
+                    background: linear-gradient(180deg, #0b3d2e 0%, #06261c 100%) !important;
+                    overflow-y: auto !important;
+                    overflow-x: hidden !important;
+                    transform: translateX(100%) !important;
+                    transition: transform 0.32s ease !important;
+                    z-index: 3000 !important;
+                    box-shadow: -10px 0 40px rgba(0,0,0,0.45) !important;
                 }
 
                 body.mnav-active #navLinks {
-                    transform: translateX(0);
+                    transform: translateX(0) !important;
                 }
 
                 .mnav-backdrop {
@@ -94,86 +98,98 @@
 
                 #navLinks > li > a {
                     display: flex !important;
-                    align-items: center;
-                    justify-content: space-between;
-                    padding: 1rem 1.5rem;
+                    align-items: center !important;
+                    justify-content: space-between !important;
+                    padding: 1rem 1.5rem !important;
                     color: #fff !important;
-                    font-size: 1rem;
-                    font-weight: 600;
-                    text-decoration: none;
+                    font-size: 1rem !important;
+                    font-weight: 600 !important;
+                    text-decoration: none !important;
+                    width: auto !important;
                 }
 
                 #navLinks .nav-dropdown-menu {
-                    display: none;
-                    background: rgba(0,0,0,0.2);
-                    padding: 0.25rem 0 0.6rem;
-                    position: static;
-                    opacity: 1;
-                    visibility: visible;
-                    transform: none;
+                    display: none !important;
+                    background: rgba(0,0,0,0.2) !important;
+                    padding: 0.25rem 0 0.6rem !important;
+                    position: static !important;
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                    transform: none !important;
+                    width: 100% !important;
+                    height: auto !important;
+                    max-height: none !important;
+                    margin: 0 !important;
+                    animation: none !important;
                 }
 
                 #navLinks .nav-dropdown.mnav-open > .nav-dropdown-menu {
-                    display: block;
+                    display: block !important;
                 }
 
                 #navLinks .nav-dropdown > a i.fa-chevron-down {
-                    transition: transform 0.25s ease;
+                    transition: transform 0.25s ease !important;
                 }
 
                 #navLinks .nav-dropdown.mnav-open > a i.fa-chevron-down {
-                    transform: rotate(180deg);
+                    transform: rotate(180deg) !important;
                 }
 
                 #navLinks .dropdown-grid {
                     display: flex !important;
-                    flex-direction: column;
-                    gap: 0;
+                    flex-direction: column !important;
+                    gap: 0 !important;
+                    grid-template-columns: none !important;
+                    width: 100% !important;
                 }
 
                 #navLinks .dropdown-item {
                     display: flex !important;
-                    align-items: center;
-                    gap: 0.75rem;
-                    padding: 0.65rem 1.5rem 0.65rem 2.25rem;
+                    align-items: center !important;
+                    gap: 0.75rem !important;
+                    padding: 0.65rem 1.5rem 0.65rem 2.25rem !important;
                     color: rgba(255,255,255,0.88) !important;
-                    text-decoration: none;
+                    text-decoration: none !important;
+                    width: auto !important;
                 }
 
                 #navLinks .dropdown-icon {
-                    width: 30px;
-                    height: 30px;
-                    flex-shrink: 0;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background: rgba(255,255,255,0.08);
-                    border-radius: 8px;
-                    font-size: 0.8rem;
+                    width: 30px !important;
+                    height: 30px !important;
+                    flex-shrink: 0 !important;
+                    display: flex !important;
+                    align-items: center !important;
+                    justify-content: center !important;
+                    background: rgba(255,255,255,0.08) !important;
+                    border-radius: 8px !important;
+                    font-size: 0.8rem !important;
                 }
 
                 #navLinks .dropdown-content {
-                    display: flex;
-                    flex-direction: column;
+                    display: flex !important;
+                    flex-direction: column !important;
                 }
 
                 #navLinks .dropdown-title {
-                    font-size: 0.88rem;
-                    font-weight: 600;
-                    line-height: 1.2;
+                    font-size: 0.88rem !important;
+                    font-weight: 600 !important;
+                    line-height: 1.2 !important;
+                    color: #fff !important;
                 }
 
                 #navLinks .dropdown-desc {
-                    display: none;
+                    display: none !important;
                 }
 
                 #navLinks .nav-emergency {
-                    padding: 1rem 1.5rem 0;
-                    border-bottom: none;
+                    padding: 1rem 1.5rem 0 !important;
+                    border-bottom: none !important;
+                    width: 100% !important;
                 }
 
                 #navLinks .nav-emergency a {
-                    justify-content: center;
+                    justify-content: center !important;
+                    display: flex !important;
                 }
             }
         `;
@@ -212,6 +228,15 @@
         }
 
         injectStyles();
+
+        // Bersihkan inline style lama (jika ada sisa dari script sebelumnya)
+        // — inline style selalu menang atas CSS apapun, termasuk !important
+        // di stylesheet biasa, jadi ini harus dikosongkan dulu.
+        navLinks.removeAttribute('style');
+        navLinks.querySelectorAll('.nav-dropdown-menu').forEach(function (menu) {
+            menu.removeAttribute('style');
+        });
+
         const backdrop = buildBackdrop();
         const closeBtn = buildCloseButton(navLinks);
 
