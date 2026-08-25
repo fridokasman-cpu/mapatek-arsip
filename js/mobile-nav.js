@@ -77,6 +77,12 @@
                     opacity: 0;
                     visibility: hidden;
                     transition: opacity 0.3s ease;
+                    /* PENTING: backdrop TIDAK BOLEH menerima klik sama sekali.
+                       Tutup-saat-klik-di-luar ditangani lewat JS (cek posisi
+                       elemen yang diklik), bukan lewat backdrop ini, supaya
+                       tidak mungkin ada klik di dalam panel yang "kececer"
+                       ke backdrop akibat masalah stacking/z-index apapun. */
+                    pointer-events: none !important;
                 }
 
                 body.mnav-active .mnav-backdrop {
@@ -283,7 +289,18 @@
         });
 
         closeBtn.addEventListener('click', closeMenu);
-        backdrop.addEventListener('click', closeMenu);
+
+        // Tutup saat klik di luar panel — dicek lewat posisi elemen yang
+        // diklik (bukan lewat backdrop), jadi tidak mungkin salah tangkap
+        // klik yang sebenarnya ditujukan untuk isi menu.
+        document.addEventListener('click', function (e) {
+            if (!document.body.classList.contains('mnav-active')) return;
+            const clickedInsidePanel = e.target.closest('#navLinks');
+            const clickedHamburger = e.target.closest('.hamburger');
+            if (!clickedInsidePanel && !clickedHamburger) {
+                closeMenu();
+            }
+        });
 
         // Accordion untuk setiap dropdown — hanya aktif di mobile
         navLinks.querySelectorAll('.nav-dropdown > a').forEach(function (trigger) {
