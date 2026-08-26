@@ -80,8 +80,11 @@
         nextBtn.addEventListener('click', function () { next(); restartAutoplay(); });
 
         // Klik langsung di kartu samping -> jadikan aktif
+        // (kecuali kalau yang diklik ikon WA -> biarkan langsung buka WhatsApp,
+        // di kartu manapun, aktif atau tidak)
         cards.forEach(function (card, i) {
             card.addEventListener('click', function (e) {
+                if (e.target.closest('.p3d-wa')) return;
                 if (i !== active) {
                     e.preventDefault();
                     setActive(i);

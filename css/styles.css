@@ -6626,6 +6626,8 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
 
     /* Nomor WA diganti jadi tombol ikon saja */
     .p3d-wa {
+        position: relative;
+        z-index: 10;
         margin-top: 1rem;
         width: 42px;
         height: 42px;
@@ -6648,7 +6650,7 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
 
     .p3d-nav {
         position: relative;
-        z-index: 50;
+        z-index: 500;
         width: 46px;
         height: 46px;
         flex-shrink: 0;
