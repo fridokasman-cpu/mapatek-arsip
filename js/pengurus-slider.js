@@ -97,13 +97,17 @@
         });
 
         // Swipe / drag
+        // PENTING: sengaja TIDAK pakai setPointerCapture() — itu yang bikin
+        // klik di tombol panah / kartu / ikon WA tidak pernah sampai ke
+        // elemen aslinya (semua event "ditelan" oleh stage). Kita juga
+        // kecualikan elemen interaktif dari logika drag sama sekali.
         let dragging = false;
         let startX = 0;
 
         stage.addEventListener('pointerdown', function (e) {
+            if (e.target.closest('.p3d-nav, .p3d-wa, .p3d-dot')) return;
             dragging = true;
             startX = e.clientX;
-            stage.setPointerCapture(e.pointerId);
         });
 
         stage.addEventListener('pointerup', function (e) {
