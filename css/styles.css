@@ -6556,6 +6556,7 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
     }
 
     .p3d-card-inner {
+        position: relative;
         background: linear-gradient(160deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
         border: 1px solid rgba(255, 255, 255, 0.09);
         border-radius: var(--radius-lg);
@@ -6714,3 +6715,96 @@ body.dark-mode .galeri-pagination button:hover:not(:disabled) {
             font-size: 0.85rem;
         }
     }
+
+/* ================================================================
+   MODE ZOOM — muncul saat kartu diklik
+   ================================================================ */
+.p3d-zoom-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 15, 12, 0.78);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 5999;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.35s ease, visibility 0.35s ease;
+    pointer-events: none;
+}
+
+.p3d-zoom-backdrop.p3d-zoom-active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+body.p3d-zoom-lock {
+    overflow: hidden;
+}
+
+.p3d-card.p3d-zoomed {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    margin: 0 !important;
+    width: min(90vw, 360px) !important;
+    z-index: 6000 !important;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1) !important;
+    cursor: default !important;
+}
+
+.p3d-card.p3d-zoomed .p3d-card-inner {
+    height: auto;
+    min-height: 400px;
+    padding: 2.25rem 1.75rem 1.75rem;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.6), 0 0 0 1px rgba(111, 203, 164, 0.35), var(--shadow-glow);
+    border-color: rgba(111, 203, 164, 0.5);
+}
+
+.p3d-card.p3d-zoomed .p3d-photo {
+    width: 130px;
+    height: 130px;
+    border-color: var(--accent-light);
+}
+
+.p3d-card.p3d-zoomed .p3d-name {
+    font-size: 1.2rem;
+}
+
+.p3d-card.p3d-zoomed .p3d-position {
+    font-size: 0.9rem;
+}
+
+.p3d-zoom-close {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.p3d-zoom-close:hover {
+    background: rgba(255,255,255,0.22);
+    transform: scale(1.08);
+}
+
+@media (max-width: 480px) {
+    .p3d-card.p3d-zoomed .p3d-card-inner {
+        min-height: 360px;
+        padding: 2rem 1.4rem 1.5rem;
+    }
+    .p3d-card.p3d-zoomed .p3d-photo {
+        width: 108px;
+        height: 108px;
+    }
+}

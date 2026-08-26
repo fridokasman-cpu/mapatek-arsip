@@ -14,6 +14,7 @@
         const total = cards.length;
         let active = 0;
         let autoplayTimer = null;
+        let zoomedCard = null;
 
         // Bangun dot indikator
         cards.forEach(function (_, i) {
@@ -21,12 +22,18 @@
             dot.className = 'p3d-dot';
             dot.setAttribute('aria-label', 'Ke pengurus nomor ' + (i + 1));
             dot.addEventListener('click', function () {
+                if (zoomedCard) return;
                 setActive(i);
                 restartAutoplay();
             });
             dotsWrap.appendChild(dot);
         });
         const dots = Array.from(dotsWrap.querySelectorAll('.p3d-dot'));
+
+        // Backdrop khusus untuk mode zoom
+        const zoomBackdrop = document.createElement('div');
+        zoomBackdrop.className = 'p3d-zoom-backdrop';
+        document.body.appendChild(zoomBackdrop);
 
         function getConfig() {
             const w = window.innerWidth;
@@ -39,6 +46,10 @@
             const cfg = getConfig();
 
             cards.forEach(function (card, i) {
+                // Kartu yang sedang di-zoom dibiarkan, style-nya diatur
+                // sendiri oleh openZoom()/closeZoom(), jangan ditimpa render().
+                if (card === zoomedCard) return;
+
                 let diff = i - active;
                 if (diff > total / 2) diff -= total;
                 if (diff < -total / 2) diff += total;
@@ -73,28 +84,84 @@
             render();
         }
 
-        function next() { setActive(active + 1); }
-        function prev() { setActive(active - 1); }
+        function next() { if (zoomedCard) return; setActive(active + 1); }
+        function prev() { if (zoomedCard) return; setActive(active - 1); }
 
         prevBtn.addEventListener('click', function () { prev(); restartAutoplay(); });
         nextBtn.addEventListener('click', function () { next(); restartAutoplay(); });
 
-        // Klik langsung di kartu samping -> jadikan aktif
-        // (kecuali kalau yang diklik ikon WA -> biarkan langsung buka WhatsApp,
-        // di kartu manapun, aktif atau tidak)
+        // ============================================================
+        // ZOOM OTOMATIS SAAT KARTU DIKLIK
+        // ============================================================
+        function openZoom(i) {
+            if (zoomedCard) return;
+
+            setActive(i); // kartu ini juga jadi kartu tengah di belakang layar
+            stopAutoplay();
+
+            const card = cards[i];
+            zoomedCard = card;
+
+            const inner = card.querySelector('.p3d-card-inner');
+            let closeBtn = inner.querySelector('.p3d-zoom-close');
+            if (!closeBtn) {
+                closeBtn = document.createElement('button');
+                closeBtn.className = 'p3d-zoom-close';
+                closeBtn.setAttribute('aria-label', 'Tutup');
+                closeBtn.innerHTML = '<i class="fas fa-times"></i>';
+                closeBtn.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeZoom();
+                });
+                inner.appendChild(closeBtn);
+            }
+
+            card.classList.add('p3d-zoomed');
+            card.style.transform = 'translate(-50%, -50%)';
+            card.style.opacity = '1';
+            card.style.zIndex = '';
+            card.style.pointerEvents = 'auto';
+
+            zoomBackdrop.classList.add('p3d-zoom-active');
+            document.body.classList.add('p3d-zoom-lock');
+            document.addEventListener('keydown', onZoomKeydown);
+        }
+
+        function closeZoom() {
+            if (!zoomedCard) return;
+            zoomedCard.classList.remove('p3d-zoomed');
+            zoomedCard = null;
+
+            zoomBackdrop.classList.remove('p3d-zoom-active');
+            document.body.classList.remove('p3d-zoom-lock');
+            document.removeEventListener('keydown', onZoomKeydown);
+
+            render();
+            startAutoplay();
+        }
+
+        function onZoomKeydown(e) {
+            if (e.key === 'Escape') closeZoom();
+        }
+
+        zoomBackdrop.addEventListener('click', closeZoom);
+
+        // Klik kartu (tengah atau samping) -> zoom otomatis
+        // (kecuali kalau yang diklik ikon WA -> biarkan langsung buka WhatsApp)
         cards.forEach(function (card, i) {
             card.addEventListener('click', function (e) {
                 if (e.target.closest('.p3d-wa')) return;
-                if (i !== active) {
-                    e.preventDefault();
-                    setActive(i);
-                    restartAutoplay();
-                }
+                if (e.target.closest('.p3d-zoom-close')) return;
+                if (zoomedCard) return;
+                e.preventDefault();
+                openZoom(i);
             });
         });
 
-        // Keyboard (saat stage difokus)
+        // Keyboard (saat stage difokus) — nonaktif ketika sedang zoom
         stage.addEventListener('keydown', function (e) {
+            if (zoomedCard) return;
             if (e.key === 'ArrowLeft') { prev(); restartAutoplay(); }
             if (e.key === 'ArrowRight') { next(); restartAutoplay(); }
         });
@@ -108,6 +175,7 @@
         let startX = 0;
 
         stage.addEventListener('pointerdown', function (e) {
+            if (zoomedCard) return;
             if (e.target.closest('.p3d-nav, .p3d-wa, .p3d-dot')) return;
             dragging = true;
             startX = e.clientX;
