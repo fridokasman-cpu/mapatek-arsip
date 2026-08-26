@@ -93,6 +93,8 @@
         // ============================================================
         // ZOOM OTOMATIS SAAT KARTU DIKLIK
         // ============================================================
+        let zoomedOriginalNextSibling = null;
+
         function openZoom(i) {
             if (zoomedCard) return;
 
@@ -117,6 +119,15 @@
                 inner.appendChild(closeBtn);
             }
 
+            // PENTING: .p3d-stage punya CSS "perspective", yang membuat
+            // descendant "position:fixed" jadi terjebak relatif terhadap
+            // .p3d-stage (bukan viewport), dan stacking-nya ikut terjebak
+            // di bawah backdrop. Solusinya: pindahkan kartu ini langsung
+            // jadi anak <body> selama mode zoom, lalu kembalikan lagi ke
+            // posisi semula saat ditutup.
+            zoomedOriginalNextSibling = card.nextSibling;
+            document.body.appendChild(card);
+
             card.classList.add('p3d-zoomed');
             card.style.transform = 'translate(-50%, -50%)';
             card.style.opacity = '1';
@@ -130,8 +141,19 @@
 
         function closeZoom() {
             if (!zoomedCard) return;
-            zoomedCard.classList.remove('p3d-zoomed');
+            const card = zoomedCard;
+
+            card.classList.remove('p3d-zoomed');
+
+            // kembalikan kartu ke posisi asalnya di dalam track
+            if (zoomedOriginalNextSibling && zoomedOriginalNextSibling.parentNode === track) {
+                track.insertBefore(card, zoomedOriginalNextSibling);
+            } else {
+                track.appendChild(card);
+            }
+
             zoomedCard = null;
+            zoomedOriginalNextSibling = null;
 
             zoomBackdrop.classList.remove('p3d-zoom-active');
             document.body.classList.remove('p3d-zoom-lock');
