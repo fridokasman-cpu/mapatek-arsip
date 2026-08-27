@@ -7163,17 +7163,29 @@ body.dark-mode .chatbot-input input {
     }
 
     .chatbot-container {
-        right: 12px !important;
-        left: 12px !important;
-        bottom: 90px !important;
-        width: auto !important;
-        max-width: none !important;
-        height: min(72vh, calc(100vh - 130px)) !important;
-        max-height: calc(100vh - 130px) !important;
-        border-radius: 20px !important;
+        right: 10px !important;
+        left: auto !important;
+        bottom: 84px !important;
+        width: min(85vw, 310px) !important;
+        max-width: calc(100vw - 24px) !important;
+        height: min(50vh, 400px) !important;
+        max-height: calc(100vh - 120px) !important;
+        border-radius: 18px !important;
     }
 
     .chatbot-header {
+        padding: 0.9rem 1rem !important;
         cursor: default; /* di HP, geser pakai gesture sentuh biasa, bukan grab cursor */
+    }
+
+    .message-content {
+        font-size: 0.82rem !important;
+    }
+}
+
+@media (max-width: 360px) {
+    .chatbot-container {
+        width: min(88vw, 280px) !important;
+        height: min(48vh, 360px) !important;
     }
 }
