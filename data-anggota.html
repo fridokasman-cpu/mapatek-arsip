@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Seluruh Anggota | Mapatek Abhipraya</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/data-anggota.css">
+</head>
+<body>
+
+<nav class="da-nav">
+    <a href="index.html" class="da-nav-brand">
+        <img src="images/logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/36x36?text=M'">
+        <span>Mapatek Abhipraya</span>
+    </a>
+    <a href="index.html" class="da-nav-back"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+</nav>
+
+<header class="da-hero">
+    <div class="da-hero-inner">
+        <span class="da-hero-badge"><i class="fas fa-users"></i> Basis Data Organisasi</span>
+        <h1>Data Seluruh <span class="da-highlight">Anggota</span></h1>
+        <p>Rekap seluruh anggota Mapatek Abhipraya dari setiap angkatan, lengkap dengan nama lapangan, NIM, dan bidang penugasan.</p>
+    </div>
+</header>
+
+<main class="da-container">
+
+    <div class="da-stats" id="daStats"></div>
+
+    <div class="da-toolbar">
+        <div class="da-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="daSearch" placeholder="Cari nama, NIM, atau nama lapangan...">
+        </div>
+        <div class="da-filter-chips" id="daFilterChips"></div>
+    </div>
+
+    <div class="da-table-wrap">
+        <table class="da-table" id="daTable">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Angkatan</th>
+                    <th>Nama Lengkap</th>
+                    <th>Nama Lapangan</th>
+                    <th>NIM</th>
+                    <th>Bidang / Lapangan</th>
+                    <th>Kontak</th>
+                </tr>
+            </thead>
+            <tbody id="daTableBody"></tbody>
+        </table>
+    </div>
+
+    <div class="da-cards" id="daCards"></div>
+
+    <p class="da-empty" id="daEmpty" style="display:none;">
+        <i class="fas fa-user-slash"></i> Tidak ada anggota yang cocok dengan pencarianmu.
+    </p>
+
+    <p class="da-note">
+        <i class="fas fa-circle-info"></i>
+        Data belum lengkap? Data ini bisa ditambah/diedit langsung lewat file
+        <code>js/anggota-data.js</code> — cukup tambahkan baris baru mengikuti format yang sudah ada.
+    </p>
+
+</main>
+
+<footer class="da-footer">
+    <p>&copy; 2026 Mapatek Abhipraya — Menjaga Alam, Membangun Karakter</p>
+</footer>
+
+<script src="js/anggota-data.js"></script>
+<script src="js/data-anggota.js"></script>
+</body>
+</html>

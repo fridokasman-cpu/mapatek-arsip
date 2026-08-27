@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alumni & Jejak Karir | Mapatek Abhipraya</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/alumni.css">
+</head>
+<body>
+
+<nav class="ap-nav">
+    <a href="index.html" class="ap-nav-brand">
+        <img src="images/logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/36x36?text=M'">
+        <span>Mapatek Abhipraya</span>
+    </a>
+    <a href="index.html" class="ap-nav-back"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+</nav>
+
+<header class="ap-hero">
+    <div class="ap-hero-inner">
+        <span class="ap-hero-badge"><i class="fas fa-graduation-cap"></i> Jejak Para Pendaki</span>
+        <h1>Alumni & <span class="ap-highlight">Jejak Karir</span></h1>
+        <p>Kisah para alumni Mapatek Abhipraya setelah menyelesaikan masa studi — membuktikan bahwa semangat kepemimpinan dan kecintaan pada alam yang ditempa di sini terus terbawa ke mana pun mereka melangkah.</p>
+    </div>
+</header>
+
+<main class="ap-container">
+
+    <div class="ap-filter-bar">
+        <div class="ap-search">
+            <i class="fas fa-search"></i>
+            <input type="text" id="alumniSearch" placeholder="Cari nama alumni...">
+        </div>
+        <div class="ap-filter-chips" id="alumniFilterChips"></div>
+    </div>
+
+    <div class="ap-grid" id="alumniGrid"></div>
+
+    <p class="ap-empty" id="alumniEmpty" style="display:none;">
+        <i class="fas fa-user-slash"></i> Tidak ada alumni yang cocok dengan pencarianmu.
+    </p>
+
+</main>
+
+<footer class="ap-footer">
+    <p>&copy; 2026 Mapatek Abhipraya — Menjaga Alam, Membangun Karakter</p>
+</footer>
+
+<script src="js/alumni-data.js"></script>
+<script src="js/alumni.js"></script>
+</body>
+</html>

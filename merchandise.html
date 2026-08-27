@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Merchandise & Donasi Ekspedisi | Mapatek Abhipraya</title>
+<link rel="icon" type="image/png" href="images/logo.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/merchandise.css">
+</head>
+<body>
+
+<nav class="mp-nav">
+    <a href="index.html" class="mp-nav-brand">
+        <img src="images/logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/36x36?text=M'">
+        <span>Mapatek Abhipraya</span>
+    </a>
+    <a href="index.html" class="mp-nav-back"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+</nav>
+
+<header class="mp-hero">
+    <div class="mp-hero-inner">
+        <span class="mp-hero-badge"><i class="fas fa-hand-holding-heart"></i> Dukung Perjalanan Kami</span>
+        <h1>Merchandise & <span class="mp-highlight">Donasi Ekspedisi</span></h1>
+        <p>Setiap pembelian merchandise dan donasi yang kamu berikan langsung digunakan untuk mendanai perlengkapan, transportasi, dan logistik ekspedisi Mapatek Abhipraya.</p>
+    </div>
+</header>
+
+<main class="mp-container">
+
+    <!-- ================= DONASI EKSPEDISI ================= -->
+    <section class="mp-section">
+        <h2 class="mp-section-title"><i class="fas fa-mountain"></i> Donasi Ekspedisi Aktif</h2>
+        <div class="mp-campaign-grid" id="campaignGrid"></div>
+    </section>
+
+    <!-- ================= MERCHANDISE ================= -->
+    <section class="mp-section">
+        <div class="mp-section-header">
+            <h2 class="mp-section-title"><i class="fas fa-shirt"></i> Merchandise</h2>
+            <div class="mp-filter-chips" id="merchFilterChips"></div>
+        </div>
+        <div class="mp-product-grid" id="productGrid"></div>
+    </section>
+
+    <!-- ================= INFO TRANSFER ================= -->
+    <section class="mp-section mp-transfer-section">
+        <div class="mp-transfer-card">
+            <h3><i class="fas fa-university"></i> Donasi Langsung via Transfer</h3>
+            <p>Ingin donasi tanpa lewat produk tertentu? Transfer bisa langsung ke rekening di bawah, lalu konfirmasi via WhatsApp supaya progress donasi ter-update.</p>
+            <div class="mp-transfer-info">
+                <div>
+                    <span class="mp-transfer-label">Bank</span>
+                    <strong>BRI — 1234-0123-4567-890</strong>
+                </div>
+                <div>
+                    <span class="mp-transfer-label">Atas Nama</span>
+                    <strong>Mapatek Abhipraya UST</strong>
+                </div>
+            </div>
+            <a href="https://wa.me/6282214428371?text=Halo%20Mapatek%2C%20saya%20sudah%20transfer%20donasi%20untuk%20ekspedisi.%20Berikut%20buktinya%3A" target="_blank" class="mp-btn mp-btn-whatsapp">
+                <i class="fab fa-whatsapp"></i> Konfirmasi via WhatsApp
+            </a>
+        </div>
+    </section>
+
+</main>
+
+<!-- Modal detail produk -->
+<div class="mp-modal" id="productModal">
+    <div class="mp-modal-content" id="productModalContent"></div>
+</div>
+
+<footer class="mp-footer">
+    <p>&copy; 2026 Mapatek Abhipraya — Menjaga Alam, Membangun Karakter</p>
+</footer>
+
+<script src="js/merchandise-data.js"></script>
+<script src="js/merchandise.js"></script>
+</body>
+</html>
