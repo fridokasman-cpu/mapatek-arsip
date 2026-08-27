@@ -119,6 +119,12 @@ function removeTypingIndicator(typingId) {
 }
 
 /**
+ * FALLBACK AI — Menggunakan Groq Cloud (GRATIS, SUPER CEPAT)
+ */
+/**
+ * FALLBACK AI — Aman via serverless proxy (Vercel)
+ */
+/**
  * FALLBACK AI — Aman via serverless proxy (Vercel)
  */
 async function fetchAIResponse(message) {
@@ -233,22 +239,8 @@ document.addEventListener('click', function(event) {
         container.classList.remove('active');
     }
 });
-
 // ================================================================
-// 🆕 DRAGGABLE CHATBOT — bisa digeser dari area mana saja
-// ----------------------------------------------------------------
-// PERBAIKAN PENTING (bug tombol close tidak berfungsi di HP):
-// Sebelumnya drag dipasang HANYA di .chatbot-header, dan tombol close
-// ada DI DALAM header itu. Saat tombol close disentuh di HP, event
-// touchstart-nya "bocor" (bubbling) ke header dan memicu startDrag(),
-// yang lalu memanggil e.preventDefault() — ini MEMBATALKAN event click
-// yang seharusnya muncul setelah touch di browser mobile, jadi
-// onclick="toggleChatbot()" pada tombol close tidak pernah terpanggil.
-//
-// Perbaikan: drag sekarang dipicu dari SELURUH jendela chatbot (bukan
-// cuma header), TAPI dengan pengecualian eksplisit untuk elemen
-// interaktif (tombol, input, link) dan area pesan (supaya scroll pesan
-// & tombol close/kirim tetap berfungsi normal, tidak pernah memicu drag).
+// 🆕 DRAGGABLE CHATBOT - VERSI PERBAIKAN
 // ================================================================
 document.addEventListener('DOMContentLoaded', function() {
     const widget = document.querySelector('.chatbot-widget');
@@ -261,8 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let offsetX = 0;
     let offsetY = 0;
 
-    // Elemen/​area ini TIDAK BOLEH memicu drag, supaya fungsinya
-    // (tap tombol, ketik input, scroll pesan) tetap normal.
+    // Elemen/area ini TIDAK BOLEH memicu drag
     function isExcludedFromDrag(target) {
         if (target.closest('input, button, a, textarea, select')) return true;
         if (target.closest('.chatbot-messages')) return true;
@@ -328,11 +319,11 @@ document.addEventListener('DOMContentLoaded', function() {
         document.removeEventListener('touchend', endDrag);
     }
 
-    // Dipasang di SELURUH jendela chatbot, bukan cuma header
+    // 🔥 PERUBAHAN: Pasang di SELURUH jendela chatbot
     dragSurface.addEventListener('mousedown', startDrag);
     dragSurface.addEventListener('touchstart', startDrag, { passive: false });
 
-    // Inisialisasi posisi awal (kanan bawah)
+    // Inisialisasi posisi awal
     function initPosition() {
         const w = window.innerWidth;
         const h = window.innerHeight;
