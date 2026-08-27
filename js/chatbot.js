@@ -119,12 +119,6 @@ function removeTypingIndicator(typingId) {
 }
 
 /**
- * FALLBACK AI — Menggunakan Groq Cloud (GRATIS, SUPER CEPAT)
- */
-/**
- * FALLBACK AI — Aman via serverless proxy (Vercel)
- */
-/**
  * FALLBACK AI — Aman via serverless proxy (Vercel)
  */
 async function fetchAIResponse(message) {
@@ -239,31 +233,57 @@ document.addEventListener('click', function(event) {
         container.classList.remove('active');
     }
 });
+
 // ================================================================
-// 🆕 DRAGGABLE CHATBOT - TAMBAHKAN DI SINI (PALING BAWAH)
+// 🆕 DRAGGABLE CHATBOT — bisa digeser dari area mana saja
+// ----------------------------------------------------------------
+// PERBAIKAN PENTING (bug tombol close tidak berfungsi di HP):
+// Sebelumnya drag dipasang HANYA di .chatbot-header, dan tombol close
+// ada DI DALAM header itu. Saat tombol close disentuh di HP, event
+// touchstart-nya "bocor" (bubbling) ke header dan memicu startDrag(),
+// yang lalu memanggil e.preventDefault() — ini MEMBATALKAN event click
+// yang seharusnya muncul setelah touch di browser mobile, jadi
+// onclick="toggleChatbot()" pada tombol close tidak pernah terpanggil.
+//
+// Perbaikan: drag sekarang dipicu dari SELURUH jendela chatbot (bukan
+// cuma header), TAPI dengan pengecualian eksplisit untuk elemen
+// interaktif (tombol, input, link) dan area pesan (supaya scroll pesan
+// & tombol close/kirim tetap berfungsi normal, tidak pernah memicu drag).
 // ================================================================
 document.addEventListener('DOMContentLoaded', function() {
     const widget = document.querySelector('.chatbot-widget');
     const header = document.querySelector('.chatbot-header');
-    
-    if (!widget || !header) return;
+    const dragSurface = document.getElementById('chatbotContainer');
+
+    if (!widget || !header || !dragSurface) return;
 
     let isDragging = false;
     let offsetX = 0;
     let offsetY = 0;
 
+    // Elemen/​area ini TIDAK BOLEH memicu drag, supaya fungsinya
+    // (tap tombol, ketik input, scroll pesan) tetap normal.
+    function isExcludedFromDrag(target) {
+        if (target.closest('input, button, a, textarea, select')) return true;
+        if (target.closest('.chatbot-messages')) return true;
+        return false;
+    }
+
     function startDrag(e) {
+        if (isExcludedFromDrag(e.target)) return;
+
         const container = document.getElementById('chatbotContainer');
         if (!container || !container.classList.contains('active')) return;
 
         const touch = e.touches ? e.touches[0] : e;
         const rect = widget.getBoundingClientRect();
-        
+
         isDragging = true;
         offsetX = touch.clientX - rect.left;
         offsetY = touch.clientY - rect.top;
 
         header.style.cursor = 'grabbing';
+        dragSurface.style.cursor = 'grabbing';
 
         document.addEventListener('mousemove', onDrag);
         document.addEventListener('mouseup', endDrag);
@@ -277,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!isDragging) return;
 
         const touch = e.touches ? e.touches[0] : e;
-        
+
         let newX = touch.clientX - offsetX;
         let newY = touch.clientY - offsetY;
 
@@ -285,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const h = window.innerHeight;
         const widgetWidth = widget.offsetWidth;
         const widgetHeight = widget.offsetHeight;
-        
+
         newX = Math.max(0, Math.min(w - widgetWidth, newX));
         newY = Math.max(0, Math.min(h - widgetHeight, newY));
 
@@ -300,15 +320,17 @@ document.addEventListener('DOMContentLoaded', function() {
     function endDrag() {
         isDragging = false;
         header.style.cursor = 'grab';
-        
+        dragSurface.style.cursor = 'grab';
+
         document.removeEventListener('mousemove', onDrag);
         document.removeEventListener('mouseup', endDrag);
         document.removeEventListener('touchmove', onDrag);
         document.removeEventListener('touchend', endDrag);
     }
 
-    header.addEventListener('mousedown', startDrag);
-    header.addEventListener('touchstart', startDrag, { passive: false });
+    // Dipasang di SELURUH jendela chatbot, bukan cuma header
+    dragSurface.addEventListener('mousedown', startDrag);
+    dragSurface.addEventListener('touchstart', startDrag, { passive: false });
 
     // Inisialisasi posisi awal (kanan bawah)
     function initPosition() {
@@ -325,19 +347,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     setTimeout(initPosition, 100);
-    
+
     window.addEventListener('resize', () => {
         const rect = widget.getBoundingClientRect();
         const w = window.innerWidth;
         const h = window.innerHeight;
         let x = parseInt(widget.style.left) || 0;
         let y = parseInt(widget.style.top) || 0;
-        
+
         if (rect.right > w) x = w - rect.width - 10;
         if (rect.bottom > h) y = h - rect.height - 10;
         if (rect.left < 0) x = 10;
         if (rect.top < 0) y = 10;
-        
+
         widget.style.left = x + 'px';
         widget.style.top = y + 'px';
     });
