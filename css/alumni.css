@@ -533,9 +533,14 @@ a { text-decoration: none; }
 
 .ap-modal-backdrop.ap-active { opacity: 1; visibility: visible; }
 
+#apModal3d {
+    width: min(90vw, 380px);
+    display: flex;
+    justify-content: center;
+}
+
 .ap-flip-card {
-    width: 100%;
-    max-width: 380px;
+    width: min(90vw, 380px);
     height: 460px;
     perspective: 1600px;
 }
