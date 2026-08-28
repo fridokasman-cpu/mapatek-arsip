@@ -26,16 +26,16 @@ const ANGKATAN_LIST_DA = [
 ];
 
 const anggotaData = [
-    { angkatan: "TAPAKKAKI",    namaLengkap: "Machmud Chabibul Lathif",        namaLapangan: "-", nim: "2024018064", bidang: "Ketua Umum",                 noHp: "085952824898" },
-    { angkatan: "TAPAKKAKI",    namaLengkap: "Putri Robet",                    namaLapangan: "-", nim: "2024018007", bidang: "Sekretaris Jenderal",         noHp: "081522723325" },
-    { angkatan: "TAPAKKAKI",    namaLengkap: "Tsye Dayana Knyartutu",          namaLapangan: "-", nim: "2024018006", bidang: "Sekretaris Wakil",            noHp: "085343835369" },
-    { angkatan: "TAPAKKAKI",    namaLengkap: "Rosa Bandatia",                  namaLapangan: "-", nim: "2024018028", bidang: "Bendahara 1",                 noHp: "082249858268" },
-    { angkatan: "TAPAKKAKI",    namaLengkap: "Tresia Utami Sulensi",           namaLapangan: "-", nim: "2024013058", bidang: "Koordinator Rock Climbing",   noHp: "085822450087" },
-    { angkatan: "PANCATOMPAK",  namaLengkap: "Muhammad Musfian Sutrawardi",    namaLapangan: "-", nim: "2023013044", bidang: "Koordinator Gunung Hutan",    noHp: "085398717626" },
-    { angkatan: "TAPAKKAKI",    namaLengkap: "Muhamad Amrullah",               namaLapangan: "-", nim: "2024012021", bidang: "Tim Gunung Hutan",            noHp: "085659543192" },
-    { angkatan: "TAPAKKAKI",    namaLengkap: "Gahar Albani Rasyid",            namaLapangan: "-", nim: "2024019012", bidang: "Koordinator Logistik",        noHp: "082338021599" },
-    { angkatan: "PANCATOMPAK",  namaLengkap: "Fridolinus Jeri Kasman",         namaLapangan: "-", nim: "2023018008", bidang: "Koordinator Dokumentasi",     noHp: "082214428371" },
-    { angkatan: "TAPAKKAKI",    namaLengkap: "Laura Mahatta Rismavi Hendra",   namaLapangan: "-", nim: "2024012037", bidang: "Tim PDD",                     noHp: "089539279 3379".replace(/\s/g,'') }
+    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Machmud Chabibul Lathif",        namaLapangan: "Ndolo", nim: "2024018064", bidang: "Ketua Umum",                 noHp: "085952824898" },
+    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Putri Robet",                    namaLapangan: "Mauna", nim: "2024018007", bidang: "Sekretaris Jenderal",         noHp: "081522723325" },
+    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Tsye Dayana Knyartutu",          namaLapangan: "Ceci", nim: "2024018006", bidang: "Sekretaris Wakil",            noHp: "085343835369" },
+    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Rosa Bandatia",                  namaLapangan: "Gale", nim: "2024018028", bidang: "Bendahara 1",                 noHp: "082249858268" },
+    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Tresia Utami Sulensi",           namaLapangan: "Taras", nim: "2024013058", bidang: "Koordinator Rock Climbing",   noHp: "085822450087" },
+    { angkatan: "TEDAKDAIVAT",  namaLengkap: "Muhammad Musfian Sutrawardi",    namaLapangan: "Ringin", nim: "2023013044", bidang: "Koordinator Gunung Hutan",    noHp: "085398717626" },
+    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Muhamad Amrullah",               namaLapangan: "Sero", nim: "2024012021", bidang: "Tim Gunung Hutan",            noHp: "085659543192" },
+    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Gahar Albani Rasyid",            namaLapangan: "Ringgas", nim: "2024019012", bidang: "Koordinator Logistik",        noHp: "082338021599" },
+    { angkatan: "TEDAKDAIVAT",  namaLengkap: "Fridolinus Jeri Kasman",         namaLapangan: "Sam", nim: "2023018008", bidang: "Koordinator Dokumentasi",     noHp: "082214428371" },
+    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Laura Mahatta Rismavi Hendra",   namaLapangan: "Lamase", nim: "2024012037", bidang: "Tim PDD",                     noHp: "089539279 3379".replace(/\s/g,'') }
 
     // Tambahkan anggota lain di sini dengan format yang sama:
     // { angkatan: "LITANIARAM", namaLengkap: "...", namaLapangan: "...", nim: "...", bidang: "Anggota", noHp: "08..." },
