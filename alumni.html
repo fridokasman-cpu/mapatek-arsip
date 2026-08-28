@@ -11,14 +11,43 @@
 </head>
 <body>
 
-<nav class="ap-nav">
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
+<nav class="ap-nav" id="apNav">
     <a href="index.html" class="ap-nav-brand">
         <img src="images/logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/36x36?text=M'">
         <span>Mapatek Abhipraya</span>
     </a>
-    <a href="index.html" class="ap-nav-back"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+
+    <ul class="ap-nav-links">
+        <li><a href="index.html"><i class="fas fa-house"></i> Beranda</a></li>
+        <li><a href="alumni.html" class="ap-nav-active"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
+        <li><a href="merchandise.html"><i class="fas fa-shirt"></i> Merchandise</a></li>
+        <li><a href="data-anggota.html"><i class="fas fa-address-book"></i> Data Anggota</a></li>
+    </ul>
+
+    <button class="ap-nav-burger" id="apNavBurger" aria-label="Buka menu">
+        <i class="fas fa-bars"></i>
+    </button>
 </nav>
 
+<!-- Drawer mobile -->
+<div class="ap-drawer-backdrop" id="apDrawerBackdrop"></div>
+<aside class="ap-drawer" id="apDrawer">
+    <div class="ap-drawer-head">
+        <span>Menu</span>
+        <button id="apDrawerClose" aria-label="Tutup menu"><i class="fas fa-times"></i></button>
+    </div>
+    <a href="index.html"><i class="fas fa-house"></i> Beranda</a>
+    <a href="alumni.html" class="ap-nav-active"><i class="fas fa-graduation-cap"></i> Alumni & Jejak Karir</a>
+    <a href="merchandise.html"><i class="fas fa-shirt"></i> Merchandise & Donasi</a>
+    <a href="data-anggota.html"><i class="fas fa-address-book"></i> Data Anggota</a>
+</aside>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
 <header class="ap-hero">
     <div class="ap-hero-inner">
         <span class="ap-hero-badge"><i class="fas fa-graduation-cap"></i> Jejak Para Pendaki</span>
@@ -27,27 +56,113 @@
     </div>
 </header>
 
-<main class="ap-container">
+<!-- ============================================================
+     FEATURED ALUMNI (SPOTLIGHT)
+============================================================ -->
+<section class="ap-spotlight-wrap" id="apSpotlightWrap"></section>
 
-    <div class="ap-filter-bar">
-        <div class="ap-search">
-            <i class="fas fa-search"></i>
-            <input type="text" id="alumniSearch" placeholder="Cari nama alumni...">
+<!-- ============================================================
+     KONTEN UTAMA (SIDEBAR + GRID)
+============================================================ -->
+<main class="ap-main">
+
+    <!-- Tombol filter khusus mobile -->
+    <button class="ap-mobile-filter-btn" id="apMobileFilterBtn">
+        <i class="fas fa-sliders"></i> Filter & Urutkan
+    </button>
+
+    <div class="ap-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="ap-sidebar" id="apSidebar">
+            <div class="ap-sidebar-head">
+                <h3><i class="fas fa-filter"></i> Filter</h3>
+                <button class="ap-sidebar-close" id="apSidebarClose" aria-label="Tutup"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div class="ap-stats-block" id="apStatsBlock"></div>
+
+            <div class="ap-sidebar-section">
+                <label class="ap-sidebar-label">Cari Alumni</label>
+                <div class="ap-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="alumniSearch" placeholder="Nama atau profesi...">
+                </div>
+            </div>
+
+            <div class="ap-sidebar-section">
+                <label class="ap-sidebar-label">Angkatan</label>
+                <div class="ap-filter-chips" id="alumniFilterChips"></div>
+            </div>
+
+            <div class="ap-sidebar-section">
+                <label class="ap-sidebar-label">Urutkan</label>
+                <select class="ap-sort-select" id="apSortSelect">
+                    <option value="terbaru">Tahun Lulus Terbaru</option>
+                    <option value="terlama">Tahun Lulus Terlama</option>
+                    <option value="az">Nama A-Z</option>
+                    <option value="za">Nama Z-A</option>
+                </select>
+            </div>
+
+            <button class="ap-apply-btn" id="apApplyBtn">Terapkan</button>
+        </aside>
+
+        <!-- GRID -->
+        <div class="ap-content">
+            <div class="ap-grid" id="alumniGrid"></div>
+            <p class="ap-empty" id="alumniEmpty" style="display:none;">
+                <i class="fas fa-user-slash"></i> Tidak ada alumni yang cocok dengan pencarianmu.
+            </p>
         </div>
-        <div class="ap-filter-chips" id="alumniFilterChips"></div>
+
     </div>
-
-    <div class="ap-grid" id="alumniGrid"></div>
-
-    <p class="ap-empty" id="alumniEmpty" style="display:none;">
-        <i class="fas fa-user-slash"></i> Tidak ada alumni yang cocok dengan pencarianmu.
-    </p>
-
 </main>
 
+<!-- ============================================================
+     FOOTER
+============================================================ -->
 <footer class="ap-footer">
-    <p>&copy; 2026 Mapatek Abhipraya — Menjaga Alam, Membangun Karakter</p>
+    <div class="ap-footer-stroke">MAPATEK ABHIPRAYA</div>
+    <div class="ap-footer-inner">
+        <div class="ap-footer-left">
+            <img src="images/logo.png" alt="Mapatek" onerror="this.src='https://via.placeholder.com/40x40?text=M'">
+            <p>Menjaga Alam, Membangun Karakter</p>
+            <div class="ap-footer-social">
+                <a href="https://instagram.com/mapatek_abhipraya" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/6282214428371" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com/@mapatek_abhipraya" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="mailto:mapatek.abhipraya@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="ap-footer-copy">&copy; 2026 Mapatek Abhipraya. All rights reserved.</p>
+        </div>
+        <div class="ap-footer-links">
+            <div>
+                <h4>Halaman</h4>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="alumni.html">Alumni</a></li>
+                    <li><a href="merchandise.html">Merchandise</a></li>
+                    <li><a href="data-anggota.html">Data Anggota</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Organisasi</h4>
+                <ul>
+                    <li><a href="index.html#tentang">Tentang Kami</a></li>
+                    <li><a href="index.html#pengurus">Pengurus</a></li>
+                    <li><a href="index.html#arsip">Arsip</a></li>
+                    <li><a href="index.html#kontak">Kontak</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </footer>
+
+<!-- Modal detail alumni (flip 3D) -->
+<div class="ap-modal-backdrop" id="apModalBackdrop">
+    <div class="ap-modal-3d" id="apModal3d"></div>
+</div>
 
 <script src="js/alumni-data.js"></script>
 <script src="js/alumni.js"></script>
