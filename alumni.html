@@ -8,6 +8,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="css/alumni.css">
+
+<!-- ============================================================
+     📊 ANALYTICS — pilih SALAH SATU (GA4 atau Plausible), lalu
+     isi ID/domain-nya. Kalau tidak dipakai, boleh dihapus/dikomentari;
+     trackEvent() di alumni.js otomatis diam kalau keduanya tidak ada.
+============================================================ -->
+
+<!-- Opsi A: Google Analytics 4 — ganti G-XXXXXXXXXX dengan Measurement ID kamu -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
+
+<!-- Opsi B: Plausible (lebih ringan, tanpa cookie) — ganti data-domain -->
+<!--
+<script defer data-domain="mapatekabhipraya.org" src="https://plausible.io/js/script.js"></script>
+-->
 </head>
 <body>
 
@@ -278,6 +300,13 @@
                     <li><a href="index.html#kontak">Kontak</a></li>
                 </ul>
             </div>
+            <div>
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="kebijakan-privasi.html">Kebijakan Privasi</a></li>
+                    <li><a href="syarat-penggunaan.html">Syarat Penggunaan</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </footer>
@@ -287,7 +316,7 @@
     <div class="ap-modal-3d" id="apModal3d"></div>
 </div>
 
-<script src="js/alumni-data.js"></script>
-<script src="js/alumni.js"></script>
+<script src="js/alumni-data.js" defer></script>
+<script src="js/alumni.js" defer></script>
 </body>
 </html>

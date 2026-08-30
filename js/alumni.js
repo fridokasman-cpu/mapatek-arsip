@@ -16,6 +16,25 @@
     let viewMode = 'grid'; // 'grid' | 'timeline'
 
     // ============================================================
+    // 📊 FITUR: ANALYTICS EVENT TRACKING
+    // ----------------------------------------------------------------
+    // Mengirim event ke Google Analytics (gtag) dan/atau Plausible, kalau
+    // salah satu skrip-nya sudah dipasang di <head> alumni.html. Kalau
+    // belum dipasang, fungsi ini diam saja (tidak error).
+    // ============================================================
+    function trackEvent(name, params) {
+        params = params || {};
+        try {
+            if (typeof window.gtag === 'function') {
+                window.gtag('event', name, params);
+            }
+            if (typeof window.plausible === 'function') {
+                window.plausible(name, { props: params });
+            }
+        } catch (err) { /* diamkan, jangan sampai analytics mematahkan fitur utama */ }
+    }
+
+    // ============================================================
     // UTIL
     // ============================================================
     function initials(name) {
@@ -646,7 +665,9 @@
 
         idCardPicker.querySelectorAll('.ap-idcard-chip-btn').forEach(function (chip) {
             chip.addEventListener('click', function () {
-                renderIdCard(alumniData[parseInt(chip.dataset.index, 10)]);
+                const a = alumniData[parseInt(chip.dataset.index, 10)];
+                trackEvent('idcard_select', { alumni: a.nama });
+                renderIdCard(a);
             });
         });
     }
@@ -679,7 +700,16 @@
         initIdCardTilt();
 
         idCardGalleryBtn.addEventListener('click', function () {
-            if (idCardActive) openGallery(idCardActive);
+            if (idCardActive) {
+                trackEvent('gallery_open', { alumni: idCardActive.nama, jumlah_foto: idCardActive.album.length });
+                openGallery(idCardActive);
+            }
+        });
+
+        idCardIgBtn.addEventListener('click', function () {
+            if (idCardActive && idCardActive.instagram) {
+                trackEvent('instagram_click', { alumni: idCardActive.nama, instagram: idCardActive.instagram });
+            }
         });
     }
 
@@ -790,7 +820,9 @@
 
         forest.querySelectorAll('.ap-tree').forEach(function (tree) {
             tree.addEventListener('click', function () {
-                openFlipModal(alumniData[parseInt(tree.dataset.index, 10)]);
+                const a = alumniData[parseInt(tree.dataset.index, 10)];
+                trackEvent('forest_tree_click', { alumni: a.nama, angkatan: a.angkatan });
+                openFlipModal(a);
             });
         });
 
@@ -834,6 +866,7 @@
                 '<span class="ap-campfire-name">' + a.nama.split(' ')[0] + '</span>';
 
             btn.addEventListener('click', function () {
+                trackEvent('campfire_avatar_click', { alumni: a.nama, angkatan: a.angkatan });
                 openFlipModal(a);
             });
 
@@ -842,14 +875,21 @@
     }
 
     // ============================================================
-    // INIT
+    // INIT — tunggu data alumni siap (fallback ATAU Google Sheets)
     // ============================================================
-    buildStats();
-    buildChart();
-    buildSpotlight();
-    buildChips();
-    render();
-    buildIdCardSection();
-    buildForest();
-    buildCampfire();
+    async function init() {
+        if (typeof MAPATEK_DATA_READY !== 'undefined') {
+            await MAPATEK_DATA_READY;
+        }
+        buildStats();
+        buildChart();
+        buildSpotlight();
+        buildChips();
+        render();
+        buildIdCardSection();
+        buildForest();
+        buildCampfire();
+    }
+
+    init();
 })();

@@ -1789,3 +1789,80 @@ body.ap-dark .ap-idcard-section { background: #0d1117; }
 body.ap-dark .ap-section-head h2 { color: #e5e7eb; }
 body.ap-dark .ap-section-head p { color: #9ca3af; }
 body.ap-dark .ap-idcard-chip-btn { background: #161b22; border-color: rgba(255,255,255,0.08); color: #e5e7eb; }
+
+/* ================================================================
+   HALAMAN LEGAL — Kebijakan Privasi & Syarat Penggunaan
+================================================================ */
+.ap-legal-hero {
+    background: linear-gradient(160deg, var(--ap-primary) 0%, var(--ap-primary-dark) 100%);
+    color: #fff;
+    padding: 3.2rem 6% 2.4rem;
+    text-align: center;
+}
+
+.ap-legal-hero span.ap-section-eyebrow { color: var(--ap-accent); background: rgba(52,211,153,0.16); }
+.ap-legal-hero h1 { margin: 0.5rem 0 0.4rem; font-size: clamp(1.6rem, 3.5vw, 2.3rem); }
+.ap-legal-hero p { margin: 0; color: rgba(255,255,255,0.7); font-size: 0.85rem; }
+
+.ap-legal-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2.8rem 6% 4rem;
+    line-height: 1.75;
+    color: #374151;
+}
+
+.ap-legal-wrap h2 {
+    font-size: 1.15rem;
+    color: #0a2b25;
+    margin: 2.2rem 0 0.8rem;
+    padding-top: 0.4rem;
+    border-top: 1px solid #e5e7eb;
+}
+
+.ap-legal-wrap h2:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+
+.ap-legal-wrap p, .ap-legal-wrap li { font-size: 0.92rem; }
+
+.ap-legal-wrap ul { padding-left: 1.2rem; }
+.ap-legal-wrap li { margin-bottom: 0.4rem; }
+
+.ap-legal-wrap a { color: var(--ap-accent-dark); font-weight: 600; }
+.ap-legal-wrap a:hover { text-decoration: underline; }
+
+.ap-legal-updated {
+    display: inline-block;
+    font-size: 0.72rem;
+    color: #6b7280;
+    background: #f0f2f1;
+    padding: 0.3rem 0.75rem;
+    border-radius: 999px;
+    margin-bottom: 0.5rem;
+}
+
+.ap-legal-toc {
+    background: #f6f9f7;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1.5rem;
+}
+
+.ap-legal-toc strong { display: block; margin-bottom: 0.5rem; font-size: 0.85rem; color: #0a2b25; }
+.ap-legal-toc ol { margin: 0; padding-left: 1.1rem; font-size: 0.82rem; }
+.ap-legal-toc li { margin-bottom: 0.25rem; }
+
+.ap-legal-callout {
+    background: rgba(52, 211, 153, 0.08);
+    border-left: 3px solid var(--ap-accent);
+    padding: 0.9rem 1.1rem;
+    border-radius: 0 10px 10px 0;
+    font-size: 0.85rem;
+    margin: 1rem 0;
+}
+
+body.ap-dark .ap-legal-wrap { color: #cbd5e1; }
+body.ap-dark .ap-legal-wrap h2 { color: #e5e7eb; border-color: rgba(255,255,255,0.1); }
+body.ap-dark .ap-legal-toc { background: #161b22; border-color: rgba(255,255,255,0.08); }
+body.ap-dark .ap-legal-toc strong { color: #e5e7eb; }
+body.ap-dark .ap-legal-updated { background: #161b22; color: #9ca3af; }
