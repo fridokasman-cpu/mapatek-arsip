@@ -1,23 +1,25 @@
 // ================================================================
-// DATA SELURUH ANGGOTA — Silakan lengkapi/edit sesuai data asli
+// DATA ALUMNI — Silakan edit/tambah sesuai data asli
 // ----------------------------------------------------------------
-// Setiap anggota adalah satu objek dengan field:
-// - angkatan      : salah satu dari ANGKATAN_LIST_DA di bawah
-// - namaLengkap   : nama lengkap sesuai KTM
-// - namaLapangan  : nama panggilan/nama lapangan (isi "-" jika belum ada)
-// - nim           : NIM
-// - bidang        : jabatan/bidang penugasan
-// - noHp          : nomor HP/WA (format 08xx..., akan dikonversi otomatis ke wa.me)
-//
-// CATATAN: Kolom "angkatan" pada 10 baris pertama (data pengurus) di
-// bawah ini masih HASIL PERKIRAAN dari 2 digit awal NIM (2023->PANCATOMPAK,
-// 2024->TAPAKKAKI, dst mengikuti pola di halaman "Tentang Kami"). Mohon
-// dicek ulang & dikoreksi jika ada yang tidak sesuai kenyataan.
-// Silakan tambahkan anggota lain (non-pengurus) di bawahnya dengan
-// format objek yang sama.
+// Setiap alumni adalah satu objek dengan field:
+// - nama         : nama lengkap
+// - angkatan     : nama angkatan (harus salah satu dari daftar ANGKATAN_LIST di bawah)
+// - tahunLulus   : tahun kelulusan/keluar dari MAPATEK (isi null jika masih aktif)
+// - foto         : path/URL foto (boleh dikosongkan "", nanti pakai inisial otomatis).
+//                  Foto ini juga dipakai sebagai BACKGROUND kartu.
+// - unggulan     : true/false — tampil di bagian "Alumni Pilihan" atas halaman
+// - profesiSekarang : pekerjaan/kegiatan sekarang
+// - lokasi       : kota/tempat kerja sekarang
+// - testimoni    : kutipan singkat dari alumni tsb
+// - noHp         : opsional, format "08xx..." — kalau diisi, muncul tombol
+//                  "Sapa via WhatsApp" di kartu detail. Kosongkan "" jika tidak ada.
+// - instagram / linkedin : opsional, kosongkan "" jika tidak ada.
+//                  instagram cukup diisi username saja, contoh: "bagas.dwi"
+// - album        : opsional, array URL foto aktivitas (dipakai di "Album Aktivitas 3D"
+//                  dan galeri kartu ID). Kosongkan [] jika belum ada foto.
 // ================================================================
 
-const ANGKATAN_LIST_DA = [
+const ANGKATAN_LIST = [
     { key: 'all', label: 'Semua Angkatan' },
     { key: 'PANCATOMPAK', label: '🌟 PANCATOMPAK (2023)' },
     { key: 'TAPAKKAKI', label: '👣 TAPAKKAKI (2024)' },
@@ -25,18 +27,94 @@ const ANGKATAN_LIST_DA = [
     { key: 'LITANIARAM', label: '🌿 LITANIARAM (2026)' }
 ];
 
-const anggotaData = [
-    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Machmud Chabibul Lathif",        namaLapangan: "Ndolo", nim: "2024018064", bidang: "Ketua Umum",                 noHp: "085952824898" },
-    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Putri Robet",                    namaLapangan: "Mauna", nim: "2024018007", bidang: "Sekretaris Jenderal",         noHp: "081522723325" },
-    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Tsye Dayana Knyartutu",          namaLapangan: "Ceci", nim: "2024018006", bidang: "Sekretaris Wakil",            noHp: "085343835369" },
-    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Rosa Bandatia",                  namaLapangan: "Gale", nim: "2024018028", bidang: "Bendahara 1",                 noHp: "082249858268" },
-    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Tresia Utami Sulensi",           namaLapangan: "Taras", nim: "2024013058", bidang: "Koordinator Rock Climbing",   noHp: "085822450087" },
-    { angkatan: "TEDAKDAIVAT",  namaLengkap: "Muhammad Musfian Sutrawardi",    namaLapangan: "Ringin", nim: "2023013044", bidang: "Koordinator Gunung Hutan",    noHp: "085398717626" },
-    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Muhamad Amrullah",               namaLapangan: "Sero", nim: "2024012021", bidang: "Tim Gunung Hutan",            noHp: "085659543192" },
-    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Gahar Albani Rasyid",            namaLapangan: "Ringgas", nim: "2024019012", bidang: "Koordinator Logistik",        noHp: "082338021599" },
-    { angkatan: "TEDAKDAIVAT",  namaLengkap: "Fridolinus Jeri Kasman",         namaLapangan: "Sam", nim: "2023018008", bidang: "Koordinator Dokumentasi",     noHp: "082214428371" },
-    { angkatan: "TEDAKDAIVAT",    namaLengkap: "Laura Mahatta Rismavi Hendra",   namaLapangan: "Lamase", nim: "2024012037", bidang: "Tim PDD",                     noHp: "089539279 3379".replace(/\s/g,'') }
-
-    // Tambahkan anggota lain di sini dengan format yang sama:
-    // { angkatan: "LITANIARAM", namaLengkap: "...", namaLapangan: "...", nim: "...", bidang: "Anggota", noHp: "08..." },
+const alumniData = [
+    {
+        nama: "Bagas Dwi Saputra",
+        angkatan: "PANCATOMPAK",
+        tahunLulus: 2024,
+        foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=500&q=80",
+        unggulan: true,
+        profesiSekarang: "Field Guide & Pemandu Ekspedisi Gunung",
+        lokasi: "Yogyakarta",
+        testimoni: "Mapatek ngajarin saya bukan cuma cara bertahan hidup di gunung, tapi juga cara mimpin tim di bawah tekanan. Sekarang skill itu jadi mata pencaharian saya sehari-hari.",
+        noHp: "081234567801",
+        instagram: "bagas.dwi",
+        linkedin: "",
+        album: [
+            "https://images.unsplash.com/photo-1551632811-561732d1e306?w=700&q=80",
+            "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=700&q=80",
+            "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=700&q=80",
+            "https://images.unsplash.com/photo-1533240332313-0db49b459ad6?w=700&q=80"
+        ]
+    },
+    {
+        nama: "Ratna Kusuma Wardani",
+        angkatan: "PANCATOMPAK",
+        tahunLulus: 2024,
+        foto: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&q=80",
+        unggulan: true,
+        profesiSekarang: "Staff Konservasi, Balai Taman Nasional",
+        lokasi: "Semarang",
+        testimoni: "Pengalaman ikut aksi konservasi di Mapatek jadi alasan saya milih karir di bidang lingkungan. Rasanya seperti melanjutkan misi yang sama, cuma skalanya lebih besar.",
+        noHp: "",
+        instagram: "ratnakusuma",
+        linkedin: "",
+        album: [
+            "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=700&q=80",
+            "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=700&q=80",
+            "https://images.unsplash.com/photo-1500534623283-312aade485b7?w=700&q=80"
+        ]
+    },
+    {
+        nama: "Fajar Nur Ihsan",
+        angkatan: "TAPAKKAKI",
+        tahunLulus: 2025,
+        foto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&q=80",
+        unggulan: false,
+        profesiSekarang: "Software Engineer",
+        lokasi: "Jakarta",
+        testimoni: "Ekspedisi ngajarin saya problem-solving di kondisi serba terbatas — ternyata itu skill yang kepake banget waktu kerja jadi engineer. Gunung dan kode sama-sama butuh sabar.",
+        noHp: "081234567802",
+        instagram: "fajarnurihsan",
+        linkedin: "",
+        album: [
+            "https://images.unsplash.com/photo-1517816428104-797678c7cf0c?w=700&q=80",
+            "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=700&q=80"
+        ]
+    },
+    {
+        nama: "Devina Ayu Lestari",
+        angkatan: "TAPAKKAKI",
+        tahunLulus: 2025,
+        foto: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=500&q=80",
+        unggulan: false,
+        profesiSekarang: "Guru & Relawan Pendidikan Lingkungan",
+        lokasi: "Magelang",
+        testimoni: "Sekarang saya sering bawa murid-murid saya untuk kegiatan alam terbuka. Semua terinspirasi dari kegiatan sosial dan penanaman pohon waktu masih aktif di Mapatek.",
+        noHp: "",
+        instagram: "devina.ayu",
+        linkedin: "",
+        album: [
+            "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=700&q=80",
+            "https://images.unsplash.com/photo-1472213984618-c79aaec00d1d?w=700&q=80",
+            "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=700&q=80"
+        ]
+    },
+    {
+        nama: "Yoga Pratama",
+        angkatan: "TEDAKDAIVAT",
+        tahunLulus: null,
+        foto: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=500&q=80",
+        unggulan: false,
+        profesiSekarang: "Masih aktif — Fokus riset jalur pendakian baru",
+        lokasi: "Yogyakarta",
+        testimoni: "Belum lulus, tapi sudah kebayang jejak yang mau saya tinggalkan buat angkatan setelah saya. Mapatek itu rumah kedua.",
+        noHp: "",
+        instagram: "",
+        linkedin: "",
+        album: [
+            "https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=700&q=80",
+            "https://images.unsplash.com/photo-1522163182402-834f871fd851?w=700&q=80"
+        ]
+    }
 ];

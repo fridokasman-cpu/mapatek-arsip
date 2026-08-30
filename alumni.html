@@ -65,6 +65,13 @@
     </div>
 </header>
 
+<!-- FITUR: Quick nav ke pengalaman 3D -->
+<div class="ap-quicknav">
+    <a href="#apIdCardSection"><i class="fas fa-id-card"></i> Kartu ID 3D</a>
+    <a href="#apForestSection"><i class="fas fa-tree"></i> Mapatek Forest</a>
+    <a href="#apCampfireSection"><i class="fas fa-fire"></i> Campfire Stories</a>
+</div>
+
 <!-- ============================================================
      FEATURED ALUMNI (SPOTLIGHT)
 ============================================================ -->
@@ -144,6 +151,96 @@
 
     </div>
 </main>
+
+<!-- ============================================================
+     🪪 KARTU ID ALUMNI 3D + ALBUM AKTIVITAS + PROFIL INSTAGRAM
+============================================================ -->
+<section class="ap-idcard-section" id="apIdCardSection">
+    <div class="ap-section-head">
+        <span class="ap-section-eyebrow">🪪 Identitas Digital</span>
+        <h2>Kartu ID 3D Alumni</h2>
+        <p>Setiap alumni punya kartu identitas digital sendiri. Gerakkan mouse di atas kartu untuk efek tilt 3D, lalu jelajahi album aktivitas &amp; profil Instagram mereka.</p>
+    </div>
+
+    <div class="ap-idcard-picker" id="apIdCardPicker"></div>
+
+    <div class="ap-idcard-stage">
+        <div class="ap-idcard-perspective">
+            <div class="ap-idcard" id="apIdCard">
+                <div class="ap-idcard-shine" id="apIdCardShine"></div>
+                <div class="ap-idcard-brand">
+                    <img src="images/logo.png" alt="" onerror="this.style.display='none'">
+                    <span>MAPATEK ABHIPRAYA</span>
+                </div>
+                <div class="ap-idcard-photo-ring">
+                    <img class="ap-idcard-photo" id="apIdCardPhoto" src="" alt="">
+                </div>
+                <h3 class="ap-idcard-name" id="apIdCardName"></h3>
+                <span class="ap-idcard-batch" id="apIdCardBatch"></span>
+                <div class="ap-idcard-role" id="apIdCardRole"></div>
+                <div class="ap-idcard-footer">
+                    <span class="ap-idcard-verified"><i class="fas fa-circle-check"></i> ALUMNI VERIFIED</span>
+                    <span class="ap-idcard-id" id="apIdCardId"></span>
+                </div>
+                <div class="ap-idcard-barcode"></div>
+            </div>
+        </div>
+
+        <div class="ap-idcard-actions">
+            <button class="ap-flip-btn" id="apIdCardGalleryBtn"><i class="fas fa-images"></i> Album Aktivitas 3D</button>
+            <a class="ap-flip-btn ap-btn-ig" id="apIdCardIgBtn" target="_blank" rel="noopener"><i class="fab fa-instagram"></i> Lihat Instagram</a>
+        </div>
+    </div>
+</section>
+
+<!-- Lightbox Album Aktivitas (coverflow 3D) -->
+<div class="ap-gallery-backdrop" id="apGalleryBackdrop">
+    <div class="ap-gallery-modal">
+        <button class="ap-modal-close" id="apGalleryClose"><i class="fas fa-times"></i></button>
+        <h3 id="apGalleryTitle"><i class="fas fa-images"></i> Album Aktivitas</h3>
+        <div class="ap-gallery-stage" id="apGalleryStage"></div>
+        <div class="ap-gallery-nav">
+            <button id="apGalleryPrev" aria-label="Sebelumnya"><i class="fas fa-chevron-left"></i></button>
+            <span id="apGalleryCounter"></span>
+            <button id="apGalleryNext" aria-label="Berikutnya"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================================
+     🌲 MAPATEK FOREST — Satu pohon, satu alumni
+============================================================ -->
+<section class="ap-forest-section" id="apForestSection">
+    <div class="ap-section-head ap-section-head-dark">
+        <span class="ap-section-eyebrow">🌲 Mapatek Forest</span>
+        <h2>Hutan Alumni</h2>
+        <p>"Setiap alumni adalah satu pohon yang tumbuh dari akar yang sama." Semakin banyak alumni bergabung, semakin lebat hutan ini bertumbuh. Klik pohon mana pun untuk mengenal sosok di baliknya.</p>
+        <div class="ap-forest-stat"><strong id="apForestCount">0</strong> pohon telah tumbuh</div>
+    </div>
+    <div class="ap-forest-perspective" id="apForestPerspective">
+        <div class="ap-forest-ground" id="apForest"></div>
+    </div>
+</section>
+
+<!-- ============================================================
+     🔥 CAMPFIRE ALUMNI STORIES
+============================================================ -->
+<section class="ap-campfire-section" id="apCampfireSection">
+    <div class="ap-section-head ap-section-head-dark">
+        <span class="ap-section-eyebrow">🔥 Api Unggun Alumni</span>
+        <h2>Campfire Alumni Stories</h2>
+        <p>Kumpul melingkar seperti malam keakraban di basecamp. Klik salah satu avatar untuk mendengar cerita mereka.</p>
+    </div>
+    <div class="ap-campfire-circle" id="apCampfireCircle">
+        <div class="ap-campfire-fire">
+            <div class="ap-flame ap-flame-1"></div>
+            <div class="ap-flame ap-flame-2"></div>
+            <div class="ap-flame ap-flame-3"></div>
+            <div class="ap-campfire-glow"></div>
+            <div class="ap-campfire-log"></div>
+        </div>
+    </div>
+</section>
 
 <!-- ============================================================
      FOOTER

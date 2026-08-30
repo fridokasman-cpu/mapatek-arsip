@@ -586,6 +586,262 @@
     });
 
     // ============================================================
+    // 🪪 FITUR: KARTU ID 3D ALUMNI + ALBUM AKTIVITAS + PROFIL IG
+    // ============================================================
+    const idCardPicker = document.getElementById('apIdCardPicker');
+    const idCard = document.getElementById('apIdCard');
+    const idCardShine = document.getElementById('apIdCardShine');
+    const idCardPhoto = document.getElementById('apIdCardPhoto');
+    const idCardName = document.getElementById('apIdCardName');
+    const idCardBatch = document.getElementById('apIdCardBatch');
+    const idCardRole = document.getElementById('apIdCardRole');
+    const idCardId = document.getElementById('apIdCardId');
+    const idCardGalleryBtn = document.getElementById('apIdCardGalleryBtn');
+    const idCardIgBtn = document.getElementById('apIdCardIgBtn');
+
+    let idCardActive = null;
+
+    function memberCode(a) {
+        const idx = alumniData.indexOf(a) + 1;
+        return 'MPT-' + a.angkatan.slice(0, 3).toUpperCase() + '-' + String(idx).padStart(3, '0');
+    }
+
+    function renderIdCard(a) {
+        idCardActive = a;
+
+        idCardPhoto.src = a.foto || ('https://ui-avatars.com/api/?name=' + encodeURIComponent(a.nama) + '&background=059669&color=fff');
+        idCardPhoto.alt = a.nama;
+        idCardName.textContent = a.nama;
+        idCardBatch.textContent = angkatanLabel(a.angkatan, true) + (a.tahunLulus ? ' • Lulus ' + a.tahunLulus : ' • Masih Aktif');
+        idCardRole.innerHTML = '<i class="fas fa-briefcase"></i> ' + a.profesiSekarang + '<br>' + a.lokasi;
+        idCardId.textContent = memberCode(a);
+
+        const hasAlbum = a.album && a.album.length > 0;
+        idCardGalleryBtn.style.display = hasAlbum ? 'inline-flex' : 'none';
+
+        if (a.instagram) {
+            idCardIgBtn.href = 'https://instagram.com/' + a.instagram.replace('@', '');
+            idCardIgBtn.innerHTML = '<i class="fab fa-instagram"></i> @' + a.instagram.replace('@', '');
+        } else {
+            idCardIgBtn.href = '#';
+            idCardIgBtn.innerHTML = '<i class="fab fa-instagram"></i> Belum ada Instagram';
+        }
+
+        idCardPicker.querySelectorAll('.ap-idcard-chip-btn').forEach(function (chip) {
+            chip.classList.toggle('ap-active', parseInt(chip.dataset.index, 10) === alumniData.indexOf(a));
+        });
+    }
+
+    function buildIdCardPicker() {
+        idCardPicker.innerHTML = alumniData.map(function (a, i) {
+            const avatar = a.foto
+                ? '<img src="' + a.foto + '" alt="">'
+                : '<span class="ap-idcard-chip-initials">' + initials(a.nama) + '</span>';
+            return (
+                '<button class="ap-idcard-chip-btn" data-index="' + i + '">' +
+                    avatar + '<span>' + a.nama.split(' ')[0] + '</span>' +
+                '</button>'
+            );
+        }).join('');
+
+        idCardPicker.querySelectorAll('.ap-idcard-chip-btn').forEach(function (chip) {
+            chip.addEventListener('click', function () {
+                renderIdCard(alumniData[parseInt(chip.dataset.index, 10)]);
+            });
+        });
+    }
+
+    // Tilt 3D kartu ID mengikuti mouse (lebih dramatis + efek shine)
+    function initIdCardTilt() {
+        const isTouchDevice = window.matchMedia('(hover: none)').matches;
+        if (isTouchDevice) return;
+
+        idCard.addEventListener('mousemove', function (e) {
+            const rect = idCard.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const rotateX = ((y / rect.height) - 0.5) * -16;
+            const rotateY = ((x / rect.width) - 0.5) * 16;
+            idCard.style.transform = 'perspective(1200px) rotateX(' + rotateX + 'deg) rotateY(' + rotateY + 'deg) scale(1.03)';
+            idCardShine.style.background = 'radial-gradient(circle 160px at ' + x + 'px ' + y + 'px, rgba(255,255,255,0.22), transparent 60%)';
+        });
+
+        idCard.addEventListener('mouseleave', function () {
+            idCard.style.transform = 'perspective(1200px) rotateX(0) rotateY(0) scale(1)';
+        });
+    }
+
+    function buildIdCardSection() {
+        if (!idCard || alumniData.length === 0) return;
+        buildIdCardPicker();
+        const firstFeatured = alumniData.find(function (a) { return a.unggulan; }) || alumniData[0];
+        renderIdCard(firstFeatured);
+        initIdCardTilt();
+
+        idCardGalleryBtn.addEventListener('click', function () {
+            if (idCardActive) openGallery(idCardActive);
+        });
+    }
+
+    // ============================================================
+    // 📸 FITUR: ALBUM AKTIVITAS 3D (lightbox coverflow)
+    // ============================================================
+    const galleryBackdrop = document.getElementById('apGalleryBackdrop');
+    const galleryStage = document.getElementById('apGalleryStage');
+    const galleryTitle = document.getElementById('apGalleryTitle');
+    const galleryCounter = document.getElementById('apGalleryCounter');
+    const galleryClose = document.getElementById('apGalleryClose');
+    const galleryPrevBtn = document.getElementById('apGalleryPrev');
+    const galleryNextBtn = document.getElementById('apGalleryNext');
+
+    let galleryPhotos = [];
+    let galleryIndex = 0;
+
+    function renderGalleryStage() {
+        galleryStage.innerHTML = galleryPhotos.map(function (url, i) {
+            return '<div class="ap-gallery-item" data-i="' + i + '"><img src="' + url + '" alt="Aktivitas ' + (i + 1) + '"></div>';
+        }).join('');
+        updateGalleryPositions();
+    }
+
+    function updateGalleryPositions() {
+        const items = galleryStage.querySelectorAll('.ap-gallery-item');
+        items.forEach(function (item, i) {
+            const offset = i - galleryIndex;
+            const abs = Math.abs(offset);
+            let transform, opacity, z;
+            if (abs === 0) {
+                transform = 'translateX(0) translateZ(0) rotateY(0deg) scale(1)';
+                opacity = 1; z = 10;
+            } else if (abs <= 2) {
+                transform = 'translateX(' + (offset * 62) + '%) translateZ(-160px) rotateY(' + (offset > 0 ? -35 : 35) + 'deg) scale(0.82)';
+                opacity = 0.55; z = 10 - abs;
+            } else {
+                transform = 'translateX(' + (offset > 0 ? 140 : -140) + '%) translateZ(-260px) scale(0.6)';
+                opacity = 0; z = 0;
+            }
+            item.style.transform = transform;
+            item.style.opacity = opacity;
+            item.style.zIndex = z;
+        });
+        galleryCounter.textContent = (galleryIndex + 1) + ' / ' + galleryPhotos.length;
+    }
+
+    function openGallery(a) {
+        if (!a.album || a.album.length === 0) return;
+        galleryPhotos = a.album;
+        galleryIndex = 0;
+        galleryTitle.innerHTML = '<i class="fas fa-images"></i> Album Aktivitas — ' + a.nama;
+        renderGalleryStage();
+        galleryBackdrop.classList.add('ap-active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeGallery() {
+        galleryBackdrop.classList.remove('ap-active');
+        document.body.style.overflow = '';
+    }
+
+    galleryClose.addEventListener('click', closeGallery);
+    galleryBackdrop.addEventListener('click', function (e) {
+        if (e.target === galleryBackdrop) closeGallery();
+    });
+    galleryPrevBtn.addEventListener('click', function () {
+        galleryIndex = (galleryIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
+        updateGalleryPositions();
+    });
+    galleryNextBtn.addEventListener('click', function () {
+        galleryIndex = (galleryIndex + 1) % galleryPhotos.length;
+        updateGalleryPositions();
+    });
+    galleryStage.addEventListener('click', function (e) {
+        const item = e.target.closest('.ap-gallery-item');
+        if (item) galleryIndex = parseInt(item.dataset.i, 10);
+        updateGalleryPositions();
+    });
+
+    // ============================================================
+    // 🌲 FITUR: MAPATEK FOREST — satu pohon, satu alumni
+    // ============================================================
+    function buildForest() {
+        const forest = document.getElementById('apForest');
+        const forestCount = document.getElementById('apForestCount');
+        const forestPerspective = document.getElementById('apForestPerspective');
+        if (!forest) return;
+
+        forestCount && animateCount(forestCount, alumniData.length, 900);
+
+        forest.innerHTML = alumniData.map(function (a, i) {
+            // variasi ukuran & posisi semu-acak, deterministik dari index supaya stabil
+            const seed = (i * 37) % 100;
+            const size = 2.1 + (seed % 30) / 40;      // ~2.1rem - 2.85rem
+            const ty = (seed % 5) === 0 ? -8 : (seed % 3 === 0 ? -4 : 0);
+            const delay = (seed % 20) / 10;
+            const swayDur = 3.5 + (seed % 30) / 10;
+            return (
+                '<button class="ap-tree" data-index="' + i + '" ' +
+                    'style="--tree-size:' + size + 'rem; --ty:' + ty + 'px; --delay:' + delay + 's; --sway-dur:' + swayDur + 's;" ' +
+                    'aria-label="Pohon ' + a.nama + '">' +
+                    '<span class="ap-tree-emoji">🌲</span>' +
+                    '<span class="ap-tree-label">' + a.nama.split(' ')[0] + '</span>' +
+                '</button>'
+            );
+        }).join('');
+
+        forest.querySelectorAll('.ap-tree').forEach(function (tree) {
+            tree.addEventListener('click', function () {
+                openFlipModal(alumniData[parseInt(tree.dataset.index, 10)]);
+            });
+        });
+
+        // Parallax ringan: seluruh hutan miring mengikuti posisi mouse
+        const isTouchDevice = window.matchMedia('(hover: none)').matches;
+        if (!isTouchDevice && forestPerspective) {
+            forestPerspective.addEventListener('mousemove', function (e) {
+                const rect = forestPerspective.getBoundingClientRect();
+                const x = (e.clientX - rect.left) / rect.width - 0.5;
+                const y = (e.clientY - rect.top) / rect.height - 0.5;
+                forest.style.transform = 'rotateX(' + (y * -6) + 'deg) rotateY(' + (x * 8) + 'deg)';
+            });
+            forestPerspective.addEventListener('mouseleave', function () {
+                forest.style.transform = 'rotateX(0) rotateY(0)';
+            });
+        }
+    }
+
+    // ============================================================
+    // 🔥 FITUR: CAMPFIRE ALUMNI STORIES
+    // ============================================================
+    function buildCampfire() {
+        const circle = document.getElementById('apCampfireCircle');
+        if (!circle) return;
+
+        const total = alumniData.length;
+        const radius = 40; // persen dari radius lingkaran (relatif ke container)
+
+        alumniData.forEach(function (a, i) {
+            const angle = (2 * Math.PI * i / total) - Math.PI / 2;
+            const left = 50 + radius * Math.cos(angle);
+            const top = 50 + radius * Math.sin(angle);
+
+            const btn = document.createElement('button');
+            btn.className = 'ap-campfire-avatar';
+            btn.style.left = left + '%';
+            btn.style.top = top + '%';
+            btn.setAttribute('aria-label', 'Cerita dari ' + a.nama);
+            btn.innerHTML =
+                photoOrInitials(a, '') +
+                '<span class="ap-campfire-name">' + a.nama.split(' ')[0] + '</span>';
+
+            btn.addEventListener('click', function () {
+                openFlipModal(a);
+            });
+
+            circle.appendChild(btn);
+        });
+    }
+
+    // ============================================================
     // INIT
     // ============================================================
     buildStats();
@@ -593,4 +849,7 @@
     buildSpotlight();
     buildChips();
     render();
+    buildIdCardSection();
+    buildForest();
+    buildCampfire();
 })();
