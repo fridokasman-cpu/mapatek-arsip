@@ -13,9 +13,10 @@ body {
     font-family: 'Inter', system-ui, sans-serif;
     background: #f6f9f7;
     color: #1f2937;
+    transition: background 0.3s ease, color 0.3s ease;
 }
 
-/* ---------- Nav ---------- */
+/* ---------- Nav (konsisten dengan halaman lain) ---------- */
 .da-nav {
     position: sticky;
     top: 0;
@@ -41,21 +42,89 @@ body {
 
 .da-nav-brand img { width: 34px; height: 34px; border-radius: 50%; }
 
-.da-nav-back {
-    color: rgba(255,255,255,0.85);
-    text-decoration: none;
-    font-size: 0.85rem;
-    font-weight: 600;
+.da-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.da-nav-links a {
     display: flex;
     align-items: center;
     gap: 0.4rem;
-    padding: 0.5rem 1rem;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.5rem 0.9rem;
     border-radius: 999px;
-    background: rgba(255,255,255,0.08);
-    transition: background 0.25s ease;
+    transition: background 0.25s ease, color 0.25s ease;
 }
 
-.da-nav-back:hover { background: rgba(255,255,255,0.16); }
+.da-nav-links a:hover, .da-nav-links a.da-active {
+    background: rgba(52, 211, 153, 0.15);
+    color: var(--da-accent);
+}
+
+.da-nav-right { display: flex; align-items: center; gap: 0.5rem; }
+
+.da-icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+}
+
+.da-icon-btn:hover { background: rgba(255,255,255,0.16); }
+
+.da-nav-burger {
+    display: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.08);
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .da-nav-links { display: none; }
+    .da-nav-burger { display: flex; align-items: center; justify-content: center; }
+}
+
+/* Drawer mobile */
+.da-drawer-backdrop {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 200;
+}
+.da-drawer-backdrop.da-active { opacity: 1; visibility: visible; }
+
+.da-drawer {
+    position: fixed; top: 0; right: -280px; width: 260px; height: 100%;
+    background: var(--da-primary); z-index: 201; padding: 1.2rem;
+    transition: right 0.3s ease; display: flex; flex-direction: column; gap: 0.4rem;
+}
+.da-drawer.da-active { right: 0; }
+.da-drawer-head { display: flex; justify-content: space-between; align-items: center; color: #fff; margin-bottom: 1rem; }
+.da-drawer-head button { background: none; border: none; color: #fff; font-size: 1.1rem; cursor: pointer; }
+.da-drawer a {
+    color: rgba(255,255,255,0.85); text-decoration: none; padding: 0.7rem 0.5rem;
+    border-radius: 10px; font-size: 0.9rem; display: flex; align-items: center; gap: 0.6rem;
+}
+.da-drawer a:hover { background: rgba(255,255,255,0.08); }
 
 /* ---------- Hero ---------- */
 .da-hero {
@@ -98,6 +167,36 @@ body {
     margin: 0;
 }
 
+/* Quick nav pills */
+.da-quicknav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1.2rem 5% 0;
+}
+
+.da-quicknav a {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: rgba(255,255,255,0.85);
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.da-quicknav a:hover {
+    background: linear-gradient(135deg, var(--da-accent), var(--da-accent-dark));
+    color: #051a16;
+    transform: translateY(-2px);
+}
+
 /* ---------- Container ---------- */
 .da-container {
     max-width: 1180px;
@@ -105,12 +204,32 @@ body {
     padding: 2.5rem 5% 4rem;
 }
 
+.da-section-head {
+    max-width: 700px;
+    margin: 0 auto 1.8rem;
+    text-align: center;
+}
+
+.da-section-eyebrow {
+    display: inline-block;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--da-accent-dark);
+    background: rgba(52, 211, 153, 0.12);
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    margin-bottom: 0.6rem;
+}
+
+.da-section-head h2 { margin: 0 0 0.5rem; font-size: clamp(1.3rem, 2.6vw, 1.8rem); color: #111827; }
+.da-section-head p { margin: 0; color: #5b6b66; font-size: 0.88rem; line-height: 1.6; }
+
 /* ---------- Stats ---------- */
 .da-stats {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
     gap: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.4rem;
 }
 
 .da-stat-card {
@@ -140,6 +259,266 @@ body {
     margin-top: 0.2rem;
 }
 
+/* Mini bar chart per divisi */
+.da-divchart {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.2rem 1.3rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+    border: 1px solid rgba(0,0,0,0.04);
+    margin-bottom: 2.5rem;
+}
+
+.da-divchart h3 { margin: 0 0 1rem; font-size: 0.9rem; color: #111827; }
+
+.da-divbar-row { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.7rem; }
+.da-divbar-row:last-child { margin-bottom: 0; }
+.da-divbar-label { flex: 0 0 180px; font-size: 0.76rem; color: #4b5563; }
+.da-divbar-track { flex: 1; height: 10px; background: #eef2f0; border-radius: 999px; overflow: hidden; }
+.da-divbar-fill { height: 100%; background: linear-gradient(90deg, var(--da-accent), var(--da-accent-dark)); border-radius: 999px; transition: width 0.6s ease; }
+.da-divbar-count { flex: 0 0 24px; text-align: right; font-size: 0.76rem; font-weight: 700; color: #111827; }
+
+/* ---------- Struktur Organisasi ---------- */
+.da-orgchart-section { background: var(--da-primary); padding: 3rem 5%; }
+.da-orgchart-section .da-section-head h2 { color: #fff; }
+.da-orgchart-section .da-section-head p { color: rgba(255,255,255,0.68); }
+.da-orgchart-section .da-section-eyebrow { color: var(--da-accent); background: rgba(52,211,153,0.16); }
+
+.da-orgchart {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.da-org-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+    padding: 0.9rem 0;
+}
+
+.da-org-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 1px;
+    height: 0.9rem;
+    background: rgba(255,255,255,0.2);
+}
+
+.da-org-row:first-child::before { display: none; }
+
+.da-org-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 14px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 220px;
+    cursor: pointer;
+    transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+}
+
+.da-org-card:hover {
+    transform: translateY(-4px);
+    background: rgba(52, 211, 153, 0.1);
+    border-color: var(--da-accent);
+}
+
+.da-org-card img, .da-org-card .da-org-initials {
+    width: 44px; height: 44px; border-radius: 50%; object-fit: cover;
+    background: linear-gradient(135deg, var(--da-accent), var(--da-accent-dark));
+    color: #fff; display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; font-weight: 700; flex-shrink: 0;
+}
+
+.da-org-card-name { font-size: 0.85rem; font-weight: 700; color: #fff; }
+.da-org-card-role { font-size: 0.7rem; color: var(--da-accent); }
+
+/* ---------- 🪪 KARTU ANGGOTA 3D ---------- */
+.da-idcard-section { background: #f6f9f7; padding: 3.2rem 5%; }
+
+.da-idcard-picker {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-bottom: 1.4rem;
+    max-width: 900px;
+    margin: 0 auto;
+    scrollbar-width: thin;
+}
+.da-idcard-picker::-webkit-scrollbar { height: 6px; }
+.da-idcard-picker::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 999px; }
+
+.da-idcard-chip-btn {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.9rem 0.4rem 0.4rem;
+    border-radius: 999px;
+    border: 1px solid #e2e8e5;
+    background: #fff;
+    cursor: pointer;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #374151;
+    transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+.da-idcard-chip-btn img, .da-idcard-chip-btn .da-idcard-chip-initials {
+    width: 26px; height: 26px; border-radius: 50%; object-fit: cover;
+    background: linear-gradient(135deg, var(--da-accent), var(--da-accent-dark));
+    color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.6rem;
+}
+.da-idcard-chip-btn:hover { border-color: var(--da-accent); }
+.da-idcard-chip-btn.da-active { background: var(--da-primary); border-color: var(--da-primary); color: #fff; }
+
+.da-idcard-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.4rem;
+}
+
+.da-idcard-perspective { perspective: 1200px; }
+
+.da-idcard {
+    position: relative;
+    width: 320px;
+    min-height: 430px;
+    border-radius: 22px;
+    padding: 1.5rem 1.4rem 1.3rem;
+    background:
+        radial-gradient(circle at 20% 0%, rgba(52,211,153,0.25), transparent 55%),
+        linear-gradient(160deg, #0d322b 0%, #051a16 100%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 25px 50px -12px rgba(5, 26, 22, 0.55);
+    transform-style: preserve-3d;
+    transition: transform 0.15s ease-out;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.12);
+}
+
+.da-idcard-shine {
+    position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(circle 180px at 50% 0%, rgba(255,255,255,0.18), transparent 60%);
+    opacity: 0; transition: opacity 0.2s ease;
+}
+.da-idcard:hover .da-idcard-shine { opacity: 1; }
+
+.da-idcard-brand {
+    display: flex; align-items: center; gap: 0.4rem;
+    font-size: 0.66rem; font-weight: 800; letter-spacing: 0.06em; color: var(--da-accent);
+    padding-bottom: 0.9rem; margin-bottom: 0.9rem;
+    border-bottom: 1px dashed rgba(255,255,255,0.18);
+    width: 100%; justify-content: center; transform: translateZ(30px);
+}
+.da-idcard-brand img { width: 18px; height: 18px; border-radius: 50%; }
+
+.da-idcard-photo-ring {
+    width: 104px; height: 104px; border-radius: 50%; padding: 4px;
+    background: linear-gradient(135deg, var(--da-accent), var(--da-accent-dark));
+    margin-bottom: 0.8rem; transform: translateZ(50px); position: relative;
+}
+.da-idcard-photo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid #0d322b; display: block; }
+
+.da-idcard-status-dot {
+    position: absolute; bottom: 2px; right: 2px; width: 16px; height: 16px;
+    border-radius: 50%; border: 3px solid #0d322b;
+}
+.da-idcard-status-dot.status-aktif { background: #34d399; }
+.da-idcard-status-dot.status-cuti { background: #fbbf24; }
+.da-idcard-status-dot.status-purna { background: #9ca3af; }
+
+.da-idcard-name { margin: 0 0 0.2rem; font-size: 1.05rem; transform: translateZ(40px); }
+.da-idcard-lapangan { font-size: 0.7rem; color: rgba(255,255,255,0.55); font-style: italic; transform: translateZ(38px); }
+.da-idcard-jabatan {
+    margin-top: 0.5rem; font-size: 0.72rem; font-weight: 700; color: var(--da-accent);
+    background: rgba(52,211,153,0.12); padding: 0.25rem 0.7rem; border-radius: 999px;
+    transform: translateZ(35px);
+}
+
+.da-idcard-meta {
+    margin-top: 0.9rem; font-size: 0.74rem; color: rgba(255,255,255,0.75);
+    line-height: 1.6; transform: translateZ(30px);
+}
+
+.da-idcard-footer {
+    margin-top: auto; padding-top: 1.1rem; width: 100%;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px dashed rgba(255,255,255,0.18); transform: translateZ(25px);
+}
+.da-idcard-verified { display: flex; align-items: center; gap: 0.3rem; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.03em; color: var(--da-accent); }
+.da-idcard-id { font-size: 0.58rem; color: rgba(255,255,255,0.45); font-family: monospace; }
+
+.da-idcard-qr {
+    margin-top: 0.7rem; width: 100%; display: flex; align-items: center; justify-content: center;
+    gap: 0.5rem; transform: translateZ(20px);
+}
+.da-idcard-qr-box {
+    width: 46px; height: 46px; border-radius: 6px;
+    background-image:
+        linear-gradient(90deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%),
+        linear-gradient(0deg, #fff 25%, transparent 25%, transparent 75%, #fff 75%);
+    background-size: 8px 8px; background-color: rgba(255,255,255,0.15);
+    border: 2px solid rgba(255,255,255,0.4);
+}
+.da-idcard-qr-label { font-size: 0.56rem; color: rgba(255,255,255,0.5); text-align: left; }
+
+.da-idcard-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.7rem; }
+
+.da-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.6rem 1.2rem; border-radius: 999px; border: none;
+    background: var(--da-primary); color: #fff; font-size: 0.8rem; font-weight: 700;
+    cursor: pointer; text-decoration: none; transition: transform 0.2s ease, background 0.2s ease;
+}
+.da-btn:hover { transform: translateY(-2px); background: var(--da-accent-dark); }
+.da-btn-wa { background: #25D366; }
+.da-btn-wa[href="#"] { opacity: 0.4; pointer-events: none; }
+.da-btn-outline { background: #fff; color: var(--da-primary); border: 1.5px solid #e2e8e5; }
+.da-btn-outline:hover { background: #f0f2f1; color: var(--da-primary); }
+
+/* ---------- 🎂 Widget Ulang Tahun ---------- */
+.da-birthday-section { padding: 2.5rem 5% 0.5rem; }
+
+.da-birthday-list {
+    max-width: 900px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; gap: 0.9rem; justify-content: center;
+}
+
+.da-birthday-empty {
+    text-align: center; color: #9ca3af; font-size: 0.85rem; padding: 1rem;
+}
+
+.da-birthday-card {
+    display: flex; align-items: center; gap: 0.7rem;
+    background: linear-gradient(135deg, rgba(52,211,153,0.1), rgba(5,150,105,0.05));
+    border: 1px solid rgba(52,211,153,0.25);
+    border-radius: 999px; padding: 0.5rem 1.1rem 0.5rem 0.5rem;
+}
+
+.da-birthday-card img, .da-birthday-card .da-birthday-initials {
+    width: 38px; height: 38px; border-radius: 50%; object-fit: cover;
+    background: linear-gradient(135deg, var(--da-accent), var(--da-accent-dark));
+    color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700;
+}
+
+.da-birthday-name { font-size: 0.8rem; font-weight: 700; color: #111827; }
+.da-birthday-date { font-size: 0.7rem; color: var(--da-accent-dark); }
+
 /* ---------- Toolbar ---------- */
 .da-toolbar {
     display: flex;
@@ -148,18 +527,11 @@ body {
     margin-bottom: 1.8rem;
 }
 
-.da-search {
-    position: relative;
-    max-width: 380px;
-}
+.da-toolbar-row { display: flex; flex-wrap: wrap; gap: 0.8rem; align-items: center; justify-content: space-between; }
 
-.da-search i {
-    position: absolute;
-    top: 50%;
-    left: 1rem;
-    transform: translateY(-50%);
-    color: #9ca3af;
-}
+.da-search { position: relative; max-width: 380px; flex: 1; min-width: 220px; }
+
+.da-search i { position: absolute; top: 50%; left: 1rem; transform: translateY(-50%); color: #9ca3af; }
 
 .da-search input {
     width: 100%;
@@ -175,6 +547,16 @@ body {
     border-color: var(--da-accent-dark);
     box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
 }
+
+.da-toolbar-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+
+.da-action-btn {
+    display: inline-flex; align-items: center; gap: 0.45rem;
+    padding: 0.55rem 1rem; border-radius: 999px; border: 1.5px solid #e5e7eb;
+    background: #fff; color: #4b5563; font-size: 0.78rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s ease;
+}
+.da-action-btn:hover { border-color: var(--da-accent-dark); color: var(--da-accent-dark); }
 
 .da-filter-chips { display: flex; flex-wrap: wrap; gap: 0.55rem; }
 
@@ -198,6 +580,8 @@ body {
     color: #fff;
 }
 
+.da-filter-group-label { font-size: 0.7rem; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.04em; margin-right: 0.3rem; }
+
 /* ---------- Tabel (desktop) ---------- */
 .da-table-wrap {
     background: #fff;
@@ -211,7 +595,7 @@ body {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.85rem;
-    min-width: 720px;
+    min-width: 900px;
 }
 
 .da-table thead th {
@@ -220,11 +604,17 @@ body {
     background: var(--da-primary);
     color: #fff;
     font-weight: 600;
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     text-transform: uppercase;
     letter-spacing: 0.03em;
     white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
 }
+
+.da-table thead th:hover { background: #0d3a32; }
+.da-table thead th i { margin-left: 0.3rem; opacity: 0.5; font-size: 0.7rem; }
+.da-table thead th.da-sort-active i { opacity: 1; color: var(--da-accent); }
 
 .da-table tbody td {
     padding: 0.85rem 1.1rem;
@@ -233,10 +623,19 @@ body {
     white-space: nowrap;
 }
 
+.da-table tbody tr { cursor: pointer; transition: background 0.15s ease; }
 .da-table tbody tr:hover { background: #f6fbf9; }
 .da-table tbody tr:last-child td { border-bottom: none; }
 
+.da-cell-person { display: flex; align-items: center; gap: 0.6rem; }
+.da-cell-person img, .da-cell-person .da-avatar-initials {
+    width: 32px; height: 32px; border-radius: 50%; object-fit: cover; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--da-accent), var(--da-accent-dark));
+    color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700;
+}
+
 .da-cell-name { font-weight: 600; color: #111827; }
+.da-cell-sub { font-size: 0.72rem; color: #9ca3af; }
 
 .da-badge {
     display: inline-block;
@@ -247,6 +646,12 @@ body {
     font-size: 0.72rem;
     font-weight: 700;
 }
+
+.da-badge-status { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-weight: 700; padding: 0.25rem 0.65rem; border-radius: 999px; }
+.da-badge-status.status-aktif { background: rgba(52,211,153,0.14); color: var(--da-accent-dark); }
+.da-badge-status.status-cuti { background: rgba(251,191,36,0.15); color: #b45309; }
+.da-badge-status.status-purna { background: rgba(156,163,175,0.18); color: #4b5563; }
+.da-badge-status i { font-size: 0.5rem; }
 
 .da-wa-btn {
     display: inline-flex;
@@ -260,6 +665,7 @@ body {
     text-decoration: none;
     transition: transform 0.2s ease;
 }
+.da-wa-btn.da-wa-disabled { background: #d1d5db; pointer-events: none; }
 
 .da-wa-btn:hover { transform: scale(1.1); }
 
@@ -273,6 +679,7 @@ body {
     margin-bottom: 0.9rem;
     box-shadow: 0 3px 14px rgba(0,0,0,0.05);
     border: 1px solid rgba(0,0,0,0.04);
+    cursor: pointer;
 }
 
 .da-card-head {
@@ -280,6 +687,13 @@ body {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 0.7rem;
+}
+
+.da-card-head-left { display: flex; align-items: center; gap: 0.6rem; }
+.da-card-head-left img, .da-card-head-left .da-avatar-initials {
+    width: 40px; height: 40px; border-radius: 50%; object-fit: cover;
+    background: linear-gradient(135deg, var(--da-accent), var(--da-accent-dark));
+    color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700;
 }
 
 .da-card h4 {
@@ -331,14 +745,63 @@ body {
     font-size: 0.78rem;
 }
 
-/* ---------- Footer ---------- */
-.da-footer {
-    text-align: center;
+.da-note a { color: var(--da-accent-dark); font-weight: 600; }
+
+/* ---------- Modal Detail Anggota ---------- */
+.da-modal-backdrop {
+    position: fixed; inset: 0; background: rgba(5, 12, 10, 0.8);
+    backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center;
+    z-index: 7000; opacity: 0; visibility: hidden; transition: opacity 0.25s ease, visibility 0.25s ease;
     padding: 1.5rem;
-    background: var(--da-primary-dark);
-    color: rgba(255,255,255,0.5);
-    font-size: 0.8rem;
 }
+.da-modal-backdrop.da-active { opacity: 1; visibility: visible; }
+
+.da-modal {
+    position: relative; width: min(420px, 100%); background: #fff; border-radius: 20px;
+    padding: 1.8rem 1.6rem; max-height: 90vh; overflow-y: auto;
+}
+
+.da-modal-close {
+    position: absolute; top: 1rem; right: 1rem; width: 34px; height: 34px; border-radius: 50%;
+    border: none; background: #f3f4f6; color: #6b7280; cursor: pointer;
+}
+
+.da-modal-head { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 1.2rem; }
+.da-modal-head img, .da-modal-head .da-avatar-initials {
+    width: 84px; height: 84px; border-radius: 50%; object-fit: cover; margin-bottom: 0.8rem;
+    background: linear-gradient(135deg, var(--da-accent), var(--da-accent-dark));
+    color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; font-weight: 700;
+}
+.da-modal-head h3 { margin: 0 0 0.2rem; font-size: 1.1rem; color: #111827; }
+.da-modal-head p { margin: 0; font-size: 0.8rem; color: #9ca3af; font-style: italic; }
+
+.da-modal-rows { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.3rem; }
+.da-modal-row { display: flex; justify-content: space-between; font-size: 0.84rem; padding: 0.5rem 0.8rem; background: #f6f9f7; border-radius: 10px; }
+.da-modal-row span { color: #6b7280; }
+.da-modal-row strong { color: #111827; }
+
+.da-modal-actions { display: flex; gap: 0.6rem; }
+.da-modal-actions .da-btn { flex: 1; justify-content: center; }
+
+/* ---------- Footer ---------- */
+.da-footer { background: var(--da-primary-dark); color: rgba(255,255,255,0.5); }
+.da-footer-inner {
+    max-width: 1180px; margin: 0 auto; padding: 2.2rem 5% 1.4rem;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2rem;
+}
+.da-footer-left img { width: 40px; height: 40px; border-radius: 50%; margin-bottom: 0.6rem; }
+.da-footer-left p { font-size: 0.8rem; margin: 0 0 0.8rem; }
+.da-footer-social { display: flex; gap: 0.6rem; margin-bottom: 0.9rem; }
+.da-footer-social a {
+    width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none;
+}
+.da-footer-copy { font-size: 0.75rem; }
+.da-footer-links { display: flex; gap: 3rem; flex-wrap: wrap; }
+.da-footer-links h4 { color: #fff; font-size: 0.82rem; margin: 0 0 0.7rem; }
+.da-footer-links ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+.da-footer-links a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 0.8rem; }
+.da-footer-links a:hover { color: var(--da-accent); }
 
 @media (max-width: 720px) {
     .da-table-wrap { display: none; }
@@ -348,4 +811,41 @@ body {
 @media (max-width: 480px) {
     .da-hero { padding: 2.5rem 6% 2rem; }
     .da-container { padding: 2rem 6% 3rem; }
+    .da-idcard { width: 100%; max-width: 300px; }
+}
+
+/* ================================================================
+   DARK MODE (localStorage key 'ap-dark-mode', dipakai bersama semua halaman)
+================================================================ */
+body.da-dark { background: #0d1117; color: #cbd5e1; }
+body.da-dark .da-section-head h2 { color: #e5e7eb; }
+body.da-dark .da-section-head p { color: #9ca3af; }
+body.da-dark .da-stat-card, body.da-dark .da-divchart,
+body.da-dark .da-table-wrap, body.da-dark .da-card,
+body.da-dark .da-search input, body.da-dark .da-chip,
+body.da-dark .da-action-btn, body.da-dark .da-idcard-chip-btn,
+body.da-dark .da-modal, body.da-dark .da-note, body.da-dark .da-btn-outline {
+    background: #161b22; border-color: rgba(255,255,255,0.08); color: #e5e7eb;
+}
+body.da-dark .da-table tbody td { color: #cbd5e1; border-color: rgba(255,255,255,0.06); }
+body.da-dark .da-table tbody tr:hover { background: #1c2530; }
+body.da-dark .da-cell-name, body.da-dark .da-card h4, body.da-dark .da-modal-head h3,
+body.da-dark .da-modal-row strong, body.da-dark .da-divbar-count { color: #e5e7eb; }
+body.da-dark .da-modal-row { background: #0d1117; }
+body.da-dark .da-idcard-section { background: #0d1117; }
+body.da-dark .da-idcard-picker::-webkit-scrollbar-thumb { background: #374151; }
+
+/* ================================================================
+   PRINT — hanya tabel & judul, tanpa navbar/footer/tombol
+================================================================ */
+@media print {
+    .da-nav, .da-hero, .da-quicknav, .da-orgchart-section,
+    .da-idcard-section, .da-birthday-section, .da-toolbar-actions,
+    .da-search, .da-filter-chips, .da-footer, .da-wa-btn,
+    .da-drawer, .da-drawer-backdrop, .da-modal-backdrop {
+        display: none !important;
+    }
+    .da-table-wrap { display: block !important; box-shadow: none; border: 1px solid #ccc; }
+    .da-cards { display: none !important; }
+    body { background: #fff; }
 }

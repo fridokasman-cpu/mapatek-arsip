@@ -3,78 +3,319 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Data Seluruh Anggota | Mapatek Abhipraya</title>
+<title>Data Anggota | Mapatek Abhipraya</title>
+<meta name="description" content="Direktori anggota Mapatek Abhipraya: struktur organisasi, kartu anggota digital 3D, dan daftar lengkap anggota per angkatan & divisi.">
 <link rel="icon" type="image/png" href="images/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="css/data-anggota.css">
+
+<!-- ============================================================
+     📊 ANALYTICS — pilih SALAH SATU, isi ID/domain-nya.
+============================================================ -->
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
+<!--
+<script defer data-domain="mapatekabhipraya.org" src="https://plausible.io/js/script.js"></script>
+-->
 </head>
 <body>
 
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
 <nav class="da-nav">
     <a href="index.html" class="da-nav-brand">
         <img src="images/logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/36x36?text=M'">
         <span>Mapatek Abhipraya</span>
     </a>
-    <a href="index.html" class="da-nav-back"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+
+    <ul class="da-nav-links">
+        <li><a href="index.html"><i class="fas fa-house"></i> Beranda</a></li>
+        <li><a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
+        <li><a href="merchandise.html"><i class="fas fa-shirt"></i> Merchandise</a></li>
+        <li><a href="data-anggota.html" class="da-active"><i class="fas fa-address-book"></i> Data Anggota</a></li>
+    </ul>
+
+    <div class="da-nav-right">
+        <button class="da-icon-btn" id="daDarkToggle" title="Mode Gelap/Terang" aria-label="Mode gelap"><i class="fas fa-moon"></i></button>
+        <button class="da-nav-burger" id="daNavBurger" aria-label="Buka menu"><i class="fas fa-bars"></i></button>
+    </div>
 </nav>
 
+<div class="da-drawer-backdrop" id="daDrawerBackdrop"></div>
+<aside class="da-drawer" id="daDrawer">
+    <div class="da-drawer-head">
+        <span>Menu</span>
+        <button id="daDrawerClose" aria-label="Tutup menu"><i class="fas fa-times"></i></button>
+    </div>
+    <a href="index.html"><i class="fas fa-house"></i> Beranda</a>
+    <a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni & Jejak Karir</a>
+    <a href="merchandise.html"><i class="fas fa-shirt"></i> Merchandise & Donasi</a>
+    <a href="data-anggota.html"><i class="fas fa-address-book"></i> Data Anggota</a>
+</aside>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
 <header class="da-hero">
     <div class="da-hero-inner">
-        <span class="da-hero-badge"><i class="fas fa-users"></i> Basis Data Organisasi</span>
-        <h1>Data Seluruh <span class="da-highlight">Anggota</span></h1>
-        <p>Rekap seluruh anggota Mapatek Abhipraya dari setiap angkatan, lengkap dengan nama lapangan, NIM, dan bidang penugasan.</p>
+        <span class="da-hero-badge"><i class="fas fa-users"></i> Direktori Resmi</span>
+        <h1>Data <span class="da-highlight">Anggota</span> Mapatek Abhipraya</h1>
+        <p>Kenali struktur organisasi, kartu anggota digital 3D, dan seluruh anggota aktif Mapatek Abhipraya dari setiap angkatan &amp; divisi.</p>
     </div>
 </header>
 
-<main class="da-container">
+<div class="da-quicknav">
+    <a href="#daStatsSection"><i class="fas fa-chart-simple"></i> Statistik</a>
+    <a href="#daOrgChartSection"><i class="fas fa-sitemap"></i> Struktur Organisasi</a>
+    <a href="#daIdCardSection"><i class="fas fa-id-card"></i> Kartu Anggota 3D</a>
+    <a href="#daDirectorySection"><i class="fas fa-table-list"></i> Direktori</a>
+</div>
 
+<!-- ============================================================
+     STATISTIK & GRAFIK DIVISI
+============================================================ -->
+<main class="da-container" id="daStatsSection">
     <div class="da-stats" id="daStats"></div>
 
-    <div class="da-toolbar">
-        <div class="da-search">
-            <i class="fas fa-search"></i>
-            <input type="text" id="daSearch" placeholder="Cari nama, NIM, atau nama lapangan...">
-        </div>
-        <div class="da-filter-chips" id="daFilterChips"></div>
+    <div class="da-divchart">
+        <h3><i class="fas fa-chart-simple"></i> Sebaran Anggota per Divisi</h3>
+        <div id="daDivChart"></div>
+    </div>
+</main>
+
+<!-- ============================================================
+     🏛️ STRUKTUR ORGANISASI
+============================================================ -->
+<section class="da-orgchart-section" id="daOrgChartSection">
+    <div class="da-section-head">
+        <span class="da-section-eyebrow">🏛️ Struktur Organisasi</span>
+        <h2>Pengurus Mapatek Abhipraya</h2>
+        <p>Susunan pengurus harian dan koordinator divisi periode berjalan. Klik kartu untuk melihat profil lengkap.</p>
+    </div>
+    <div class="da-orgchart" id="daOrgChart"></div>
+</section>
+
+<!-- ============================================================
+     🪪 KARTU ANGGOTA DIGITAL 3D
+============================================================ -->
+<section class="da-idcard-section" id="daIdCardSection">
+    <div class="da-section-head">
+        <span class="da-section-eyebrow">🪪 Identitas Digital</span>
+        <h2>Kartu Anggota Digital 3D</h2>
+        <p>Setiap anggota punya kartu identitas digital sendiri, lengkap dengan status keanggotaan &amp; kode QR verifikasi. Gerakkan mouse di atas kartu untuk efek tilt 3D.</p>
     </div>
 
+    <div class="da-idcard-picker" id="daIdCardPicker"></div>
+
+    <div class="da-idcard-stage">
+        <div class="da-idcard-perspective">
+            <div class="da-idcard" id="daIdCard">
+                <div class="da-idcard-shine" id="daIdCardShine"></div>
+                <div class="da-idcard-brand">
+                    <img src="images/logo.png" alt="" onerror="this.style.display='none'">
+                    <span>MAPATEK ABHIPRAYA</span>
+                </div>
+                <div class="da-idcard-photo-ring">
+                    <img class="da-idcard-photo" id="daIdCardPhoto" src="" alt="">
+                    <span class="da-idcard-status-dot" id="daIdCardStatusDot"></span>
+                </div>
+                <h3 class="da-idcard-name" id="daIdCardName"></h3>
+                <span class="da-idcard-lapangan" id="daIdCardLapangan"></span>
+                <div class="da-idcard-jabatan" id="daIdCardJabatan"></div>
+                <div class="da-idcard-meta" id="daIdCardMeta"></div>
+                <div class="da-idcard-footer">
+                    <span class="da-idcard-verified"><i class="fas fa-circle-check"></i> ANGGOTA VERIFIED</span>
+                    <span class="da-idcard-id" id="daIdCardId"></span>
+                </div>
+                <div class="da-idcard-qr">
+                    <span class="da-idcard-qr-box"></span>
+                    <span class="da-idcard-qr-label">Scan untuk<br>verifikasi kontak</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="da-idcard-actions">
+            <a class="da-btn da-btn-wa" id="daIdCardWaBtn" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Sapa via WhatsApp</a>
+            <button class="da-btn da-btn-outline" id="daIdCardDetailBtn"><i class="fas fa-circle-info"></i> Lihat Detail Lengkap</button>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================================
+     🎂 ULANG TAHUN BULAN INI
+============================================================ -->
+<section class="da-birthday-section">
+    <div class="da-section-head">
+        <span class="da-section-eyebrow">🎂 Engagement</span>
+        <h2>Ulang Tahun Bulan Ini</h2>
+        <p>Jangan lupa ucapkan selamat untuk anggota yang berulang tahun bulan ini!</p>
+    </div>
+    <div class="da-birthday-list" id="daBirthdayList"></div>
+</section>
+
+<!-- ============================================================
+     📋 DIREKTORI ANGGOTA (tabel + kartu)
+============================================================ -->
+<div class="da-container" id="daDirectorySection">
+    <div class="da-section-head">
+        <span class="da-section-eyebrow">📋 Direktori</span>
+        <h2>Seluruh Anggota</h2>
+        <p>Cari, filter, urutkan, atau ekspor data anggota sesuai kebutuhan.</p>
+    </div>
+
+    <div class="da-toolbar">
+        <div class="da-toolbar-row">
+            <div class="da-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="daSearch" placeholder="Cari nama, NIM, nama lapangan, atau jabatan...">
+            </div>
+            <div class="da-toolbar-actions">
+                <button class="da-action-btn" id="daExportBtn"><i class="fas fa-file-csv"></i> Export CSV</button>
+                <button class="da-action-btn" id="daPrintBtn"><i class="fas fa-print"></i> Cetak</button>
+            </div>
+        </div>
+
+        <div class="da-toolbar-row">
+            <div>
+                <span class="da-filter-group-label">Angkatan:</span>
+                <div class="da-filter-chips" id="daFilterChips" style="display:inline-flex;"></div>
+            </div>
+        </div>
+        <div class="da-toolbar-row">
+            <div>
+                <span class="da-filter-group-label">Divisi:</span>
+                <div class="da-filter-chips" id="daDivisiChips" style="display:inline-flex;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabel (desktop) -->
     <div class="da-table-wrap">
-        <table class="da-table" id="daTable">
+        <table class="da-table">
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Angkatan</th>
-                    <th>Nama Lengkap</th>
-                    <th>Nama Lapangan</th>
-                    <th>NIM</th>
-                    <th>Bidang / Lapangan</th>
-                    <th>Kontak</th>
+                    <th data-sort="namaLengkap" class="da-sort-active">Nama <i class="fas fa-arrow-up"></i></th>
+                    <th data-sort="angkatan">Angkatan <i class="fas fa-sort"></i></th>
+                    <th data-sort="jabatan">Jabatan <i class="fas fa-sort"></i></th>
+                    <th data-sort="nim">NIM <i class="fas fa-sort"></i></th>
+                    <th data-sort="status">Status <i class="fas fa-sort"></i></th>
+                    <th>WA</th>
                 </tr>
             </thead>
             <tbody id="daTableBody"></tbody>
         </table>
     </div>
 
+    <!-- Kartu (mobile) -->
     <div class="da-cards" id="daCards"></div>
 
-    <p class="da-empty" id="daEmpty" style="display:none;">
-        <i class="fas fa-user-slash"></i> Tidak ada anggota yang cocok dengan pencarianmu.
-    </p>
+    <div class="da-empty" id="daEmpty" style="display:none;">
+        <i class="fas fa-user-slash"></i>
+        Tidak ada anggota yang cocok dengan pencarian/filter.
+    </div>
 
-    <p class="da-note">
-        <i class="fas fa-circle-info"></i>
-        Data belum lengkap? Data ini bisa ditambah/diedit langsung lewat file
-        <code>js/anggota-data.js</code> — cukup tambahkan baris baru mengikuti format yang sudah ada.
-    </p>
+    <div class="da-note">
+        <i class="fas fa-shield-halved"></i>
+        <div>
+            NIM ditampilkan sebagian (disamarkan) untuk melindungi privasi anggota. Nomor WhatsApp tidak pernah ditampilkan secara mentah — tombol <code>WA</code> langsung membuka percakapan tanpa membocorkan nomornya. Baca selengkapnya di <a href="kebijakan-privasi.html">Kebijakan Privasi</a>.
+        </div>
+    </div>
+</div>
 
-</main>
+<!-- ============================================================
+     MODAL DETAIL ANGGOTA
+============================================================ -->
+<div class="da-modal-backdrop" id="daModalBackdrop">
+    <div class="da-modal">
+        <button class="da-modal-close" id="daModalClose"><i class="fas fa-times"></i></button>
+        <div class="da-modal-head" id="daModalHead"></div>
+        <div class="da-modal-rows" id="daModalRows"></div>
+        <div class="da-modal-actions">
+            <a class="da-btn da-btn-wa" id="daModalWaBtn" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <button class="da-btn da-btn-outline" id="daModalCardBtn"><i class="fas fa-id-card"></i> Lihat Kartu 3D</button>
+        </div>
+    </div>
+</div>
 
+<!-- ============================================================
+     FOOTER
+============================================================ -->
 <footer class="da-footer">
-    <p>&copy; 2026 Mapatek Abhipraya — Menjaga Alam, Membangun Karakter</p>
+    <div class="da-footer-inner">
+        <div class="da-footer-left">
+            <img src="images/logo.png" alt="Mapatek" onerror="this.src='https://via.placeholder.com/40x40?text=M'">
+            <p>Menjaga Alam, Membangun Karakter</p>
+            <div class="da-footer-social">
+                <a href="https://instagram.com/mapatek_abhipraya" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/6282214428371" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com/@mapatek_abhipraya" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="mailto:mapatek.abhipraya@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="da-footer-copy">&copy; 2026 Mapatek Abhipraya. All rights reserved.</p>
+        </div>
+        <div class="da-footer-links">
+            <div>
+                <h4>Halaman</h4>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="alumni.html">Alumni</a></li>
+                    <li><a href="merchandise.html">Merchandise</a></li>
+                    <li><a href="data-anggota.html">Data Anggota</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="kebijakan-privasi.html">Kebijakan Privasi</a></li>
+                    <li><a href="syarat-penggunaan.html">Syarat Penggunaan</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </footer>
 
-<script src="js/anggota-data.js"></script>
-<script src="js/data-anggota.js"></script>
+<script src="js/data-anggota-data.js" defer></script>
+<script src="js/data-anggota.js" defer></script>
+<script>
+    // Hamburger drawer
+    (function () {
+        const burger = document.getElementById('daNavBurger');
+        const drawer = document.getElementById('daDrawer');
+        const backdrop = document.getElementById('daDrawerBackdrop');
+        const close = document.getElementById('daDrawerClose');
+        if (burger) burger.addEventListener('click', function () { drawer.classList.add('da-active'); backdrop.classList.add('da-active'); });
+        if (close) close.addEventListener('click', function () { drawer.classList.remove('da-active'); backdrop.classList.remove('da-active'); });
+        if (backdrop) backdrop.addEventListener('click', function () { drawer.classList.remove('da-active'); backdrop.classList.remove('da-active'); });
+    })();
+
+    // Dark mode toggle — pakai key 'ap-dark-mode' yang sama dengan halaman lain
+    // supaya preferensi gelap/terang konsisten di seluruh website.
+    (function () {
+        const darkToggle = document.getElementById('daDarkToggle');
+        if (!darkToggle) return;
+        const icon = darkToggle.querySelector('i');
+        function applyDark(isDark) {
+            document.body.classList.toggle('da-dark', isDark);
+            icon.classList.toggle('fa-moon', !isDark);
+            icon.classList.toggle('fa-sun', isDark);
+        }
+        applyDark(localStorage.getItem('ap-dark-mode') === 'true');
+        darkToggle.addEventListener('click', function () {
+            const isDark = !document.body.classList.contains('da-dark');
+            applyDark(isDark);
+            localStorage.setItem('ap-dark-mode', isDark);
+        });
+    })();
+</script>
 </body>
 </html>
