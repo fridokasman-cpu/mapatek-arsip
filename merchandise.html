@@ -4,21 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Merchandise & Donasi Ekspedisi | Mapatek Abhipraya</title>
+<meta name="description" content="Dukung ekspedisi Mapatek Abhipraya lewat donasi atau belanja merchandise resmi: kaos, hoodie, dan aksesoris.">
 <link rel="icon" type="image/png" href="images/logo.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="stylesheet" href="css/merchandise.css">
+
+<!--
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+-->
 </head>
 <body>
 
+<!-- ============================================================
+     NAVBAR
+============================================================ -->
 <nav class="mp-nav">
     <a href="index.html" class="mp-nav-brand">
         <img src="images/logo.png" alt="Logo" onerror="this.src='https://via.placeholder.com/36x36?text=M'">
         <span>Mapatek Abhipraya</span>
     </a>
-    <a href="index.html" class="mp-nav-back"><i class="fas fa-arrow-left"></i> Kembali ke Beranda</a>
+
+    <ul class="mp-nav-links">
+        <li><a href="index.html"><i class="fas fa-house"></i> Beranda</a></li>
+        <li><a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni</a></li>
+        <li><a href="merchandise.html" class="mp-active"><i class="fas fa-shirt"></i> Merchandise</a></li>
+        <li><a href="data-anggota.html"><i class="fas fa-address-book"></i> Data Anggota</a></li>
+    </ul>
+
+    <div class="mp-nav-right">
+        <button class="mp-icon-btn" id="cartBtn" aria-label="Keranjang belanja">
+            <i class="fas fa-cart-shopping"></i>
+            <span class="mp-cart-badge mp-hidden" id="cartBadge">0</span>
+        </button>
+        <button class="mp-icon-btn" id="mpDarkToggle" title="Mode Gelap/Terang" aria-label="Mode gelap"><i class="fas fa-moon"></i></button>
+        <button class="mp-nav-burger" id="mpNavBurger" aria-label="Buka menu"><i class="fas fa-bars"></i></button>
+    </div>
 </nav>
 
+<div class="mp-drawer-backdrop" id="mpDrawerBackdrop"></div>
+<aside class="mp-drawer" id="mpDrawer">
+    <div class="mp-drawer-head">
+        <span>Menu</span>
+        <button id="mpDrawerClose" aria-label="Tutup menu"><i class="fas fa-times"></i></button>
+    </div>
+    <a href="index.html"><i class="fas fa-house"></i> Beranda</a>
+    <a href="alumni.html"><i class="fas fa-graduation-cap"></i> Alumni & Jejak Karir</a>
+    <a href="merchandise.html"><i class="fas fa-shirt"></i> Merchandise & Donasi</a>
+    <a href="data-anggota.html"><i class="fas fa-address-book"></i> Data Anggota</a>
+</aside>
+
+<!-- ============================================================
+     HERO
+============================================================ -->
 <header class="mp-hero">
     <div class="mp-hero-inner">
         <span class="mp-hero-badge"><i class="fas fa-hand-holding-heart"></i> Dukung Perjalanan Kami</span>
@@ -27,21 +71,120 @@
     </div>
 </header>
 
+<div class="mp-quicknav">
+    <a href="#impactSection"><i class="fas fa-chart-simple"></i> Dampak Donasi</a>
+    <a href="#campaignSection"><i class="fas fa-mountain"></i> Campaign</a>
+    <a href="#merchSection"><i class="fas fa-shirt"></i> Merchandise</a>
+    <a href="#donorSection"><i class="fas fa-trophy"></i> Wall of Fame</a>
+    <a href="#faqSection"><i class="fas fa-circle-question"></i> FAQ</a>
+</div>
+
 <main class="mp-container">
 
-    <!-- ================= DONASI EKSPEDISI ================= -->
-    <section class="mp-section">
+    <!-- ================= 📊 DASHBOARD DAMPAK (Fitur 3) ================= -->
+    <section class="mp-section" id="impactSection">
+        <h2 class="mp-section-title"><i class="fas fa-chart-simple"></i> Dampak Donasi Sejauh Ini</h2>
+        <div class="mp-impact-grid" id="impactGrid"></div>
+    </section>
+
+    <!-- ================= DONASI EKSPEDISI (+ Fitur 5 Countdown, Fitur 10 Share) ================= -->
+    <section class="mp-section" id="campaignSection">
         <h2 class="mp-section-title"><i class="fas fa-mountain"></i> Donasi Ekspedisi Aktif</h2>
         <div class="mp-campaign-grid" id="campaignGrid"></div>
     </section>
 
-    <!-- ================= MERCHANDISE ================= -->
+    <!-- ================= 💰 DONASI CEPAT (Fitur 4) ================= -->
     <section class="mp-section">
+        <h2 class="mp-section-title"><i class="fas fa-bolt"></i> Donasi Cepat</h2>
+        <p class="mp-section-sub">Ingin donasi tanpa terikat campaign tertentu? Pilih nominal atau isi sendiri, tinggal klik dan chat WhatsApp langsung terisi otomatis.</p>
+        <div class="mp-quickdonate-card">
+            <div class="mp-quickdonate-amounts" id="quickDonateAmounts"></div>
+            <div class="mp-quickdonate-custom">
+                <input type="text" id="quickDonateCustom" placeholder="Atau isi nominal sendiri, mis. 75000">
+            </div>
+            <button class="mp-btn mp-btn-donate" id="quickDonateBtn"><i class="fas fa-hand-holding-heart"></i> Lanjut Donasi via WhatsApp</button>
+        </div>
+    </section>
+
+    <!-- ================= 🧾 QRIS (Fitur 6) ================= -->
+    <section class="mp-section">
+        <h2 class="mp-section-title"><i class="fas fa-qrcode"></i> Donasi via QRIS</h2>
+        <div class="mp-qris-card">
+            <div class="mp-qris-box"></div>
+            <div class="mp-qris-info">
+                <h3>Scan & Bayar Instan</h3>
+                <p>Buka aplikasi e-wallet atau m-banking favoritmu, pilih menu Scan QRIS, lalu masukkan nominal donasi sesuai keinginan.</p>
+                <p>Setelah transfer, jangan lupa konfirmasi ke WhatsApp admin supaya progress donasi ter-update.</p>
+                <div class="mp-qris-note"><i class="fas fa-triangle-exclamation"></i> Placeholder — ganti kotak QR di atas dengan gambar QRIS resmi organisasi kamu.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= MERCHANDISE (+ Fitur 2 Tilt 3D, Fitur 8 Search) ================= -->
+    <section class="mp-section" id="merchSection">
         <div class="mp-section-header">
-            <h2 class="mp-section-title"><i class="fas fa-shirt"></i> Merchandise</h2>
+            <h2 class="mp-section-title" style="margin-bottom:0;"><i class="fas fa-shirt"></i> Merchandise</h2>
+        </div>
+        <div class="mp-merch-toolbar">
+            <div class="mp-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="merchSearch" placeholder="Cari produk...">
+            </div>
             <div class="mp-filter-chips" id="merchFilterChips"></div>
         </div>
         <div class="mp-product-grid" id="productGrid"></div>
+    </section>
+
+    <!-- ================= 🏆 WALL OF FAME DONATUR (Fitur 7) ================= -->
+    <section class="mp-section" id="donorSection">
+        <h2 class="mp-section-title"><i class="fas fa-trophy"></i> Wall of Fame Donatur</h2>
+        <p class="mp-section-sub">Terima kasih untuk para donatur yang sudah mengizinkan namanya ditampilkan di sini. Setiap kontribusi, sekecil apa pun, sangat berarti.</p>
+        <div class="mp-donor-wall" id="donorWall"></div>
+    </section>
+
+    <!-- ================= 📸 GALERI DAMPAK EKSPEDISI (Fitur 9) ================= -->
+    <section class="mp-section">
+        <h2 class="mp-section-title"><i class="fas fa-images"></i> Galeri Dampak Ekspedisi</h2>
+        <p class="mp-section-sub">Beberapa momen dari kegiatan yang berhasil didanai lewat donasi & merchandise sebelumnya.</p>
+        <div class="mp-dampak-stage" id="dampakStage"></div>
+        <div class="mp-dampak-nav">
+            <button id="dampakPrev" aria-label="Sebelumnya"><i class="fas fa-chevron-left"></i></button>
+            <span class="mp-dampak-counter" id="dampakCounter"></span>
+            <button id="dampakNext" aria-label="Berikutnya"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </section>
+
+    <!-- ================= 🪜 INFO: CARA DONASI & BELANJA ================= -->
+    <section class="mp-section">
+        <h2 class="mp-section-title"><i class="fas fa-list-check"></i> Cara Donasi & Belanja</h2>
+        <div class="mp-steps-grid">
+            <div class="mp-step-card">
+                <div class="mp-step-num">1</div>
+                <h4>Pilih Cara Dukung</h4>
+                <p>Donasi ke campaign tertentu, donasi cepat nominal bebas, scan QRIS, atau belanja merchandise.</p>
+            </div>
+            <div class="mp-step-card">
+                <div class="mp-step-num">2</div>
+                <h4>Transfer / Bayar</h4>
+                <p>Transfer ke rekening resmi, scan QRIS, atau checkout keranjang belanja lewat WhatsApp.</p>
+            </div>
+            <div class="mp-step-card">
+                <div class="mp-step-num">3</div>
+                <h4>Konfirmasi ke WhatsApp</h4>
+                <p>Kirim bukti transfer & sebutkan campaign/produk tujuan supaya bisa segera diproses.</p>
+            </div>
+            <div class="mp-step-card">
+                <div class="mp-step-num">4</div>
+                <h4>Progress Diperbarui</h4>
+                <p>Bendahara mencatat donasi masuk, progress bar campaign diperbarui, dan pesanan merch diproses 2-4 hari kerja.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= ❓ FAQ (info tambahan) ================= -->
+    <section class="mp-section" id="faqSection">
+        <h2 class="mp-section-title"><i class="fas fa-circle-question"></i> Pertanyaan yang Sering Ditanyakan</h2>
+        <div class="mp-faq-list" id="faqList"></div>
     </section>
 
     <!-- ================= INFO TRANSFER ================= -->
@@ -72,11 +215,74 @@
     <div class="mp-modal-content" id="productModalContent"></div>
 </div>
 
+<!-- Modal keranjang (Fitur 1) -->
+<div class="mp-modal" id="cartModal">
+    <div class="mp-modal-content" id="cartModalContent"></div>
+</div>
+
+<!-- ============================================================
+     FOOTER
+============================================================ -->
 <footer class="mp-footer">
-    <p>&copy; 2026 Mapatek Abhipraya — Menjaga Alam, Membangun Karakter</p>
+    <div class="mp-footer-inner">
+        <div class="mp-footer-left">
+            <img src="images/logo.png" alt="Mapatek" onerror="this.src='https://via.placeholder.com/40x40?text=M'">
+            <p>Menjaga Alam, Membangun Karakter</p>
+            <div class="mp-footer-social">
+                <a href="https://instagram.com/mapatek_abhipraya" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/6282214428371" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.tiktok.com/@mapatek_abhipraya" target="_blank" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="mailto:mapatek.abhipraya@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <p class="mp-footer-copy">&copy; 2026 Mapatek Abhipraya. All rights reserved.</p>
+        </div>
+        <div class="mp-footer-links">
+            <div>
+                <h4>Halaman</h4>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="alumni.html">Alumni</a></li>
+                    <li><a href="merchandise.html">Merchandise</a></li>
+                    <li><a href="data-anggota.html">Data Anggota</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="kebijakan-privasi.html">Kebijakan Privasi</a></li>
+                    <li><a href="syarat-penggunaan.html">Syarat Penggunaan</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </footer>
 
-<script src="js/merchandise-data.js"></script>
-<script src="js/merchandise.js"></script>
+<script src="js/merchandise-data.js" defer></script>
+<script src="js/merchandise.js" defer></script>
+<script>
+    (function () {
+        const burger = document.getElementById('mpNavBurger');
+        const drawer = document.getElementById('mpDrawer');
+        const backdrop = document.getElementById('mpDrawerBackdrop');
+        const close = document.getElementById('mpDrawerClose');
+        if (burger) burger.addEventListener('click', function () { drawer.classList.add('mp-active'); backdrop.classList.add('mp-active'); });
+        if (close) close.addEventListener('click', function () { drawer.classList.remove('mp-active'); backdrop.classList.remove('mp-active'); });
+        if (backdrop) backdrop.addEventListener('click', function () { drawer.classList.remove('mp-active'); backdrop.classList.remove('mp-active'); });
+    })();
+
+    // Dark mode — TANPA localStorage (sesuai permintaan), jadi cuma aktif
+    // selama halaman ini dibuka dan reset ke terang lagi saat di-refresh.
+    (function () {
+        const darkToggle = document.getElementById('mpDarkToggle');
+        if (!darkToggle) return;
+        const icon = darkToggle.querySelector('i');
+        darkToggle.addEventListener('click', function () {
+            const isDark = !document.body.classList.contains('mp-dark');
+            document.body.classList.toggle('mp-dark', isDark);
+            icon.classList.toggle('fa-moon', !isDark);
+            icon.classList.toggle('fa-sun', isDark);
+        });
+    })();
+</script>
 </body>
 </html>
