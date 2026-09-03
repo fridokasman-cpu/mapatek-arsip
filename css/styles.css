@@ -7189,3 +7189,385 @@ body.dark-mode .chatbot-input input {
         height: min(48vh, 360px) !important;
     }
 }
+/* ================================================================
+       TENTANG — REDESIGN 3D PROFESIONAL — namespace "ab3d-"
+       ================================================================ */
+    .ab3d-section {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ab3d-section .container { position: relative; z-index: 1; }
+
+    /* ---------- Intro: emblem 3D + teks ---------- */
+    .ab3d-intro {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        gap: clamp(2rem, 5vw, 3.5rem);
+        align-items: center;
+        margin: clamp(2rem, 4vw, 3rem) 0 clamp(2.5rem, 5vw, 4rem);
+    }
+
+    .ab3d-emblem-stage {
+        display: flex;
+        justify-content: center;
+        perspective: 1200px;
+    }
+
+    .ab3d-emblem {
+        position: relative;
+        width: 220px;
+        height: 220px;
+        transform-style: preserve-3d;
+        transition: transform 0.15s ease-out;
+        cursor: pointer;
+    }
+
+    .ab3d-emblem-ring {
+        position: absolute;
+        inset: -14px;
+        border-radius: 50%;
+        border: 2px dashed rgba(52, 165, 120, 0.35);
+        animation: ab3dSpin 18s linear infinite;
+        transform: translateZ(-20px);
+    }
+
+    @keyframes ab3dSpin {
+        from { transform: translateZ(-20px) rotate(0deg); }
+        to   { transform: translateZ(-20px) rotate(360deg); }
+    }
+
+    .ab3d-emblem-inner {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: var(--gradient-accent, linear-gradient(145deg, #34a578 0%, #1e6b4c 100%));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4.2rem;
+        color: #fff;
+        box-shadow: 0 30px 60px -12px rgba(10, 43, 37, 0.5), 0 0 0 8px rgba(255,255,255,0.6), inset 0 -10px 24px rgba(0,0,0,0.15);
+        transform: translateZ(10px);
+    }
+
+    .ab3d-emblem-badge {
+        position: absolute;
+        bottom: -14px;
+        left: 50%;
+        transform: translateX(-50%) translateZ(50px);
+        white-space: nowrap;
+        background: #fff;
+        color: var(--primary, #0a2b25);
+        font-size: 0.78rem;
+        font-weight: 700;
+        padding: 0.45rem 1.1rem;
+        border-radius: var(--radius-full, 999px);
+        box-shadow: var(--shadow-lg, 0 8px 32px rgba(0,0,0,0.1));
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .ab3d-emblem-badge i { color: var(--accent, #34a578); }
+
+    .ab3d-intro-text p {
+        font-size: 1.02rem;
+        line-height: 1.85;
+        color: var(--gray-700, #334155);
+        margin-bottom: 1.3rem;
+    }
+
+    .ab3d-fact-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.7rem;
+    }
+
+    .ab3d-fact-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--gradient-light, linear-gradient(135deg, #e8f5ed 0%, #d1fae5 100%));
+        color: var(--primary, #0a2b25);
+        font-size: 0.82rem;
+        font-weight: 700;
+        padding: 0.55rem 1.1rem;
+        border-radius: var(--radius-full, 999px);
+        border: 1px solid rgba(52, 165, 120, 0.25);
+    }
+
+    .ab3d-fact-chip i { color: var(--accent, #34a578); }
+
+    /* ---------- Kartu "Arti Nama" — glass 3D ---------- */
+    .ab3d-name-card {
+        position: relative;
+        background: var(--gradient-primary, linear-gradient(145deg, #0a2b25 0%, #1e6b4c 100%));
+        border-radius: var(--radius-xl, 28px);
+        padding: clamp(2rem, 5vw, 3rem);
+        margin-bottom: clamp(2.5rem, 5vw, 4rem);
+        overflow: hidden;
+        box-shadow: var(--shadow-2xl, 0 24px 64px rgba(0,0,0,0.18));
+        transform-style: preserve-3d;
+        transition: transform 0.15s ease-out;
+        text-align: center;
+    }
+
+    .ab3d-name-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle 320px at 30% 20%, rgba(111, 203, 164, 0.35), transparent 60%);
+        pointer-events: none;
+        transform: translateZ(5px);
+    }
+
+    .ab3d-name-content {
+        position: relative;
+        z-index: 1;
+        max-width: 640px;
+        margin: 0 auto;
+        transform: translateZ(30px);
+    }
+
+    .ab3d-name-label {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--accent-light, #6fcba4);
+        background: rgba(111, 203, 164, 0.15);
+        padding: 0.35rem 1rem;
+        border-radius: var(--radius-full, 999px);
+        margin-bottom: 1rem;
+    }
+
+    .ab3d-name-content h3 {
+        font-size: clamp(1.8rem, 4vw, 2.6rem);
+        color: #fff;
+        margin-bottom: 1rem;
+        font-style: italic;
+    }
+
+    .ab3d-name-content p {
+        color: rgba(255,255,255,0.78);
+        font-size: 1rem;
+        line-height: 1.8;
+    }
+
+    .ab3d-name-content strong { color: var(--accent-light, #6fcba4); }
+
+    /* ---------- Sejarah & Timeline 3D ---------- */
+    .ab3d-sejarah, .ab3d-kegiatan {
+        margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+    }
+
+    .ab3d-sejarah-title {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        font-size: clamp(1.2rem, 2.6vw, 1.5rem);
+        color: var(--primary, #0a2b25);
+        margin-bottom: 0.7rem;
+    }
+
+    .ab3d-sejarah-title i { color: var(--accent, #34a578); }
+
+    .ab3d-sejarah-desc {
+        color: var(--gray-600, #475569);
+        font-size: 0.95rem;
+        line-height: 1.75;
+        max-width: 780px;
+        margin-bottom: clamp(1.8rem, 3vw, 2.5rem);
+    }
+
+    .ab3d-timeline {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.2rem;
+        perspective: 1400px;
+        margin-bottom: 1.8rem;
+    }
+
+    .ab3d-timeline-line {
+        position: absolute;
+        top: -14px;
+        left: 6%;
+        right: 6%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--accent, #34a578) 15%, var(--accent, #34a578) 85%, transparent);
+    }
+
+    .ab3d-tcard-wrap {
+        position: relative;
+        padding-top: 14px;
+    }
+
+    .ab3d-tcard-wrap::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: var(--accent, #34a578);
+        box-shadow: 0 0 0 4px #fff, 0 0 0 5px rgba(52, 165, 120, 0.3);
+        z-index: 2;
+    }
+
+    .ab3d-tcard {
+        background: #fff;
+        border-radius: var(--radius-lg, 20px);
+        padding: 1.6rem 1.3rem;
+        text-align: center;
+        box-shadow: var(--shadow-md, 0 4px 16px rgba(0,0,0,0.07));
+        border: 1px solid var(--gray-200, #e2e8f0);
+        transform-style: preserve-3d;
+        transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+        cursor: default;
+        height: 100%;
+    }
+
+    .ab3d-tcard:hover {
+        box-shadow: var(--shadow-xl, 0 16px 48px rgba(0,0,0,0.14)), var(--shadow-glow, 0 0 40px rgba(52,165,120,0.25));
+        border-color: transparent;
+    }
+
+    .ab3d-tcard-year {
+        display: block;
+        font-size: 0.68rem;
+        font-weight: 700;
+        color: var(--accent, #34a578);
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        margin-bottom: 0.6rem;
+        transform: translateZ(20px);
+    }
+
+    .ab3d-tcard-emoji {
+        display: block;
+        font-size: 2.1rem;
+        margin-bottom: 0.5rem;
+        transform: translateZ(35px);
+    }
+
+    .ab3d-tcard h4 {
+        font-size: 1.05rem;
+        color: var(--primary, #0a2b25);
+        margin-bottom: 0.4rem;
+        letter-spacing: 0.02em;
+        transform: translateZ(25px);
+    }
+
+    .ab3d-tcard p {
+        font-size: 0.8rem;
+        color: var(--gray-500, #64748b);
+        margin: 0;
+        transform: translateZ(15px);
+    }
+
+    .ab3d-sejarah-quote {
+        text-align: center;
+        font-style: italic;
+        color: var(--gray-600, #475569);
+        font-size: 0.95rem;
+        max-width: 700px;
+        margin: 0 auto;
+        padding-top: 0.5rem;
+        position: relative;
+    }
+
+    /* ---------- Feature grid kegiatan 3D ---------- */
+    .ab3d-feature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1.2rem;
+        perspective: 1200px;
+    }
+
+    .ab3d-feature {
+        background: #fff;
+        border-radius: var(--radius-lg, 20px);
+        padding: 1.8rem 1.3rem;
+        text-align: center;
+        border: 1px solid var(--gray-200, #e2e8f0);
+        box-shadow: var(--shadow-sm, 0 1px 4px rgba(0,0,0,0.06));
+        transform-style: preserve-3d;
+        transition: transform 0.15s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .ab3d-feature:hover {
+        box-shadow: var(--shadow-xl, 0 16px 48px rgba(0,0,0,0.14));
+        border-color: transparent;
+    }
+
+    .ab3d-feature-icon {
+        width: 62px;
+        height: 62px;
+        margin: 0 auto 1rem;
+        border-radius: 50%;
+        background: var(--gradient-light, linear-gradient(135deg, #e8f5ed 0%, #d1fae5 100%));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: var(--accent, #34a578);
+        transform: translateZ(30px);
+        transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .ab3d-feature:hover .ab3d-feature-icon {
+        background: var(--gradient-accent, linear-gradient(145deg, #34a578 0%, #1e6b4c 100%));
+        color: #fff;
+    }
+
+    .ab3d-feature h5 {
+        font-size: 0.98rem;
+        color: var(--primary, #0a2b25);
+        margin-bottom: 0.35rem;
+        transform: translateZ(20px);
+    }
+
+    .ab3d-feature p {
+        font-size: 0.78rem;
+        color: var(--gray-500, #64748b);
+        margin: 0;
+        line-height: 1.5;
+        transform: translateZ(10px);
+    }
+
+    /* ---------- Dark mode ---------- */
+    body.dark-mode .ab3d-tcard,
+    body.dark-mode .ab3d-feature {
+        background: var(--gray-800, #1e293b);
+        border-color: rgba(255,255,255,0.08);
+    }
+    body.dark-mode .ab3d-tcard h4,
+    body.dark-mode .ab3d-feature h5 { color: #fff; }
+    body.dark-mode .ab3d-tcard p,
+    body.dark-mode .ab3d-feature p,
+    body.dark-mode .ab3d-sejarah-desc,
+    body.dark-mode .ab3d-sejarah-quote,
+    body.dark-mode .ab3d-intro-text p { color: var(--gray-300, #cbd5e1); }
+    body.dark-mode .ab3d-sejarah-title { color: #fff; }
+    body.dark-mode .ab3d-emblem-badge { background: var(--gray-800, #1e293b); color: #fff; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 860px) {
+        .ab3d-intro { grid-template-columns: 1fr; text-align: center; }
+        .ab3d-fact-row { justify-content: center; }
+        .ab3d-timeline { grid-template-columns: repeat(2, 1fr); row-gap: 2.2rem; }
+        .ab3d-timeline-line { display: none; }
+        .ab3d-feature-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+        .ab3d-emblem { width: 170px; height: 170px; }
+        .ab3d-emblem-inner { font-size: 3.2rem; }
+        .ab3d-timeline { grid-template-columns: 1fr; }
+        .ab3d-feature-grid { grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+        .ab3d-name-card { padding: 1.8rem 1.4rem; }
+    }

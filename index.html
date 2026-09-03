@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/chatbot-pro.css">
     <link rel="stylesheet" href="css/pengurus-slider.css">
+    <link rel="stylesheet" href="css/tentang-3d.css">
 </head>
 <body>
 
@@ -272,34 +273,134 @@
         </div>
     </section>
 
-    <!-- ============================================================
-    TENTANG
-    ============================================================ -->
-    <section id="tentang" class="tentang-section reveal">
-        <div class="container">
-            <h2 class="section-title">Tentang <span class="highlight">Kami</span></h2>
-            <div class="section-divider"><i class="fas fa-mountain"></i></div>
-            <div class="tentang-content">
-                <p><strong>Mapatek Abhipraya</strong> merupakan organisasi mahasiswa pencinta alam yang berdiri pada tanggal <strong>19 Maret 2023</strong> di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta. Lahir dari semangat sekelompok mahasiswa yang memiliki visi untuk melestarikan alam sekaligus membangun karakter kepribadian yang tangguh melalui kegiatan-kegiatan alam terbuka.</p>
-
-                <div class="sejarah-box">
-                    <h3><i class="fas fa-history"></i> Sejarah &amp; Perjalanan Angkatan</h3>
-                    <p>Berawal dari kegelisahan akan minimnya wadah bagi mahasiswa pecinta alam di kampus, serta keinginan untuk menanamkan nilai-nilai kecintaan terhadap alam dan jiwa kepemimpinan, berdirilah Mapatek Abhipraya. Berikut perjalanan angkatan yang membentuk sejarah organisasi:</p>
-                    <div class="angkatan-list">
-                        <div class="angkatan-item"><span class="angkatan-year">2023 (Angkatan Pendiri)</span><span class="angkatan-name">🌟 PANCATOMPAK</span><span class="angkatan-desc">"Lima Puncak Harapan" — 5 orang pemberani.</span></div>
-                        <div class="angkatan-item"><span class="angkatan-year">2024 (Angkatan I)</span><span class="angkatan-name">👣 TAPAKKAKI</span><span class="angkatan-desc">"Mengukir Jejak Perjuangan"</span></div>
-                        <div class="angkatan-item"><span class="angkatan-year">2025 (Angkatan II)</span><span class="angkatan-name">⛰️ TEDAKDAIVAT</span><span class="angkatan-desc">"Menapaki Puncak Tertinggi"</span></div>
-                        <div class="angkatan-item"><span class="angkatan-year">2026 (Angkatan III)</span><span class="angkatan-name">🌿 LITANIARAM</span><span class="angkatan-desc">"Pelita bagi Alam"</span></div>
+   <!-- ============================================================
+    TENTANG — Redesign Profesional dengan Elemen 3D
+    ============================================================
+    Ganti seluruh <section id="tentang">...</section> yang lama
+    di index.html dengan blok ini (termasuk <style> dan <script>
+    di bagian bawah). Semua class dipakai prefix "ab3d-" supaya
+    tidak bentrok dengan CSS lama (.tentang-section, .sejarah-box,
+    dst) di styles.css.
+============================================================ -->
+<section id="tentang" class="tentang-section reveal ab3d-section">
+    <div class="container">
+ 
+        <h2 class="section-title">Tentang <span class="highlight">Kami</span></h2>
+        <p class="section-subtitle">Mengenal lebih dekat perjalanan, nilai, dan semangat Mapatek Abhipraya</p>
+ 
+        <!-- ============ INTRO: split layout + emblem 3D ============ -->
+        <div class="ab3d-intro">
+            <div class="ab3d-emblem-stage">
+                <div class="ab3d-emblem" id="ab3dEmblem">
+                    <div class="ab3d-emblem-ring"></div>
+                    <div class="ab3d-emblem-inner">
+                        <i class="fas fa-mountain-sun"></i>
                     </div>
-                    <p style="margin-top:1rem; font-style:italic;">"Setiap angkatan memiliki cerita dan pengabdiannya masing-masing. Mereka adalah mata rantai yang tak terputus dalam perjalanan panjang Mapatek Abhipraya."</p>
+                    <span class="ab3d-emblem-badge"><i class="fas fa-flag"></i> 19 Maret 2023</span>
                 </div>
-
-                <p>Nama <strong>"Abhipraya"</strong> berasal dari bahasa Sanskerta yang berarti <em>"harapan" atau "cita-cita"</em>. Nama ini mencerminkan harapan besar para pendiri organisasi untuk menjadi garda terdepan dalam pelestarian alam dan pembentukan karakter mahasiswa yang peduli terhadap lingkungan.</p>
-
-                <p>Sejak berdirinya, Mapatek Abhipraya telah melaksanakan berbagai kegiatan seperti pendidikan dan latihan dasar (Diksar), ekspedisi pendakian gunung, aksi konservasi lingkungan, bersih-bersih pantai, penanaman pohon, serta berbagai kegiatan sosial kemasyarakatan. Organisasi ini terus berkembang dan menjadi rumah bagi mahasiswa UST yang ingin belajar tentang alam, kepemimpinan, dan kerja sama tim.</p>
+            </div>
+ 
+            <div class="ab3d-intro-text">
+                <p><strong>Mapatek Abhipraya</strong> merupakan organisasi mahasiswa pencinta alam yang berdiri pada tanggal <strong>19 Maret 2023</strong> di Universitas Sarjanawiyata Tamansiswa (UST) Yogyakarta. Lahir dari semangat sekelompok mahasiswa yang memiliki visi untuk melestarikan alam sekaligus membangun karakter kepribadian yang tangguh melalui kegiatan-kegiatan alam terbuka.</p>
+ 
+                <div class="ab3d-fact-row">
+                    <div class="ab3d-fact-chip"><i class="fas fa-calendar-check"></i> Berdiri 2023</div>
+                    <div class="ab3d-fact-chip"><i class="fas fa-location-dot"></i> UST Yogyakarta</div>
+                    <div class="ab3d-fact-chip"><i class="fas fa-users"></i> 4 Angkatan Aktif</div>
+                </div>
             </div>
         </div>
-    </section>
+ 
+        <!-- ============ ARTI NAMA — kartu glass 3D ============ -->
+        <div class="ab3d-name-card" id="ab3dNameCard">
+            <div class="ab3d-name-glow"></div>
+            <div class="ab3d-name-content">
+                <span class="ab3d-name-label">Makna di Balik Nama</span>
+                <h3>"Abhipraya"</h3>
+                <p>Berasal dari bahasa <strong>Sanskerta</strong> yang berarti <em>"harapan"</em> atau <em>"cita-cita"</em> — mencerminkan harapan besar para pendiri untuk menjadi garda terdepan dalam pelestarian alam dan pembentukan karakter mahasiswa yang peduli terhadap lingkungan.</p>
+            </div>
+        </div>
+ 
+        <!-- ============ SEJARAH & TIMELINE ANGKATAN 3D ============ -->
+        <div class="ab3d-sejarah">
+            <h3 class="ab3d-sejarah-title"><i class="fas fa-history"></i> Sejarah &amp; Perjalanan Angkatan</h3>
+            <p class="ab3d-sejarah-desc">Berawal dari kegelisahan akan minimnya wadah bagi mahasiswa pecinta alam di kampus, serta keinginan untuk menanamkan nilai-nilai kecintaan terhadap alam dan jiwa kepemimpinan, berdirilah Mapatek Abhipraya. Berikut perjalanan angkatan yang membentuk sejarah organisasi:</p>
+ 
+            <div class="ab3d-timeline" id="ab3dTimeline">
+                <div class="ab3d-timeline-line"></div>
+ 
+                <div class="ab3d-tcard-wrap">
+                    <div class="ab3d-tcard">
+                        <span class="ab3d-tcard-year">2023 &bull; Angkatan Pendiri</span>
+                        <span class="ab3d-tcard-emoji">🌟</span>
+                        <h4>PANCATOMPAK</h4>
+                        <p>"Lima Puncak Harapan" — 5 orang pemberani.</p>
+                    </div>
+                </div>
+ 
+                <div class="ab3d-tcard-wrap">
+                    <div class="ab3d-tcard">
+                        <span class="ab3d-tcard-year">2024 &bull; Angkatan I</span>
+                        <span class="ab3d-tcard-emoji">👣</span>
+                        <h4>TAPAKKAKI</h4>
+                        <p>"Mengukir Jejak Perjuangan"</p>
+                    </div>
+                </div>
+ 
+                <div class="ab3d-tcard-wrap">
+                    <div class="ab3d-tcard">
+                        <span class="ab3d-tcard-year">2025 &bull; Angkatan II</span>
+                        <span class="ab3d-tcard-emoji">⛰️</span>
+                        <h4>TEDAKDAIVAT</h4>
+                        <p>"Menapaki Puncak Tertinggi"</p>
+                    </div>
+                </div>
+ 
+                <div class="ab3d-tcard-wrap">
+                    <div class="ab3d-tcard">
+                        <span class="ab3d-tcard-year">2026 &bull; Angkatan III</span>
+                        <span class="ab3d-tcard-emoji">🌿</span>
+                        <h4>LITANIARAM</h4>
+                        <p>"Pelita bagi Alam"</p>
+                    </div>
+                </div>
+            </div>
+ 
+            <p class="ab3d-sejarah-quote">"Setiap angkatan memiliki cerita dan pengabdiannya masing-masing. Mereka adalah mata rantai yang tak terputus dalam perjalanan panjang Mapatek Abhipraya."</p>
+        </div>
+ 
+        <!-- ============ BIDANG KEGIATAN — feature grid 3D ============ -->
+        <div class="ab3d-kegiatan">
+            <h3 class="ab3d-sejarah-title"><i class="fas fa-compass"></i> Bidang Kegiatan Kami</h3>
+            <p class="ab3d-sejarah-desc">Sejak berdirinya, Mapatek Abhipraya terus berkembang dan menjadi rumah bagi mahasiswa UST yang ingin belajar tentang alam, kepemimpinan, dan kerja sama tim melalui berbagai kegiatan berikut:</p>
+ 
+            <div class="ab3d-feature-grid" id="ab3dFeatureGrid">
+                <div class="ab3d-feature">
+                    <div class="ab3d-feature-icon"><i class="fas fa-hiking"></i></div>
+                    <h5>Diksar</h5>
+                    <p>Pendidikan &amp; latihan dasar pecinta alam</p>
+                </div>
+                <div class="ab3d-feature">
+                    <div class="ab3d-feature-icon"><i class="fas fa-mountain"></i></div>
+                    <h5>Ekspedisi</h5>
+                    <p>Pendakian gunung ke berbagai penjuru negeri</p>
+                </div>
+                <div class="ab3d-feature">
+                    <div class="ab3d-feature-icon"><i class="fas fa-seedling"></i></div>
+                    <h5>Konservasi</h5>
+                    <p>Aksi pelestarian lingkungan &amp; penanaman pohon</p>
+                </div>
+                <div class="ab3d-feature">
+                    <div class="ab3d-feature-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    <h5>Bakti Sosial</h5>
+                    <p>Kegiatan sosial kemasyarakatan &amp; bersih pantai</p>
+                </div>
+            </div>
+        </div>
+ 
+    </div>
+</section>
+ 
 
    <!-- ============================================================
     PENGURUS — 3D Circular Slider
@@ -930,6 +1031,7 @@
     <script src="js/slideshow.js"></script>
    <script src="js/mobile-nav.js"></script>
    <script src="js/pengurus-slider.js"></script>
+  <script src="js/tentang-3d.js"></script>
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
