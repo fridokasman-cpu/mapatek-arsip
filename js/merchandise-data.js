@@ -30,7 +30,7 @@ const campaignData = [
     },
     {
         id: "diksar-litaniaram",
-        judul: "Diksar Angkatan LITANIARAM",
+        judul: "Pelantikan Angkatan Litani Aram",
         deskripsi: "Pendanaan untuk pendidikan dan latihan dasar anggota baru: pelatih tamu, sewa alat rock climbing, dan konsumsi selama 3 hari kegiatan.",
         target: 8000000,
         terkumpul: 3200000,
