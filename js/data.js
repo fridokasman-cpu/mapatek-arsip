@@ -94,6 +94,15 @@ const agendas = [
         location: "Lumajang, Jawa Timur",
         desc: "Pendakian puncak Mahameru (3.676 mdpl) via Ranupane",
         status: "upcoming"
+    },
+    { date: "2026-10-20",
+      day: "20",
+      month: "OKT",
+      title: "Pendaftaran Dibuka",
+     location: "Sekretariat Mapatek Abhipraya",
+      desc: "Pendaftaran Mapatek Abhipraya",
+    status: "upcoming"
+
     }
 ];
 

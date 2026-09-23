@@ -62,6 +62,15 @@
             "location": "Jambi, Sumatera",
             "desc": "Pendakian puncak tertinggi di Sumatera (3.805 mdpl)",
             "status": "upcoming"
+        },
+        { 
+            "date": "2026-10-20",
+            "day": "04",
+            "month": "OKT",
+            "title": "Pendaftaran Dibuka",
+            "location": "Sekretariat Mapatek Abhipraya",
+            "desc": "Pendaftaran Mapatek Abhipraya",
+            "status": "upcoming"
         }
     ]
     
