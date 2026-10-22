@@ -7,7 +7,7 @@
 const agendas = [
     { 
         date: "2026-07-18",
-        day: "18",
+        day: "16",
         month: "JUL",
         title: "Pendakian Gunung Sumbing",
         location: "Wonosobo, Jawa Tengah",
